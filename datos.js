@@ -9,15 +9,15 @@
      · CORTE                     fecha de corte de la información
      · HITOS[].est               'cumplido' | 'programado'
      · GANTT[].est               estado de cada frente (ver ESTADO)
-     · ALERTAS[].sit / postura   texto de cada alerta
+     · ALERTAS[].hechos / postura   texto de cada alerta
    ===================================================================== */
 
 const CORTE = { txt:'26 jun 2026', fecha:new Date(2026,5,26) };
 
 const CAT = {
-  critica :{ n:'Crítica',  c:'#E5484D' },
-  moderada:{ n:'Moderada', c:'#F0A800' },
-  leve    :{ n:'Leve',     c:'#1FBF5B' }
+  critica :{ n:'Crítica',  c:'#D3313A', tx:'#FFFFFF' },
+  moderada:{ n:'Moderada', c:'#F0A800', tx:'#0F1F52' },
+  leve    :{ n:'Leve',     c:'#1E9E4F', tx:'#FFFFFF' }
 };
 
 const COMPONENTES = ['Financiero','Operaciones','Infraestructura','CONPES','Jurídico','Ambiental','Cronograma'];
@@ -28,128 +28,98 @@ const PERIODOS    = ['2025-IV','2026-I','2026-II'];
    vistas: 1 o 2 escenas por alerta; cada una con su clave `vis` (visuales.js)
    ------------------------------------------------------------------- */
 const ALERTAS = [
-  { n:1, id:'fet', corto:'FET', t:'FET no implementado',
+  { n:1, id:'fet', corto:'FET', titulo:'FET: fondo sin constituir', t:'FET no implementado',
     per:'2025-IV', comp:'Financiero', cat:'critica',
-    msg:'El FET aún no está constituido. Se dimensiona con el modelo financiero de julio: necesidad, alcance y fuentes salen de cifras, no de urgencias.',
-    postura:'El Municipio asume el compromiso con la sostenibilidad financiera del SETP y la equidad tarifaria. El FET se decide con el modelo en la mano y se formaliza con acciones administrativas y normativas apenas exista la cifra.',
-    vistas:[{ vis:'fet', sit:[
-      'No constituido formalmente; en estructuración técnica.',
-      'Consultoría en curso para actualizar el modelo financiero del sistema. Resultado: julio de 2026.',
-      'Aún no hay metodología para estimar el diferencial entre tarifa técnica y tarifa al usuario, ni el eventual déficit operacional.',
-      'Riesgos fiscales y sostenibilidad: se evalúan cuando exista el modelo; hoy no hay análisis concluyente.'
-    ]}]
-  },
+    frase:'El fondo *aún no existe*. Se dimensiona con el modelo financiero de julio: con cifras, no con urgencias.',
+    hechos:['En estructuración técnica; sin constituir formalmente.',
+            'Una consultoría actualiza el modelo financiero del sistema.',
+            'Falta la metodología para estimar el déficit operacional.'],
+    cifras:[{ t:'Jul 2026', l:'resultado final del modelo financiero' }, { n:5, l:'pasos en la hoja de ruta hasta implementarlo' }],
+    postura:'Decidimos con el modelo en la mano: primero las cifras, después el fondo. El Municipio respalda la sostenibilidad del SETP y la equidad tarifaria.',
+    vistas:[{ vis:'fet', icono:'drag', pregunta:'Mueve los deslizadores y mira cuánto se llena el fondo. Supuestos ilustrativos.' }] },
 
-  { n:2, id:'concertacion', corto:'Concertación', t:'Concertación con transportadores para viabilidad del sistema',
+  { n:2, id:'concertacion', corto:'Transportadores', titulo:'Concertación con transportadores', t:'Concertación con transportadores para viabilidad del sistema',
     per:'2025-IV', comp:'Operaciones', cat:'critica',
-    msg:'La viabilidad se concerta con números abiertos: canasta de costos validada con los operadores y modelo financiero cerrado el 24 de julio.',
-    postura:'Ningún acto se expide sin una viabilidad demostrada y sin requisitos verificados. La vía financiera y la vía normativa convergen en un mismo punto: la definición de los actos administrativos.',
-    vistas:[{ vis:'con', sit:[
-      'Revisión de la canasta de costos: validación de variables operativas y financieras con los operadores.',
-      'Modelo financiero: resultado final el 24 de julio de 2026.',
-      'Análisis de viabilidad: evaluación de sostenibilidad del sistema.',
-      'En paralelo: mesas de diálogo, solicitud de documentación y aclaraciones a los operadores.'
-    ]}]
-  },
+    frase:'La viabilidad se cierra con *números abiertos*: canasta de costos validada con los operadores y modelo financiero el 24 de julio.',
+    hechos:['Se valida la canasta de costos con los operadores.',
+            'El modelo financiero cierra el 24 de julio.',
+            'Con eso se evalúa la viabilidad y se definen los actos.'],
+    cifras:[{ t:'24 jul', l:'resultado final del modelo financiero' }, { n:2, l:'vías que deben converger: financiera y normativa' }],
+    postura:'Ningún acto sale sin viabilidad demostrada ni requisitos verificados. Las dos vías llegan al mismo punto.',
+    vistas:[{ vis:'con', icono:'drag', pregunta:'Arrastra cada bus hasta el final. Cuando las dos vías llegan, se habilitan los actos.' }] },
 
-  { n:3, id:'semaforos', corto:'Semáforos', t:'Retraso contrato de semaforización',
+  { n:3, id:'semaforos', corto:'Semáforos', titulo:'Semaforización con retraso', t:'Retraso contrato de semaforización',
     per:'2025-IV', comp:'Infraestructura', cat:'moderada',
-    msg:'El retraso no está en instalar: está en integrar, validar y poner en operación. Se reanuda el 30 de junio con prórroga acotada y hitos verificables.',
-    postura:'Prórroga acotada (hasta 2 meses) y atada a hitos: controladores completos, planes semafóricos aprobados y red sincronizada. Meta de Fase I: 28 controladores, 34 intersecciones integradas y red validada.',
-    vistas:[{ vis:'sem', sit:[
-      'Avance real 75,01 % frente a 99,76 % programado: brecha de 24,75 puntos.',
-      '25 de 28 controladores y 25 de 34 intersecciones instaladas; 14 en funcionamiento.',
-      'Suspensión No. 2; reanudación prevista el 30 de junio de 2026, a la espera de la solicitud formal de prórroga del contratista.'
-    ]}]
-  },
+    frase:'El retraso no está en instalar: está en *integrar, validar y poner en operación*.',
+    hechos:['25 de 34 intersecciones instaladas; 14 en funcionamiento.',
+            'Suspensión No. 2; reanudación el 30 de junio de 2026.',
+            'Prórroga de hasta 2 meses, sin solicitud formal aún.'],
+    cifras:[{ n:75.01, dec:2, suf:' %', l:'avance real ejecutado' }, { n:99.76, dec:2, suf:' %', l:'avance programado' }],
+    postura:'Prórroga acotada y atada a hitos: controladores completos, planes aprobados y red sincronizada y validada.',
+    vistas:[{ vis:'sem', icono:'tap', pregunta:'Toca el semáforo o simula el cierre de la Fase I.' }] },
 
-  { n:4, id:'app', corto:'APP Tranvía', t:'Propuesta APP tranvía podría redefinir convenio',
+  { n:4, id:'app', corto:'Tranvía', titulo:'Propuesta de tranvía (APP)', t:'Propuesta APP tranvía podría redefinir convenio',
     per:'2025-IV', comp:'CONPES', cat:'critica',
-    msg:'El CONPES 4017 no habilita el tranvía. Cualquier avance del ART exige un nuevo CONPES y estudios más avanzados; el SETP sigue ejecutando su ruta.',
-    postura:'El SETP defiende el marco vigente: el ART entra por un nuevo CONPES o no entra. Tres de sus cuatro troncales coinciden con corredores que el SETP ya interviene: se integran, no se duplican.',
-    vistas:[
-      { vis:'appA', sit:[
-        'Sistema ART sobre riel virtual: 31,64 m, 307 pasajeros, demanda de 321.065 viajes/día.',
-        'Se presenta como 100 % privado y solicita ser el único operador.',
-        'Pide financiar con recursos del CONPES 4017 la compra de vehículos nuevos.',
-        'Concepto favorable de prefactibilidad: 27 de octubre de 2025.'
-      ]},
-      { vis:'appB', sit:[
-        'DNP: el CONPES 4017 no permite desarrollar el tranvía.',
-        'Para avanzar: nuevo CONPES, evaluación integral del sistema y aclaraciones.',
-        'Puede desarrollarse en paralelo, con estudios más avanzados: prediales, diseños estructurales y de demanda.'
-      ]}
-    ]
-  },
+    frase:'El CONPES 4017 *no permite el tranvía*. Cualquier avance exige un nuevo CONPES; el SETP sigue su ruta.',
+    hechos:['Riel virtual; se presenta como 100 % privado.',
+            'Pide ser único operador y usar recursos del CONPES 4017.',
+            'Concepto favorable de prefactibilidad: 27 oct 2025.'],
+    cifras:[{ n:321065, l:'viajes por día que proyecta la propuesta' }, { t:'3 de 4', l:'troncales coinciden con corredores del SETP' }],
+    postura:'El marco vigente es el CONPES 4017. El ART entra por un nuevo CONPES o no entra; lo que coincide con el SETP se integra, no se duplica.',
+    vistas:[{ vis:'appA', icono:'tap',  pregunta:'Toca una línea para ver con qué proyecto del SETP se superpone.' },
+            { vis:'appB', icono:'drag', pregunta:'Arrastra el tranvía por la trazabilidad y marca las condiciones para avanzar.' }] },
 
-  { n:5, id:'desembolsos', corto:'Desembolsos', t:'Desembolsos Nación y Municipio no solicitados frente a POAI',
+  { n:5, id:'desembolsos', corto:'Desembolsos', titulo:'Desembolsos frente al POAI', t:'Desembolsos Nación y Municipio no solicitados frente a POAI',
     per:'2026-I', comp:'Financiero', cat:'leve',
-    msg:'El Municipio cumplió el 100 % de sus aportes, año tras año. Lo que falta es velocidad de contratación: seis frentes suman $53.872 M en 2026.',
-    postura:'Cada peso tiene proyecto y fase. Se gestiona con calendario de radicación y, para lo que no alcance a contratarse en la vigencia, con reprogramación del convenio.',
-    vistas:[
-      { vis:'desA', sit:[
-        'Aportes del Municipio 2021–2026: 100 % desembolsado en cada vigencia; el de 2026 se giró el 30 de abril.',
-        'Convenio de cofinanciación Nación 2024–2026: $190.564 M. Adjudicado $107.539 M (56,4 %); a reprogramar $83.025 M (43,6 %).'
-      ]},
-      { vis:'desB', sit:[
-        'Seis frentes 2026 radicados o por radicar: $53.872 M (Nación $23.730 M · Municipio $30.141 M).',
-        'Del convenio Nación 2026 ($61.521 M), $37.791 M están sin proyecto asignado.'
-      ]}
-    ]
-  },
+    frase:'El Municipio cumplió *el 100 % de sus aportes*. Lo que falta es velocidad de contratación.',
+    hechos:['Aportes 2021–2026: $80,8 mil M desembolsados.',
+            'Convenio Nación 2024–2026: $190,6 mil M; $83,0 mil M por reprogramar.',
+            'En 2026, seis frentes suman $53,9 mil M.'],
+    cifras:[{ n:100, suf:' %', l:'de los aportes del Municipio, desembolsados' }, { n:43.6, dec:1, suf:' %', l:'del convenio de la Nación, por reprogramar' }],
+    postura:'Cada peso tiene proyecto y fase. Lo que no alcance a contratarse en la vigencia se reprograma con calendario.',
+    vistas:[{ vis:'desA', icono:'tap', pregunta:'Toca las barras para ver los valores. Activa o quita la indexación.' },
+            { vis:'desB', icono:'tap', pregunta:'Toca un frente de 2026 y suma proyectos para ver si alcanzan lo por reprogramar.' }] },
 
-  { n:6, id:'actos', corto:'Actos adm.', t:'Indefinición de los actos administrativos que adopten las condiciones del modelo operacional',
+  { n:6, id:'actos', corto:'Actos', titulo:'Actos administrativos sin definir', t:'Indefinición de los actos administrativos que adopten las condiciones del modelo operacional',
     per:'2026-I', comp:'Jurídico', cat:'critica',
-    msg:'Los actos administrativos se expiden por paquetes: primero los que no dependen del modelo, después los que sí. Sin plazos abiertos.',
-    postura:'Un plazo adicional sin fecha es un riesgo. Se cierra con fecha límite y se separan los actos que pueden salir ya de los que esperan el modelo financiero.',
-    vistas:[{ vis:'actos', sit:[
-      'Los actos adoptan las condiciones del modelo operacional.',
-      'Dependen de dos vías: viabilidad del sistema (modelo financiero, 24 de julio) y verificación normativa de los operadores.',
-      'Concertación: mesas de diálogo, solicitud de documentación y aclaraciones con plazo adicional.'
-    ]}]
-  },
+    frase:'Los actos salen *por paquetes*: primero los que no dependen del modelo. Sin plazos abiertos.',
+    hechos:['Adoptan las condiciones del modelo operacional.',
+            'Dependen de la viabilidad y la verificación normativa.',
+            'El plazo adicional para aclaraciones aún no tiene fecha.'],
+    cifras:[{ t:'24 jul', l:'modelo financiero: de él dependen varios actos' }, { t:'Sin fecha', l:'plazo adicional para aclaraciones a los operadores' }],
+    postura:'Un plazo sin fecha es un riesgo. Se fija una fecha límite y se separan los actos que salen ya de los que esperan el modelo.',
+    vistas:[{ vis:'actos', icono:'drag', pregunta:'Arrastra cada acto al paquete que le corresponde. Tipos referenciales.' }] },
 
-  { n:7, id:'pma', corto:'PMA', t:'No implementación del PMA contrato Semaforización Fase I',
+  { n:7, id:'pma', corto:'PMA', titulo:'PMA de semaforización, Fase I', t:'No implementación del PMA contrato Semaforización Fase I',
     per:'2026-I', comp:'Ambiental', cat:'leve',
-    msg:'La gestión ambiental sí se ejecuta en obra. Lo que falta es el soporte formal: se exige a la interventoría el informe con evidencia.',
-    postura:'Requerimiento formal a la interventoría con contenido mínimo y plazo. El recibo final del contrato queda condicionado al soporte del PMA.',
-    vistas:[{ vis:'pma', sit:[
-      'En su rol de supervisión, el Ente Gestor ha evidenciado actividades del PMA en Semaforización Fase I.',
-      'La interventoría no ha remitido oficialmente los alcances e impactos de lo ejecutado por el contratista.',
-      'El vacío es de reporte y trazabilidad, no de obra.'
-    ]}]
-  },
+    frase:'La gestión ambiental *sí se hace en obra*. Falta el soporte formal de la interventoría.',
+    hechos:['El Ente Gestor evidenció actividades del PMA en obra.',
+            'La interventoría no ha enviado alcances e impactos.',
+            'El vacío es de reporte y trazabilidad, no de obra.'],
+    cifras:[{ n:34, l:'intersecciones de la Fase I con PMA por documentar' }, { t:'Sin informe', l:'oficial de la interventoría al corte' }],
+    postura:'Requerimiento formal con contenido mínimo y plazo. El recibo final del contrato depende del soporte del PMA.',
+    vistas:[{ vis:'pma', icono:'tap', pregunta:'Marca el contenido mínimo, envía el requerimiento y recibe el informe.' }] },
 
-  { n:8, id:'obras', corto:'Obras CONPES', t:'Retrasos en ejecución de obras de acuerdo con el cronograma CONPES',
+  { n:8, id:'obras', corto:'Obras', titulo:'Obras frente al cronograma CONPES', t:'Retrasos en ejecución de obras de acuerdo con el cronograma CONPES',
     per:'2026-I', comp:'Cronograma', cat:'critica',
-    msg:'Ferrocarril, Ambalá y cicloinfraestructura tienen ruta y fecha. Los rezagos reales están en Paraderos, Patiotalleres y Jordán Paralela, y ahí se decide.',
-    postura:'Cada rezago tiene una decisión con fecha: redistribuir el tope de Jordán Paralela, radicar Paraderos y definir el modelo de patiotalleres.',
-    vistas:[
-      { vis:'obraA', sit:[
-        'Cronograma CONPES ajustado a calendario real: 2023–2028.',
-        'Arrastra la línea «hoy» para ver qué frentes deberían haber cerrado ya.',
-        'Toca una barra para ver el estado de cada frente.'
-      ]},
-      { vis:'obraB', sit:[
-        'Av. Ferrocarril: consultoría radicada en UMUS el 10 de junio de 2026.',
-        'Av. Ambalá en ejecución; Carrera 5 ejecutada.',
-        'Paraderos Tipo 1 y 2: llave en mano, radicación proyectada 7 de julio de 2026.',
-        'Patiotalleres: 4 predios georreferenciados; el estudio de septiembre de 2025 indica 5.'
-      ]}
-    ]
-  },
+    frase:'Ferrocarril, Ambalá y ciclorruta tienen ruta y fecha. El rezago real está en *paraderos, patiotalleres y Jordán Paralela*.',
+    hechos:['Ferrocarril: consultoría radicada el 10 de junio.',
+            'Ambalá en ejecución; Carrera 5 ejecutada.',
+            'Paraderos Tipo 1 y 2: radicar el 7 de julio.'],
+    cifras:[{ t:'+6 meses', l:'de rezago en Paraderos Tipo 1 y 2 al corte' }, { t:'5 vs 4', l:'patiotalleres requeridos frente a predios georreferenciados' }],
+    postura:'Cada rezago tiene una decisión con fecha: redistribuir Jordán Paralela, radicar Paraderos y definir el modelo de patiotalleres.',
+    vistas:[{ vis:'obraA', icono:'drag', pregunta:'Arrastra la línea «hoy» y toca una barra para ver el estado de cada frente.' },
+            { vis:'obraB', icono:'tap',  pregunta:'Toca un frente en la lista o en el mapa.' }] },
 
-  { n:9, id:'tecno', corto:'FET + Tecnología', t:'Rezagos en los avances para la estructuración e implementación del FET y componente tecnológico',
+  { n:9, id:'tecno', corto:'Tecnología', titulo:'FET y componente tecnológico', t:'Rezagos en los avances para la estructuración e implementación del FET y componente tecnológico',
     per:'2026-II', comp:'Operaciones', cat:'critica',
-    msg:'La tecnología es la ruta crítica de la operación. Se estructura en 2026 el paquete completo, con recursos comprometidos desde 2027.',
-    postura:'Sin recaudo, control de flota y centro de control no hay servicio integrado. Se estructuran como un solo paquete tecnológico y se secuencian con el FET y la flota.',
-    vistas:[{ vis:'tecno', sit:[
-      'FET en estructuración técnica; modelo financiero en julio de 2026.',
-      'Recaudo y control de flota: proceso por estructurar en 2026; recursos a comprometer del 2027.',
-      'Centro de control previsto en el Lote 6 de Patiotalleres: compra 2027, construcción en el segundo semestre de 2027.',
-      'Semáforos Fase II en estructuración: $12.515 M (aporte del Municipio 2026).'
-    ]}]
-  }
+    frase:'La tecnología es la *ruta crítica* de la operación. Se estructura en 2026 el paquete completo.',
+    hechos:['Recaudo y control de flota: recursos desde 2027.',
+            'Centro de control en el Lote 6: compra en 2027.',
+            'El cronograma CONPES los previó entre 2023 y 2025.'],
+    cifras:[{ t:'+22 meses', l:'de rezago del centro de control frente al plan' }, { t:'$12.515 M', l:'Semáforos Fase II, en estructuración' }],
+    postura:'Sin recaudo, control de flota y centro de control no hay servicio integrado. Se estructuran como un solo paquete.',
+    vistas:[{ vis:'tecno', icono:'drag', pregunta:'Arrastra los nodos y simula la integración del paquete tecnológico.' }] }
 ];
 
 /* ---------------------------------------------------------------------
@@ -158,13 +128,13 @@ const ALERTAS = [
    est: ejecutado | ejecucion | estructuracion | estudios | bloqueado | retirado | sindato
    ------------------------------------------------------------------- */
 const ESTADO = {
-  ejecutado     :{ n:'Ejecutado',                c:'#1FBF5B' },
+  ejecutado     :{ n:'Ejecutado',                c:'#1E9E4F' },
   ejecucion     :{ n:'En ejecución',             c:'#F0A800' },
-  estructuracion:{ n:'En estructuración',        c:'#4C8DFF' },
-  estudios      :{ n:'Estudios radicados',       c:'#4C8DFF' },
-  bloqueado     :{ n:'Sin recursos · en revisión', c:'#E5484D' },
-  retirado      :{ n:'Sin alcance (no se contempla)', c:'#7C8DB5' },
-  sindato       :{ n:'Sin estado en este corte', c:'#7C8DB5' }
+  estructuracion:{ n:'En estructuración',        c:'#2B63D9' },
+  estudios      :{ n:'Estudios radicados',       c:'#2B63D9' },
+  bloqueado     :{ n:'Sin recursos, en revisión', c:'#D3313A' },
+  retirado      :{ n:'Sin alcance', c:'#8A93AD' },
+  sindato       :{ n:'Sin estado en el corte', c:'#8A93AD' }
 };
 
 const GANTT = [
@@ -189,26 +159,26 @@ const GANTT = [
    HITOS — hoja de ruta.  f = fecha; a = alertas relacionadas
    ------------------------------------------------------------------- */
 const HITOS = [
-  { f:new Date(2026,3,30), a:[5],     est:'cumplido',   t:'Desembolso del aporte del Municipio 2026', r:'Municipio' },
-  { f:new Date(2026,5,10), a:[8],     est:'cumplido',   t:'Consultoría Av. Ferrocarril radicada en UMUS (elegibilidad)', r:'SETP' },
-  { f:new Date(2026,5,10), a:[4],     est:'cumplido',   t:'Concepto del DNP remitido a la APP de iniciativa privada', r:'SETP' },
-  { f:new Date(2026,5,30), a:[3],     est:'programado', t:'Reanudación del contrato de semaforización Fase I', r:'Contratista / SETP' },
-  { f:new Date(2026,5,30), a:[8],     est:'programado', t:'Radicar consultoría de cicloinfraestructura Cra 5', r:'SETP' },
-  { f:new Date(2026,6,7),  a:[4],     est:'programado', t:'Mesa interinstitucional MinHacienda · DNP · MinTransporte (tentativa)', r:'SETP' },
-  { f:new Date(2026,6,7),  a:[8],     est:'programado', t:'Radicar Paraderos Tipo 1 y 2 (llave en mano)', r:'SETP' },
-  { f:new Date(2026,6,24), a:[1,2,6], est:'programado', t:'Resultado final del modelo financiero (FET · viabilidad · actos)', r:'Consultoría' },
-  { f:new Date(2026,7,30), a:[3],     est:'programado', t:'Fin estimado de Fase I (reanudación + hasta 2 meses)', r:'Contratista' },
-  { f:new Date(2026,11,31),a:[9],     est:'programado', t:'Estructurar el proceso de Recaudo y Control de flota', r:'SETP' },
-  { f:new Date(2027,0,31), a:[9],     est:'programado', t:'2027: comprometer recursos de Recaudo/Flota y comprar Lote 6 (Centro de control)', r:'SETP' }
+  { f:new Date(2026,3,30), a:[5],     est:'cumplido',   c:'Desembolso del aporte del Municipio',         t:'Desembolso del aporte del Municipio 2026', r:'Municipio' },
+  { f:new Date(2026,5,10), a:[8],     est:'cumplido',   c:'Ferrocarril radicado en UMUS',                t:'Consultoría Av. Ferrocarril radicada en UMUS (elegibilidad)', r:'SETP' },
+  { f:new Date(2026,5,10), a:[4],     est:'cumplido',   c:'Concepto DNP remitido a la APP',              t:'Concepto del DNP remitido a la APP de iniciativa privada', r:'SETP' },
+  { f:new Date(2026,5,30), a:[3],     est:'programado', c:'Reanuda semaforización Fase I',               t:'Reanudación del contrato de semaforización Fase I', r:'Contratista / SETP' },
+  { f:new Date(2026,5,30), a:[8],     est:'programado', c:'Radicar ciclorruta Cra 5',                    t:'Radicar consultoría de cicloinfraestructura Cra 5', r:'SETP' },
+  { f:new Date(2026,6,7),  a:[4],     est:'programado', c:'Mesa MinHacienda, DNP y MinTransporte',       t:'Mesa interinstitucional MinHacienda · DNP · MinTransporte (tentativa)', r:'SETP' },
+  { f:new Date(2026,6,7),  a:[8],     est:'programado', c:'Radicar Paraderos Tipo 1 y 2',                t:'Radicar Paraderos Tipo 1 y 2 (llave en mano)', r:'SETP' },
+  { f:new Date(2026,6,24), a:[1,2,6], est:'programado', c:'Resultado del modelo financiero',             t:'Resultado final del modelo financiero (FET · viabilidad · actos)', r:'Consultoría' },
+  { f:new Date(2026,7,30), a:[3],     est:'programado', c:'Fin estimado de la Fase I',                   t:'Fin estimado de Fase I (reanudación + hasta 2 meses)', r:'Contratista' },
+  { f:new Date(2026,11,31),a:[9],     est:'programado', c:'Estructurar recaudo y control de flota',      t:'Estructurar el proceso de Recaudo y Control de flota', r:'SETP' },
+  { f:new Date(2027,0,31), a:[9],     est:'programado', c:'Recursos 2027 y compra del Lote 6',           t:'2027: comprometer recursos de Recaudo/Flota y comprar Lote 6 (Centro de control)', r:'SETP' }
 ];
 
 const SIN_FECHA = [
-  { a:4, t:'APP privada remite los avances actualizados de la prefactibilidad', r:'APP privada' },
-  { a:3, t:'Solicitud formal de prórroga del contratista',                       r:'Contratista' },
-  { a:6, t:'Plazo adicional para aclaraciones a los operadores',                 r:'SETP' },
-  { a:7, t:'Informe oficial de la interventoría sobre el PMA (alcances e impactos)', r:'Interventoría' },
-  { a:8, t:'Decisión sobre redistribución del tope de Av. Jordán Paralela',      r:'SETP' },
-  { a:8, t:'Decisión sobre el modelo de patiotalleres (5 requeridos)',           r:'SETP' }
+  { a:4, c:'Avances de prefactibilidad (APP privada)',       t:'APP privada remite los avances actualizados de la prefactibilidad', r:'APP privada' },
+  { a:3, c:'Solicitud formal de prórroga',      t:'Solicitud formal de prórroga del contratista',                       r:'Contratista' },
+  { a:6, c:'Plazo para aclaraciones a operadores',    t:'Plazo adicional para aclaraciones a los operadores',                 r:'SETP' },
+  { a:7, c:'Informe de la interventoría sobre el PMA',  t:'Informe oficial de la interventoría sobre el PMA (alcances e impactos)', r:'Interventoría' },
+  { a:8, c:'Decisión sobre el tope de Jordán Paralela',         t:'Decisión sobre redistribución del tope de Av. Jordán Paralela',      r:'SETP' },
+  { a:8, c:'Decisión sobre el modelo de patiotalleres',         t:'Decisión sobre el modelo de patiotalleres (5 requeridos)',           r:'SETP' }
 ];
 
 /* ---------------------------------------------------------------------
@@ -240,9 +210,9 @@ const FASES = ['Estructuración','Radicado UMUS','Contratación','Desembolso'];
 /* cartera con presupuesto identificado en las fichas del SETP (obra + interventoría), en pesos.
    Referencial: valores totales del proyecto, sin discriminar aporte Nación / Municipio. */
 const CARTERA = [
-  { n:'Av. Ferrocarril · obra + interventoría',   v:34156900000, req:'Requiere diseños y concepto de elegibilidad' },
-  { n:'Cicloinfraestructura Cra 5 · obra + interv.', v:27842100000, req:'Requiere consultoría radicada (30-jun)' },
-  { n:'Semáforos Fase III · obra + interventoría', v:9360900000,  req:'Presupuestada para 2027' }
+  { n:'Av. Ferrocarril', v:34156900000, req:'Obra e interventoría · requiere diseños' },
+  { n:'Ciclorruta Cra 5', v:27842100000, req:'Obra e interventoría · requiere consultoría' },
+  { n:'Semáforos Fase III', v:9360900000, req:'Obra e interventoría · prevista para 2027' }
 ];
 
 /* ---------------------------------------------------------------------

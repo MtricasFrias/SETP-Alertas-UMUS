@@ -1,591 +1,641 @@
 /* =====================================================================
-   VISUALES 1/2 — portada · panorama · hoja de ruta · gracias · FET · concertación · semáforos
-   Cada visual anima e interactúa con lo que hace el usuario (arrastrar, tocar, cambiar).
+   VISUALES «EXPLORAR» — uno por alerta. Área útil: 106 × 48 rem. Texto mínimo: 1,5 rem.
    ===================================================================== */
-const estilo = css => document.head.insertAdjacentHTML('beforeend','<style>'+css+'</style>');
-const CATN = { critica:0, moderada:1, leve:2 };
-const catDe = n => CAT[ALERTAS[n-1].cat].c;
-
 estilo(`
-/* ---------- portada ---------- */
-.pt{position:absolute; inset:0}
-.pt-logo{position:absolute; left:6rem; top:1rem; height:31rem; filter:drop-shadow(0 1rem 2.4rem rgba(0,0,0,.35)); animation:flota 6s ease-in-out infinite}
-@keyframes flota{50%{transform:translateY(-.7rem)}}
-.pt-txt{position:absolute; left:41rem; top:3.2rem; width:72rem}
-.pt-txt small{display:block; font-size:.95rem; letter-spacing:.3em; text-transform:uppercase; color:var(--gold); font-weight:800}
-.pt-txt h1{font-size:4.6rem; line-height:1.02; font-weight:900; letter-spacing:-.03em; margin:.8rem 0 1rem}
-.pt-txt h1 span{color:var(--gold)}
-.pt-txt p{font-size:1.4rem; line-height:1.4; color:#D5E0FA; max-width:56rem}
-.pt-stats{display:flex; gap:2.6rem; margin:1.6rem 0 1.8rem}
-.pt-stats .kpi b{font-size:3.2rem}
-.pt-btns{display:flex; gap:1rem}
-.pt-hint{margin-top:1.1rem; font-size:.88rem; color:var(--mut)}
-.pt-staff{position:absolute; left:2.5rem; bottom:.4rem; width:115rem; height:20.1rem; overflow:visible}
-.pt-staff .lin{stroke:rgba(255,255,255,.28); stroke-width:1.6}
-.pt-staff .nota{cursor:pointer; transform-box:fill-box; transform-origin:center; animation:pop 22s linear infinite}
-.pt-staff .nota:hover ellipse{filter:brightness(1.25)}
-.pt-staff .nota text.n{font-size:12px; font-weight:900; fill:#fff}
-.pt-staff .nota text.l{font-size:14px; font-weight:700; fill:#A9B8E0; text-anchor:middle; transition:.2s}
-.pt-staff .nota:hover text.l{fill:#fff; font-size:16px}
-@keyframes pop{0%{transform:scale(1.7)} 3.5%{transform:scale(1)} 100%{transform:scale(1)}}
-.pt-bus{position:absolute; bottom:6.15rem; width:5.6rem; height:3rem; color:var(--verde); animation:corre 22s linear infinite; pointer-events:none}
-@keyframes corre{from{left:-6rem} to{left:126rem}}
-
-/* ---------- panorama ---------- */
-.pano{display:grid !important; grid-template-columns:63rem minmax(0,1fr); gap:2rem}
-.filtros{display:flex; gap:.6rem; margin:1rem 0 .9rem; flex-wrap:wrap}
-.tabla{width:100%; border-collapse:collapse; font-size:1.05rem}
-.tabla th{position:sticky; top:0; text-align:left; padding:.5rem .7rem; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); border-bottom:1px solid var(--line); cursor:pointer; user-select:none; white-space:nowrap}
-.tabla th:hover{color:#fff}
-.tabla td{padding:.72rem .7rem; border-bottom:1px solid rgba(255,255,255,.08); line-height:1.25; transition:.2s}
-.tabla tbody tr{cursor:pointer; transition:.2s; opacity:1}
-.tabla tbody tr:hover, .tabla tbody tr.hl{background:rgba(255,255,255,.11)}
-.tabla tbody tr.dim{opacity:.22}
-.tabla td.n{font-weight:900; font-size:1.05rem; color:var(--c); width:2.6rem}
-.tabla .cat{display:inline-flex; align-items:center; gap:.4rem; font-weight:800; font-size:.8rem; color:var(--c); white-space:nowrap}
-.tabla .cat i{width:.62rem; height:.62rem; border-radius:50%; background:var(--c); box-shadow:0 0 .7rem var(--c)}
-.pano-r{padding:1.3rem 1.6rem; display:flex; flex-direction:column; gap:1rem}
-.pano-top{display:flex; align-items:center; gap:2rem}
-.donut{width:11rem; height:11rem; flex:none}
-.donut circle{fill:none; stroke-width:15; transition:stroke-dasharray 1.2s cubic-bezier(.2,.8,.2,1)}
-.donut text{fill:#fff; text-anchor:middle; font-weight:900}
-.leyenda{display:flex; flex-direction:column; gap:.5rem}
-.leyenda div{display:flex; align-items:center; gap:.7rem; font-size:1rem}
-.leyenda b{font-size:1.5rem; min-width:1.6rem}
-.leyenda i{width:.8rem; height:.8rem; border-radius:50%}
-.mx{flex:1; display:grid; grid-template-columns:9.5rem repeat(3,minmax(0,1fr)); grid-auto-rows:minmax(0,1fr); gap:.35rem; min-height:0}
-.mx .h{font-size:.74rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); font-weight:800; display:flex; align-items:end; justify-content:center; padding-bottom:.3rem}
-.mx .r{font-size:.9rem; font-weight:700; color:var(--mut); display:flex; align-items:center}
-.mx .c{background:rgba(255,255,255,.04); border-radius:.7rem; display:flex; align-items:center; justify-content:center; gap:.5rem; position:relative}
-.bub{position:relative; width:3.3rem; height:3.3rem; border-radius:50%; background:var(--c); color:#fff; font-weight:900; font-size:1.3rem;
-  display:flex; align-items:center; justify-content:center; box-shadow:0 0 1.4rem color-mix(in srgb,var(--c) 60%,transparent); transition:.25s}
-.bub:hover, .bub.hl{transform:scale(1.22); z-index:2}
-.bub.dim{opacity:.18; transform:scale(.85)}
-.bub.crit:after{content:""; position:absolute; inset:-.35rem; border-radius:50%; border:.16rem solid var(--c); animation:latido 1.9s ease-out infinite}
-@keyframes latido{from{transform:scale(.85); opacity:.9} to{transform:scale(1.5); opacity:0}}
-.bub .nueva{position:absolute; top:-.85rem; left:50%; transform:translateX(-50%); background:var(--gold); color:#1B1200; font-size:.58rem; letter-spacing:.06em; padding:.08rem .42rem; border-radius:99rem; font-weight:900}
-
-/* ---------- hoja de ruta ---------- */
-.rut{position:absolute; inset:0; padding:.4rem 2.5rem 0; display:flex; flex-direction:column; gap:.9rem}
-.rut-h{display:flex; align-items:flex-end; gap:2rem}
-.rut-h h1{font-size:2.1rem; font-weight:900; letter-spacing:-.02em; line-height:1.05}
-.rut-h p{font-size:1.12rem; color:#D5E0FA; margin-top:.35rem; max-width:66rem}
-.rut-ctl{margin-left:auto; display:flex; gap:.5rem; align-items:center; flex-wrap:wrap; justify-content:flex-end}
-.rut-al{display:flex; gap:.4rem; align-items:center}
-.rut-al .chip{padding:.28rem .65rem; min-width:2.3rem; justify-content:center; border-color:var(--c); color:var(--c)}
-.rut-al .chip.on{background:var(--c); color:#fff; border-color:var(--c)}
-.tl-wrap{position:relative; flex:1; min-height:0; padding:0 1rem}
-.tl-ax{position:absolute; left:1rem; right:1rem; top:50%; height:.34rem; border-radius:9px; background:linear-gradient(90deg,#4C8DFF,#E5484D,#1FBF5B,#F0A800); opacity:.85}
-.tl-mes{position:absolute; top:calc(50% + .5rem); font-size:.72rem; color:var(--mut); font-weight:700; transform:translateX(-50%); letter-spacing:.06em; text-transform:uppercase}
-.tl-mes:before{content:""; position:absolute; left:50%; top:-.5rem; height:.5rem; width:1px; background:rgba(255,255,255,.35)}
-.tl-pin{position:absolute; width:1.05rem; height:1.05rem; margin:-.36rem 0 0 -.52rem; border-radius:50%; background:var(--c); border:.16rem solid #fff; box-shadow:0 0 1rem var(--c); z-index:3}
-.tl-brk{position:absolute; top:calc(50% - 1.2rem); transform:translateX(-50%); font-size:1.6rem; color:var(--mut); letter-spacing:.1em; font-weight:900}
-.tl-stem{position:absolute; width:1px; background:rgba(255,255,255,.35); z-index:1}
-.tl-card{position:absolute; width:11.4rem; padding:.45rem .65rem .5rem; border-radius:.7rem; background:rgba(8,26,84,.92); border:1px solid var(--line); border-left:.28rem solid var(--c);
-  font-size:.78rem; line-height:1.28; cursor:pointer; transition:.25s; z-index:2}
-.tl-card b{display:flex; align-items:center; gap:.4rem; font-size:.74rem; color:var(--c); margin-bottom:.15rem; letter-spacing:.04em}
-.tl-card:hover, .tl-card.sel{background:#0F2C86; transform:translateY(-.15rem); box-shadow:0 .8rem 2rem rgba(0,0,0,.4); z-index:6}
-.tl-card.dim, .tl-pin.dim, .tl-stem.dim{opacity:.16}
-.tl-card.vence{border-color:var(--rojo); border-left-color:var(--rojo); border-style:dashed}
-.tl-card .ok{margin-left:auto; font-size:.66rem; padding:.05rem .4rem; border-radius:99rem; background:var(--verde); color:#04210F; font-weight:900}
-.tl-card .vc{margin-left:auto; font-size:.66rem; padding:.05rem .4rem; border-radius:99rem; background:var(--rojo); color:#fff; font-weight:900}
-.tl-play{position:absolute; top:0; bottom:0; width:0; z-index:1}
-.tl-play:before{content:""; position:absolute; left:-1px; top:1.9rem; bottom:0; width:2px; background:#fff; opacity:.85}
-.tl-play .mango{position:absolute; left:0; top:0; transform:translateX(-50%); background:#fff; color:var(--navy); font-weight:900; font-size:.82rem; padding:.28rem .8rem; border-radius:99rem; cursor:ew-resize; white-space:nowrap; box-shadow:0 .4rem 1.2rem rgba(0,0,0,.4)}
-.tl-play .mango:after{content:" ⇔"}
-.tl-play svg{position:absolute; left:0; top:calc(50% - 2.65rem); width:4.4rem; height:2.4rem; transform:translateX(-50%); color:var(--verde); pointer-events:none}
-.rut-b{display:grid; grid-template-columns:minmax(0,.75fr) minmax(0,1.6fr); gap:1.2rem; height:9.6rem}
-.rut-b .card{padding:.9rem 1.2rem}
-.rut-b h4{font-size:.74rem; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); margin-bottom:.5rem}
-.sf{display:flex; flex-wrap:wrap; gap:.4rem}
-.sf span{font-size:.82rem; padding:.28rem .7rem; border-radius:.6rem; background:var(--glass2); border:1px solid var(--line); cursor:pointer; transition:.2s}
-.sf span:hover{background:rgba(255,255,255,.2)}
-.sf span b{color:var(--c); margin-right:.3rem}
-.det-h{font-size:1.15rem; font-weight:800; line-height:1.25}
-.det-s{font-size:.9rem; color:var(--mut); margin-top:.3rem}
-
-/* ---------- gracias ---------- */
-.fin{position:absolute; inset:0; overflow:hidden}
-.fin-t{position:absolute; left:8rem; top:12rem}
-.fin-t small{display:block; font-size:3.4rem; font-weight:900; letter-spacing:-.02em; text-transform:uppercase}
-.fin-t .bar{display:inline-block; margin-top:.3rem; background:#FDB913; color:#0B1220; font-size:8rem; font-weight:900; letter-spacing:-.03em; padding:0 2.6rem 0 1.2rem; line-height:1.05; text-transform:uppercase;
-  clip-path:inset(0 100% 0 0); animation:barre 1s .3s cubic-bezier(.2,.8,.2,1) forwards}
-@keyframes barre{to{clip-path:inset(0 0 0 0)}}
-.fin-bus{position:absolute; bottom:5rem; width:46rem; height:24.5rem; color:#1FBF5B; animation:llega 2.2s cubic-bezier(.15,.7,.2,1) forwards; right:-50rem}
-@keyframes llega{to{right:5rem}}
-.fin-bus.par{animation:llega 2.2s cubic-bezier(.15,.7,.2,1) forwards, bob 1.6s 2.3s ease-in-out infinite}
-.fin-road{position:absolute; left:0; right:0; bottom:4.6rem; height:.5rem; background:repeating-linear-gradient(90deg,#fff 0 3rem,transparent 3rem 6rem); opacity:.35; animation:ruta 1s linear infinite}
-@keyframes ruta{to{background-position:-6rem 0}}
-.fin-b{position:absolute; left:8rem; top:34rem; display:flex; gap:1rem}
-.fin-logos{position:absolute; left:8rem; bottom:.5rem; display:flex; gap:1.4rem; align-items:center}
+.caja{ background:#fff; padding:1.6rem 2rem; min-height:0 }
+.hd{ font:700 1.5rem var(--fd); color:var(--mut) }
+.k-num{ font:800 3.2rem/1 var(--fd); color:var(--ink); letter-spacing:-.02em }
+.pill{ display:inline-block; padding:.2rem .9rem; border-radius:.35rem; font:700 1.5rem var(--fd); white-space:nowrap }
+.pill.ok{ background:var(--verde); color:#fff } .pill.pr{ background:#FCE9B5; color:#6B4A00 } .pill.sf{ background:#F8D9D6; color:#8E1A22 }
 
 /* ---------- FET ---------- */
-.fet{display:flex; flex-direction:column; gap:1rem; height:100%}
-.fet-top{display:flex; align-items:center; gap:1rem; font-size:.9rem}
-.fet-body{display:grid; grid-template-columns:23rem minmax(0,1fr); gap:1.6rem; flex:1; min-height:0}
-.fet-tank{position:relative}
-.fet-tank svg{width:100%; height:100%}
-.fet-tank .ola1{animation:ola 4.5s linear infinite} .fet-tank .ola2{animation:ola 7s linear infinite reverse}
-@keyframes ola{to{transform:translateX(-190px)}}
-.fet-tank #agua{transition:transform 1s cubic-bezier(.2,.8,.2,1)}
-.fet-tank .mon{fill:#FFD56B; animation:cae 1.6s ease-in infinite}
-@keyframes cae{0%{transform:translateY(-30px); opacity:0} 15%{opacity:1} 85%{opacity:1} 100%{transform:translateY(120px); opacity:0}}
-.fet-cob{position:absolute; left:0; right:0; top:44%; text-align:center; pointer-events:none}
-.fet-cob b{font-size:3.4rem; font-weight:900; text-shadow:0 .2rem 1rem rgba(0,0,0,.6)}
-.fet-cob small{display:block; font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:#DDE7FF; text-shadow:0 .1rem .5rem rgba(0,0,0,.7)}
-.fet-ctl{display:flex; flex-direction:column; gap:.55rem; min-height:0}
-.sl span{display:flex; justify-content:space-between; font-size:.92rem; color:var(--mut); font-weight:600}
-.sl span b{color:#fff; font-size:1.02rem}
-.fet-kp{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.8rem; margin-top:.3rem}
-.fet-kp .kpi{padding:.7rem .9rem; border-radius:.9rem; background:var(--glass2); border:1px solid var(--line)}
-.fet-kp .kpi b{font-size:1.55rem}
-.fet-src{display:flex; flex-wrap:wrap; gap:.4rem; align-items:center; font-size:.82rem; color:var(--mut)}
-.fet-src span.c{padding:.22rem .7rem; border-radius:99rem; border:1px dashed var(--line); color:#fff}
-.fet-ruta{padding:1rem 1.2rem .9rem; border-radius:1rem; background:var(--glass2); border:1px solid var(--line)}
-.fet-ruta h4{font-size:.74rem; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); margin-bottom:.7rem}
-.pasos{position:relative; display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:.6rem}
-.pasos:before{content:""; position:absolute; left:10%; right:10%; top:1.05rem; height:.26rem; background:rgba(255,255,255,.18); border-radius:9px}
-.pasos:after{content:""; position:absolute; left:10%; top:1.05rem; height:.26rem; width:calc(var(--p,0)*16%); background:var(--gold); border-radius:9px; transition:width .7s cubic-bezier(.5,0,.2,1)}
-.paso{position:relative; z-index:1; text-align:center; font-size:.8rem; line-height:1.25; color:var(--mut); padding:0 .3rem; transition:.3s}
-.paso span{display:flex; margin:0 auto .45rem; width:2.3rem; height:2.3rem; border-radius:50%; align-items:center; justify-content:center; font-weight:900; background:#0B1E55; border:.16rem solid var(--line); color:#fff; transition:.3s}
-.paso.pas span{background:var(--gold); border-color:var(--gold); color:#1B1200}
-.paso.act{color:#fff; font-weight:700}
-.paso.act span{background:#fff; color:var(--navy); border-color:#fff; transform:scale(1.18); box-shadow:0 0 1.3rem rgba(255,255,255,.55)}
-.paso-d{margin-top:.75rem; font-size:.95rem; color:#fff; min-height:2.6rem; padding:.6rem .9rem; border-radius:.7rem; background:rgba(0,0,0,.22)}
+.fet{ display:grid; grid-template-rows:auto minmax(0,1fr); gap:1.8rem; height:100% }
+.fet-p{ padding:1.4rem 2rem 1.2rem }
+.pasos{ position:relative; display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:1rem }
+.pasos:before{ content:""; position:absolute; left:10%; right:10%; top:1.7rem; height:.35rem; background:#D8D2C4; border-radius:1rem }
+.pasos:after{ content:""; position:absolute; left:10%; top:1.7rem; height:.35rem; width:calc(var(--p,0)*20%); background:var(--sol); border-radius:1rem; transition:width .6s cubic-bezier(.5,0,.2,1) }
+.paso{ position:relative; z-index:1; text-align:center; font:600 1.55rem/1.15 var(--ft); color:var(--mut); padding:0 .4rem; transition:.25s }
+.paso span{ display:flex; margin:0 auto .6rem; width:3.6rem; height:3.6rem; border-radius:50%; align-items:center; justify-content:center; font:800 1.7rem var(--fd); background:#fff; box-shadow:inset 0 0 0 .3rem #C9C3B4; color:var(--mut); transition:.25s }
+.paso.pas span{ background:var(--sol); box-shadow:none; color:var(--ink) }
+.paso.act{ color:var(--ink) } .paso.act span{ background:var(--ink); box-shadow:none; color:#fff; transform:scale(1.18) }
+.paso-d{ margin-top:1rem; font-size:1.7rem; line-height:1.2; color:var(--ink); min-height:2.1rem }
+.fmain{ display:grid; grid-template-columns:24rem minmax(0,1fr) 30rem; gap:3rem; min-height:0 }
+.tank{ position:relative; min-height:0 } .tank svg{ width:100%; height:100% }
+.tank .o1{ animation:ola 4.5s linear infinite } .tank .o2{ animation:ola 7s linear infinite reverse }
+@keyframes ola{ to{ transform:translateX(-190px) } }
+.tank #agua{ transition:transform .9s cubic-bezier(.2,.8,.2,1) }
+.tank .mon{ animation:cae 1.6s ease-in infinite }
+@keyframes cae{ 0%{ transform:translateY(-34px); opacity:0 } 15%{ opacity:1 } 85%{ opacity:1 } 100%{ transform:translateY(130px); opacity:0 } }
+.cob{ position:absolute; left:0; right:0; top:44%; text-align:center; pointer-events:none }
+.cob b{ font:800 4.8rem/1 var(--fd); color:var(--ink) } .cob span{ display:block; font:600 1.5rem var(--ft); color:var(--mut) } .cob.lleno b, .cob.lleno span{ color:#fff; text-shadow:0 .1rem .5rem rgba(0,0,0,.4) }
+.sls{ display:flex; flex-direction:column; justify-content:space-between; min-height:0 }
+.sl span{ display:flex; justify-content:space-between; align-items:baseline; font:600 1.65rem var(--ft); color:var(--tx) }
+.sl span b{ font:800 2.2rem var(--fd); color:var(--ink) }
+.sls .nota{ font-size:1.5rem; color:var(--mut) }
+.kres{ display:flex; flex-direction:column; gap:1.4rem; min-height:0 }
+.kres .caja{ flex:1; display:flex; flex-direction:column; justify-content:center; padding:1rem 1.8rem }
+.kres .caja span{ font-size:1.5rem; color:var(--mut); line-height:1.15; margin-top:.4rem }
 
-/* ---------- concertación ---------- */
-.con{display:grid; grid-template-columns:minmax(0,1fr) 15rem; grid-template-rows:minmax(0,1fr) minmax(0,1fr) 8.6rem; gap:1.1rem; height:100%}
-.con-lane{display:flex; flex-direction:column; background:var(--glass); border:1px solid var(--line); border-radius:1.1rem; padding:.8rem 2rem 1rem; position:relative}
-.con-lane h4{font-size:.85rem; letter-spacing:.14em; text-transform:uppercase; color:var(--c); font-weight:900; display:flex; align-items:center; gap:.5rem}
-.con-lane h4:before{content:""; width:.7rem; height:.7rem; border-radius:50%; background:var(--c)}
-.con-tr{position:relative; flex:1; padding-top:3.4rem; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem}
-.con-tr:before{content:""; position:absolute; left:0; right:0; top:2.7rem; height:.32rem; border-radius:9px; background:color-mix(in srgb,var(--c) 40%,transparent)}
-.con-tr:after{content:""; position:absolute; left:0; top:2.7rem; height:.32rem; border-radius:9px; background:var(--c); width:var(--w,0%); transition:width .8s cubic-bezier(.5,0,.2,1)}
-.con-st{position:relative; padding:.65rem .8rem; border-radius:.8rem; background:rgba(255,255,255,.07); border:1px solid var(--line); cursor:pointer; transition:.25s; min-height:0; display:flex; flex-direction:column; justify-content:center}
-.con-st:hover{background:rgba(255,255,255,.14); transform:translateY(-2px)}
-.con-st b{display:flex; align-items:center; gap:.5rem; font-size:1.12rem; line-height:1.15}
-.con-st b em{flex:none; font-style:normal; width:1.5rem; height:1.5rem; border-radius:50%; background:var(--c); color:#fff; display:flex; align-items:center; justify-content:center; font-size:.8rem}
-.con-st p{font-size:.95rem; color:var(--mut); margin-top:.35rem; line-height:1.3}
-.con-st.hecho{border-color:var(--c)} .con-st.hecho b em:before{content:"✓"} .con-st.hecho b em{font-size:0} .con-st.hecho b em:before{font-size:.85rem}
-.con-st.act{background:color-mix(in srgb,var(--c) 26%,rgba(255,255,255,.06)); border-color:var(--c); box-shadow:0 0 1.6rem color-mix(in srgb,var(--c) 40%,transparent)}
-.con-bus{position:absolute; top:.35rem; width:4.6rem; height:2.4rem; margin-left:-2.3rem; color:var(--c); cursor:grab; transition:left .8s cubic-bezier(.5,0,.2,1); z-index:3; touch-action:none; filter:drop-shadow(0 .3rem .5rem rgba(0,0,0,.4))}
-.con-bus.arr{cursor:grabbing; transition:none}
-.con-fin{grid-column:2; grid-row:1/3; border-radius:1.1rem; padding:1.1rem 1rem; background:linear-gradient(160deg,#12308F,#0A1F5C); border:1px solid var(--line); text-align:center; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.7rem; position:relative; transition:.5s; overflow:hidden}
-.con-fin .gl{width:4rem; height:4rem; border-radius:50%; background:rgba(255,255,255,.1); display:flex; align-items:center; justify-content:center; font-size:2rem; transition:.5s}
-.con-fin b{font-size:1.2rem; line-height:1.15}
-.con-fin p{font-size:.8rem; color:var(--mut); line-height:1.3}
-.con-fin.ok{background:linear-gradient(160deg,#118a45,#0A5C2C); box-shadow:0 0 3rem rgba(31,191,91,.5)}
-.con-fin.ok .gl{background:#fff; transform:scale(1.15) rotate(-6deg)}
-.con-fin .sello{position:absolute; right:-.4rem; top:1.2rem; padding:.2rem .8rem; border:.2rem solid #fff; color:#fff; font-weight:900; letter-spacing:.14em; font-size:.85rem; transform:rotate(14deg) scale(3); opacity:0; border-radius:.3rem}
-.con-fin.ok .sello{animation:sello .5s .1s cubic-bezier(.2,1.4,.4,1) forwards}
-@keyframes sello{to{transform:rotate(14deg) scale(1); opacity:1}}
-.con-det{grid-column:1/3; padding:1rem 1.3rem; border-radius:1rem; background:var(--glass2); border:1px solid var(--line); font-size:1rem; display:flex; flex-direction:column; gap:.4rem; justify-content:center}
-.con-det h5{font-size:1.15rem}
-.con-det small{color:var(--gold); letter-spacing:.16em; text-transform:uppercase; font-weight:800; font-size:.72rem}
+/* ---------- Concertación ---------- */
+.con{ display:grid; grid-template-columns:minmax(0,1fr) 25rem; grid-template-rows:minmax(0,1fr) minmax(0,1fr) 10rem; gap:1.6rem; height:100% }
+.lane{ background:#fff; padding:1.2rem 2.4rem 1.4rem; display:flex; flex-direction:column; min-height:0 }
+.lane h4{ font:800 1.75rem var(--fd); color:var(--c) }
+.ctr{ position:relative; flex:1; margin-top:.4rem; padding-top:4.6rem; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1.6rem; min-height:0 }
+.ctr:before{ content:""; position:absolute; left:0; right:0; top:3.3rem; height:.5rem; border-radius:1rem; background:color-mix(in srgb,var(--c) 28%,#fff) }
+.ctr:after{ content:""; position:absolute; left:0; top:3.3rem; height:.5rem; border-radius:1rem; background:var(--c); width:var(--w,0%); transition:width .8s cubic-bezier(.5,0,.2,1) }
+.est{ position:relative; text-align:left; padding:1rem 1.4rem; background:#F5F2EB; border-left:.55rem solid color-mix(in srgb,var(--c) 35%,#fff); transition:.25s; display:flex; align-items:center; gap:1rem; min-height:0 }
+.est:hover{ background:#ECE7DB }
+.est em{ flex:none; font-style:normal; width:3rem; height:3rem; border-radius:50%; background:var(--c); color:#fff; display:flex; align-items:center; justify-content:center; font:800 1.6rem var(--fd) }
+.est b{ font:700 1.75rem/1.12 var(--fd); color:var(--ink) }
+.est.act{ background:color-mix(in srgb,var(--c) 14%,#fff); border-left-color:var(--c) }
+.est.hecho{ border-left-color:var(--c) } .est.hecho em{ font-size:0 } .est.hecho em:before{ content:""; width:1.2rem; height:.7rem; border-left:.3rem solid #fff; border-bottom:.3rem solid #fff; transform:rotate(-45deg) translate(.1rem,-.1rem) }
+.cbus{ position:absolute; top:.15rem; width:6.8rem; height:3.6rem; margin-left:-3.4rem; color:var(--c); cursor:grab; transition:left .8s cubic-bezier(.34,1.3,.5,1); z-index:3; touch-action:none }
+.cbus.arr{ cursor:grabbing; transition:none }
+.cfin{ grid-column:2; grid-row:1/3; background:var(--ink); color:#fff; padding:2rem 1.8rem; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.4rem; text-align:center; position:relative; transition:background .5s; overflow:hidden }
+.cfin svg{ width:8rem; height:8rem; color:#fff } .cfin b{ font:800 2.2rem/1.1 var(--fd) } .cfin p{ font-size:1.55rem; line-height:1.2; color:#C5CFEE }
+.cfin.ok{ background:var(--verde) } .cfin.ok p{ color:#E9FFF1 }
+.cfin .sello{ position:absolute; top:1.6rem; right:-1rem; font:800 1.7rem var(--fd); letter-spacing:.06em; padding:.3rem 1.4rem; border:.28rem solid #fff; transform:rotate(12deg) scale(3); opacity:0 }
+.cfin.ok .sello{ animation:sello .5s .1s cubic-bezier(.2,1.4,.4,1) forwards }
+@keyframes sello{ to{ transform:rotate(12deg) scale(1); opacity:1 } }
+.cdet{ grid-column:1/3; background:#fff; border-left:.7rem solid var(--sol); padding:1rem 2.2rem; display:flex; flex-direction:column; justify-content:center }
+.cdet b{ font:800 2.1rem var(--fd); color:var(--ink) } .cdet span{ font-size:1.7rem; line-height:1.2; color:var(--tx); margin-top:.2rem }
 
-/* ---------- semáforos ---------- */
-.sem{display:grid; grid-template-columns:12rem minmax(0,1fr); grid-template-rows:auto minmax(0,1fr) auto; gap:1.1rem 1.6rem; height:100%}
-.sem-a{grid-row:1/3; display:flex; flex-direction:column; align-items:center; gap:.7rem}
-.tl{width:8rem; padding:1.1rem .9rem; border-radius:2.6rem; background:#0B1220; border:.28rem solid #26324f; display:flex; flex-direction:column; gap:.9rem; cursor:pointer; box-shadow:0 1rem 2.4rem rgba(0,0,0,.45)}
-.tl i{display:block; width:5.6rem; height:5.6rem; border-radius:50%; background:#1a2440; transition:.25s}
-.tl i.r.on{background:#FF4D52; box-shadow:0 0 2.6rem #FF4D52} .tl i.a.on{background:#FFC324; box-shadow:0 0 2.6rem #FFC324} .tl i.v.on{background:#2BE07A; box-shadow:0 0 2.6rem #2BE07A}
-.sem-a small{font-size:.8rem; color:var(--mut); text-align:center; line-height:1.3}
-.sem-a .est{font-weight:900; font-size:.95rem; color:#fff; text-align:center}
-.bars{display:flex; flex-direction:column; gap:.7rem}
-.brow{display:grid; grid-template-columns:11rem minmax(0,1fr) 5.4rem; align-items:center; gap:.9rem; font-size:.95rem}
-.brow .b{height:1.5rem; border-radius:.8rem; background:rgba(255,255,255,.12); overflow:hidden}
-.brow .b i{display:block; height:100%; width:0; border-radius:.8rem; transition:width 1.3s cubic-bezier(.2,.8,.2,1)}
-.brow strong{font-size:1.4rem; text-align:right; font-weight:900}
-.brecha{align-self:flex-start; margin-left:11.9rem; font-size:.9rem; font-weight:800; color:#FFB4B6; background:rgba(229,72,77,.18); border:1px dashed var(--rojo); padding:.2rem .8rem; border-radius:.5rem}
-.sem-k{display:flex; gap:2.6rem; margin-top:.3rem}
-.sem-k .kpi b{font-size:2.2rem} .sem-k .kpi b em{font-style:normal; font-size:1.3rem; color:var(--mut); font-weight:700}
-.dots{display:grid; grid-template-columns:repeat(12,minmax(0,1fr)); gap:.7rem; margin:.9rem 0}
-.dt{aspect-ratio:1; border-radius:50%; background:#3A4770; border:2px solid rgba(255,255,255,.14); transition:.35s; cursor:pointer; position:relative}
-.dt.pend{background:#2A3560}
-.dt.inst{background:var(--ambar); border-color:#FFDD8A; box-shadow:0 0 .8rem rgba(240,168,0,.5)}
-.dt.op{background:#2BE07A; border-color:#A8F5C8; box-shadow:0 0 1rem rgba(43,224,122,.6); animation:parp 2.4s ease-in-out infinite}
-@keyframes parp{50%{transform:scale(1.12)}}
-.dt.dim{opacity:.18}
-.dt:hover{transform:scale(1.3); z-index:2}
-.ctls{display:flex; flex-wrap:wrap; gap:.3rem; margin-top:.4rem; max-width:19rem}
-.ctls i{width:1.1rem; height:1.1rem; border-radius:.35rem; background:#2A3560; border:1px solid rgba(255,255,255,.2); transition:.3s}
-.ctls i.on{background:var(--azul); border-color:#B9D2FF}
-.sem-d{grid-column:1/3; display:flex; align-items:center; gap:1.4rem; padding:.85rem 1.2rem; border-radius:1rem; background:var(--glass2); border:1px solid var(--line); flex-wrap:wrap}
-.sem-d .fin{font-size:.95rem} .sem-d .fin b{font-size:1.15rem}
-.causas{display:flex; flex-wrap:wrap; gap:.4rem}
-.causas span{font-size:.78rem; padding:.22rem .65rem; border-radius:99rem; border:1px solid var(--line); background:rgba(255,255,255,.06); cursor:default}
+/* ---------- Semáforos ---------- */
+.sem{ display:grid; grid-template-columns:14rem minmax(0,1fr) 37rem; grid-template-rows:minmax(0,1fr) auto; gap:2rem 3.4rem; height:100% }
+.sem-a{ display:flex; flex-direction:column; align-items:center; gap:1.2rem; min-height:0 }
+.tl{ width:12.4rem; padding:1.4rem 1.6rem; border-radius:3.2rem; background:var(--ink); display:flex; flex-direction:column; gap:1.3rem; cursor:pointer }
+.tl i{ display:block; width:9.2rem; height:9.2rem; border-radius:50%; background:#2A3868; transition:.2s }
+.tl i.r.on{ background:#F2454D } .tl i.a.on{ background:#FFC324 } .tl i.v.on{ background:#2BD87A }
+.sem-a b{ font:800 1.9rem var(--fd); color:var(--ink) }
+.sem-b{ display:flex; flex-direction:column; gap:1.6rem; min-height:0 }
+.brow .top{ display:flex; justify-content:space-between; align-items:baseline; font:600 1.7rem var(--ft) }
+.brow .top strong{ font:800 3.4rem/1 var(--fd); color:var(--ink) }
+.brow .b{ height:3.2rem; background:#DDD7C8; margin-top:.4rem; overflow:hidden }
+.brow .b i{ display:block; height:100%; width:0; transition:width 1.2s cubic-bezier(.2,.8,.2,1) }
+.brecha{ align-self:flex-start; font:800 2rem var(--fd); color:var(--rojo); border-left:.5rem solid var(--rojo); padding:.2rem 1.4rem; background:#F8E2E0 }
+.sem-k{ display:flex; gap:3.4rem } .sem-k div b{ display:block; font:800 3.6rem/1 var(--fd); color:var(--ink) } .sem-k div b em{ font-style:normal; font-size:2.2rem; color:var(--mut) } .sem-k div span{ font-size:1.5rem; color:var(--mut) }
+.sem-c{ min-height:0 }
+.dots{ display:grid; grid-template-columns:repeat(8,minmax(0,1fr)); gap:.9rem; margin-top:1.4rem }
+.dt{ aspect-ratio:1; border-radius:50%; background:#DCD6C7; transition:.3s cubic-bezier(.3,1.5,.5,1); cursor:pointer }
+.dt.inst{ background:var(--ambar) } .dt.op{ background:#2BB868 } .dt.dim{ opacity:.18 } .dt:hover{ transform:scale(1.15) }
+.leg{ display:flex; flex-wrap:wrap; gap:.7rem }
+.sem-d{ grid-column:1/4; display:flex; align-items:center; gap:2.4rem; background:#fff; padding:1.3rem 2.2rem }
+.sem-d .fnx{ font-size:1.7rem; color:var(--ink) } .sem-d .fnx b{ font:800 2.1rem var(--fd) }
+
+/* ---------- ART ---------- */
+.app{ display:grid; grid-template-columns:minmax(0,1fr) 34rem; gap:2.6rem; height:100% }
+.app-d{ background:#fff; position:relative; min-height:0; display:flex; flex-direction:column; padding-bottom:3.2rem }
+.app-d svg{ flex:1; min-height:0; width:100% }
+.app-d .ln{ fill:none; stroke-width:11; stroke-linecap:round; transition:opacity .3s; cursor:pointer }
+.app-d .lbl{ font:700 22px var(--ft); fill:var(--ink) }
+.app-d .bd{ opacity:0; transition:opacity .35s; pointer-events:none }
+.app-d.show .bd{ opacity:1 }
+.app-d .bd rect{ fill:#fff; stroke:var(--ink); stroke-width:3 } .app-d .bd text{ font:700 22px var(--ft); fill:var(--ink) } .app-d .bd line{ stroke:var(--ink); stroke-width:3 }
+.app-d .nota{ position:absolute; right:1.4rem; bottom:.8rem; font-size:1.5rem; color:var(--mut) }
+.app-i{ display:flex; flex-direction:column; gap:1.3rem; min-height:0 }
+.lns{ display:flex; gap:1rem }
+.lns button{ width:4.8rem; height:4.8rem; border-radius:50%; background:var(--c); color:#fff; font:800 2.4rem var(--fd); transition:transform .25s cubic-bezier(.3,1.5,.5,1) }
+.lns button:hover{ transform:scale(1.1) } .lns button.on{ box-shadow:0 0 0 .4rem var(--paper), 0 0 0 .7rem var(--c) }
+.info{ background:#fff; border-left:.7rem solid var(--ink); padding:1.2rem 1.7rem; flex:1; min-height:0; overflow:hidden }
+.info b{ display:block; font:800 2rem/1.15 var(--fd); color:var(--ink); margin-bottom:.6rem } .info span{ font-size:1.65rem; line-height:1.25; color:var(--tx) }
+.acl{ display:flex; flex-direction:column; gap:.8rem }
+.acl button{ text-align:left; padding:.6rem 1.2rem; background:#F8E2E0; border-left:.5rem solid var(--rojo); font:700 1.55rem/1.15 var(--ft); color:#7B1A22; transition:.2s } .acl button:hover{ background:#F3CFCB }
+
+.tlb{ position:relative; height:14.2rem; margin:0 1rem }
+.tlb .ax{ position:absolute; left:0; right:0; top:50%; height:.5rem; background:var(--ink); border-radius:1rem }
+.tlb .nd{ position:absolute; top:50%; width:3.4rem; height:3.4rem; margin:-1.45rem 0 0 -1.7rem; border-radius:50%; background:#fff; box-shadow:inset 0 0 0 .32rem var(--ink); z-index:2; cursor:pointer; transition:transform .25s cubic-bezier(.3,1.5,.5,1), background .25s; font:800 1.6rem var(--fd); color:var(--ink); display:flex; align-items:center; justify-content:center }
+.tlb .nd.hecho{ background:var(--sol); box-shadow:inset 0 0 0 .32rem var(--ink) } .tlb .nd.act{ transform:scale(1.3); background:var(--ink); color:#fff }
+.tlb .fe{ position:absolute; width:11rem; margin-left:-5.5rem; text-align:center; font:700 1.55rem var(--fd); color:var(--mut); cursor:pointer } .tlb .fe.act{ color:var(--ink) }
+.tlb .gap{ position:absolute; top:calc(50% - 3.6rem); font:700 1.5rem var(--fd); color:var(--rojo); transform:translateX(-50%); white-space:nowrap }
+.tlb .tram{ position:absolute; top:calc(50% - 5.2rem); width:9.6rem; height:2.6rem; margin-left:-4.8rem; color:#7DB71E; cursor:grab; z-index:4; transition:left .6s cubic-bezier(.34,1.3,.5,1); touch-action:none }
+.tlb .tram.arr{ cursor:grabbing; transition:none }
+.appb{ display:grid; grid-template-rows:auto minmax(0,1fr); gap:1.8rem; height:100% }
+.appb-t{ padding:1rem 2.4rem 1.2rem }
+.tdet{ font:700 2rem/1.2 var(--fd); color:var(--ink); min-height:2.6rem } .tdet em{ font-style:normal; color:var(--rojo) }
+.appb-b{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.1fr); gap:1.8rem; min-height:0 }
+.puertas{ display:flex; flex-direction:column; gap:.8rem; margin-top:.8rem }
+.puerta{ display:flex; align-items:center; gap:1.2rem; padding:.5rem 1.2rem; background:#F5F2EB; cursor:pointer; transition:.2s; font:700 1.65rem/1.12 var(--fd); color:var(--ink) } .puerta:hover{ background:#ECE7DB }
+.puerta .ck{ flex:none; width:2.8rem; height:2.8rem; border-radius:.4rem; box-shadow:inset 0 0 0 .25rem var(--rojo); transition:.2s; position:relative }
+.puerta.on .ck{ background:var(--verde); box-shadow:none } .puerta.on .ck:before{ content:""; position:absolute; left:.8rem; top:.45rem; width:.9rem; height:1.5rem; border-right:.32rem solid #fff; border-bottom:.32rem solid #fff; transform:rotate(45deg) }
+.medidor{ display:flex; align-items:center; gap:1.6rem; margin-top:1rem }
+.medidor .barra{ flex:1; height:2.4rem; background:#DDD7C8 } .medidor .barra i{ display:block; height:100%; width:0; background:var(--rojo); transition:width .5s, background .4s }
+.medidor b{ font:800 1.9rem var(--fd); color:var(--ink); white-space:nowrap }
+.comp{ display:flex; flex-direction:column; gap:.9rem; margin-top:.8rem }
+.comp div{ display:grid; grid-template-columns:3rem minmax(0,1fr) auto; gap:1.2rem; align-items:center; font-size:1.6rem; line-height:1.15; color:var(--ink); font-weight:600; padding:.5rem 0; border-bottom:.12rem solid #E4DED0 }
+.comp div em{ font:800 1.8rem var(--fd); font-style:normal; color:var(--mut) }
+
+/* ---------- desembolsos ---------- */
+.des{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:2.4rem; height:100% }
+.gr{ background:#fff; padding:1.6rem 2rem; display:flex; flex-direction:column; min-height:0 }
+.gr .tot{ font:800 4rem/1 var(--fd); color:var(--ink); letter-spacing:-.03em; margin:.3rem 0 .6rem } .gr .tot small{ font:600 1.55rem var(--ft); color:var(--mut); letter-spacing:0 }
+.gr svg{ flex:1; min-height:0; width:100% }
+.gr .b rect{ transition:.3s } .gr .b:hover rect{ opacity:.85 }
+.gr .ax text{ font:700 16px var(--fd); fill:#5B6688; text-anchor:middle } .gr .vl{ font:800 17px var(--fd); fill:#0F1F52; text-anchor:middle } .gr .g{ font:800 15px var(--ft); fill:#1E9E4F; text-anchor:middle }
+.leyenda{ display:flex; gap:2rem; font-size:1.55rem; color:var(--ink) } .leyenda i{ display:inline-block; width:1.4rem; height:1.4rem; margin-right:.6rem; vertical-align:-.1rem }
+.des2{ display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr); gap:2.4rem; height:100% }
+.tp{ width:100%; border-collapse:collapse; margin-top:.8rem }
+.tp th{ font:700 1.5rem var(--fd); color:var(--mut); text-align:left; padding:.3rem .6rem; border-bottom:.22rem solid var(--ink) }
+.tp td{ font-size:1.6rem; padding:.4rem .6rem; border-bottom:.12rem solid #E4DED0; line-height:1.1; font-weight:600; color:var(--ink) }
+.tp tr{ cursor:pointer } .tp tbody tr:hover, .tp tr.sel{ background:#F1ECE0 } .tp td.v{ text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums; font-weight:500 }
+.fs4{ display:flex; gap:.3rem } .fs4 i{ width:1.6rem; height:.8rem; background:#D6D0C1 } .fs4 i.on{ background:var(--azul) } .fs4 i.cur{ background:var(--ambar) }
+.split{ display:flex; height:2.6rem; margin-top:.6rem; font:700 1.5rem var(--fd); color:#fff } .split i{ display:flex; align-items:center; justify-content:center; font-style:normal; width:0; transition:width 1s cubic-bezier(.2,.8,.2,1); overflow:hidden; white-space:nowrap }
+.dcard{ margin-top:.7rem; padding:.7rem 1.4rem; background:#F5F2EB; border-left:.6rem solid var(--ink); font-size:1.65rem; line-height:1.2; color:var(--ink) }
+.cart{ display:flex; flex-direction:column; gap:.9rem; margin:1rem 0 }
+.cart button{ display:flex; align-items:center; gap:1rem; text-align:left; padding:.8rem 1.3rem; background:#F5F2EB; border-left:.6rem solid #C9C3B4; font:700 1.6rem/1.12 var(--fd); color:var(--ink); transition:.2s }
+.cart button.on{ background:#E1F1E6; border-left-color:var(--verde) } .cart button b{ margin-left:auto; white-space:nowrap; font-size:1.7rem } .cart button small{ display:block; font:500 1.5rem var(--ft); color:var(--mut) }
+.cbar{ height:3rem; background:#DDD7C8; position:relative } .cbar i{ display:block; height:100%; width:0; background:var(--verde); transition:width .7s cubic-bezier(.2,.8,.2,1) }
+.cbar span{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font:800 1.6rem var(--fd); color:var(--ink) }
+
+/* ---------- actos ---------- */
+.actos{ position:relative; display:flex; flex-direction:column; gap:1.4rem; height:100% }
+.act-t{ display:flex; align-items:center; gap:2rem }
+.pool{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; min-height:12.6rem; padding:1.2rem; background:#E9E4D8; align-content:start }
+.pool:empty:after{ content:"Todos los actos están ubicados"; grid-column:1/4; text-align:center; font-size:1.7rem; color:var(--mut); padding:4rem 0 }
+.ac{ padding:1rem 1.4rem; background:var(--ink); color:#fff; font:600 1.6rem/1.15 var(--ft); cursor:grab; user-select:none; touch-action:none; transition:transform .2s, box-shadow .2s; min-height:4.9rem; display:flex; align-items:center }
+.ac:hover{ transform:translateY(-.2rem) }
+.ac.vuela{ position:absolute; z-index:50; cursor:grabbing; box-shadow:0 1.2rem 2.4rem rgba(0,0,0,.3); transform:rotate(-1.5deg) scale(1.03); transition:none }
+.ac.mal{ animation:sacude .45s } @keyframes sacude{ 20%,60%{ transform:translateX(-.6rem) } 40%,80%{ transform:translateX(.6rem) } }
+.act-h{ min-height:2.2rem; font:600 1.65rem var(--ft); color:#8A5A00 }
+.lanes{ flex:1; min-height:0; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:1.6rem }
+.lane2{ position:relative; background:#fff; border-top:.7rem solid var(--c); padding:1.2rem 1.8rem; display:flex; flex-direction:column; gap:.7rem; overflow:hidden; transition:.25s }
+.lane2.over{ background:color-mix(in srgb,var(--c) 14%,#fff) }
+.lane2 h5{ font:800 1.75rem var(--fd); color:var(--ink); display:flex; align-items:center; gap:1rem } .lane2 h5 em{ margin-left:auto; font-style:normal; font-size:1.6rem; padding:.05rem 1rem; background:var(--c); color:var(--cx,#fff) }
+.lane2 small{ font-size:1.5rem; color:var(--mut) } .lane2 .ls{ display:flex; flex-direction:column; gap:.7rem; flex:1 } .lane2 .ac{ cursor:default; background:var(--c); color:var(--cx,#fff); min-height:4.3rem; padding:.6rem 1.2rem }
+.lane2.lock:after{ content:"Bloqueado hasta que exista el modelo financiero"; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; padding:2rem; background:rgba(15,31,82,.93); color:#fff; font:700 1.9rem/1.2 var(--fd) }
+.lane2.sell:before{ content:"EXPEDIDO"; position:absolute; right:1.6rem; bottom:1.2rem; padding:.2rem 1.2rem; border:.3rem solid var(--ink); color:var(--ink); font:800 2rem var(--fd); letter-spacing:.06em; transform:rotate(-8deg); animation:selloA .5s cubic-bezier(.2,1.5,.4,1); z-index:3; background:rgba(255,255,255,.7) }
+@keyframes selloA{ from{ transform:rotate(-8deg) scale(3); opacity:0 } }
+
+/* ---------- PMA ---------- */
+.pma{ display:flex; flex-direction:column; gap:1.8rem; height:100% }
+.pma-s{ position:relative; height:14.6rem; background:#fff; flex:none }
+.pma-s .nodo{ position:absolute; top:1rem; width:22rem; margin-left:-11rem; text-align:center }
+.pma-s .nodo svg{ width:5.2rem; height:5.2rem; color:var(--ink) } .pma-s .nodo b{ display:block; font:800 1.75rem var(--fd); color:var(--ink) } .pma-s .nodo span{ font-size:1.5rem; color:var(--mut) }
+.pma-s .cam{ position:absolute; left:14%; right:14%; top:11.3rem; border-top:.35rem dashed #B9B2A0 }
+.pma-s .sobre{ position:absolute; top:9.45rem; width:5.2rem; height:3.7rem; margin-left:-2.6rem; transition:left 1.6s cubic-bezier(.5,0,.2,1) }
+.pma-s .msg{ position:absolute; left:0; right:0; bottom:.5rem; text-align:center; font:800 1.75rem var(--fd); color:var(--rojo) }
+.pma-s .msg.ok{ color:var(--verde) }
+.pma-b{ flex:1; min-height:0; display:grid; grid-template-columns:minmax(0,1fr) 31rem; gap:2rem }
+.chk{ display:flex; flex-direction:column; gap:.6rem }
+.chk button{ display:flex; align-items:center; gap:1.4rem; padding:.55rem 1.4rem; text-align:left; background:#fff; font:600 1.7rem/1.1 var(--ft); color:var(--ink); transition:.2s } .chk button:hover{ background:#EFEAE0 }
+.chk .ck{ flex:none; width:2.8rem; height:2.8rem; border-radius:.4rem; box-shadow:inset 0 0 0 .25rem var(--ink); position:relative }
+.chk button.on .ck{ background:var(--verde); box-shadow:none } .chk button.on .ck:before{ content:""; position:absolute; left:.8rem; top:.45rem; width:.9rem; height:1.5rem; border-right:.32rem solid #fff; border-bottom:.32rem solid #fff; transform:rotate(45deg) }
+.pma-c{ background:#fff; display:flex; flex-direction:column; align-items:center; gap:1.2rem; padding:1.4rem 1.8rem }
+.pma-c .k-num{ font-size:5rem } .pma-c .btn{ width:100%; font-size:1.55rem; padding:.9rem 1rem } .pma-c .bar{ width:100%; height:1.6rem; background:#DDD7C8 } .pma-c .bar i{ display:block; height:100%; width:0; background:var(--sol); transition:width .4s, background .3s }
+
+/* ---------- Gantt ---------- */
+.gtw{ display:flex; flex-direction:column; gap:1.2rem; height:100% }
+.gt-top{ display:flex; align-items:center; gap:1rem; flex-wrap:wrap }
+.lg-i{ display:inline-flex; align-items:center; gap:.6rem; font:600 1.5rem var(--ft); color:var(--ink); margin-left:.6rem } .lg-i i{ width:1.4rem; height:1.4rem }
+.gt{ position:relative; --lw:27rem; background:#fff; padding:.4rem 1.6rem 1rem; flex:none }
+.gt-h, .gt-r{ display:grid; grid-template-columns:var(--lw) minmax(0,1fr) }
+.gt-hy{ display:flex } .gt-hy .y{ flex:1; text-align:left; border-left:.15rem solid #CFC9BA; padding:.3rem 0 .2rem .8rem; font:800 1.6rem var(--fd); color:var(--ink) }
+.gt-r{ height:2.85rem; align-items:center; cursor:pointer; border-top:.12rem solid #EBE6DA } .gt-r.gsep{ border-top:.3rem solid var(--ink) }
+.gt-r:hover, .gt-r.sel{ background:#F1ECE0 }
+.gt-r .lb{ font:700 1.55rem var(--ft); color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding-right:.6rem }
+.gt-t{ position:relative; height:100%; background:repeating-linear-gradient(90deg,#E6E1D4 0 .12rem,transparent .12rem 8.3333%) }
+.gt-t .bd{ position:absolute; top:.4rem; bottom:.4rem }
+.gt-t .bd.ft{ opacity:.45; background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.75) 0 .35rem,transparent .35rem .8rem) }
+.gt-t .bd.lt{ background:repeating-linear-gradient(135deg,#D3313A 0 .45rem,#8E1A22 .45rem .9rem) }
+.gt-t .bd.ret{ box-shadow:inset 0 0 0 .18rem #8A93AD; background:transparent }
+.gt-t .tg{ position:absolute; top:50%; transform:translate(.5rem,-50%); font:800 1.5rem var(--fd); color:var(--rojo); white-space:nowrap }
+.gt-play{ position:absolute; top:.4rem; bottom:.6rem; left:calc(1.6rem + var(--lw) + (100% - 3.2rem - var(--lw)) * var(--f,.5)); width:0; z-index:6; pointer-events:none }
+.gt-play:before{ content:""; position:absolute; left:-.15rem; top:2.6rem; bottom:0; width:.3rem; background:var(--ink) }
+.gt-play .mango{ position:absolute; left:0; top:0; transform:translateX(-50%); background:var(--sol); color:var(--ink); font:800 1.5rem var(--fd); padding:.35rem 1.2rem; cursor:ew-resize; white-space:nowrap; pointer-events:auto }
+.gt-d{ background:#fff; border-left:.7rem solid var(--ink); padding:.6rem 1.8rem; font-size:1.6rem; line-height:1.2; color:var(--ink); flex:1; min-height:0 }
+.gt-d b.t{ font:800 1.8rem var(--fd) }
+.mp{ position:absolute; inset:0 } .mp #mapa{ position:absolute; inset:0 }
+.mp-l{ position:absolute; left:0; top:0; bottom:9.6rem; width:35rem; z-index:5; overflow:auto; display:flex; flex-direction:column; gap:.6rem; background:var(--paper); padding:.8rem; scrollbar-width:thin }
+.mp-l button{ display:flex; align-items:center; gap:1rem; text-align:left; padding:.7rem 1rem; background:#fff; border-left:.6rem solid var(--c); font:700 1.6rem/1.1 var(--fd); color:var(--ink); transition:.2s } .mp-l button:hover{ background:#EFEAE0 } .mp-l button.sel{ background:var(--ink); color:#fff }
+.mp-l button small{ display:block; font:500 1.5rem var(--ft); color:var(--mut) } .mp-l button.sel small{ color:#C5CFEE }
+.mp-d{ position:absolute; left:0; right:0; bottom:0; height:9rem; z-index:5; background:var(--ink); color:#fff; padding:1rem 2rem; font-size:1.6rem; line-height:1.2 } .mp-d b{ color:var(--sol); font:800 1.8rem var(--fd) }
+.mp-c{ position:absolute; right:1rem; top:1rem; z-index:5; display:flex; gap:.6rem } .mp-c .chip{ background:var(--paper) } .mp-c .chip.on{ background:var(--ink) }
+.mk-p{ width:1rem; height:1rem; border-radius:50%; background:var(--azul); border:.18rem solid #fff }
+.mk-pa{ position:relative; width:0; height:0 }
+.mk-pa i{ position:absolute; left:-2rem; top:-2rem; width:4rem; height:4rem; background:var(--ink); border:.3rem solid #fff; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; cursor:pointer } .mk-pa i svg{ width:2.2rem; height:2.2rem }
+
+/* ---------- tecnología ---------- */
+.tec{ display:grid; grid-template-rows:minmax(0,1.55fr) minmax(0,1fr); gap:1.6rem; height:100% }
+.tec-n{ position:relative; background:#fff; min-height:0 } .tec-n svg{ position:absolute; inset:0; width:100%; height:100% }
+.tec-n .lk{ stroke:#B9B2A0; stroke-width:3; stroke-dasharray:8 8 } .tec-n .lk.ok{ stroke:var(--verde); stroke-dasharray:none; stroke-width:5 }
+.tec-n .nd{ cursor:grab } .tec-n .nd rect{ transition:fill .4s } .tec-n .nd text{ fill:#fff; font-weight:700; text-anchor:middle; pointer-events:none } .tec-n .nd .s{ font-size:15px; font-weight:500 }
+.tec-n .pk{ fill:var(--ink) }
+.tec-b{ position:absolute; left:1.4rem; top:1.2rem; display:flex; gap:1.2rem; align-items:center; z-index:2 } .tec-s{ position:absolute; left:50%; bottom:.7rem; transform:translateX(-50%); font-size:1.55rem; color:var(--mut); white-space:nowrap; z-index:2 }
+.tec-g{ background:#fff; padding:0 0 0; overflow:hidden } .tec-g .gt{ padding-top:.2rem }
 `);
 
-/* =====================================================================
-   PORTADA
-   ===================================================================== */
-VIS.portada = root => {
-  root.innerHTML = `<div class="pt">
-    <img class="pt-logo" src="img/logo-full.png" alt="TransMusical SETP">
-    <div class="pt-txt">
-      <small class="rv">Alertas identificadas por la UMUS</small>
-      <h1 class="rv">Seguimiento general de <span>alertas</span></h1>
-      <p class="rv">Dónde estamos, qué decidimos y con qué fecha se cierra cada una. Nueve alertas, una posición del SETP para cada una.</p>
-      <div class="pt-stats rv">
-        <div class="kpi"><b data-count="${ALERTAS.length}">0</b><small>Alertas</small></div>
-        <div class="kpi" style="color:var(--rojo)"><b data-count="${ALERTAS.filter(a=>a.cat==='critica').length}">0</b><small style="color:var(--mut)">Críticas</small></div>
-        <div class="kpi" style="color:var(--ambar)"><b data-count="${ALERTAS.filter(a=>a.cat==='moderada').length}">0</b><small style="color:var(--mut)">Moderada</small></div>
-        <div class="kpi" style="color:var(--verde)"><b data-count="${ALERTAS.filter(a=>a.cat==='leve').length}">0</b><small style="color:var(--mut)">Leves</small></div>
-      </div>
-      <div class="pt-btns rv"><button class="btn" id="ini">Iniciar recorrido ▸</button><button class="btn sec" id="pan">Ver panorama</button></div>
-      <div class="pt-hint rv">← → para navegar · toca una nota del pentagrama para saltar a esa alerta · F pantalla completa</div>
-    </div>
-    <svg class="pt-staff" viewBox="0 0 1200 210">${[70,90,110,130,150].map(y=>`<line class="lin" x1="0" x2="1200" y1="${y}" y2="${y}"/>`).join('')}
-      ${ALERTAS.map((a,i)=>{
-        const x=95+i*126, y=[150,130,110,90,70,90,110,130,150][i], c=CAT[a.cat].c, arr=y>=110;
-        const f=(2.5+x/1200*115+6)/132; const d=(f*22).toFixed(2);
-        return `<g class="nota" data-n="${a.n}" style="animation-delay:${d}s"><title>${a.n}. ${a.t}</title>
-          <line x1="${arr?x+11:x-11}" x2="${arr?x+11:x-11}" y1="${y}" y2="${arr?y-50:y+50}" stroke="${c}" stroke-width="3.4" stroke-linecap="round"/>
-          <ellipse cx="${x}" cy="${y}" rx="14" ry="10" fill="${c}" transform="rotate(-20 ${x} ${y})"/>
-          <text class="n" x="${x}" y="${y+4}" text-anchor="middle">${a.n}</text>
-          <text class="l" x="${x}" y="200">${a.corto}</text></g>`; }).join('')}
-    </svg>
-    <svg class="pt-bus"><use href="#i-bus"/></svg>
-  </div>`;
-  $('#ini',root).onclick = () => ir(idxTipo('panorama'));
-  $('#pan',root).onclick = () => ir(idxTipo('panorama'));
-  $$('.nota',root).forEach(g => g.onclick = () => ir(idxAlerta(+g.dataset.n)));
-};
+const MESES_L = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+const mesTxt = i => MESES_L[i%12] + ' ' + (2023+Math.floor(i/12));
+const idxFecha = d => (d.getFullYear()-2023)*12 + d.getMonth() + (d.getDate()-1)/new Date(d.getFullYear(),d.getMonth()+1,0).getDate();
+const NSVG = 'http://www.w3.org/2000/svg';
+const clamp = (v,a,b) => Math.min(b,Math.max(a,v));
 
 /* =====================================================================
-   PANORAMA — tabla oficial (ordenable) + matriz componente × período
-   ===================================================================== */
-VIS.panorama = root => {
-  const cnt = {critica:0, moderada:0, leve:0}; ALERTAS.forEach(a=>cnt[a.cat]++);
-  let filtro = 'todas', orden = {k:'n', d:1};
-  root.classList.add('pano');
-  root.innerHTML = `
-    <aside class="izq" style="--cat:#F0A800">
-      <div class="tags rv"><span class="tag num" style="background:#F0A800;color:#1B1200">Panorama</span><span class="tag">Corte ${CORTE.txt}</span></div>
-      <h1 class="rv">${ALERTAS.length} alertas abiertas. Una posición para cada una.</h1>
-      <p class="msg rv">${cnt.critica} críticas, ${cnt.moderada} moderada y ${cnt.leve} leves. Ninguna queda sin ruta: cada una tiene postura del SETP y una fecha de cierre o de decisión.</p>
-      <div class="filtros rv" id="fil"></div>
-      <table class="tabla rv"><thead><tr><th data-k="n">No.</th><th data-k="t">Alerta identificada</th><th data-k="per">Período</th><th data-k="comp">Componente</th><th data-k="cat">Categoría</th></tr></thead><tbody id="tb"></tbody></table>
-    </aside>
-    <main class="card pano-r rv">
-      <div class="pano-top">
-        <svg class="donut" viewBox="0 0 130 130"><g transform="rotate(-90 65 65)">${['critica','moderada','leve'].map(k=>`<circle id="dn-${k}" cx="65" cy="65" r="50" stroke="${CAT[k].c}" stroke-dasharray="0 314"/>`).join('')}</g>
-          <text x="65" y="74" font-size="34">${ALERTAS.length}</text></svg>
-        <div class="leyenda">${['critica','moderada','leve'].map(k=>`<div><i style="background:${CAT[k].c}"></i><b style="color:${CAT[k].c}">${cnt[k]}</b>${CAT[k].n}${cnt[k]>1?'s':''}</div>`).join('')}</div>
-        <p class="mut" style="margin-left:auto; max-width:19rem; font-size:.9rem">Toca una burbuja o una fila para abrir la alerta. Las críticas laten.</p>
-      </div>
-      <div class="mx" id="mx"></div>
-    </main>`;
-
-  const cats = {todas:'Todas', critica:'Crítica', moderada:'Moderada', leve:'Leve'};
-  $('#fil',root).innerHTML = Object.entries(cats).map(([k,n])=>`<button class="chip${k==='todas'?' on':''}" data-f="${k}">${k!=='todas'?`<i style="background:${CAT[k].c}"></i>`:''}${n}${k!=='todas'?' · '+cnt[k]:' · '+ALERTAS.length}</button>`).join('');
-
-  const tb = $('#tb',root);
-  function filas(){
-    const arr = [...ALERTAS].sort((a,b)=>{
-      const va = orden.k==='cat'?CATN[a.cat]:a[orden.k], vb = orden.k==='cat'?CATN[b.cat]:b[orden.k];
-      return (va>vb?1:va<vb?-1:a.n-b.n)*orden.d; });
-    tb.innerHTML = arr.map(a=>`<tr data-n="${a.n}" style="--c:${CAT[a.cat].c}" class="${filtro!=='todas'&&a.cat!==filtro?'dim':''}">
-      <td class="n">${a.n}</td><td>${a.t}</td><td>${a.per}</td><td>${a.comp}</td><td><span class="cat"><i></i>${CAT[a.cat].n}</span></td></tr>`).join('');
-    $$('tr',tb).forEach(tr=>{
-      tr.onclick=()=>ir(idxAlerta(+tr.dataset.n));
-      tr.onmouseenter=()=>hl(tr.dataset.n,true); tr.onmouseleave=()=>hl(tr.dataset.n,false);
-    });
-  }
-  function hl(n,on){ $$(`[data-n="${n}"]`,root).forEach(e=>e.classList.toggle('hl',on)); }
-  function aplica(){
-    $$('.bub',root).forEach(b=>b.classList.toggle('dim', filtro!=='todas' && ALERTAS[b.dataset.n-1].cat!==filtro));
-    filas();
-    $$('#fil .chip',root).forEach(c=>c.classList.toggle('on',c.dataset.f===filtro));
-  }
-  $$('#fil .chip',root).forEach(c=>c.onclick=()=>{ filtro=c.dataset.f; aplica(); });
-  $$('.tabla th',root).forEach(th=>th.onclick=()=>{ orden = {k:th.dataset.k, d:orden.k===th.dataset.k?-orden.d:1}; filas(); });
-
-  /* matriz */
-  let m = '<div class="h"></div>' + PERIODOS.map(p=>`<div class="h">${p}</div>`).join('');
-  COMPONENTES.forEach(c=>{
-    m += `<div class="r">${c}</div>`;
-    PERIODOS.forEach(p=>{
-      const as = ALERTAS.filter(a=>a.comp===c && a.per===p);
-      m += `<div class="c">${as.map(a=>`<div class="bub${a.cat==='critica'?' crit':''}" data-n="${a.n}" style="--c:${CAT[a.cat].c}">${a.n}${p==='2026-II'?'<span class="nueva">NUEVA</span>':''}</div>`).join('')}</div>`;
-    });
-  });
-  $('#mx',root).innerHTML = m;
-  $$('.bub',root).forEach(b=>{
-    b.onclick=()=>ir(idxAlerta(+b.dataset.n));
-    b.onmouseenter=e=>{ hl(b.dataset.n,true); verTip(`<b>${b.dataset.n}. ${ALERTAS[b.dataset.n-1].t}</b>`,e); };
-    b.onmouseleave=()=>{ hl(b.dataset.n,false); ocultaTip(); };
-  });
-  filas();
-  /* dona animada */
-  requestAnimationFrame(()=>setTimeout(()=>{
-    let off=0; const C=2*Math.PI*50;
-    ['critica','moderada','leve'].forEach(k=>{ const L=cnt[k]/ALERTAS.length*C; const el=$('#dn-'+k,root);
-      el.style.strokeDasharray=`${Math.max(0,L-4)} ${C}`; el.style.strokeDashoffset=-off; off+=L; });
-  },250));
-};
-
-/* =====================================================================
-   HOJA DE RUTA — línea de tiempo arrastrable
-   ===================================================================== */
-VIS.ruta = root => {
-  /* escala a tramos: abr–sep 2026 a escala real (donde se concentran los compromisos) y un bloque final «Q4 2026 · 2027» */
-  const T0 = new Date(2026,3,14), TM = new Date(2026,8,20), T1 = new Date(2027,1,10);
-  const F1 = .84, F2 = .885;
-  let play = CORTE.fecha.getTime(), sel = null, filt = new Set();
-  root.innerHTML = `<div class="rut">
-    <div class="rut-h rv"><div><h1>Hoja de ruta: quién, qué y cuándo</h1>
-      <p>Cada compromiso con fecha, y los que aún no la tienen. Arrastra la línea blanca por el tiempo: lo que quedó atrás sin cumplirse se marca en rojo.</p></div>
-      <div class="rut-ctl"><span class="mut" style="font-size:.8rem">Filtrar por alerta:</span><div class="rut-al" id="ral"></div><button class="chip" id="bcorte">Corte ${CORTE.txt}</button><button class="chip" id="bhoy">Hoy</button></div></div>
-    <div class="tl-wrap card rv" id="tw"><div class="tl-ax"></div><div class="tl-brk">⋯</div><div class="tl-play" id="pl"><div class="mango" id="mg"></div><svg><use href="#i-bus"/></svg></div></div>
-    <div class="rut-b rv">
-      <div class="card"><h4>Detalle</h4><div id="det"><div class="det-h">Toca un compromiso</div><div class="det-s">Verás la alerta, el responsable y el estado.</div></div></div>
-      <div class="card"><h4>Sin fecha en el corte — se fijan en esta reunión</h4><div class="sf" id="sf"></div></div>
-    </div></div>`;
-  const tw = $('#tw',root), W = () => tw.clientWidth - 32;
-  const fr = t => t <= TM ? Math.max(0,(t-T0)/(TM-T0))*F1 : F2 + Math.min(1,(t-TM)/(T1-TM))*(1-F2);
-  const px = t => 16 + fr(t)*W();
-  const inv = f => f <= F1 ? T0.getTime() + f/F1*(TM-T0) : f < F2 ? TM.getTime() : TM.getTime() + (f-F2)/(1-F2)*(T1-TM);
-  const ordenados = [...HITOS].sort((a,b)=>a.f-b.f);
-  const CW = 11.4;   // ancho de tarjeta en rem
-  const remPx = () => parseFloat(getComputedStyle(document.documentElement).fontSize);
-
-  /* ranuras sin choques: 2 niveles arriba (u0,u1) y 2 abajo (d0,d1) */
-  const slots = ['u0','d0','u1','d1'], ult = {};
-  ordenados.forEach(h=>{ const x = fr(h.f)*W()/remPx();
-    h.slot = slots.find(s=>ult[s]===undefined || x-ult[s] > CW+.4) || 'u1'; ult[h.slot]=x; });
-
-  /* marcas de mes (abr–sep) y del bloque final */
-  const marca = (t,txt) => { const e=document.createElement('div'); e.className='tl-mes'; e.textContent=txt; e.dataset.t=+t; tw.append(e); };
-  for(let m=3; m<=8; m++) marca(new Date(2026,m,1), MES[m]+(m===3?' 2026':''));
-  marca(new Date(2026,11,31),'dic'); marca(new Date(2027,0,31),'ene 27');
-
-  const alerta = h => h.a[0];
-  const nodos = ordenados.map(h=>{
-    const c = catDe(alerta(h)), niv = +h.slot[1], arriba = h.slot[0]==='u';
-    const alto = 3.4 + niv*5.6;
-    const pin = document.createElement('div'); pin.className='tl-pin'; pin.style.setProperty('--c',c); pin.style.top='50%';
-    const stem = document.createElement('div'); stem.className='tl-stem';
-    stem.style.top = arriba ? `calc(50% - ${alto}rem)` : '50%'; stem.style.height = `${alto-.4}rem`;
-    const card = document.createElement('div'); card.className='tl-card'; card.style.setProperty('--c',c);
-    card.style.top = arriba ? `calc(50% - ${alto+4.4}rem)` : `calc(50% + ${alto-.4}rem)`;
-    card.innerHTML = `<b>${fFecha(h.f).replace(/ 20\d\d$/,'')}${h.f.getFullYear()>2026?' '+h.f.getFullYear():''} · A${h.a.join('/')}<span class="mk"></span></b>${h.t}`;
-    card.onclick = () => { sel=h; pinta(); };
-    tw.append(stem,pin,card); return {h,pin,stem,card};
-  });
-  function coloca(){
-    $$('.tl-mes',tw).forEach(e=>e.style.left=px(+e.dataset.t)+'px');
-    $('.tl-brk',tw).style.left = (16+(F1+F2)/2*W())+'px';
-    nodos.forEach(({h,pin,stem,card})=>{ const x=px(h.f); pin.style.left=x+'px'; stem.style.left=x+'px';
-      card.style.left=Math.min(Math.max(x-14, 4), tw.clientWidth-card.offsetWidth-4)+'px'; });
-    $('#pl',root).style.left=px(play)+'px';
-  }
-  function pinta(){
-    $('#mg',root).textContent = fFecha(new Date(play));
-    nodos.forEach(({h,pin,stem,card})=>{
-      const on = !filt.size || h.a.some(a=>filt.has(a));
-      [pin,stem,card].forEach(e=>e.classList.toggle('dim',!on));
-      const vence = h.est==='programado' && h.f.getTime() < play;
-      card.classList.toggle('vence',vence); card.classList.toggle('sel',sel===h);
-      $('.mk',card).innerHTML = h.est==='cumplido' ? '<span class="ok">CUMPLIDO</span>' : vence ? '<span class="vc">FECHA SUPERADA</span>' : '';
-    });
-    const d=$('#det',root);
-    if(sel){ const al = sel.a.map(n=>`<span class="tag" style="color:${catDe(n)};border-color:${catDe(n)}">A${n} · ${ALERTAS[n-1].corto}</span>`).join(' ');
-      const vence = sel.est==='programado' && sel.f.getTime() < play;
-      d.innerHTML = `<div class="det-h">${sel.t}</div><div class="det-s">${fFecha(sel.f)} · Responsable: <b>${sel.r}</b> · ${sel.est==='cumplido'?'✔ Cumplido':vence?'⚠ Fecha superada: confirmar cumplimiento':'Programado'}</div><div style="margin-top:.5rem;display:flex;gap:.4rem;flex-wrap:wrap">${al}</div>`; }
-  }
-  $('#ral',root).innerHTML = ALERTAS.map(a=>`<button class="chip" data-a="${a.n}" style="--c:${CAT[a.cat].c}" title="${a.t}">${a.n}</button>`).join('');
-  $$('#ral .chip',root).forEach(b=>b.onclick=()=>{ const n=+b.dataset.a; filt.has(n)?filt.delete(n):filt.add(n); b.classList.toggle('on',filt.has(n)); pinta(); });
-  $('#sf',root).innerHTML = SIN_FECHA.map(s=>`<span data-a="${s.a}" title="Responsable: ${s.r}"><b style="color:${catDe(s.a)}">A${s.a}</b>${s.t}</span>`).join('');
-  $$('#sf span',root).forEach(s=>s.onclick=()=>ir(idxAlerta(+s.dataset.a)));
-
-  const setPlay = clientX => { const r=tw.getBoundingClientRect(), k=r.width/tw.clientWidth;
-    play = inv(Math.min(1,Math.max(0,((clientX-r.left)/k-16)/W()))); $('#pl',root).style.left=px(play)+'px'; pinta(); };
-  arrastrar($('#mg',root),{mueve:e=>setPlay(e.clientX)});
-  tw.addEventListener('click',e=>{ if(e.target===tw||e.target.classList.contains('tl-ax')) setPlay(e.clientX); });
-  $('#bcorte',root).onclick=()=>{ play=CORTE.fecha.getTime(); coloca(); pinta(); };
-  $('#bhoy',root).onclick=()=>{ play=Math.min(Date.now(),T1.getTime()); coloca(); pinta(); };
-  requestAnimationFrame(()=>{ coloca(); pinta(); });
-  const rs=()=>coloca(); window.addEventListener('resize',rs); limpiar.push(()=>window.removeEventListener('resize',rs));
-};
-
-
-/* =====================================================================
-   GRACIAS
-   ===================================================================== */
-VIS.fin = root => {
-  root.innerHTML = `<div class="fin">
-    <div class="fin-t"><small class="rv">Muchas</small><br><span class="bar">Gracias</span>
-      <p class="rv" style="margin-top:1.4rem;font-size:1.4rem;color:#D5E0FA;max-width:44rem">Nueve alertas, una posición clara para cada una. El SETP sigue en marcha.</p></div>
-    <div class="fin-b rv"><button class="btn" id="v1">Volver al panorama</button><button class="btn sec" id="v2">Ver hoja de ruta</button><button class="btn sec" id="v3">Reiniciar</button></div>
-    <div class="fin-road"></div>
-    <svg class="fin-bus par"><use href="#i-bus"/></svg>
-    <div class="fin-logos rv"><img src="img/logo-icon.png" style="height:4.4rem" alt=""><img src="img/alcaldia.png" style="height:5rem;background:#fff;border-radius:.7rem;padding:.2rem .5rem" alt=""></div>
-  </div>`;
-  $('#v1',root).onclick=()=>ir(idxTipo('panorama')); $('#v2',root).onclick=()=>ir(idxTipo('ruta')); $('#v3',root).onclick=()=>ir(0);
-};
-
-/* =====================================================================
-   ALERTA 1 — FET: simulador de dimensionamiento
+   1 · FET — simulador del fondo
    ===================================================================== */
 VIS.fet = root => {
   const P = {tt:3500, tu:3000, via:100, mes:24, apo:0};
-  const sl = (id,lbl,min,max,step) => `<label class="sl rv"><span>${lbl}<b id="v-${id}"></b></span><input type="range" id="${id}" min="${min}" max="${max}" step="${step}" value="${P[id]}"></label>`;
+  const sl = (id,lbl,min,max,step) => `<label class="sl"><span>${lbl}<b id="v-${id}"></b></span><input type="range" id="${id}" min="${min}" max="${max}" step="${step}" value="${P[id]}"></label>`;
   root.innerHTML = `<div class="fet">
-    <div class="fet-top rv"><span class="chip" style="background:var(--gold);border-color:var(--gold);color:#1B1200">SIMULADOR ILUSTRATIVO</span>
-      <span class="mut">Supuestos editables para entender la mecánica. La cifra oficial la fija el modelo financiero (julio 2026).</span></div>
-    <div class="fet-body">
-      <div class="fet-tank rv">
-        <svg viewBox="0 0 260 400" id="tk">
-          <defs><clipPath id="cp"><path d="M35 60 v274 a95 24 0 0 0 190 0 v-274 a95 24 0 0 1 -190 0z"/></clipPath></defs>
-          <path d="M100 6 h60 l-12 26 h-36z" fill="#9DB0DC" opacity=".8"/>
-          <g class="mons" id="mons">${[0,.5,1].map(d=>`<use class="mon" href="#i-coin" x="${112+d*8}" y="0" width="30" height="30" style="animation-delay:${d}s;animation-duration:${1.5+d*.3}s"/>`).join('')}</g>
-          <path d="M35 60 v274 a95 24 0 0 0 190 0 v-274 a95 24 0 0 1 -190 0z" fill="rgba(255,255,255,.07)"/>
-          <g clip-path="url(#cp)"><g id="agua" style="transform:translateY(360px)">
-            <g class="ola2" opacity=".55"><path d="M-190 0 q47.5 -16 95 0 t95 0 t95 0 t95 0 t95 0 t95 0 v420 h-570z" id="w2"/></g>
-            <g class="ola1"><path d="M-190 6 q47.5 14 95 0 t95 0 t95 0 t95 0 t95 0 t95 0 v420 h-570z" id="w1"/></g></g></g>
-          <ellipse cx="130" cy="60" rx="95" ry="24" fill="none" stroke="#B9C7EE" stroke-width="2.4"/>
-          <path d="M35 60 v274 a95 24 0 0 0 190 0 v-274" fill="none" stroke="#B9C7EE" stroke-width="2.4"/>
-          <line x1="20" x2="240" y1="64" y2="64" stroke="#fff" stroke-dasharray="6 6" opacity=".5"/>
-          <text x="245" y="60" font-size="11" fill="#fff" text-anchor="end" opacity=".8">100 %</text>
-        </svg>
-        <div class="fet-cob"><b id="cob">0 %</b><small>cobertura del fondo</small></div>
-      </div>
-      <div class="fet-ctl">
-        ${sl('tt','Tarifa técnica por viaje',2500,5000,50)}${sl('tu','Tarifa al usuario por viaje',2000,4000,50)}
-        ${sl('via','Viajes pagos por día (miles)',40,200,5)}${sl('mes','Horizonte de cobertura (meses)',6,36,1)}
-        ${sl('apo','Aporte anual al FET ($ mil millones)',0,40,1)}
-        <div class="fet-kp rv"><div class="kpi"><b id="k-def">—</b><small>Déficit por viaje</small></div><div class="kpi"><b id="k-req">—</b><small>Fondo requerido</small></div><div class="kpi"><b id="k-apo">—</b><small>Aportado en el horizonte</small></div></div>
-        <div class="fet-src rv">Fuentes a evaluar (no dimensionadas): <span class="c">aportes del Municipio (POAI)</span><span class="c">zonas azules</span><span class="c">publicidad en MUPI</span></div>
-      </div>
-    </div>
-    <div class="fet-ruta rv"><h4>Hoja de ruta del FET · toca un paso</h4><div class="pasos" id="pasos"></div><div class="paso-d" id="pd"></div></div>
-  </div>`;
-  const $$$ = s => $(s,root);
+    <div class="caja fet-p rv"><div class="pasos" id="pasos"></div><div class="paso-d" id="pd"></div></div>
+    <div class="fmain">
+      <div class="tank rv"><svg viewBox="0 0 260 400"><defs><clipPath id="cp"><path d="M35 60v274a95 24 0 0 0 190 0V60a95 24 0 0 1-190 0z"/></clipPath></defs>
+          <path d="M100 4h60l-12 28h-36z" fill="#B9B2A0"/>
+          <g id="mons">${[0,.5,1].map(d=>`<use class="mon" href="#i-coin" x="${112+d*8}" y="0" width="32" height="32" style="animation-delay:${d}s;animation-duration:${1.5+d*.3}s"/>`).join('')}</g>
+          <path d="M35 60v274a95 24 0 0 0 190 0V60a95 24 0 0 1-190 0z" fill="#fff"/>
+          <g clip-path="url(#cp)"><g id="agua" style="transform:translateY(360px)"><g class="o2" opacity=".55"><path id="w2" d="M-190 0q47.5-16 95 0t95 0t95 0t95 0t95 0t95 0v420h-570z"/></g><g class="o1"><path id="w1" d="M-190 6q47.5 14 95 0t95 0t95 0t95 0t95 0t95 0v420h-570z"/></g></g></g>
+          <path d="M35 60v274a95 24 0 0 0 190 0V60" fill="none" stroke="#0F1F52" stroke-width="5"/><ellipse cx="130" cy="60" rx="95" ry="24" fill="none" stroke="#0F1F52" stroke-width="5"/>
+          <line x1="14" x2="246" y1="64" y2="64" stroke="#0F1F52" stroke-dasharray="7 7" stroke-width="2.5"/></svg>
+        <div class="cob"><b id="cob">0 %</b><span>del fondo requerido</span></div></div>
+      <div class="sls rv">${sl('tt','Tarifa técnica por viaje',2500,5000,50)}${sl('tu','Tarifa al usuario por viaje',2000,4000,50)}${sl('via','Viajes pagos por día (miles)',40,200,5)}${sl('apo','Aporte anual al FET ($ mil millones)',0,40,1)}
+        <div class="nota">Horizonte de cobertura: 24 meses. Cifras ilustrativas: la oficial sale del modelo de julio.</div></div>
+      <div class="kres rv"><div class="caja"><div class="k-num" id="k-def">$0</div><span>déficit por viaje</span></div><div class="caja"><div class="k-num" id="k-req">$0</div><span>fondo requerido</span></div><div class="caja"><div class="k-num" id="k-apo">$0</div><span>aportado en el horizonte</span></div></div>
+    </div></div>`;
   function calc(){
-    ['tt','tu','via','mes','apo'].forEach(k=>P[k]=+$$$('#'+k).value);
-    const def = Math.max(0,P.tt-P.tu), anual = def*P.via*1000*365, req = anual*P.mes/12, apo = P.apo*1e9*P.mes/12;
-    const cob = req>0 ? apo/req : (apo>0?1:0), niv = Math.min(1,cob);
-    $$$('#v-tt').textContent='$'+fm(P.tt); $$$('#v-tu').textContent='$'+fm(P.tu); $$$('#v-via').textContent=P.via+' mil'; $$$('#v-mes').textContent=P.mes+' meses'; $$$('#v-apo').textContent='$'+P.apo+' mil M';
-    $$$('#k-def').textContent='$'+fm(def); $$$('#k-req').textContent=fB(req); $$$('#k-apo').textContent=fB(apo);
-    $$$('#cob').textContent=Math.round(cob*100)+' %';
-    const col = cob>=1?'#1FBF5B':cob>=.5?'#F0A800':'#E5484D';
-    $$$('#w1').style.fill=col; $$$('#w2').style.fill=col;
-    $$$('#agua').style.transform=`translateY(${360-300*niv}px)`;
-    $$$('#mons').style.opacity = P.apo>0?1:0;
+    ['tt','tu','via','apo'].forEach(k=>P[k]=+$('#'+k,root).value);
+    const def=Math.max(0,P.tt-P.tu), req=def*P.via*1000*365*P.mes/12, apo=P.apo*1e9*P.mes/12, cob=req>0?apo/req:(apo>0?1:0), niv=Math.min(1,cob);
+    $('#v-tt',root).textContent='$'+fm(P.tt); $('#v-tu',root).textContent='$'+fm(P.tu); $('#v-via',root).textContent=P.via+' mil'; $('#v-apo',root).textContent='$'+P.apo+' mil M';
+    $('#k-def',root).textContent='$'+fm(def); $('#k-req',root).textContent=fB(req); $('#k-apo',root).textContent=fB(apo);
+    $('#cob',root).textContent=Math.round(cob*100)+' %'; $(".cob",root).classList.toggle("lleno",niv>.42);
+    const col = cob>=1?'#1E9E4F':cob>=.5?'#F0A800':'#D3313A'; $('#w1',root).style.fill=col; $('#w2',root).style.fill=col;
+    $('#agua',root).style.transform=`translateY(${360-300*niv}px)`; $('#mons',root).style.opacity=P.apo>0?1:0;
   }
   $$('input',root).forEach(i=>i.oninput=calc); calc();
-  /* pasos */
-  const pasos = [
-    ['Modelo financiero final','Julio de 2026','Consultoría actualiza el modelo financiero del sistema. Resultado final en julio de 2026.'],
-    ['Análisis de resultados','Evaluación integral','Se analizan los resultados y se evalúa el sistema de forma integral: necesidad, alcance y viabilidad del Fondo.'],
-    ['Hoja de ruta del FET','Definición','Se define la hoja de ruta para la eventual implementación del Fondo.'],
-    ['Acciones administrativas y normativas','Si aplica','Adopción de las acciones administrativas y normativas correspondientes, si aplica.'],
-    ['Compromiso del Municipio','Sostenibilidad y equidad tarifaria','Compromiso del Municipio con la sostenibilidad financiera del SETP y con la equidad tarifaria.']];
-  let a=0; const ps=$$$('#pasos');
-  ps.innerHTML = pasos.map((p,i)=>`<button class="paso" data-i="${i}"><span>${i+1}</span>${p[0]}<br><small class="mut">${p[1]}</small></button>`).join('');
-  const marca=i=>{ a=i; ps.style.setProperty('--p',i); $$('.paso',ps).forEach((e,k)=>{ e.classList.toggle('act',k===i); e.classList.toggle('pas',k<i); }); $$$('#pd').textContent=pasos[i][2]; };
+  const pasos=[['Modelo financiero final','Consultoría actualiza el modelo del sistema. Resultado final en julio de 2026.'],['Análisis de resultados','Se evalúa el sistema de forma integral: necesidad, alcance y viabilidad del Fondo.'],
+    ['Hoja de ruta del FET','Se define la hoja de ruta para la eventual implementación del Fondo.'],['Acciones normativas','Adopción de las acciones administrativas y normativas, si aplica.'],['Compromiso del Municipio','Sostenibilidad financiera del SETP y equidad tarifaria.']];
+  const ps=$('#pasos',root);
+  ps.innerHTML=pasos.map((p,i)=>`<button class="paso" data-i="${i}"><span>${i+1}</span>${p[0]}</button>`).join('');
+  const marca=i=>{ ps.style.setProperty('--p',i); $$('.paso',ps).forEach((e,k)=>{ e.classList.toggle('act',k===i); e.classList.toggle('pas',k<i); }); $('#pd',root).textContent=pasos[i][1]; };
   $$('.paso',ps).forEach(b=>b.onclick=()=>marca(+b.dataset.i)); marca(0);
 };
 
 /* =====================================================================
-   ALERTA 2 — Concertación: dos vías que convergen (buses arrastrables)
+   2 · Concertación — dos vías que convergen
    ===================================================================== */
 VIS.con = root => {
-  const L = [
-    { c:'#4C8DFF', h:'1 · Viabilidad del sistema', p:[
-      ['Revisión de la canasta de costos','Validación de variables operativas y financieras con los operadores.','Insumo del modelo financiero.'],
-      ['Modelo financiero','Resultado final: 24 de julio de 2026.','Base de la evaluación de sostenibilidad.'],
-      ['Análisis de viabilidad','Evaluación de la sostenibilidad del sistema.','Habilita la definición de los actos administrativos.']] },
-    { c:'#1FBF5B', h:'2 · Concertación y verificación normativa', p:[
-      ['Mesas de diálogo','Espacio de concertación con los transportadores.','Recoge inquietudes y acuerdos.'],
-      ['Solicitud de documentación','Para la revisión del cumplimiento normativo de los operadores.','Verifica requisitos.'],
-      ['Aclaraciones y plazo adicional','Respuesta a las inquietudes de los operadores.','Cierra la vía normativa.']] }];
-  const pos=[-1,-1], X = p => p<0?0:p>2?100:(p*2+1)/6*100;
-  root.innerHTML = `<div class="con">
-    ${L.map((l,k)=>`<div class="con-lane rv" style="--c:${l.c}"><h4>${l.h}</h4>
-      <div class="con-tr" id="tr${k}">${l.p.map((s,i)=>`<div class="con-st" data-k="${k}" data-i="${i}"><b><em>${i+1}</em>${s[0]}</b><p>${s[1]}</p></div>`).join('')}
-        <svg class="con-bus" id="b${k}" style="left:0%"><use href="#i-bus"/></svg></div></div>`).join('')}
-    <div class="con-fin rv" id="fin"><span class="sello">HABILITADO</span><div class="gl">📜</div><b>Definición de actos administrativos</b>
-      <p>Con base en la viabilidad del sistema y el cumplimiento de requisitos de los operadores.</p></div>
-    <div class="con-det rv" id="det"><small>Arrastra los buses o toca una etapa</small><h5>Las dos vías tienen que llegar</h5>
-      <span class="mut">Cuando ambos buses lleguen al final, se habilita la definición de los actos administrativos.</span></div></div>`;
-  function ver(k,p,det){
+  const L=[{c:'#2B63D9',h:'1 · Viabilidad del sistema',p:[['Canasta de costos','Validación de variables operativas y financieras con los operadores.'],['Modelo financiero · 24 jul','Resultado final el 24 de julio de 2026: base de la evaluación de sostenibilidad.'],['Análisis de viabilidad','Evaluación de la sostenibilidad del sistema. Habilita los actos administrativos.']]},
+           {c:'#1E9E4F',h:'2 · Concertación y verificación normativa',p:[['Mesas de diálogo','Espacio de concertación con los transportadores: se recogen inquietudes y acuerdos.'],['Documentación','Solicitud de documentos para revisar el cumplimiento normativo de los operadores.'],['Aclaraciones y plazo','Respuesta a las inquietudes de los operadores. Cierra la vía normativa.']]}];
+  const pos=[-1,-1], X=p=>p<0?0:p>2?100:(p*2+1)/6*100;
+  root.innerHTML=`<div class="con">
+    ${L.map((l,k)=>`<div class="lane rv" style="--c:${l.c}"><h4>${l.h}</h4><div class="ctr" id="tr${k}">${l.p.map((s,i)=>`<button class="est" data-k="${k}" data-i="${i}"><em>${i+1}</em><b>${s[0]}</b></button>`).join('')}<svg class="cbus" id="b${k}" style="left:0%"><use href="#i-bus"/></svg></div></div>`).join('')}
+    <div class="cfin rv" id="fin"><span class="sello">HABILITADO</span>${ico('i-doc')}<b>Definición de actos administrativos</b><p>Con la viabilidad demostrada y los requisitos de los operadores verificados.</p></div>
+    <div class="cdet rv" id="det"><b>Las dos vías tienen que llegar</b><span>Arrastra cada bus o toca una etapa. Cuando ambos lleguen al final se habilitan los actos.</span></div></div>`;
+  function ver(k,p){
     pos[k]=p; const bus=$('#b'+k,root), tr=$('#tr'+k,root);
     bus.style.left=X(p)+'%'; tr.style.setProperty('--w',X(p)+'%');
-    $$('.con-st',tr).forEach((e,i)=>{ e.classList.toggle('hecho',i<p); e.classList.toggle('act',i===p); });
-    if(det!==false && p>=0 && p<=2){ const s=L[k].p[p]; $('#det',root).innerHTML=`<small style="color:${L[k].c}">${L[k].h} · etapa ${p+1}</small><h5>${s[0]}</h5><span class="mut">${s[1]} — ${s[2]}</span>`; }
-    if(p===3 && det!==false) $('#det',root).innerHTML=`<small style="color:${L[k].c}">${L[k].h}</small><h5>Vía completa</h5><span class="mut">${k===0?'Viabilidad demostrada con el modelo financiero y el análisis de sostenibilidad.':'Requisitos normativos verificados y aclaraciones respondidas.'}</span>`;
-    $('#fin',root).classList.toggle('ok', pos[0]===3 && pos[1]===3);
+    $$('.est',tr).forEach((e,i)=>{ e.classList.toggle('hecho',i<p); e.classList.toggle('act',i===p); });
+    if(p>=0&&p<=2) $('#det',root).innerHTML=`<b style="color:${L[k].c}">${L[k].h} · etapa ${p+1}: ${L[k].p[p][0]}</b><span>${L[k].p[p][1]}</span>`;
+    if(p===3) $('#det',root).innerHTML=`<b style="color:${L[k].c}">${L[k].h}: vía completa</b><span>${k===0?'Viabilidad demostrada con el modelo financiero y el análisis de sostenibilidad.':'Requisitos normativos verificados y aclaraciones respondidas.'}</span>`;
+    $('#fin',root).classList.toggle('ok',pos[0]===3&&pos[1]===3);
   }
-  $$('.con-st',root).forEach(e=>e.onclick=()=>ver(+e.dataset.k,+e.dataset.i));
-  [0,1].forEach(k=>{
-    const bus=$('#b'+k,root), tr=$('#tr'+k,root);
-    arrastrar(bus,{ inicio:()=>bus.classList.add('arr'),
-      mueve:e=>{ const r=tr.getBoundingClientRect(); const f=Math.min(100,Math.max(0,(e.clientX-r.left)/r.width*100)); bus.style.left=f+'%'; },
-      fin:()=>{ bus.classList.remove('arr'); const f=parseFloat(bus.style.left);
-        const c=[0,X(0),X(1),X(2),100], q=c.reduce((b,v,i)=>Math.abs(v-f)<Math.abs(c[b]-f)?i:b,0); ver(k,q-1); } });
-    ver(k,-1,false);
-  });
+  $$('.est',root).forEach(e=>e.onclick=()=>ver(+e.dataset.k,+e.dataset.i));
+  [0,1].forEach(k=>{ const bus=$('#b'+k,root), tr=$('#tr'+k,root);
+    arrastrar(bus,{ inicio:()=>bus.classList.add('arr'), mueve:e=>{ const r=tr.getBoundingClientRect(); bus.style.left=clamp((e.clientX-r.left)/r.width*100,0,100)+'%'; },
+      fin:()=>{ bus.classList.remove('arr'); const f=parseFloat(bus.style.left), c=[0,X(0),X(1),X(2),100]; ver(k,c.reduce((b,v,i)=>Math.abs(v-f)<Math.abs(c[b]-f)?i:b,0)-1); } }); });
 };
 
 /* =====================================================================
-   ALERTA 3 — Semaforización: semáforo, brecha, 34 intersecciones, simulación
+   3 · Semaforización
    ===================================================================== */
 VIS.sem = root => {
-  const S = { op:14, inst:25, ctl:25, meses:2, sim:false };
-  root.innerHTML = `<div class="sem">
-    <div class="sem-a rv"><div class="tl" id="tl"><i class="r on"></i><i class="a"></i><i class="v"></i></div><div class="est" id="tle">Rojo</div><small>Toca el semáforo para cambiar de fase</small></div>
-    <div class="rv"><div class="bars">
-        <div class="brow"><span>Avance programado</span><div class="b"><i id="bp" style="background:#4C8DFF"></i></div><strong data-count="99.76" data-dec="2" data-suf="%">0</strong></div>
-        <div class="brow"><span>Avance real ejecutado</span><div class="b"><i id="br" style="background:linear-gradient(90deg,#F0A800,#FFD56B)"></i></div><strong id="vr">0 %</strong></div>
-        <div class="brecha" id="brecha">Brecha: 24,75 puntos</div></div>
-      <div class="sem-k"><div class="kpi"><b id="kc">25<em>/28</em></b><small>Controladores</small><div class="ctls" id="ctls"></div></div>
-        <div class="kpi"><b id="ki">25<em>/34</em></b><small>Intersecciones instaladas</small></div>
-        <div class="kpi" style="color:#2BE07A"><b id="ko">14</b><small style="color:var(--mut)">En funcionamiento</small></div></div></div>
-    <div class="rv"><div class="chips" style="display:flex;gap:.5rem;flex-wrap:wrap" id="fl">
-        <button class="chip on" data-f="todas">Las 34</button><button class="chip" data-f="op"><i style="background:#2BE07A"></i>En funcionamiento</button>
-        <button class="chip" data-f="inst"><i style="background:var(--ambar)"></i>Instaladas sin operar</button><button class="chip" data-f="pend"><i style="background:#5C6AA0"></i>Por instalar</button></div>
-      <div class="dots" id="dots"></div>
-      <div class="causas" id="cs"></div></div>
-    <div class="sem-d rv"><div class="fin">Reanudación <b>30 jun 2026</b> → fin estimado <b id="ffin"></b></div>
-      <div class="seg" id="seg"><button data-m="1">Prórroga 1 mes</button><button data-m="2" class="on">Prórroga 2 meses</button></div>
-      <span class="mut" style="font-size:.85rem">Se fija en el acta de reanudación</span>
-      <button class="btn" id="sim" style="margin-left:auto">▶ Simular cierre de Fase I</button><button class="btn sec" id="rst" style="display:none">↺ Restablecer</button></div>
-  </div>`;
-  const dots=$('#dots',root); dots.innerHTML=Array.from({length:34},(_,i)=>`<div class="dt" data-i="${i}"></div>`).join('');
-  $('#ctls',root).innerHTML=Array.from({length:28},()=>'<i></i>').join('');
-  $('#cs',root).innerHTML=['Componentes tecnológicos parciales','Elementos complementarios en controladores','Planeamientos semafóricos pendientes','Parametrización y validación','Pruebas operativas finales'].map(t=>`<span>${t}</span>`).join('');
+  const S={op:14,inst:25,meses:2,sim:false};
+  root.innerHTML=`<div class="sem">
+    <div class="sem-a rv"><div class="tl" id="tl"><i class="r on"></i><i class="a"></i><i class="v"></i></div><b id="tle">Rojo</b></div>
+    <div class="sem-b rv">
+      <div class="brow"><div class="top"><span>Avance programado</span><strong data-count="99.76" data-dec="2" data-suf=" %">0</strong></div><div class="b"><i id="bp" style="background:#2B63D9"></i></div></div>
+      <div class="brow"><div class="top"><span>Avance real ejecutado</span><strong id="vr">0 %</strong></div><div class="b"><i id="br" style="background:#F0A800"></i></div></div>
+      <div class="brecha" id="brecha">Brecha de 24,75 puntos</div>
+      <div class="sem-k"><div><b id="kc">25<em> / 28</em></b><span>controladores instalados</span></div><div><b id="ki">25<em> / 34</em></b><span>intersecciones instaladas</span></div></div></div>
+    <div class="sem-c rv"><div class="leg" id="fl">
+        <button class="chip on" data-f="todas">Las 34</button><button class="chip" data-f="op" style="--c:#2BB868"><i></i><span id="c-op">14</span> operan</button>
+        <button class="chip" data-f="inst" style="--c:#F0A800"><i></i><span id="c-in">11</span> sin operar</button><button class="chip" data-f="pend" style="--c:#B9B2A0"><i></i><span id="c-pe">9</span> por instalar</button></div>
+      <div class="dots" id="dots"></div></div>
+    <div class="sem-d rv"><div class="seg" id="seg"><button data-m="1">Prórroga 1 mes</button><button data-m="2" class="on">Prórroga 2 meses</button></div>
+      <div class="fnx">Reanudación <b>30 jun 2026</b> · fin estimado <b id="ffin"></b></div><button class="btn sol" id="sim" style="margin-left:auto">Simular cierre de Fase I</button><button class="btn borde" id="rst" style="display:none">Restablecer</button></div></div>`;
+  const dots=$('#dots',root); dots.innerHTML=Array.from({length:34},()=>'<div class="dt"></div>').join('');
   let filtro='todas';
   function pinta(){
     $$('.dt',dots).forEach((d,i)=>{ const e=i<S.op?'op':i<S.inst?'inst':'pend'; d.className='dt '+e+(filtro!=='todas'&&e!==filtro?' dim':''); d.dataset.e=e; });
-    $$('#ctls i',root).forEach((c,i)=>c.classList.toggle('on',i<S.ctl));
-    $('#kc',root).innerHTML=`${S.ctl}<em>/28</em>`; $('#ki',root).innerHTML=`${S.inst}<em>/34</em>`; $('#ko',root).textContent=S.op;
-    const prog=((S.inst-25)+(S.op-14)+(S.ctl-25))/(9+20+3), real=75.01+(100-75.01)*prog;
+    $('#c-op',root).textContent=S.op; $('#c-in',root).textContent=S.inst-S.op; $('#c-pe',root).textContent=34-S.inst;
+    const ctl=S.sim?Math.min(28,25+Math.round((S.inst-25)/9*3)):25;
+    $('#kc',root).innerHTML=`${ctl}<em> / 28</em>`; $('#ki',root).innerHTML=`${S.inst}<em> / 34</em>`;
+    const prog=((S.inst-25)+(S.op-14))/(9+20), real=75.01+(100-75.01)*prog;
     $('#br',root).style.width=real+'%'; $('#vr',root).textContent=real.toLocaleString('es-CO',{minimumFractionDigits:2,maximumFractionDigits:2})+' %';
-    $('#brecha',root).textContent = real>=99.7 ? 'Meta alcanzada: Fase I integrada' : 'Brecha: '+(99.76-real).toLocaleString('es-CO',{minimumFractionDigits:2,maximumFractionDigits:2})+' puntos';
+    $('#brecha',root).textContent = real>=99.7?'Meta alcanzada: Fase I integrada':'Brecha de '+(99.76-real).toLocaleString('es-CO',{minimumFractionDigits:2,maximumFractionDigits:2})+' puntos';
+    $('#brecha',root).style.color = real>=99.7?'var(--verde)':''; $('#brecha',root).style.borderLeftColor = real>=99.7?'var(--verde)':''; $('#brecha',root).style.background = real>=99.7?'#DDF1E4':'';
     $('#ffin',root).textContent=fFecha(new Date(2026,5+S.meses,30));
   }
-  $$('.dt',dots).forEach(d=>{ d.onmouseenter=e=>verTip(`Intersección: <b>${{op:'en funcionamiento',inst:'instalada, sin operar',pend:'por instalar'}[d.dataset.e]}</b>`,e); d.onmouseleave=ocultaTip; });
+  $$('.dt',dots).forEach(d=>{ d.onmouseenter=e=>verTip({op:'En funcionamiento',inst:'Instalada, sin operar',pend:'Por instalar'}[d.dataset.e],e); d.onmouseleave=ocultaTip; });
   $$('#fl .chip',root).forEach(b=>b.onclick=()=>{ filtro=b.dataset.f; $$('#fl .chip',root).forEach(x=>x.classList.toggle('on',x===b)); pinta(); });
   $$('#seg button',root).forEach(b=>b.onclick=()=>{ S.meses=+b.dataset.m; $$('#seg button',root).forEach(x=>x.classList.toggle('on',x===b)); pinta(); });
-  /* semáforo automático */
-  const tl=$('#tl',root), lamps={r:$('.r',tl),a:$('.a',tl),v:$('.v',tl)}; let fase=0, tm;
-  const NOM=['Rojo','Verde','Ámbar'], SEQ=['r','v','a'], DUR=[2600,2600,900];
-  function luz(){ Object.entries(lamps).forEach(([k,e])=>e.classList.toggle('on',k===SEQ[fase])); $('#tle',root).textContent=S.sim&&S.op>=34?'Verde · red sincronizada':NOM[fase]; }
+  const lamps={r:$('.r',root),a:$('.a',root),v:$('.v',root)}; let fase=0, tm; const NOM=['Rojo','Verde','Ámbar'], SEQ=['r','v','a'], DUR=[2600,2600,900];
+  function luz(){ Object.entries(lamps).forEach(([k,e])=>e.classList.toggle('on',k===SEQ[fase])); $('#tle',root).textContent=S.sim&&S.op>=34?'Red sincronizada':NOM[fase]; }
   function ciclo(){ clearTimeout(tm); luz(); if(S.sim&&S.op>=34) return; tm=setTimeout(()=>{ fase=(fase+1)%3; ciclo(); },DUR[fase]); }
-  tl.onclick=()=>{ fase=(fase+1)%3; ciclo(); }; limpiar.push(()=>clearTimeout(tm)); ciclo();
-  /* simulación */
+  $('#tl',root).onclick=()=>{ fase=(fase+1)%3; ciclo(); }; limpiar.push(()=>clearTimeout(tm)); ciclo();
   let it; limpiar.push(()=>clearInterval(it));
   $('#sim',root).onclick=()=>{ if(S.sim) return; S.sim=true; $('#sim',root).style.display='none';
-    it=setInterval(()=>{
-      if(S.inst<34) S.inst++; else if(S.op<34) S.op++; else if(S.ctl<28) S.ctl++;
-      if(S.op<34&&S.inst>=30) S.op=Math.min(S.inst,S.op+1);
-      if(S.ctl<28&&S.inst>28) S.ctl++;
-      pinta();
-      if(S.inst>=34&&S.op>=34&&S.ctl>=28){ clearInterval(it); fase=1; ciclo(); $('#rst',root).style.display=''; }
-    },140); };
-  $('#rst',root).onclick=()=>{ clearInterval(it); Object.assign(S,{op:14,inst:25,ctl:25,sim:false}); $('#rst',root).style.display='none'; $('#sim',root).style.display=''; fase=0; ciclo(); pinta(); };
+    it=setInterval(()=>{ if(S.inst<34) S.inst++; else if(S.op<34) S.op++; if(S.op<34&&S.inst>=30) S.op=Math.min(S.inst,S.op+1); pinta();
+      if(S.inst>=34&&S.op>=34){ clearInterval(it); fase=1; ciclo(); $('#rst',root).style.display=''; } },150); };
+  $('#rst',root).onclick=()=>{ clearInterval(it); Object.assign(S,{op:14,inst:25,sim:false}); $('#rst',root).style.display='none'; $('#sim',root).style.display=''; fase=0; ciclo(); pinta(); };
+  pinta(); requestAnimationFrame(()=>setTimeout(()=>{ $('#bp',root).style.width='99.76%'; },200));
+};
+
+/* =====================================================================
+   4a · Tranvía (ART) — esquema y coincidencias con el SETP
+   ===================================================================== */
+VIS.appA = root => {
+  const LN = {
+    A:{ c:'#D3313A', n:'Línea A · Ambalá', d:'M90,130 C260,95 430,80 610,95 S830,135 905,240', dur:11, setp:'Coincide con la Av. Ambalá, que el SETP ya ejecuta (Contrato de Obra 042 de 2026).', bd:[330,52,346,94,'Av. Ambalá · en ejecución'] },
+    B:{ c:'#2B63D9', n:'Línea B · Jordán y Carrera 5', d:'M110,215 C250,300 380,380 510,360 S710,230 905,240', dur:12, setp:'Coincide con la Carrera 5 (ejecutada) y con Av. Jordán Paralela (sin recursos, en revisión). La ciclorruta de la Cra 5 está por radicar.', bd:[440,215,425,352,'Cra 5 · ejecutada'] },
+    C:{ c:'#1E9E4F', n:'Línea C · Picaleña, Mirolindo y Ferrocarril', d:'M135,285 C250,390 330,450 480,500 S700,640 830,610 S915,480 905,240', dur:17, setp:'Coincide con la Av. Ferrocarril (consultoría radicada el 10 de junio) y pasa por Picaleña, donde hay un predio de patiotalleres en gestión.', bd:[330,560,292,415,'Ferrocarril · radicada'] },
+    D:{ c:'#F0A800', n:'Línea D · Boquerón y Calle 19', d:'M55,650 C75,540 105,410 135,285', dur:6, setp:'Boquerón tiene un predio de patiotalleres en gestión; la Calle 19 es el arranque de la Av. Ferrocarril.', bd:[300,655,62,648,'Boquerón · predio en gestión'] } };
+  const ACL = [['¿100 % privado?','La propuesta declara inversión «100 % asumida por el privado» y, a la vez, pide recursos del CONPES 4017 para comprar vehículos. Hay que aclarar cuál es el aporte público real.'],
+    ['¿Único operador?','La exclusividad choca con el modelo del SETP, que se construye con los transportadores existentes.'],
+    ['¿321.065 viajes por día?','En una ciudad de unos 0,55 a 0,6 millones de habitantes son más de medio viaje diario por habitante solo en el ART. Se contrasta con el estudio de demanda del SETP (sep. 2025).']];
+  root.innerHTML=`<div class="app">
+    <div class="app-d rv show" id="ad"><svg viewBox="0 0 1000 700" id="sv">
+        <path d="M40 90C200 40 560 20 890 100L965 260C925 430 800 660 640 690C440 710 220 600 90 420Z" fill="#ECE7DB"/>
+        ${Object.entries(LN).map(([k,l])=>`<path class="ln" data-k="${k}" d="${l.d}" stroke="${l.c}"/>`).join('')}
+        <circle cx="905" cy="240" r="13" fill="#0F1F52"/><text x="880" y="285" text-anchor="end" class="lbl">Lote · inicio de A, B y C</text>
+        <circle cx="90" cy="130" r="9" fill="#D3313A" stroke="#fff" stroke-width="3"/><circle cx="110" cy="215" r="9" fill="#2B63D9" stroke="#fff" stroke-width="3"/><text x="20" y="98" class="lbl">Fin de A y B</text>
+        <circle cx="135" cy="285" r="9" fill="#1E9E4F" stroke="#fff" stroke-width="3"/><text x="154" y="322" class="lbl">Fin de C y D</text>
+        <circle cx="55" cy="650" r="9" fill="#F0A800" stroke="#fff" stroke-width="3"/><text x="20" y="690" class="lbl">Inicio de D</text>
+        <use href="#i-plane" x="900" y="380" width="44" height="44" style="color:#8A93AD"/><text x="965" y="450" text-anchor="end" class="lbl" style="fill:#5B6688">Aeropuerto</text>
+        ${Object.entries(LN).map(([k,l])=>`<g class="bd" data-k="${k}"><line x1="${l.bd[0]}" y1="${l.bd[1]}" x2="${l.bd[2]}" y2="${l.bd[3]}"/><rect x="${l.bd[0]-150}" y="${l.bd[1]-22}" width="300" height="44" rx="5"/><text x="${l.bd[0]}" y="${l.bd[1]+8}" text-anchor="middle">${l.bd[4]}</text></g>`).join('')}
+        ${Object.entries(LN).map(([k,l])=>`<g class="tr" data-k="${k}" style="color:${l.c}"><use href="#i-art" width="130" height="34" x="-65" y="-27"/><animateMotion dur="${l.dur}s" repeatCount="indefinite" rotate="auto" path="${l.d}"/></g>`).join('')}
+      </svg><div class="nota">Esquema no georreferenciado, basado en la Figura 8 de la propuesta</div></div>
+    <div class="app-i rv">
+      <div class="lns" id="lg">${Object.entries(LN).map(([k,l])=>`<button data-k="${k}" style="--c:${l.c}">${k}</button>`).join('')}</div>
+      <div class="info" id="info"></div>
+      <label class="sw on" id="swb"><i></i>Mostrar coincidencias con el SETP</label>
+      <div class="acl" id="acl">${ACL.map((a,i)=>`<button data-i="${i}">${a[0]}</button>`).join('')}</div></div></div>`;
+  let sel=null, acl=null;
+  function pinta(){
+    $$('.ln',root).forEach(l=>l.style.opacity=!sel||sel===l.dataset.k?1:.14);
+    $$('.tr',root).forEach(t=>t.style.display=!sel||sel===t.dataset.k?'':'none');
+    $$('#lg button',root).forEach(c=>c.classList.toggle('on',c.dataset.k===sel));
+    $$('.bd',root).forEach(b=>b.style.display=!sel||sel===b.dataset.k?'':'none');
+    $('#info',root).style.borderLeftColor = acl!==null?'#D3313A':sel?LN[sel].c:'#0F1F52';
+    $('#info',root).innerHTML = acl!==null ? `<b>${ACL[acl][0]}</b><span>${ACL[acl][1]}</span>`
+      : sel ? `<b>${LN[sel].n}</b><span>${LN[sel].setp}</span>` : `<b>3 de 4 troncales coinciden con corredores del SETP</b><span>Toca una línea para ver con qué proyecto se superpone. Se integran o se descartan; no se duplican.</span>`;
+  }
+  $$('.ln,#lg button',root).forEach(e=>e.onclick=()=>{ sel=sel===e.dataset.k?null:e.dataset.k; acl=null; pinta(); });
+  $$('#acl button',root).forEach(b=>b.onclick=()=>{ acl=acl===+b.dataset.i?null:+b.dataset.i; pinta(); });
+  $('#swb',root).onclick=()=>{ $('#swb',root).classList.toggle('on'); $('#ad',root).classList.toggle('show'); };
   pinta();
-  requestAnimationFrame(()=>setTimeout(()=>{ $('#bp',root).style.width='99.76%'; },200));
+};
+
+/* =====================================================================
+   4b · Tranvía — trazabilidad, concepto DNP y condiciones
+   ===================================================================== */
+VIS.appB = root => {
+  const H=[[new Date(2025,9,27),'Concepto favorable a la prefactibilidad (con condiciones)'],[new Date(2025,9,30),'Reunión virtual con la UMUS y el proponente'],[new Date(2025,10,7),'Mesas técnicas presenciales con el proponente'],[new Date(2025,10,19),'Visita del inversionista'],
+    [new Date(2025,11,3),'Mesa con el Ministerio de Transporte'],[new Date(2025,11,5),'Solicitud de concepto al DNP'],[new Date(2026,3,22),'Concepto del DNP'],[new Date(2026,5,1),'Mesa técnica para socializar el concepto del DNP']];
+  const COND=['Nuevo CONPES','Evaluación integral del sistema','Aclaraciones al proponente','Estudios prediales, estructurales y de demanda'];
+  root.innerHTML=`<div class="appb">
+    <div class="caja appb-t rv"><div class="tlb" id="tb"><div class="ax"></div></div><div class="tdet" id="hd"></div></div>
+    <div class="appb-b">
+      <div class="caja rv"><div class="hd" style="display:flex;justify-content:space-between;align-items:baseline">Condiciones para avanzar · tócalas<b id="mt" style="color:var(--rojo);font:800 1.8rem var(--fd)">0 de 4</b></div><div class="puertas" id="pu">${COND.map((c,i)=>`<div class="puerta" data-i="${i}"><span class="ck"></span>${c}</div>`).join('')}</div></div>
+      <div class="caja rv"><div class="hd">Compromisos de la mesa interinstitucional</div><div class="comp">
+        <div><em>1</em><span>Remitir el concepto del DNP a la APP de iniciativa privada · SETP</span><span class="pill ok">10 jun</span></div>
+        <div><em>2</em><span>Mesa con MinHacienda, DNP y MinTransporte · SETP</span><span class="pill pr">7 jul (tentativa)</span></div>
+        <div><em>3</em><span>Avances actualizados de la prefactibilidad · APP privada</span><span class="pill sf">Sin fecha</span></div></div></div></div></div>`;
+  const tb=$('#tb',root), n=H.length, xs=i=>4+i*(92/(n-1));
+  H.forEach((h,i)=>{
+    const nd=document.createElement('div'); nd.className='nd'; nd.style.left=xs(i)+'%'; nd.textContent=i+1; nd.onclick=()=>ir2(i);
+    const fe=document.createElement('div'); fe.className='fe'; fe.style.left=xs(i)+'%'; fe.style.top='calc(50% + '+(i%2?'5.1rem':'2.5rem')+')'; fe.textContent=h[0].getDate()+' '+MES[h[0].getMonth()]+' '+String(h[0].getFullYear()).slice(2); fe.onclick=()=>ir2(i);
+    tb.append(nd,fe);
+    if(i>0){ const d=Math.round((h[0]-H[i-1][0])/864e5); if(d>40){ const g=document.createElement('div'); g.className='gap'; g.style.left=(xs(i)+xs(i-1))/2+'%'; g.textContent='≈ '+(d/30.4).toFixed(1).replace('.',',')+' meses'; tb.append(g); } } });
+  const trm=document.createElementNS(NSVG,'svg'); trm.setAttribute('class','tram'); trm.innerHTML='<use href="#i-art"/>'; trm.style.left=xs(0)+'%'; tb.append(trm);
+  function ir2(k){ $$('.nd',tb).forEach((e,i)=>{ e.classList.toggle('hecho',i<=k); e.classList.toggle('act',i===k); }); $$('.fe',tb).forEach((e,i)=>e.classList.toggle('act',i===k));
+    trm.style.left=xs(k)+'%'; $('#hd',root).innerHTML=`<em>${fFecha(H[k][0])}</em> · ${H[k][1]}`; }
+  arrastrar(trm,{ inicio:()=>trm.classList.add('arr'), mueve:e=>{ const r=tb.getBoundingClientRect(); trm.style.left=clamp((e.clientX-r.left)/r.width*100,4,96)+'%'; },
+    fin:()=>{ trm.classList.remove('arr'); const f=parseFloat(trm.style.left); ir2(H.reduce((b,_,i)=>Math.abs(xs(i)-f)<Math.abs(xs(b)-f)?i:b,0)); } });
+  ir2(0);
+  const on=new Set();
+  $$('.puerta',root).forEach(p=>p.onclick=()=>{ const i=+p.dataset.i; on.has(i)?on.delete(i):on.add(i); p.classList.toggle('on',on.has(i)); const k=on.size;
+    $('#mt',root).style.color=k===4?'#1E9E4F':k?'#B77B00':'#D3313A'; $('#mt',root).textContent=k===4?'4 de 4: puede avanzar':k+' de 4'; });
+};
+
+/* =====================================================================
+   5a · Desembolsos — aportes del Municipio y cofinanciación Nación
+   ===================================================================== */
+VIS.desA = root => {
+  const M=MUNICIPIO, N=NACION, sum=a=>a.reduce((x,y)=>x+y,0);
+  const totM=sum(M.aporte)+sum(M.indexacion), totN=sum(N.convenio), adj=sum(N.adjudicado), rep=sum(N.reprogramar);
+  let conIdx=true;
+  root.innerHTML=`<div class="des">
+    <div class="gr rv"><div class="hd">Aportes del Municipio · 100 % desembolsado cada año</div>
+      <div class="tot"><span data-count="${totM/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</span> <small>2021–2026</small></div>
+      <svg viewBox="0 0 480 320" id="gm"></svg>
+      <label class="sw on" id="swi"><i></i>Incluir indexación</label></div>
+    <div class="gr rv"><div class="hd">Cofinanciación de la Nación · 2024–2026</div>
+      <div class="tot"><span data-count="${totN/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</span> <small>convenio</small></div>
+      <svg viewBox="0 0 480 320" id="gn"></svg>
+      <div class="leyenda"><span><i style="background:#1E9E4F"></i>Adjudicado ${(adj/totN*100).toFixed(1).replace('.',',')} %</span><span><i style="background:#D3313A"></i>Por reprogramar ${(rep/totN*100).toFixed(1).replace('.',',')} %</span></div></div></div>`;
+  const rect=(x,w,v,max,col,base,H)=>{ const h=v/max*H; return `<rect x="${x}" width="${w}" y="${base-h}" height="${h}" fill="${col}"/>`; };
+  function dibujaM(){ const H=205, base=252, max=21e9, w=46; let s='';
+    M.anios.forEach((a,i)=>{ const x=22+i*74, ap=M.aporte[i], ix=conIdx?M.indexacion[i]:0, tot=ap+ix;
+      s+=`<g class="b" data-t="${a}: aportes ${fM(ap)}${M.indexacion[i]?` + indexación ${fM(M.indexacion[i])}`:''}" style="cursor:pointer">${rect(x,w,ap,max,'#2B63D9',base,H)}${ix?rect(x,w,ix,max,'#F0A800',base-ap/max*H,H):''}
+        <text class="vl" x="${x+w/2}" y="${base-tot/max*H-8}">${(tot/1e9).toFixed(1).replace('.',',')}</text></g><g class="ax"><text x="${x+w/2}" y="${base+22}">${a}</text></g><text class="g" x="${x+w/2}" y="${base+44}">100 %</text>`; });
+    $('#gm',root).innerHTML=s; $$('#gm .b',root).forEach(g=>{ g.onmousemove=e=>verTip(g.dataset.t,e); g.onmouseleave=ocultaTip; }); }
+  function dibujaN(){ const H=205, base=252, max=72e9, w=92; let s='';
+    N.anios.forEach((a,i)=>{ const x=48+i*146, ad=N.adjudicado[i], rp=N.reprogramar[i];
+      s+=`<g class="b" data-t="${a}${a===2026?'*':''}: convenio ${fM(N.convenio[i])} · adjudicado ${fM(ad)} · por reprogramar ${fM(rp)}" style="cursor:pointer">${rect(x,w,ad,max,'#1E9E4F',base,H)}${rect(x,w,rp,max,'#D3313A',base-ad/max*H,H)}
+        <text class="vl" x="${x+w/2}" y="${base-N.convenio[i]/max*H-8}">${(N.convenio[i]/1e9).toFixed(1).replace('.',',')}</text>
+        <text x="${x+w/2}" y="${base-ad/max*H/2+6}" style="font:800 17px Montserrat;fill:#fff;text-anchor:middle">${Math.round(ad/N.convenio[i]*100)} %</text></g><g class="ax"><text x="${x+w/2}" y="${base+22}">${a}${a===2026?'*':''}</text></g>`; });
+    $('#gn',root).innerHTML=s+`<text x="470" y="312" text-anchor="end" style="font:500 15px Source Sans 3;fill:#5B6688">* 2026 proyectado</text>`;
+    $$('#gn .b',root).forEach(g=>{ g.onmousemove=e=>verTip(g.dataset.t,e); g.onmouseleave=ocultaTip; }); }
+  dibujaM(); dibujaN();
+  $('#swi',root).onclick=()=>{ conIdx=!conIdx; $('#swi',root).classList.toggle('on',conIdx); dibujaM(); };
+};
+
+/* =====================================================================
+   5b · Desembolsos — seis frentes 2026 y cartera
+   ===================================================================== */
+VIS.desB = root => {
+  const tot=k=>PROY26.reduce((a,p)=>a+p[k],0), rep26=NACION.reprogramar[2];
+  let sel=0; const cartOn=new Set();
+  root.innerHTML=`<div class="des2">
+    <div class="gr rv"><div class="hd">Seis frentes de 2026 · toca una fila</div>
+      <div class="tot"><span data-count="${(tot('mun')+tot('nac'))/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</span> <small>en total</small></div>
+      <div class="split"><i id="sn" style="background:#1E9E4F">Nación</i><i id="sm" style="background:#2B63D9">Municipio</i></div>
+      <table class="tp"><thead><tr><th>Frente</th><th style="text-align:right">Nación</th><th style="text-align:right">Municipio</th><th>Fase</th></tr></thead><tbody id="tp">
+        ${PROY26.map((p,i)=>`<tr data-i="${i}"><td>${p.n}</td><td class="v">${p.nac?fM(p.nac):'—'}</td><td class="v">${p.mun?fM(p.mun):'—'}</td><td><div class="fs4">${FASES.map((f,k)=>`<i class="${k<p.fase?'on':k===p.fase?'cur':''}" title="${f}"></i>`).join('')}</div></td></tr>`).join('')}</tbody></table>
+      <div class="dcard" id="dc"></div></div>
+    <div class="gr rv"><div class="hd">¿Alcanza la cartera para lo por reprogramar?</div>
+      <div class="tot" style="color:#D3313A"><span data-count="${rep26/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</span> <small>sin proyecto en 2026</small></div>
+      <div class="cart" id="ct">${CARTERA.map((c,i)=>`<button data-i="${i}"><span>${c.n}<small>${c.req}</small></span><b>${fM(c.v)}</b></button>`).join('')}</div>
+      <div class="cbar"><i id="cb"></i><span id="cbt">0 %</span></div><div class="dcard" id="cd"></div></div></div>`;
+  requestAnimationFrame(()=>setTimeout(()=>{ const n=tot('nac')/(tot('nac')+tot('mun'))*100; $('#sn',root).style.width=n+'%'; $('#sn',root).textContent='Nación '+Math.round(n)+' %'; $('#sm',root).style.width=(100-n)+'%'; $('#sm',root).textContent='Municipio '+Math.round(100-n)+' %'; },300));
+  const dc=()=>{ const p=PROY26[sel]; $$('#tp tr[data-i]',root).forEach(r=>r.classList.toggle('sel',+r.dataset.i===sel)); $('#dc',root).innerHTML=`<b>${p.n}</b><br>${p.txt}`; };
+  $$('#tp tr[data-i]',root).forEach(r=>r.onclick=()=>{ sel=+r.dataset.i; dc(); }); dc();
+  function cart(){ const v=[...cartOn].reduce((a,i)=>a+CARTERA[i].v,0), pc=v/rep26*100;
+    $('#cb',root).style.width=Math.min(100,pc)+'%'; $('#cbt',root).textContent=Math.round(pc)+' % de lo por reprogramar';
+    $('#cd',root).innerHTML = !cartOn.size ? 'Suma proyectos con presupuesto identificado (obra + interventoría, referencial).' : pc>=100 ? `<b style="color:#1E9E4F">La cartera cubre lo por reprogramar.</b> El cuello de botella no es falta de proyectos: es tener estudios y elegibilidad a tiempo.` : `Cubre ${fB(v)}; faltan ${fB(rep26-v)}.`; }
+  $$('#ct button',root).forEach(b=>b.onclick=()=>{ const i=+b.dataset.i; cartOn.has(i)?cartOn.delete(i):cartOn.add(i); b.classList.toggle('on',cartOn.has(i)); cart(); }); cart();
+};
+
+/* =====================================================================
+   6 · Actos administrativos — arrastrar al paquete
+   ===================================================================== */
+VIS.actos = root => {
+  let modelo=false;
+  root.innerHTML=`<div class="actos" id="ac">
+    <div class="act-t rv"><label class="sw" id="swm"><i></i>El modelo financiero ya se publicó (24 jul)</label></div>
+    <div class="pool rv" id="pool"></div><div class="act-h" id="ah"></div>
+    <div class="lanes rv">
+      <div class="lane2" id="l-ya" style="--c:#1E9E4F"><h5>Paquete 1 · no depende del modelo<em id="c-ya">0/3</em></h5><small>Puede expedirse ya</small><div class="ls"></div></div>
+      <div class="lane2 lock" id="l-modelo" style="--c:#F0A800;--cx:#0F1F52"><h5>Paquete 2 · depende del modelo<em id="c-modelo">0/3</em></h5><small>Sale cuando el modelo esté cerrado</small><div class="ls"></div></div></div></div>`;
+  const ac=$('#ac',root), pool=$('#pool',root), tot={ya:ACTOS.filter(a=>a.dep==='ya').length, modelo:ACTOS.filter(a=>a.dep==='modelo').length}, cnt={ya:0,modelo:0};
+  const hint=t=>{ $('#ah',root).textContent=t; };
+  const lane=e=>document.elementsFromPoint(e.clientX,e.clientY).find(x=>x.classList&&x.classList.contains('lane2'))||null;
+  ACTOS.forEach(a=>{ const c=document.createElement('div'); c.className='ac'; c.textContent=a.t; pool.append(c); let off;
+    arrastrar(c,{ inicio:e=>{ const r=c.getBoundingClientRect(), b=ac.getBoundingClientRect(); off=[e.clientX-r.left,e.clientY-r.top]; c.style.width=r.width+'px'; c.classList.add('vuela'); c.style.left=(r.left-b.left)+'px'; c.style.top=(r.top-b.top)+'px'; },
+      mueve:e=>{ const b=ac.getBoundingClientRect(); c.style.left=(e.clientX-b.left-off[0])+'px'; c.style.top=(e.clientY-b.top-off[1])+'px'; const l=lane(e); $$('.lane2',root).forEach(x=>x.classList.toggle('over',x===l)); },
+      fin:e=>{ $$('.lane2',root).forEach(x=>x.classList.remove('over')); const l=lane(e); c.classList.remove('vuela'); c.style.width=c.style.left=c.style.top='';
+        const vuelve=m=>{ pool.append(c); c.classList.remove('mal'); void c.offsetWidth; c.classList.add('mal'); hint(m); };
+        if(!l) return pool.append(c);
+        const k=l.id.slice(2);
+        if(k==='modelo'&&!modelo) return vuelve('Bloqueado: ese paquete espera el modelo financiero. Actívalo arriba si ya salió.');
+        if(a.dep!==k) return vuelve(a.dep==='modelo'?'Ese acto depende del modelo financiero: solo sale cuando el modelo esté cerrado.':'Ese acto no depende del modelo: puede salir ya, no lo dejes esperando.');
+        $('.ls',l).append(c); c.style.cursor='default'; c.style.pointerEvents='none'; cnt[k]++; $('#c-'+k,root).textContent=`${cnt[k]}/${tot[k]}`; hint('');
+        if(cnt[k]===tot[k]){ l.classList.add('sell'); hint(cnt.ya===tot.ya&&cnt.modelo===tot.modelo?'Paquetes completos: los actos salen por orden, sin plazos abiertos.':k==='ya'?'Paquete 1 listo: estos actos no esperan el modelo.':'Paquete 2 listo.'); } } }); });
+  $('#swm',root).onclick=()=>{ modelo=!modelo; $('#swm',root).classList.toggle('on',modelo); $('#l-modelo',root).classList.toggle('lock',!modelo); hint(modelo?'Modelo publicado: se libera el Paquete 2.':''); };
+};
+
+/* =====================================================================
+   7 · PMA — requerimiento e informe
+   ===================================================================== */
+VIS.pma = root => {
+  const on=new Set(); let paso=0;
+  root.innerHTML=`<div class="pma">
+    <div class="pma-s rv"><div class="nodo" style="left:12%">${ico('i-hardhat')}<b>Interventoría</b></div>
+      <div class="nodo" style="left:50%">${ico('i-leaf')}<b>PMA en obra: sí se hace</b></div>
+      <div class="nodo" style="left:88%">${ico('i-building')}<b>Ente Gestor · SETP</b></div>
+      <div class="cam"></div><svg class="sobre" id="env" style="left:16%"><use href="#i-env"/></svg><div class="msg" id="msg">Falta el informe formal de alcances e impactos</div></div>
+    <div class="pma-b">
+      <div class="rv"><div class="hd" style="margin-bottom:.8rem">Contenido mínimo que se exige a la interventoría · tócalo</div><div class="chk">${PMA_ITEMS.map((t,i)=>`<button data-i="${i}"><span class="ck"></span>${t}</button>`).join('')}</div></div>
+      <div class="pma-c rv"><div class="k-num" id="pt">0 / 6</div><div class="bar"><i id="pr"></i></div>
+        <button class="btn" id="b1" disabled>1 · Enviar requerimiento</button><button class="btn borde" id="b2" disabled>2 · Recibir informe</button><button class="btn borde" id="b3" style="display:none">Reiniciar</button></div></div></div>`;
+  const env=$('#env',root), msg=$('#msg',root);
+  function pinta(){ const k=on.size; $('#pr',root).style.width=k/6*100+'%'; $('#pr',root).style.background=k===6?'#1E9E4F':'#FDB913'; $('#pt',root).textContent=k+' / 6'; $('#b1',root).disabled=!(k===6&&paso===0); }
+  $$('.chk button',root).forEach(b=>b.onclick=()=>{ if(paso>0) return; const i=+b.dataset.i; on.has(i)?on.delete(i):on.add(i); b.classList.toggle('on',on.has(i)); pinta(); });
+  $('#b1',root).onclick=()=>{ paso=1; msg.textContent='Requerimiento formal enviado, con contenido mínimo y plazo'; $('#b1',root).disabled=true; $('#b2',root).disabled=false; $('#b2',root).classList.remove('borde'); };
+  $('#b2',root).onclick=()=>{ paso=2; env.style.left='84%'; $('#b2',root).disabled=true; setTimeout(()=>{ msg.textContent='Informe con evidencia recibido: se habilita el recibo final'; msg.classList.add('ok'); $('#b3',root).style.display=''; },1600); };
+  $('#b3',root).onclick=()=>{ paso=0; on.clear(); $$('.chk button',root).forEach(b=>b.classList.remove('on')); env.style.left='16%'; msg.textContent='Falta el informe formal de alcances e impactos'; msg.classList.remove('ok'); $('#b3',root).style.display='none'; $('#b2',root).classList.add('borde'); $('#b2',root).disabled=true; pinta(); };
+  pinta();
+};
+
+/* =====================================================================
+   Gantt reutilizable (alertas 8 y 9)
+   ===================================================================== */
+function gantt(host, rows, {fecha=CORTE.fecha, onSel}={}){
+  const ANIOS=[2023,2024,2025,2026,2027,2028]; let hoy=idxFecha(fecha), sel=null;
+  host.innerHTML=`<div class="gt"><div class="gt-h"><div></div><div class="gt-hy">${ANIOS.map(a=>`<div class="y">${a}</div>`).join('')}</div></div>
+    ${rows.map((r,i)=>`<div class="gt-r${i>0&&rows[i-1].g!==r.g?' gsep':''}" data-i="${i}"><div class="lb" title="${r.n}">${r.n}</div><div class="gt-t"></div></div>`).join('')}
+    <div class="gt-play" id="gp"><div class="mango" id="gm"></div></div></div>`;
+  const play=$('#gp',host), first=$('.gt-t',host), p=v=>v/72*100+'%';
+  function pinta(){
+    const late=[];
+    rows.forEach((r,i)=>{ const t=$$('.gt-r',host)[i].querySelector('.gt-t'), fin=r.b+1, col=ESTADO[r.est].c, cerrado=r.est==='ejecutado'||r.est==='retirado'; let h='';
+      if(r.est==='retirado') h=`<div class="bd ret" style="left:${p(r.a)};width:${p(fin-r.a)}"></div>`;
+      else { const dn=Math.max(0,Math.min(hoy,fin)-r.a);
+        if(dn>0) h+=`<div class="bd" style="left:${p(r.a)};width:${p(dn)};background:${col}"></div>`;
+        if(hoy<fin) h+=`<div class="bd ft" style="left:${p(Math.max(hoy,r.a))};width:${p(fin-Math.max(hoy,r.a))};background-color:${col}"></div>`;
+        if(!cerrado&&hoy>fin){ h+=`<div class="bd lt" style="left:${p(fin)};width:${p(hoy-fin)}"></div><span class="tg" style="left:${p(hoy)}">+${Math.round(hoy-fin)} m</span>`; late.push([r,hoy-fin]); } }
+      t.innerHTML=h; });
+    play.style.setProperty('--f',clamp(hoy/72,0,1));
+    const mi=Math.floor(hoy), dim=new Date(2023,mi+1,0).getDate(), d=new Date(2023,mi,1+Math.min(dim-1,Math.floor((hoy-mi)*dim)));
+    $('#gm',host).textContent=fFecha(d);
+    host.dispatchEvent(new CustomEvent('gantt',{detail:{late:late.sort((a,b)=>b[1]-a[1]),fecha:d}}));
+    $$('.gt-r',host).forEach(r=>r.classList.toggle('sel',rows[+r.dataset.i]===sel));
+  }
+  $$('.gt-r',host).forEach(r=>r.onclick=()=>{ sel=rows[+r.dataset.i]; onSel&&onSel(sel,hoy); pinta(); });
+  arrastrar($('#gm',host),{ mueve:e=>{ const b=first.getBoundingClientRect(); hoy=clamp((e.clientX-b.left)/b.width*72,0,71.99); pinta(); } });
+  pinta();
+  return { set(f){ hoy=idxFecha(f); pinta(); } };
+}
+const rezagoTxt=(r,hoy)=>{ const m=hoy-(r.b+1); return m>0&&r.est!=='ejecutado'&&r.est!=='retirado' ? `<b style="color:#D3313A">${Math.round(m)} meses de rezago.</b> ` : ''; };
+
+/* ---------- 8a · cronograma CONPES ---------- */
+VIS.obraA = root => {
+  const rows=GANTT.filter(g=>g.g!=='Tecnología');
+  root.innerHTML=`<div class="gtw">
+    <div class="gt-top rv"><button class="chip" id="bc">Corte ${CORTE.txt}</button><button class="chip" id="bh">Hoy</button>
+      ${[['ejecutado','Ejecutado'],['ejecucion','En ejecución'],['estructuracion','En estructuración'],['bloqueado','Sin recursos'],['retirado','Sin alcance']].map(([k,n])=>`<span class="lg-i"><i style="background:${ESTADO[k].c}"></i>${n}</span>`).join('')}</div>
+    <div class="rv" id="gh"></div><div class="gt-d rv" id="gd"></div></div>`;
+  let elegido=false;
+  const det=(r,hoy)=>{ elegido=true; $('#gd',root).innerHTML=`<b class="t">${r.n}</b> · ${ESTADO[r.est].n}. Plan CONPES: ${mesTxt(r.a)} a ${mesTxt(r.b)}. ${rezagoTxt(r,hoy)}${r.nota}`; };
+  const api=gantt($('#gh',root),rows,{onSel:det});
+  $('#gh',root).addEventListener('gantt',e=>{ const l=e.detail.late;
+    if(!elegido) $('#gd',root).innerHTML=`<b class="t">A ${fFecha(e.detail.fecha)}</b> · ${l.length?l.map(([r,m])=>`${r.n} (+${Math.round(m)} m)`).join(', '):'ningún frente supera su fecha de cierre.'}`; });
+  $('#bc',root).onclick=()=>{ elegido=false; api.set(CORTE.fecha); }; $('#bh',root).onclick=()=>{ elegido=false; api.set(new Date()); };
+  api.set(CORTE.fecha);
+};
+
+/* ---------- 8b · mapa ---------- */
+VIS.obraB = root => {
+  root.innerHTML=`<div class="mp"><div id="mapa"></div>
+    <div class="mp-l rv" id="ml"></div>
+    <div class="mp-c"><button class="chip on" id="tp1">Paraderos Tipo 1 y 2</button><button class="chip on" id="tpa">Patiotalleres</button></div>
+    <div class="mp-d rv" id="md"><b>Frentes pendientes de infraestructura.</b> Toca un corredor en el mapa o en la lista.</div></div>`;
+  const F=[
+    {id:'ferrocarril',n:'Av. Ferrocarril',s:'Consultoría radicada · 10 jun',c:ESTADO.estudios.c,k:['ferrocarril'],t:'Estudios y diseños Fase III radicados en UMUS el 10 de junio de 2026. Presupuesto de obra $32.035 M + interventoría $2.122 M.'},
+    {id:'ambala',n:'Av. Ambalá',s:'En ejecución',c:ESTADO.ejecucion.c,k:['ambala1','ambala2'],t:'Contrato de Obra 042 de 2026. Tramo 1 (Cra 5 a Cl 37) y tramo 2 (Cl 77 a Cl 63): 5.007 m.'},
+    {id:'cra5',n:'Carrera 5',s:'Ejecutada',c:ESTADO.ejecutado.c,k:['carrera5','carrera5FaseI'],t:'Fases I y II ejecutadas: eje troncal del SETP, con accesibilidad universal en los pasos peatonales.'},
+    {id:'ciclo',n:'Ciclorruta Cra 5',s:'Radicar · 30 jun',c:ESTADO.estructuracion.c,k:['cicloCarrera5'],t:'Consultoría de cicloinfraestructura y andenes (Cl 10 a 44) en estructuración, próxima a radicar. Estimado $1.222 M.'},
+    {id:'paraderos',n:'Paraderos Tipo 1 y 2',s:'Llave en mano · radicar 7 jul',c:ESTADO.estructuracion.c,k:[],t:'10 paraderos Tipo I y 71 Tipo II con MUPI, en estructuración. Nación $8.669 M.'},
+    {id:'patios',n:'Patiotalleres',s:'4 predios · se requieren 5',c:ESTADO.estructuracion.c,k:[],t:'Predio 1 ($15.075 M, Municipio) y Predio 2 ($15.061 M, Nación) en estructuración. El estudio de sep. 2025 indica 5 patiotalleres; hay 4 puntos en el KMZ.'},
+    {id:'jordan',n:'Av. Jordán Paralela',s:'Sin recursos · en revisión',c:ESTADO.bloqueado.c,k:[],t:'Por el tope presupuestal del componente se priorizaron los demás corredores; en revisión la redistribución. Sin traza georreferenciada.'}];
+  $('#ml',root).innerHTML=F.map(f=>`<button data-id="${f.id}" style="--c:${f.c}"><span>${f.n}<small>${f.s}</small></span></button>`).join('');
+  const M=[], flip=c=>[c[1],c[0]], R=parseFloat(getComputedStyle(document.documentElement).fontSize);
+  const map=new maplibregl.Map({container:'mapa',center:[-75.205,4.437],zoom:12.2,attributionControl:{compact:true},
+    style:{version:8,sources:{base:{type:'raster',tileSize:256,maxzoom:19,attribution:'© OpenStreetMap contributors',tiles:['https://a.tile.openstreetmap.org/{z}/{x}/{y}.png','https://b.tile.openstreetmap.org/{z}/{x}/{y}.png','https://c.tile.openstreetmap.org/{z}/{x}/{y}.png']}},
+      layers:[{id:'fondo',type:'background',paint:{'background-color':'#EDE9DE'}},{id:'base',type:'raster',source:'base',paint:{'raster-saturation':-0.92,'raster-contrast':-0.05,'raster-brightness-min':.25,'raster-opacity':.95}}]}});
+  window.__mapa=map; limpiar.push(()=>{ try{ map.remove(); }catch(e){} });
+  const lugar=f=>{ $$('#ml button',root).forEach(b=>b.classList.toggle('sel',b.dataset.id===f.id)); $('#md',root).innerHTML=`<b>${f.n}</b> · ${f.s}<br>${f.t}`;
+    let pts=[]; f.k.forEach(k=>pts.push(...CORREDORES[k].coords)); if(f.id==='paraderos') pts=PARADEROS_12; if(f.id==='patios') pts=PATIOS.map(p=>p.coord);
+    if(pts.length){ const b=new maplibregl.LngLatBounds(); pts.forEach(c=>b.extend(flip(c))); map.fitBounds(b,{padding:{left:37*R,top:4*R,right:4*R,bottom:11*R},maxZoom:15.4,duration:1500}); } };
+  $$('#ml button',root).forEach(b=>b.onclick=()=>lugar(F.find(f=>f.id===b.dataset.id)));
+  map.on('load',()=>{
+    F.forEach(f=>f.k.forEach(k=>{ map.addSource('c-'+k,{type:'geojson',data:{type:'Feature',properties:{},geometry:{type:'LineString',coordinates:CORREDORES[k].coords.map(flip)}}});
+      if(f.id!=='ciclo') map.addLayer({id:'cs-'+k,type:'line',source:'c-'+k,layout:{'line-cap':'round','line-join':'round'},paint:{'line-color':'#fff','line-width':12}});
+      map.addLayer({id:'c-'+k,type:'line',source:'c-'+k,layout:{'line-cap':'round','line-join':'round'},paint:f.id==='ciclo'?{'line-color':f.c,'line-width':5,'line-dasharray':[1.4,1.4]}:{'line-color':f.c,'line-width':7}});
+      map.on('click','c-'+k,()=>lugar(f)); map.on('mouseenter','c-'+k,()=>map.getCanvas().style.cursor='pointer'); map.on('mouseleave','c-'+k,()=>map.getCanvas().style.cursor=''); }));
+    PARADEROS_12.forEach(c=>{ const el=document.createElement('div'); el.className='mk-p'; M.push(['p1',new maplibregl.Marker({element:el}).setLngLat(flip(c)).addTo(map)]); });
+    PATIOS.forEach(p=>{ const el=document.createElement('div'); el.className='mk-pa'; el.innerHTML=`<i>${ico('i-factory')}</i>`; el.title=p.nombre; el.onclick=()=>lugar(F.find(f=>f.id==='patios')); M.push(['pa',new maplibregl.Marker({element:el}).setLngLat(flip(p.coord)).addTo(map)]); });
+    const bb=new maplibregl.LngLatBounds(); Object.values(CORREDORES).forEach(c=>c.coords.forEach(p=>bb.extend(flip(p)))); PATIOS.forEach(p=>bb.extend(flip(p.coord)));
+    map.fitBounds(bb,{padding:{left:37*R,top:4*R,right:4*R,bottom:11*R},duration:0}); });
+  const tog=(id,tipo)=>$('#'+id,root).onclick=()=>{ const b=$('#'+id,root); b.classList.toggle('on'); M.filter(m=>m[0]===tipo).forEach(m=>b.classList.contains('on')?m[1].addTo(map):m[1].remove()); };
+  tog('tp1','p1'); tog('tpa','pa');
+};
+
+/* =====================================================================
+   9 · Tecnología — red arrastrable + cronograma
+   ===================================================================== */
+VIS.tecno = root => {
+  const ND=[{id:'cc',n:'Centro de control',s:'Lote 6 · compra 2027',x:500,y:150,w:230,est:'estructuracion',g:'Centro de control'},
+    {id:'rec',n:'Recaudo',s:'Estructurar en 2026',x:170,y:80,w:200,est:'estructuracion',g:'Recaudo y control de flota'},
+    {id:'flo',n:'Control de flota',s:'Recursos desde 2027',x:170,y:225,w:200,est:'estructuracion',g:'Recaudo y control de flota'},
+    {id:'usu',n:'Información al usuario',s:'En formulación',x:830,y:80,w:230,est:'estructuracion',g:'Información al usuario'},
+    {id:'sem',n:'Semáforos',s:'Fase I al 75 %',x:830,y:225,w:200,est:'ejecucion',g:'Semaforización'},
+    {id:'fet',n:'FET y modelo financiero',s:'Resultado en julio',x:500,y:52,w:250,est:'estructuracion',g:null}];
+  const LK=[['cc','rec'],['cc','flo'],['cc','usu'],['cc','sem'],['cc','fet'],['fet','rec']];
+  root.innerHTML=`<div class="tec"><div class="tec-n rv"><div class="tec-b"><button class="btn sol" id="si">Simular integración</button><button class="btn borde" id="re" style="display:none">Restablecer</button></div><svg viewBox="0 0 1000 285" id="sv"></svg><div class="tec-s" id="tx">Azul: en estructuración · Ámbar: en ejecución · Verde: integrado</div></div><div class="tec-g rv" id="gh"></div></div>`;
+  const sv=$('#sv',root), N={}; ND.forEach(n=>N[n.id]={...n,ok:false});
+  const col=n=>n.ok?'#1E9E4F':ESTADO[n.est].c;
+  sv.innerHTML=LK.map((l,i)=>`<line class="lk" id="lk${i}"/>`).join('')+LK.map((l,i)=>`<circle class="pk" id="pk${i}" r="7" style="display:none"/>`).join('')+
+    ND.map(n=>`<g class="nd" data-id="${n.id}"><rect id="r-${n.id}" x="${-n.w/2}" y="-33" width="${n.w}" height="66" rx="6" fill="${col(N[n.id])}"/><text y="-4" font-size="19" style="fill:${n.est==='ejecucion'?'#0F1F52':'#fff'}">${n.n}</text><text class="s" y="20" style="fill:${n.est==='ejecucion'?'#0F1F52':'#fff'}">${n.s}</text></g>`).join('');
+  const pos=()=>{ ND.forEach(n=>{ const o=N[n.id]; $(`.nd[data-id=${n.id}]`,sv).setAttribute('transform',`translate(${o.x},${o.y})`); });
+    LK.forEach((l,i)=>{ const a=N[l[0]], b=N[l[1]], e=$('#lk'+i,sv); e.setAttribute('x1',a.x); e.setAttribute('y1',a.y); e.setAttribute('x2',b.x); e.setAttribute('y2',b.y); e.classList.toggle('ok',a.ok&&b.ok); }); }; pos();
+  $$('.nd',sv).forEach(g=>{ const o=N[g.dataset.id]; let off=[0,0];
+    arrastrar(g,{ inicio:e=>{ const p=svgPt(sv,e); off=[p.x-o.x,p.y-o.y]; }, mueve:e=>{ const p=svgPt(sv,e); o.x=clamp(p.x-off[0],120,880); o.y=clamp(p.y-off[1],40,250); pos(); } });
+    g.onmouseenter=e=>{ const r=o.g&&GANTT.find(x=>x.n===o.g); if(r) verTip(`<b>${r.n}</b><br>Plan: ${mesTxt(r.a)} a ${mesTxt(r.b)}<br>${r.nota}`,e); }; g.onmouseleave=ocultaTip; });
+  let raf; const loop=t=>{ LK.forEach((l,i)=>{ const a=N[l[0]], b=N[l[1]], c=$('#pk'+i,sv), on=a.ok&&b.ok; c.style.display=on?'':'none'; if(on){ const p=((t/1400)+i*.17)%1; c.setAttribute('cx',a.x+(b.x-a.x)*p); c.setAttribute('cy',a.y+(b.y-a.y)*p); } }); raf=requestAnimationFrame(loop); };
+  raf=requestAnimationFrame(loop); limpiar.push(()=>cancelAnimationFrame(raf));
+  const pinta=()=>ND.forEach(n=>$('#r-'+n.id,sv).setAttribute('fill',col(N[n.id]))), tms=[]; limpiar.push(()=>tms.forEach(clearTimeout));
+  $('#si',root).onclick=()=>{ $('#si',root).style.display='none'; ['sem','rec','flo','usu','cc','fet'].forEach((id,i)=>tms.push(setTimeout(()=>{ N[id].ok=true; pinta(); pos();
+    if(i===5){ $('#tx',root).innerHTML='<b style="color:#1E9E4F">Paquete integrado</b>: recaudo, control de flota, información, control, semáforos y FET.'; $('#re',root).style.display=''; } },i*700))); };
+  $('#re',root).onclick=()=>{ tms.forEach(clearTimeout); ND.forEach(n=>N[n.id].ok=false); pinta(); pos(); $('#re',root).style.display='none'; $('#si',root).style.display=''; $("#tx",root).textContent="Azul: en estructuración · Ámbar: en ejecución · Verde: integrado"; };
+  gantt($('#gh',root),GANTT.filter(g=>g.g==='Tecnología'));
 };
