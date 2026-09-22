@@ -42,7 +42,7 @@ estilo(`
 .tabla th{ text-align:left; font:700 1.5rem var(--fd); color:var(--mut); padding:.5rem 1rem; border-bottom:.25rem solid var(--ink); cursor:pointer; white-space:nowrap; user-select:none }
 .tabla th:hover{ color:var(--ink) }
 .tabla td{ font-size:1.65rem; padding:.62rem 1rem; border-bottom:.12rem solid var(--rule); line-height:1.15; transition:.15s }
-.tabla tbody tr{ cursor:pointer; transition:.15s } .tabla tbody tr:hover, .tabla tbody tr.hl{ background:#EAE5D8 }
+.tabla tbody tr{ cursor:pointer; transition:.15s } .tabla tbody tr:hover, .tabla tbody tr.hl{ background:#DEE5F1 }
 .tabla tbody tr.dim{ opacity:.25 }
 .tabla td.n{ font:800 2.1rem var(--fd); color:var(--c); width:4.6rem }
 .tabla td.t{ font-weight:600; color:var(--ink) }
@@ -53,7 +53,7 @@ estilo(`
 .mx{ display:grid; grid-template-columns:12.4rem repeat(3,minmax(0,1fr)); grid-auto-rows:5.2rem; gap:.25rem }
 .mx .h{ font:700 1.5rem var(--fd); color:var(--mut); display:flex; align-items:center; justify-content:center }
 .mx .r{ font-size:1.5rem; font-weight:600; color:var(--ink); display:flex; align-items:center }
-.mx .c{ background:#ECE7DB; display:flex; align-items:center; justify-content:center }
+.mx .c{ background:#DFE6F2; display:flex; align-items:center; justify-content:center }
 .bub{ position:relative; width:4rem; height:4rem; border-radius:50%; background:var(--c); color:var(--cx); font:800 1.9rem var(--fd); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:transform .25s cubic-bezier(.3,1.5,.5,1) }
 .bub:hover, .bub.hl{ transform:scale(1.25) } .bub.dim{ opacity:.2 }
 .bub .nueva{ position:absolute; top:-2.3rem; left:50%; transform:translateX(-50%); background:var(--ink); color:#fff; font:700 1.5rem var(--fd); padding:0 .6rem; border-radius:.3rem }
@@ -65,21 +65,21 @@ estilo(`
 .rt-h p{ margin-left:auto; max-width:56rem; text-align:right; font-size:1.65rem; line-height:1.2; color:var(--mut) }
 .rt-b{ position:absolute; left:3.4rem; right:3.4rem; top:13.2rem; display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:1.4rem }
 .rt-c h3{ font:800 2.1rem var(--fd); color:var(--ink); padding-bottom:.7rem; border-bottom:.3rem solid var(--ink); margin-bottom:1rem }
-.hito{ display:block; width:100%; text-align:left; background:#fff; border-left:.6rem solid var(--c); padding:.55rem 1rem .65rem; margin-bottom:.7rem; transition:.2s }
-.hito:hover{ background:#EFEAE0 }
+.hito{ display:block; width:100%; text-align:left; background:var(--card); border-left:.6rem solid var(--c); padding:.55rem 1rem .65rem; margin-bottom:.7rem; transition:.2s }
+.hito:hover{ background:#E3E9F4 }
 .hito b{ display:flex; align-items:center; gap:.6rem; font:700 1.5rem var(--fd); color:var(--c); margin-bottom:.15rem }
 .hito em{ display:block; font:700 1.5rem var(--fd); font-style:normal; margin-top:.15rem; color:var(--mut) }
 .hito span{ font-size:1.55rem; line-height:1.15; color:var(--ink); font-weight:600 }
 .hito.vence{ background:#FBE6E4; border-left-color:var(--rojo) } .hito.vence em{ color:var(--rojo) }
 .hito.ok em{ color:var(--verde) } .hito.dim{ opacity:.25 }
 .rt-f{ position:absolute; left:3.4rem; right:3.4rem; bottom:.8rem; height:15.6rem; display:grid; grid-template-columns:44rem minmax(0,1fr); gap:3rem }
-.rt-f .caja{ background:#fff; padding:1.3rem 1.8rem }
+.rt-f .caja{ background:var(--card); padding:1.3rem 1.8rem }
 .rt-f h4{ font:700 1.5rem var(--fd); color:var(--mut); margin-bottom:.5rem }
 .rt-f .fecha{ font:800 3.2rem/1 var(--fd); color:var(--ink); margin-bottom:.4rem }
 .rt-f .bt{ display:flex; gap:.8rem; margin-top:.6rem }
 .sf{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.5rem 2rem }
 .sf button{ text-align:left; font-size:1.5rem; line-height:1.1; padding:.22rem 0; border-bottom:.1rem solid var(--rule); color:var(--ink) }
-.sf button:hover{ background:#EFEAE0 } .sf button b{ display:inline-block; min-width:3.4rem; font:800 1.5rem var(--fd); color:var(--c) }
+.sf button:hover{ background:#E3E9F4 } .sf button b{ display:inline-block; min-width:3.4rem; font:800 1.5rem var(--fd); color:var(--c) }
 
 /* ---------- gracias ---------- */
 .fin{ position:absolute; inset:0; overflow:hidden; color:#fff }
@@ -98,6 +98,9 @@ estilo(`
 .fin .btn{ font-size:1.9rem; padding:1.3rem 2.6rem }
 .fin .btn.borde{ color:#fff; box-shadow:inset 0 0 0 .22rem #fff }
 .fin-l{ position:absolute; left:7rem; bottom:9.6rem; display:flex; align-items:center; gap:2rem }
+.fin-notas{ position:absolute; right:14rem; bottom:30rem; width:18rem; height:12rem; pointer-events:none; z-index:5 }
+.fin-notas span{ position:absolute; bottom:0; font-weight:900; opacity:0; animation:notaFlota 3.2s ease-in-out infinite; text-shadow:0 .2rem .5rem rgba(0,0,0,.3) }
+@keyframes notaFlota{ 0%{ transform:translateY(0) rotate(-6deg) scale(.8); opacity:0 } 15%{ opacity:1; transform:translateY(-2rem) rotate(4deg) scale(1) } 80%{ opacity:.85 } 100%{ transform:translateY(-11rem) rotate(-8deg) scale(.9); opacity:0 } }
 `);
 
 /* ------------------------------ resumen ------------------------------ */
@@ -239,10 +242,13 @@ VIS.ruta = root => {
 
 /* ------------------------------ gracias ------------------------------ */
 VIS.fin = root => {
+  const NOTAS=['♪','♫','♩','♬'], COLS=['#FDB913','#5FD68C','#FF7A80','#FDB913','#5FD68C'];
+  const notas=Array.from({length:5},(_,i)=>`<span style="left:${i*3.6}rem;color:${COLS[i]};animation-delay:${2.5+i*.35}s;font-size:${1.7+ (i%3)*.5}rem">${NOTAS[i%NOTAS.length]}</span>`).join('');
   root.innerHTML=`<div class="fin">
-    <div class="fin-t"><small class="rv">Muchas</small><span class="bar">gracias</span><p class="rv">Nueve alertas, una posición clara para cada una. El SETP sigue en marcha.</p></div>
+    <div class="fin-t"><small class="rv">Muchas</small><span class="bar">Gracias</span><p class="rv">Nueve alertas, una posición clara para cada una. El SETP sigue en marcha.</p></div>
     <div class="fin-b rv"><button class="btn sol" id="v1">Volver al panorama</button><button class="btn borde" id="v2">Hoja de ruta</button><button class="btn borde" id="v3">Reiniciar</button></div>
     <div class="fin-road"></div><svg class="fin-bus"><use href="#i-bus"/></svg>
-    <div class="fin-l rv"><img src="img/logo-full.png" style="height:12rem" alt=""><img src="img/alcaldia.png" style="height:8.4rem;background:#fff;border-radius:.8rem;padding:.4rem .9rem" alt=""></div></div>`;
+    <div class="fin-notas">${notas}</div>
+    <div class="fin-l rv"><img src="img/logo-full.png" style="height:12rem" alt=""><img src="img/alcaldia.png" style="height:8.4rem;background:var(--card);border-radius:.8rem;padding:.4rem .9rem" alt=""></div></div>`;
   $('#v1',root).onclick=()=>ir(idxTipo('panorama')); $('#v2',root).onclick=()=>ir(idxTipo('ruta')); $('#v3',root).onclick=()=>ir(0);
 };

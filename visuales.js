@@ -2,7 +2,7 @@
    VISUALES «EXPLORAR» — uno por alerta. Área útil: 106 × 48 rem. Texto mínimo: 1,5 rem.
    ===================================================================== */
 estilo(`
-.caja{ background:#fff; padding:1.6rem 2rem; min-height:0 }
+.caja{ background:var(--card); padding:1.6rem 2rem; min-height:0 }
 .hd{ font:700 1.5rem var(--fd); color:var(--mut) }
 .k-num{ font:800 3.2rem/1 var(--fd); color:var(--ink); letter-spacing:-.02em }
 .pill{ display:inline-block; padding:.2rem .9rem; border-radius:.35rem; font:700 1.5rem var(--fd); white-space:nowrap }
@@ -12,10 +12,10 @@ estilo(`
 .fet{ display:grid; grid-template-rows:auto minmax(0,1fr); gap:1.8rem; height:100% }
 .fet-p{ padding:1.4rem 2rem 1.2rem }
 .pasos{ position:relative; display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:1rem }
-.pasos:before{ content:""; position:absolute; left:10%; right:10%; top:1.7rem; height:.35rem; background:#D8D2C4; border-radius:1rem }
+.pasos:before{ content:""; position:absolute; left:10%; right:10%; top:1.7rem; height:.35rem; background:#CBD6E7; border-radius:1rem }
 .pasos:after{ content:""; position:absolute; left:10%; top:1.7rem; height:.35rem; width:calc(var(--p,0)*20%); background:var(--sol); border-radius:1rem; transition:width .6s cubic-bezier(.5,0,.2,1) }
 .paso{ position:relative; z-index:1; text-align:center; font:600 1.55rem/1.15 var(--ft); color:var(--mut); padding:0 .4rem; transition:.25s }
-.paso span{ display:flex; margin:0 auto .6rem; width:3.6rem; height:3.6rem; border-radius:50%; align-items:center; justify-content:center; font:800 1.7rem var(--fd); background:#fff; box-shadow:inset 0 0 0 .3rem #C9C3B4; color:var(--mut); transition:.25s }
+.paso span{ display:flex; margin:0 auto .6rem; width:3.6rem; height:3.6rem; border-radius:50%; align-items:center; justify-content:center; font:800 1.7rem var(--fd); background:var(--card); box-shadow:inset 0 0 0 .3rem #C0CCDF; color:var(--mut); transition:.25s }
 .paso.pas span{ background:var(--sol); box-shadow:none; color:var(--ink) }
 .paso.act{ color:var(--ink) } .paso.act span{ background:var(--ink); box-shadow:none; color:#fff; transform:scale(1.18) }
 .paso-d{ margin-top:1rem; font-size:1.7rem; line-height:1.2; color:var(--ink); min-height:2.1rem }
@@ -38,13 +38,13 @@ estilo(`
 
 /* ---------- Concertación ---------- */
 .con{ display:grid; grid-template-columns:minmax(0,1fr) 25rem; grid-template-rows:minmax(0,1fr) minmax(0,1fr) 10rem; gap:1.6rem; height:100% }
-.lane{ background:#fff; padding:1.2rem 2.4rem 1.4rem; display:flex; flex-direction:column; min-height:0 }
+.lane{ background:var(--card); padding:1.2rem 2.4rem 1.4rem; display:flex; flex-direction:column; min-height:0 }
 .lane h4{ font:800 1.75rem var(--fd); color:var(--c) }
 .ctr{ position:relative; flex:1; margin-top:.4rem; padding-top:4.6rem; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1.6rem; min-height:0 }
 .ctr:before{ content:""; position:absolute; left:0; right:0; top:3.3rem; height:.5rem; border-radius:1rem; background:color-mix(in srgb,var(--c) 28%,#fff) }
 .ctr:after{ content:""; position:absolute; left:0; top:3.3rem; height:.5rem; border-radius:1rem; background:var(--c); width:var(--w,0%); transition:width .8s cubic-bezier(.5,0,.2,1) }
-.est{ position:relative; text-align:left; padding:1rem 1.4rem; background:#F5F2EB; border-left:.55rem solid color-mix(in srgb,var(--c) 35%,#fff); transition:.25s; display:flex; align-items:center; gap:1rem; min-height:0 }
-.est:hover{ background:#ECE7DB }
+.est{ position:relative; text-align:left; padding:1rem 1.4rem; background:var(--paper); border-left:.55rem solid color-mix(in srgb,var(--c) 35%,#fff); transition:.25s; display:flex; align-items:center; gap:1rem; min-height:0 }
+.est:hover{ background:#DFE6F2 }
 .est em{ flex:none; font-style:normal; width:3rem; height:3rem; border-radius:50%; background:var(--c); color:#fff; display:flex; align-items:center; justify-content:center; font:800 1.6rem var(--fd) }
 .est b{ font:700 1.75rem/1.12 var(--fd); color:var(--ink) }
 .est.act{ background:color-mix(in srgb,var(--c) 14%,#fff); border-left-color:var(--c) }
@@ -57,7 +57,7 @@ estilo(`
 .cfin .sello{ position:absolute; top:1.6rem; right:-1rem; font:800 1.7rem var(--fd); letter-spacing:.06em; padding:.3rem 1.4rem; border:.28rem solid #fff; transform:rotate(12deg) scale(3); opacity:0 }
 .cfin.ok .sello{ animation:sello .5s .1s cubic-bezier(.2,1.4,.4,1) forwards }
 @keyframes sello{ to{ transform:rotate(12deg) scale(1); opacity:1 } }
-.cdet{ grid-column:1/3; background:#fff; border-left:.7rem solid var(--sol); padding:1rem 2.2rem; display:flex; flex-direction:column; justify-content:center }
+.cdet{ grid-column:1/3; background:var(--card); border-left:.7rem solid var(--sol); padding:1rem 2.2rem; display:flex; flex-direction:column; justify-content:center }
 .cdet b{ font:800 2.1rem var(--fd); color:var(--ink) } .cdet span{ font-size:1.7rem; line-height:1.2; color:var(--tx); margin-top:.2rem }
 
 /* ---------- Semáforos ---------- */
@@ -70,21 +70,21 @@ estilo(`
 .sem-b{ display:flex; flex-direction:column; gap:1.6rem; min-height:0 }
 .brow .top{ display:flex; justify-content:space-between; align-items:baseline; font:600 1.7rem var(--ft) }
 .brow .top strong{ font:800 3.4rem/1 var(--fd); color:var(--ink) }
-.brow .b{ height:3.2rem; background:#DDD7C8; margin-top:.4rem; overflow:hidden }
+.brow .b{ height:3.2rem; background:#D5DDEC; margin-top:.4rem; overflow:hidden }
 .brow .b i{ display:block; height:100%; width:0; transition:width 1.2s cubic-bezier(.2,.8,.2,1) }
 .brecha{ align-self:flex-start; font:800 2rem var(--fd); color:var(--rojo); border-left:.5rem solid var(--rojo); padding:.2rem 1.4rem; background:#F8E2E0 }
 .sem-k{ display:flex; gap:3.4rem } .sem-k div b{ display:block; font:800 3.6rem/1 var(--fd); color:var(--ink) } .sem-k div b em{ font-style:normal; font-size:2.2rem; color:var(--mut) } .sem-k div span{ font-size:1.5rem; color:var(--mut) }
 .sem-c{ min-height:0 }
 .dots{ display:grid; grid-template-columns:repeat(8,minmax(0,1fr)); gap:.9rem; margin-top:1.4rem }
-.dt{ aspect-ratio:1; border-radius:50%; background:#DCD6C7; transition:.3s cubic-bezier(.3,1.5,.5,1); cursor:pointer }
+.dt{ aspect-ratio:1; border-radius:50%; background:#C7D0DE; transition:.3s cubic-bezier(.3,1.5,.5,1); cursor:pointer }
 .dt.inst{ background:var(--ambar) } .dt.op{ background:#2BB868 } .dt.dim{ opacity:.18 } .dt:hover{ transform:scale(1.15) }
 .leg{ display:flex; flex-wrap:wrap; gap:.7rem }
-.sem-d{ grid-column:1/4; display:flex; align-items:center; gap:2.4rem; background:#fff; padding:1.3rem 2.2rem }
+.sem-d{ grid-column:1/4; display:flex; align-items:center; gap:2.4rem; background:var(--card); padding:1.3rem 2.2rem }
 .sem-d .fnx{ font-size:1.7rem; color:var(--ink) } .sem-d .fnx b{ font:800 2.1rem var(--fd) }
 
 /* ---------- ART ---------- */
 .app{ display:grid; grid-template-columns:minmax(0,1fr) 34rem; gap:2.6rem; height:100% }
-.app-d{ background:#fff; position:relative; min-height:0; display:flex; flex-direction:column; padding-bottom:3.2rem }
+.app-d{ background:var(--card); position:relative; min-height:0; display:flex; flex-direction:column; padding-bottom:3.2rem }
 .app-d svg{ flex:1; min-height:0; width:100% }
 .app-d .ln{ fill:none; stroke-width:11; stroke-linecap:round; transition:opacity .3s; cursor:pointer }
 .app-d .lbl{ font:700 22px var(--ft); fill:var(--ink) }
@@ -96,14 +96,14 @@ estilo(`
 .lns{ display:flex; gap:1rem }
 .lns button{ width:4.8rem; height:4.8rem; border-radius:50%; background:var(--c); color:#fff; font:800 2.4rem var(--fd); transition:transform .25s cubic-bezier(.3,1.5,.5,1) }
 .lns button:hover{ transform:scale(1.1) } .lns button.on{ box-shadow:0 0 0 .4rem var(--paper), 0 0 0 .7rem var(--c) }
-.info{ background:#fff; border-left:.7rem solid var(--ink); padding:1.2rem 1.7rem; flex:1; min-height:0; overflow:hidden }
+.info{ background:var(--card); border-left:.7rem solid var(--ink); padding:1.2rem 1.7rem; flex:1; min-height:0; overflow:hidden }
 .info b{ display:block; font:800 2rem/1.15 var(--fd); color:var(--ink); margin-bottom:.6rem } .info span{ font-size:1.65rem; line-height:1.25; color:var(--tx) }
 .acl{ display:flex; flex-direction:column; gap:.8rem }
 .acl button{ text-align:left; padding:.6rem 1.2rem; background:#F8E2E0; border-left:.5rem solid var(--rojo); font:700 1.55rem/1.15 var(--ft); color:#7B1A22; transition:.2s } .acl button:hover{ background:#F3CFCB }
 
 .tlb{ position:relative; height:14.2rem; margin:0 1rem }
 .tlb .ax{ position:absolute; left:0; right:0; top:50%; height:.5rem; background:var(--ink); border-radius:1rem }
-.tlb .nd{ position:absolute; top:50%; width:3.4rem; height:3.4rem; margin:-1.45rem 0 0 -1.7rem; border-radius:50%; background:#fff; box-shadow:inset 0 0 0 .32rem var(--ink); z-index:2; cursor:pointer; transition:transform .25s cubic-bezier(.3,1.5,.5,1), background .25s; font:800 1.6rem var(--fd); color:var(--ink); display:flex; align-items:center; justify-content:center }
+.tlb .nd{ position:absolute; top:50%; width:3.4rem; height:3.4rem; margin:-1.45rem 0 0 -1.7rem; border-radius:50%; background:var(--card); box-shadow:inset 0 0 0 .32rem var(--ink); z-index:2; cursor:pointer; transition:transform .25s cubic-bezier(.3,1.5,.5,1), background .25s; font:800 1.6rem var(--fd); color:var(--ink); display:flex; align-items:center; justify-content:center }
 .tlb .nd.hecho{ background:var(--sol); box-shadow:inset 0 0 0 .32rem var(--ink) } .tlb .nd.act{ transform:scale(1.3); background:var(--ink); color:#fff }
 .tlb .fe{ position:absolute; width:11rem; margin-left:-5.5rem; text-align:center; font:700 1.55rem var(--fd); color:var(--mut); cursor:pointer } .tlb .fe.act{ color:var(--ink) }
 .tlb .gap{ position:absolute; top:calc(50% - 3.6rem); font:700 1.5rem var(--fd); color:var(--rojo); transform:translateX(-50%); white-space:nowrap }
@@ -114,42 +114,43 @@ estilo(`
 .tdet{ font:700 2rem/1.2 var(--fd); color:var(--ink); min-height:2.6rem } .tdet em{ font-style:normal; color:var(--rojo) }
 .appb-b{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.1fr); gap:1.8rem; min-height:0 }
 .puertas{ display:flex; flex-direction:column; gap:.8rem; margin-top:.8rem }
-.puerta{ display:flex; align-items:center; gap:1.2rem; padding:.5rem 1.2rem; background:#F5F2EB; cursor:pointer; transition:.2s; font:700 1.65rem/1.12 var(--fd); color:var(--ink) } .puerta:hover{ background:#ECE7DB }
+.puerta{ display:flex; align-items:center; gap:1.2rem; padding:.5rem 1.2rem; background:var(--paper); cursor:pointer; transition:.2s; font:700 1.65rem/1.12 var(--fd); color:var(--ink) } .puerta:hover{ background:#DFE6F2 }
 .puerta .ck{ flex:none; width:2.8rem; height:2.8rem; border-radius:.4rem; box-shadow:inset 0 0 0 .25rem var(--rojo); transition:.2s; position:relative }
 .puerta.on .ck{ background:var(--verde); box-shadow:none } .puerta.on .ck:before{ content:""; position:absolute; left:.8rem; top:.45rem; width:.9rem; height:1.5rem; border-right:.32rem solid #fff; border-bottom:.32rem solid #fff; transform:rotate(45deg) }
 .medidor{ display:flex; align-items:center; gap:1.6rem; margin-top:1rem }
-.medidor .barra{ flex:1; height:2.4rem; background:#DDD7C8 } .medidor .barra i{ display:block; height:100%; width:0; background:var(--rojo); transition:width .5s, background .4s }
+.medidor .barra{ flex:1; height:2.4rem; background:#D5DDEC } .medidor .barra i{ display:block; height:100%; width:0; background:var(--rojo); transition:width .5s, background .4s }
 .medidor b{ font:800 1.9rem var(--fd); color:var(--ink); white-space:nowrap }
 .comp{ display:flex; flex-direction:column; gap:.9rem; margin-top:.8rem }
-.comp div{ display:grid; grid-template-columns:3rem minmax(0,1fr) auto; gap:1.2rem; align-items:center; font-size:1.6rem; line-height:1.15; color:var(--ink); font-weight:600; padding:.5rem 0; border-bottom:.12rem solid #E4DED0 }
+.comp div{ display:grid; grid-template-columns:3rem minmax(0,1fr) auto; gap:1.2rem; align-items:center; font-size:1.6rem; line-height:1.15; color:var(--ink); font-weight:600; padding:.5rem 0; border-bottom:.12rem solid #DBE3F0 }
 .comp div em{ font:800 1.8rem var(--fd); font-style:normal; color:var(--mut) }
 
 /* ---------- desembolsos ---------- */
 .des{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:2.4rem; height:100% }
-.gr{ background:#fff; padding:1.6rem 2rem; display:flex; flex-direction:column; min-height:0 }
+.gr{ background:var(--card); padding:1.6rem 2rem; display:flex; flex-direction:column; min-height:0 }
 .gr .tot{ font:800 4rem/1 var(--fd); color:var(--ink); letter-spacing:-.03em; margin:.3rem 0 .6rem } .gr .tot small{ font:600 1.55rem var(--ft); color:var(--mut); letter-spacing:0 }
 .gr svg{ flex:1; min-height:0; width:100% }
 .gr .b rect{ transition:.3s } .gr .b:hover rect{ opacity:.85 }
 .gr .ax text{ font:700 16px var(--fd); fill:#5B6688; text-anchor:middle } .gr .vl{ font:800 17px var(--fd); fill:#0F1F52; text-anchor:middle } .gr .g{ font:800 15px var(--ft); fill:#1E9E4F; text-anchor:middle }
-.leyenda{ display:flex; gap:2rem; font-size:1.55rem; color:var(--ink) } .leyenda i{ display:inline-block; width:1.4rem; height:1.4rem; margin-right:.6rem; vertical-align:-.1rem }
+.leyenda{ display:flex; gap:2rem; font-size:1.55rem; color:var(--ink); margin-top:.5rem; transition:.2s } .leyenda i{ display:inline-block; width:1.4rem; height:1.4rem; margin-right:.6rem; vertical-align:-.1rem; border-radius:.3rem }
+.gnote{ font-size:1.4rem; color:var(--mut); margin-top:-.3rem }
 .des2{ display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr); gap:2.4rem; height:100% }
 .tp{ width:100%; border-collapse:collapse; margin-top:.8rem }
 .tp th{ font:700 1.5rem var(--fd); color:var(--mut); text-align:left; padding:.3rem .6rem; border-bottom:.22rem solid var(--ink) }
-.tp td{ font-size:1.6rem; padding:.4rem .6rem; border-bottom:.12rem solid #E4DED0; line-height:1.1; font-weight:600; color:var(--ink) }
-.tp tr{ cursor:pointer } .tp tbody tr:hover, .tp tr.sel{ background:#F1ECE0 } .tp td.v{ text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums; font-weight:500 }
-.fs4{ display:flex; gap:.3rem } .fs4 i{ width:1.6rem; height:.8rem; background:#D6D0C1 } .fs4 i.on{ background:var(--azul) } .fs4 i.cur{ background:var(--ambar) }
+.tp td{ font-size:1.6rem; padding:.4rem .6rem; border-bottom:.12rem solid #DBE3F0; line-height:1.1; font-weight:600; color:var(--ink) }
+.tp tr{ cursor:pointer } .tp tbody tr:hover, .tp tr.sel{ background:#E6ECF7 } .tp td.v{ text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums; font-weight:500 }
+.fs4{ display:flex; gap:.3rem } .fs4 i{ width:1.6rem; height:.8rem; background:#CCD6E6 } .fs4 i.on{ background:var(--azul) } .fs4 i.cur{ background:var(--ambar) }
 .split{ display:flex; height:2.6rem; margin-top:.6rem; font:700 1.5rem var(--fd); color:#fff } .split i{ display:flex; align-items:center; justify-content:center; font-style:normal; width:0; transition:width 1s cubic-bezier(.2,.8,.2,1); overflow:hidden; white-space:nowrap }
-.dcard{ margin-top:.7rem; padding:.7rem 1.4rem; background:#F5F2EB; border-left:.6rem solid var(--ink); font-size:1.65rem; line-height:1.2; color:var(--ink) }
+.dcard{ margin-top:.7rem; padding:.7rem 1.4rem; background:var(--paper); border-left:.6rem solid var(--ink); font-size:1.65rem; line-height:1.2; color:var(--ink) }
 .cart{ display:flex; flex-direction:column; gap:.9rem; margin:1rem 0 }
-.cart button{ display:flex; align-items:center; gap:1rem; text-align:left; padding:.8rem 1.3rem; background:#F5F2EB; border-left:.6rem solid #C9C3B4; font:700 1.6rem/1.12 var(--fd); color:var(--ink); transition:.2s }
+.cart button{ display:flex; align-items:center; gap:1rem; text-align:left; padding:.8rem 1.3rem; background:var(--paper); border-left:.6rem solid #C0CCDF; font:700 1.6rem/1.12 var(--fd); color:var(--ink); transition:.2s }
 .cart button.on{ background:#E1F1E6; border-left-color:var(--verde) } .cart button b{ margin-left:auto; white-space:nowrap; font-size:1.7rem } .cart button small{ display:block; font:500 1.5rem var(--ft); color:var(--mut) }
-.cbar{ height:3rem; background:#DDD7C8; position:relative } .cbar i{ display:block; height:100%; width:0; background:var(--verde); transition:width .7s cubic-bezier(.2,.8,.2,1) }
+.cbar{ height:3rem; background:#D5DDEC; position:relative } .cbar i{ display:block; height:100%; width:0; background:var(--verde); transition:width .7s cubic-bezier(.2,.8,.2,1) }
 .cbar span{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font:800 1.6rem var(--fd); color:var(--ink) }
 
 /* ---------- actos ---------- */
 .actos{ position:relative; display:flex; flex-direction:column; gap:1.4rem; height:100% }
 .act-t{ display:flex; align-items:center; gap:2rem }
-.pool{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; min-height:12.6rem; padding:1.2rem; background:#E9E4D8; align-content:start }
+.pool{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; min-height:12.6rem; padding:1.2rem; background:#DEE5F1; align-content:start }
 .pool:empty:after{ content:"Todos los actos están ubicados"; grid-column:1/4; text-align:center; font-size:1.7rem; color:var(--mut); padding:4rem 0 }
 .ac{ padding:1rem 1.4rem; background:var(--ink); color:#fff; font:600 1.6rem/1.15 var(--ft); cursor:grab; user-select:none; touch-action:none; transition:transform .2s, box-shadow .2s; min-height:4.9rem; display:flex; align-items:center }
 .ac:hover{ transform:translateY(-.2rem) }
@@ -157,7 +158,7 @@ estilo(`
 .ac.mal{ animation:sacude .45s } @keyframes sacude{ 20%,60%{ transform:translateX(-.6rem) } 40%,80%{ transform:translateX(.6rem) } }
 .act-h{ min-height:2.2rem; font:600 1.65rem var(--ft); color:#8A5A00 }
 .lanes{ flex:1; min-height:0; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:1.6rem }
-.lane2{ position:relative; background:#fff; border-top:.7rem solid var(--c); padding:1.2rem 1.8rem; display:flex; flex-direction:column; gap:.7rem; overflow:hidden; transition:.25s }
+.lane2{ position:relative; background:var(--card); border-top:.7rem solid var(--c); padding:1.2rem 1.8rem; display:flex; flex-direction:column; gap:.7rem; overflow:hidden; transition:.25s }
 .lane2.over{ background:color-mix(in srgb,var(--c) 14%,#fff) }
 .lane2 h5{ font:800 1.75rem var(--fd); color:var(--ink); display:flex; align-items:center; gap:1rem } .lane2 h5 em{ margin-left:auto; font-style:normal; font-size:1.6rem; padding:.05rem 1rem; background:var(--c); color:var(--cx,#fff) }
 .lane2 small{ font-size:1.5rem; color:var(--mut) } .lane2 .ls{ display:flex; flex-direction:column; gap:.7rem; flex:1 } .lane2 .ac{ cursor:default; background:var(--c); color:var(--cx,#fff); min-height:4.3rem; padding:.6rem 1.2rem }
@@ -167,32 +168,32 @@ estilo(`
 
 /* ---------- PMA ---------- */
 .pma{ display:flex; flex-direction:column; gap:1.8rem; height:100% }
-.pma-s{ position:relative; height:14.6rem; background:#fff; flex:none }
+.pma-s{ position:relative; height:14.6rem; background:var(--card); flex:none }
 .pma-s .nodo{ position:absolute; top:1rem; width:22rem; margin-left:-11rem; text-align:center }
 .pma-s .nodo svg{ width:5.2rem; height:5.2rem; color:var(--ink) } .pma-s .nodo b{ display:block; font:800 1.75rem var(--fd); color:var(--ink) } .pma-s .nodo span{ font-size:1.5rem; color:var(--mut) }
-.pma-s .cam{ position:absolute; left:14%; right:14%; top:11.3rem; border-top:.35rem dashed #B9B2A0 }
+.pma-s .cam{ position:absolute; left:14%; right:14%; top:11.3rem; border-top:.35rem dashed #A9B8CE }
 .pma-s .sobre{ position:absolute; top:9.45rem; width:5.2rem; height:3.7rem; margin-left:-2.6rem; transition:left 1.6s cubic-bezier(.5,0,.2,1) }
 .pma-s .msg{ position:absolute; left:0; right:0; bottom:.5rem; text-align:center; font:800 1.75rem var(--fd); color:var(--rojo) }
 .pma-s .msg.ok{ color:var(--verde) }
 .pma-b{ flex:1; min-height:0; display:grid; grid-template-columns:minmax(0,1fr) 31rem; gap:2rem }
 .chk{ display:flex; flex-direction:column; gap:.6rem }
-.chk button{ display:flex; align-items:center; gap:1.4rem; padding:.55rem 1.4rem; text-align:left; background:#fff; font:600 1.7rem/1.1 var(--ft); color:var(--ink); transition:.2s } .chk button:hover{ background:#EFEAE0 }
+.chk button{ display:flex; align-items:center; gap:1.4rem; padding:.55rem 1.4rem; text-align:left; background:var(--card); font:600 1.7rem/1.1 var(--ft); color:var(--ink); transition:.2s } .chk button:hover{ background:#E3E9F4 }
 .chk .ck{ flex:none; width:2.8rem; height:2.8rem; border-radius:.4rem; box-shadow:inset 0 0 0 .25rem var(--ink); position:relative }
 .chk button.on .ck{ background:var(--verde); box-shadow:none } .chk button.on .ck:before{ content:""; position:absolute; left:.8rem; top:.45rem; width:.9rem; height:1.5rem; border-right:.32rem solid #fff; border-bottom:.32rem solid #fff; transform:rotate(45deg) }
-.pma-c{ background:#fff; display:flex; flex-direction:column; align-items:center; gap:1.2rem; padding:1.4rem 1.8rem }
-.pma-c .k-num{ font-size:5rem } .pma-c .btn{ width:100%; font-size:1.55rem; padding:.9rem 1rem } .pma-c .bar{ width:100%; height:1.6rem; background:#DDD7C8 } .pma-c .bar i{ display:block; height:100%; width:0; background:var(--sol); transition:width .4s, background .3s }
+.pma-c{ background:var(--card); display:flex; flex-direction:column; align-items:center; gap:1.2rem; padding:1.4rem 1.8rem }
+.pma-c .k-num{ font-size:5rem } .pma-c .btn{ width:100%; font-size:1.55rem; padding:.9rem 1rem } .pma-c .bar{ width:100%; height:1.6rem; background:#D5DDEC } .pma-c .bar i{ display:block; height:100%; width:0; background:var(--sol); transition:width .4s, background .3s }
 
 /* ---------- Gantt ---------- */
 .gtw{ display:flex; flex-direction:column; gap:1.2rem; height:100% }
 .gt-top{ display:flex; align-items:center; gap:1rem; flex-wrap:wrap }
 .lg-i{ display:inline-flex; align-items:center; gap:.6rem; font:600 1.5rem var(--ft); color:var(--ink); margin-left:.6rem } .lg-i i{ width:1.4rem; height:1.4rem }
-.gt{ position:relative; --lw:27rem; background:#fff; padding:.4rem 1.6rem 1rem; flex:none }
+.gt{ position:relative; --lw:27rem; background:var(--card); padding:.4rem 1.6rem 1rem; flex:none }
 .gt-h, .gt-r{ display:grid; grid-template-columns:var(--lw) minmax(0,1fr) }
-.gt-hy{ display:flex } .gt-hy .y{ flex:1; text-align:left; border-left:.15rem solid #CFC9BA; padding:.3rem 0 .2rem .8rem; font:800 1.6rem var(--fd); color:var(--ink) }
-.gt-r{ height:2.85rem; align-items:center; cursor:pointer; border-top:.12rem solid #EBE6DA } .gt-r.gsep{ border-top:.3rem solid var(--ink) }
-.gt-r:hover, .gt-r.sel{ background:#F1ECE0 }
+.gt-hy{ display:flex } .gt-hy .y{ flex:1; text-align:left; border-left:.15rem solid #C7D2E3; padding:.3rem 0 .2rem .8rem; font:800 1.6rem var(--fd); color:var(--ink) }
+.gt-r{ height:2.85rem; align-items:center; cursor:pointer; border-top:.12rem solid #E0E6F1 } .gt-r.gsep{ border-top:.3rem solid var(--ink) }
+.gt-r:hover, .gt-r.sel{ background:#E6ECF7 }
 .gt-r .lb{ font:700 1.55rem var(--ft); color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding-right:.6rem }
-.gt-t{ position:relative; height:100%; background:repeating-linear-gradient(90deg,#E6E1D4 0 .12rem,transparent .12rem 8.3333%) }
+.gt-t{ position:relative; height:100%; background:repeating-linear-gradient(90deg,#DBE2EF 0 .12rem,transparent .12rem 8.3333%) }
 .gt-t .bd{ position:absolute; top:.4rem; bottom:.4rem }
 .gt-t .bd.ft{ opacity:.45; background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.75) 0 .35rem,transparent .35rem .8rem) }
 .gt-t .bd.lt{ background:repeating-linear-gradient(135deg,#D3313A 0 .45rem,#8E1A22 .45rem .9rem) }
@@ -201,11 +202,11 @@ estilo(`
 .gt-play{ position:absolute; top:.4rem; bottom:.6rem; left:calc(1.6rem + var(--lw) + (100% - 3.2rem - var(--lw)) * var(--f,.5)); width:0; z-index:6; pointer-events:none }
 .gt-play:before{ content:""; position:absolute; left:-.15rem; top:2.6rem; bottom:0; width:.3rem; background:var(--ink) }
 .gt-play .mango{ position:absolute; left:0; top:0; transform:translateX(-50%); background:var(--sol); color:var(--ink); font:800 1.5rem var(--fd); padding:.35rem 1.2rem; cursor:ew-resize; white-space:nowrap; pointer-events:auto }
-.gt-d{ background:#fff; border-left:.7rem solid var(--ink); padding:.6rem 1.8rem; font-size:1.6rem; line-height:1.2; color:var(--ink); flex:1; min-height:0 }
+.gt-d{ background:var(--card); border-left:.7rem solid var(--ink); padding:.6rem 1.8rem; font-size:1.6rem; line-height:1.2; color:var(--ink); flex:1; min-height:0 }
 .gt-d b.t{ font:800 1.8rem var(--fd) }
 .mp{ position:absolute; inset:0 } .mp #mapa{ position:absolute; inset:0 }
 .mp-l{ position:absolute; left:0; top:0; bottom:9.6rem; width:35rem; z-index:5; overflow:auto; display:flex; flex-direction:column; gap:.6rem; background:var(--paper); padding:.8rem; scrollbar-width:thin }
-.mp-l button{ display:flex; align-items:center; gap:1rem; text-align:left; padding:.7rem 1rem; background:#fff; border-left:.6rem solid var(--c); font:700 1.6rem/1.1 var(--fd); color:var(--ink); transition:.2s } .mp-l button:hover{ background:#EFEAE0 } .mp-l button.sel{ background:var(--ink); color:#fff }
+.mp-l button{ display:flex; align-items:center; gap:1rem; text-align:left; padding:.7rem 1rem; background:var(--card); border-left:.6rem solid var(--c); font:700 1.6rem/1.1 var(--fd); color:var(--ink); transition:.2s } .mp-l button:hover{ background:#E3E9F4 } .mp-l button.sel{ background:var(--ink); color:#fff }
 .mp-l button small{ display:block; font:500 1.5rem var(--ft); color:var(--mut) } .mp-l button.sel small{ color:#C5CFEE }
 .mp-d{ position:absolute; left:0; right:0; bottom:0; height:9rem; z-index:5; background:var(--ink); color:#fff; padding:1rem 2rem; font-size:1.6rem; line-height:1.2 } .mp-d b{ color:var(--sol); font:800 1.8rem var(--fd) }
 .mp-c{ position:absolute; right:1rem; top:1rem; z-index:5; display:flex; gap:.6rem } .mp-c .chip{ background:var(--paper) } .mp-c .chip.on{ background:var(--ink) }
@@ -215,12 +216,12 @@ estilo(`
 
 /* ---------- tecnología ---------- */
 .tec{ display:grid; grid-template-rows:minmax(0,1.55fr) minmax(0,1fr); gap:1.6rem; height:100% }
-.tec-n{ position:relative; background:#fff; min-height:0 } .tec-n svg{ position:absolute; inset:0; width:100%; height:100% }
-.tec-n .lk{ stroke:#B9B2A0; stroke-width:3; stroke-dasharray:8 8 } .tec-n .lk.ok{ stroke:var(--verde); stroke-dasharray:none; stroke-width:5 }
+.tec-n{ position:relative; background:var(--card); min-height:0 } .tec-n svg{ position:absolute; inset:0; width:100%; height:100% }
+.tec-n .lk{ stroke:#A9B8CE; stroke-width:3; stroke-dasharray:8 8 } .tec-n .lk.ok{ stroke:var(--verde); stroke-dasharray:none; stroke-width:5 }
 .tec-n .nd{ cursor:grab } .tec-n .nd rect{ transition:fill .4s } .tec-n .nd text{ fill:#fff; font-weight:700; text-anchor:middle; pointer-events:none } .tec-n .nd .s{ font-size:15px; font-weight:500 }
 .tec-n .pk{ fill:var(--ink) }
 .tec-b{ position:absolute; left:1.4rem; top:1.2rem; display:flex; gap:1.2rem; align-items:center; z-index:2 } .tec-s{ position:absolute; left:50%; bottom:.7rem; transform:translateX(-50%); font-size:1.55rem; color:var(--mut); white-space:nowrap; z-index:2 }
-.tec-g{ background:#fff; padding:0 0 0; overflow:hidden } .tec-g .gt{ padding-top:.2rem }
+.tec-g{ background:var(--card); padding:0 0 0; overflow:hidden } .tec-g .gt{ padding-top:.2rem }
 `);
 
 const MESES_L = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
@@ -239,7 +240,7 @@ VIS.fet = root => {
     <div class="caja fet-p rv"><div class="pasos" id="pasos"></div><div class="paso-d" id="pd"></div></div>
     <div class="fmain">
       <div class="tank rv"><svg viewBox="0 0 260 400"><defs><clipPath id="cp"><path d="M35 60v274a95 24 0 0 0 190 0V60a95 24 0 0 1-190 0z"/></clipPath></defs>
-          <path d="M100 4h60l-12 28h-36z" fill="#B9B2A0"/>
+          <path d="M100 4h60l-12 28h-36z" fill="#A9B8CE"/>
           <g id="mons">${[0,.5,1].map(d=>`<use class="mon" href="#i-coin" x="${112+d*8}" y="0" width="32" height="32" style="animation-delay:${d}s;animation-duration:${1.5+d*.3}s"/>`).join('')}</g>
           <path d="M35 60v274a95 24 0 0 0 190 0V60a95 24 0 0 1-190 0z" fill="#fff"/>
           <g clip-path="url(#cp)"><g id="agua" style="transform:translateY(360px)"><g class="o2" opacity=".55"><path id="w2" d="M-190 0q47.5-16 95 0t95 0t95 0t95 0t95 0t95 0v420h-570z"/></g><g class="o1"><path id="w1" d="M-190 6q47.5 14 95 0t95 0t95 0t95 0t95 0t95 0v420h-570z"/></g></g></g>
@@ -307,7 +308,7 @@ VIS.sem = root => {
       <div class="sem-k"><div><b id="kc">25<em> / 28</em></b><span>controladores instalados</span></div><div><b id="ki">25<em> / 34</em></b><span>intersecciones instaladas</span></div></div></div>
     <div class="sem-c rv"><div class="leg" id="fl">
         <button class="chip on" data-f="todas">Las 34</button><button class="chip" data-f="op" style="--c:#2BB868"><i></i><span id="c-op">14</span> operan</button>
-        <button class="chip" data-f="inst" style="--c:#F0A800"><i></i><span id="c-in">11</span> sin operar</button><button class="chip" data-f="pend" style="--c:#B9B2A0"><i></i><span id="c-pe">9</span> por instalar</button></div>
+        <button class="chip" data-f="inst" style="--c:#F0A800"><i></i><span id="c-in">11</span> sin operar</button><button class="chip" data-f="pend" style="--c:#A9B8CE"><i></i><span id="c-pe">9</span> por instalar</button></div>
       <div class="dots" id="dots"></div></div>
     <div class="sem-d rv"><div class="seg" id="seg"><button data-m="1">Prórroga 1 mes</button><button data-m="2" class="on">Prórroga 2 meses</button></div>
       <div class="fnx">Reanudación <b>30 jun 2026</b> · fin estimado <b id="ffin"></b></div><button class="btn sol" id="sim" style="margin-left:auto">Simular cierre de Fase I</button><button class="btn borde" id="rst" style="display:none">Restablecer</button></div></div>`;
@@ -353,7 +354,7 @@ VIS.appA = root => {
     ['¿321.065 viajes por día?','En una ciudad de unos 0,55 a 0,6 millones de habitantes son más de medio viaje diario por habitante solo en el ART. Se contrasta con el estudio de demanda del SETP (sep. 2025).']];
   root.innerHTML=`<div class="app">
     <div class="app-d rv show" id="ad"><svg viewBox="0 0 1000 700" id="sv">
-        <path d="M40 90C200 40 560 20 890 100L965 260C925 430 800 660 640 690C440 710 220 600 90 420Z" fill="#ECE7DB"/>
+        <path d="M40 90C200 40 560 20 890 100L965 260C925 430 800 660 640 690C440 710 220 600 90 420Z" fill="#DFE6F2"/>
         ${Object.entries(LN).map(([k,l])=>`<path class="ln" data-k="${k}" d="${l.d}" stroke="${l.c}"/>`).join('')}
         <circle cx="905" cy="240" r="13" fill="#0F1F52"/><text x="880" y="285" text-anchor="end" class="lbl">Lote · inicio de A, B y C</text>
         <circle cx="90" cy="130" r="9" fill="#D3313A" stroke="#fff" stroke-width="3"/><circle cx="110" cy="215" r="9" fill="#2B63D9" stroke="#fff" stroke-width="3"/><text x="20" y="98" class="lbl">Fin de A y B</text>
@@ -427,23 +428,28 @@ VIS.desA = root => {
     <div class="gr rv"><div class="hd">Aportes del Municipio · 100 % desembolsado cada año</div>
       <div class="tot"><span data-count="${totM/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</span> <small>2021–2026</small></div>
       <svg viewBox="0 0 480 320" id="gm"></svg>
+      <div class="leyenda"><span><i style="background:#2B63D9"></i>Aporte</span><span id="lgix"><i style="background:#F0A800"></i>Indexación</span></div>
       <label class="sw on" id="swi"><i></i>Incluir indexación</label></div>
     <div class="gr rv"><div class="hd">Cofinanciación de la Nación · 2024–2026</div>
-      <div class="tot"><span data-count="${totN/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</span> <small>convenio</small></div>
-      <svg viewBox="0 0 480 320" id="gn"></svg>
-      <div class="leyenda"><span><i style="background:#1E9E4F"></i>Adjudicado ${(adj/totN*100).toFixed(1).replace('.',',')} %</span><span><i style="background:#D3313A"></i>Por reprogramar ${(rep/totN*100).toFixed(1).replace('.',',')} %</span></div></div></div>`;
+      <div class="tot"><span data-count="${totN/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</span> <small>convenio, todo el período</small></div>
+      <div class="gnote">Adjudicado ${(adj/totN*100).toFixed(1).replace('.',',')} % · Por reprogramar ${(rep/totN*100).toFixed(1).replace('.',',')} % en total</div>
+      <svg viewBox="0 0 480 340" id="gn"></svg>
+      <div class="leyenda"><span><i style="background:#1E9E4F"></i>Adjudicado</span><span><i style="background:#D3313A"></i>Por reprogramar</span></div></div></div>`;
   const rect=(x,w,v,max,col,base,H)=>{ const h=v/max*H; return `<rect x="${x}" width="${w}" y="${base-h}" height="${h}" fill="${col}"/>`; };
-  function dibujaM(){ const H=205, base=252, max=21e9, w=46; let s='';
+  function dibujaM(){ const H=195, base=248, max=21e9, w=46; let s='';
     M.anios.forEach((a,i)=>{ const x=22+i*74, ap=M.aporte[i], ix=conIdx?M.indexacion[i]:0, tot=ap+ix;
-      s+=`<g class="b" data-t="${a}: aportes ${fM(ap)}${M.indexacion[i]?` + indexación ${fM(M.indexacion[i])}`:''}" style="cursor:pointer">${rect(x,w,ap,max,'#2B63D9',base,H)}${ix?rect(x,w,ix,max,'#F0A800',base-ap/max*H,H):''}
-        <text class="vl" x="${x+w/2}" y="${base-tot/max*H-8}">${(tot/1e9).toFixed(1).replace('.',',')}</text></g><g class="ax"><text x="${x+w/2}" y="${base+22}">${a}</text></g><text class="g" x="${x+w/2}" y="${base+44}">100 %</text>`; });
-    $('#gm',root).innerHTML=s; $$('#gm .b',root).forEach(g=>{ g.onmousemove=e=>verTip(g.dataset.t,e); g.onmouseleave=ocultaTip; }); }
-  function dibujaN(){ const H=205, base=252, max=72e9, w=92; let s='';
-    N.anios.forEach((a,i)=>{ const x=48+i*146, ad=N.adjudicado[i], rp=N.reprogramar[i];
+      s+=`<g class="b" data-t="${a}: aporte ${fM(ap)}${M.indexacion[i]?` + indexación ${fM(M.indexacion[i])}`:''}" style="cursor:pointer">${rect(x,w,ap,max,'#2B63D9',base,H)}${ix?rect(x,w,ix,max,'#F0A800',base-ap/max*H,H):''}
+        <text class="vl" x="${x+w/2}" y="${base-tot/max*H-8}">$${(tot/1e9).toFixed(1).replace('.',',')}</text></g><g class="ax"><text x="${x+w/2}" y="${base+22}">${a}</text></g>`; });
+    $('#gm',root).innerHTML=s; $$('#gm .b',root).forEach(g=>{ g.onmousemove=e=>verTip(g.dataset.t,e); g.onmouseleave=ocultaTip; });
+    $('#lgix',root).style.opacity=conIdx?1:.3; }
+  function dibujaN(){ const H=190, base=248, max=72e9, w=92; let s='';
+    N.anios.forEach((a,i)=>{ const x=48+i*146, cx=x+w/2, ad=N.adjudicado[i], rp=N.reprogramar[i];
       s+=`<g class="b" data-t="${a}${a===2026?'*':''}: convenio ${fM(N.convenio[i])} · adjudicado ${fM(ad)} · por reprogramar ${fM(rp)}" style="cursor:pointer">${rect(x,w,ad,max,'#1E9E4F',base,H)}${rect(x,w,rp,max,'#D3313A',base-ad/max*H,H)}
-        <text class="vl" x="${x+w/2}" y="${base-N.convenio[i]/max*H-8}">${(N.convenio[i]/1e9).toFixed(1).replace('.',',')}</text>
-        <text x="${x+w/2}" y="${base-ad/max*H/2+6}" style="font:800 17px Montserrat;fill:#fff;text-anchor:middle">${Math.round(ad/N.convenio[i]*100)} %</text></g><g class="ax"><text x="${x+w/2}" y="${base+22}">${a}${a===2026?'*':''}</text></g>`; });
-    $('#gn',root).innerHTML=s+`<text x="470" y="312" text-anchor="end" style="font:500 15px Source Sans 3;fill:#5B6688">* 2026 proyectado</text>`;
+        <text class="vl" x="${cx}" y="${base-N.convenio[i]/max*H-8}">$${(N.convenio[i]/1e9).toFixed(1).replace('.',',')}</text></g>
+        <g class="ax"><text x="${cx}" y="${base+22}">${a}${a===2026?'*':''}</text></g>
+        <text x="${cx}" y="${base+40}" style="font:700 13px 'Source Sans 3';fill:#1E9E4F;text-anchor:middle">Adj. $${(ad/1e9).toFixed(1).replace('.',',')}</text>
+        <text x="${cx}" y="${base+56}" style="font:700 13px 'Source Sans 3';fill:#D3313A;text-anchor:middle">Repr. $${(rp/1e9).toFixed(1).replace('.',',')}</text>`; });
+    $('#gn',root).innerHTML=s+`<text x="470" y="336" text-anchor="end" style="font:500 15px Source Sans 3;fill:#5B6688">* 2026 proyectado</text>`;
     $$('#gn .b',root).forEach(g=>{ g.onmousemove=e=>verTip(g.dataset.t,e); g.onmouseleave=ocultaTip; }); }
   dibujaM(); dibujaN();
   $('#swi',root).onclick=()=>{ conIdx=!conIdx; $('#swi',root).classList.toggle('on',conIdx); dibujaM(); };
@@ -591,7 +597,7 @@ VIS.obraB = root => {
   const M=[], flip=c=>[c[1],c[0]], R=parseFloat(getComputedStyle(document.documentElement).fontSize);
   const map=new maplibregl.Map({container:'mapa',center:[-75.205,4.437],zoom:12.2,attributionControl:{compact:true},
     style:{version:8,sources:{base:{type:'raster',tileSize:256,maxzoom:19,attribution:'© OpenStreetMap contributors',tiles:['https://a.tile.openstreetmap.org/{z}/{x}/{y}.png','https://b.tile.openstreetmap.org/{z}/{x}/{y}.png','https://c.tile.openstreetmap.org/{z}/{x}/{y}.png']}},
-      layers:[{id:'fondo',type:'background',paint:{'background-color':'#EDE9DE'}},{id:'base',type:'raster',source:'base',paint:{'raster-saturation':-0.92,'raster-contrast':-0.05,'raster-brightness-min':.25,'raster-opacity':.95}}]}});
+      layers:[{id:'fondo',type:'background',paint:{'background-color':'#E2E8F1'}},{id:'base',type:'raster',source:'base',paint:{'raster-saturation':-0.92,'raster-contrast':-0.05,'raster-brightness-min':.25,'raster-opacity':.95}}]}});
   window.__mapa=map; limpiar.push(()=>{ try{ map.remove(); }catch(e){} });
   const lugar=f=>{ $$('#ml button',root).forEach(b=>b.classList.toggle('sel',b.dataset.id===f.id)); $('#md',root).innerHTML=`<b>${f.n}</b> · ${f.s}<br>${f.t}`;
     let pts=[]; f.k.forEach(k=>pts.push(...CORREDORES[k].coords)); if(f.id==='paraderos') pts=PARADEROS_12; if(f.id==='patios') pts=PATIOS.map(p=>p.coord);
