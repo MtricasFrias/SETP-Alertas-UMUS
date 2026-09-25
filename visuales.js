@@ -229,12 +229,12 @@ estilo(`
 .mp-l button.off{ opacity:.45 }
 .mp-f{ position:relative; background:var(--card); border-left:.8rem solid var(--c,var(--navy)); padding:.9rem 2rem 1rem; display:flex; flex-direction:column; gap:.4rem; min-height:0; overflow:hidden; transition:border-color .3s }
 .ff-x{ position:absolute; right:1.6rem; bottom:.9rem; padding:.3rem 1.2rem !important }
-.cv{ display:grid; grid-template-columns:1.15fr .95fr 1.1fr .9fr; gap:0 1.6rem; height:100%; align-content:center }
-.cv>div{ min-width:0 } .cv h6{ font:800 1.5rem var(--fd); color:var(--mut); text-transform:uppercase; letter-spacing:.06em; margin:0 0 .15rem .2rem }
-.cv button{ display:flex; align-items:center; gap:.9rem; width:100%; padding:.1rem .6rem .1rem .2rem; border-radius:.6rem; font:600 1.55rem/1.15 var(--ft); color:var(--ink); text-align:left; transition:.2s } .cv button:hover{ background:var(--paper) }
-.cv button svg,.cv button img{ flex:none; width:3.4rem; height:2.4rem; object-fit:contain } .cv button span{ white-space:nowrap }
-.cv button.off{ opacity:.4 } .cv button.off span{ text-decoration:line-through }
-.cv .cv-pa{ flex:none; width:2.4rem; height:2.4rem; margin:0 .5rem; background:var(--azul); border:.2rem solid #fff; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; box-shadow:0 .2rem .5rem rgba(31,60,120,.35) } .cv .cv-pa svg{ width:1.4rem; height:1.4rem }
+.cvn{ display:grid; grid-template-columns:1.15fr .95fr 1.1fr .9fr; gap:0 1.6rem; height:100%; align-content:center }
+.cvn>div{ min-width:0 } .cvn h6{ font:800 1.5rem var(--fd); color:var(--mut); text-transform:uppercase; letter-spacing:.06em; margin:0 0 .15rem .2rem }
+.cvn button{ display:flex; align-items:center; gap:.9rem; width:100%; padding:.1rem .6rem .1rem .2rem; border-radius:.6rem; font:600 1.55rem/1.15 var(--ft); color:var(--ink); text-align:left; transition:.2s } .cvn button:hover{ background:var(--paper) }
+.cvn button svg,.cvn button img{ flex:none; width:3.4rem; height:2.4rem; object-fit:contain } .cvn button span{ white-space:nowrap }
+.cvn button.off{ opacity:.4 } .cvn button.off span{ text-decoration:line-through }
+.cvn .cv-pa{ flex:none; width:2.4rem; height:2.4rem; margin:0 .5rem; background:var(--azul); border:.2rem solid #fff; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; box-shadow:0 .2rem .5rem rgba(31,60,120,.35) } .cvn .cv-pa svg{ width:1.4rem; height:1.4rem }
 .ff-h{ display:flex; align-items:center; gap:1.2rem } .ff-h .st{ font:800 1.55rem var(--fd); color:#fff; padding:.2rem 1.1rem; border-radius:.6rem; text-shadow:0 0 .2rem rgba(0,0,0,.25) } .ff-h h3{ font:800 2.5rem var(--fd); color:var(--ink); letter-spacing:-.01em } .ff-h em{ font:600 1.65rem var(--ft); font-style:normal; color:var(--mut) }
 .ff-d{ margin-left:auto; display:flex; gap:2.4rem } .ff-d span{ font-size:1.5rem; color:var(--mut); line-height:1.1 } .ff-d b{ display:block; font:800 2.2rem var(--fd); color:var(--ink) }
 .mp-f p{ font:600 1.7rem/1.22 var(--ft); color:var(--tx) } .mp-f small{ font:700 1.5rem var(--ft); color:var(--mut) }
@@ -673,8 +673,8 @@ VIS.obraB = root => {
     $('#ml',root).innerHTML=h; $$('#ml button',root).forEach(b=>b.onclick=()=>elige(b.dataset.id===sel?null:b.dataset.id)); const sb=$('#ml button.sel',root); if(sb) sb.scrollIntoView({block:'nearest'}); };
   const ficha=()=>{ const f=$('#mf',root), p=PR.find(x=>x.id===sel);
     if(!p){ f.style.setProperty('--c','var(--navy)');
-      f.innerHTML=`<div class="cv">${CV.map(([g,rows])=>`<div><h6>${g}</h6>${rows.map(([n,t,e,ids])=>`<button data-g="${ids.join(' ')}" class="${ids.every(id=>off.has(id))?'off':''}">${simbolo(t,e)}<span>${n}</span></button>`).join('')}</div>`).join('')}</div>`;
-      $$('.cv button',f).forEach(b=>b.onclick=()=>{ const ids=b.dataset.g.split(' '), ocultar=!ids.every(id=>off.has(id)); ids.forEach(id=>ocultar?off.add(id):off.delete(id)); ficha(); lista(); aplica(); }); return; }
+      f.innerHTML=`<div class="cvn">${CV.map(([g,rows])=>`<div><h6>${g}</h6>${rows.map(([n,t,e,ids])=>`<button data-g="${ids.join(' ')}" class="${ids.every(id=>off.has(id))?'off':''}">${simbolo(t,e)}<span>${n}</span></button>`).join('')}</div>`).join('')}</div>`;
+      $$('.cvn button',f).forEach(b=>b.onclick=()=>{ const ids=b.dataset.g.split(' '), ocultar=!ids.every(id=>off.has(id)); ids.forEach(id=>ocultar?off.add(id):off.delete(id)); ficha(); lista(); aplica(); }); return; }
     const s=EST[p.e]; f.style.setProperty('--c',s.c);
     f.innerHTML=`<div class="ff-h"><span class="st" style="background:${s.c}">${s.n}</span><h3>${p.n}</h3><em>${p.fase}</em><div class="ff-d">${p.ch.map(([v,l])=>`<span><b>${v}</b>${l}</span>`).join('')}</div></div><p>${p.txt}</p><small>En el mapa: ${p.mp}</small><button class="chip ff-x">Ver convenciones</button>`;
     $('.ff-x',f).onclick=()=>elige(null); };
