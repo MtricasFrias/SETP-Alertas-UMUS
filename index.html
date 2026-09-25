@@ -12,22 +12,26 @@
 
   /* ===== Lienzo 1920×1080 = 120×67,5 rem. Regla de lectura a distancia: nada de texto por debajo de 1,5 rem (24 px). ===== */
   :root{
-    --paper:#E7ECF5; --card:#F4F7FC; --ink:#0F1F52; --tx:#26325C; --mut:#5B6688; --rule:#CBD6E7; --navy:#0B1F5E; --navy2:#16307F;
-    --rojo:#D3313A; --ambar:#F0A800; --verde:#1E9E4F; --azul:#2B63D9; --sol:#FDB913;
+    --paper:#EAF2FD; --card:#F8FBFF; --ink:#1F3C78; --tx:#3A5488; --mut:#66799F; --rule:#D4E1F2; --navy:#3866B5; --navy2:#4D7FCB;
+    --rojo:#E5626A; --ambar:#F6BD4B; --verde:#3AA56D; --azul:#5B91E3; --sol:#FFD25E;
     --fd:'Montserrat',system-ui,'Segoe UI',sans-serif; --ft:'Source Sans 3',system-ui,'Segoe UI',sans-serif;
   }
   *{ box-sizing:border-box; margin:0; padding:0 }
   html{ font-size:min(.8333vw,1.4815vh) }
-  body{ height:100vh; background:#0d0d10; overflow:hidden; font:500 1.75rem/1.32 var(--ft); color:var(--tx) }
+  body{ height:100vh; background:#CFDCEF; overflow:hidden; font:500 1.75rem/1.32 var(--ft); color:var(--tx) }
   button{ font:inherit; color:inherit; cursor:pointer; background:none; border:0 }
   svg text{ font-family:var(--ft) }
   mark{ background:linear-gradient(transparent 60%, var(--sol) 60% 93%, transparent 93%); color:inherit; padding:0 .12em }
 
   #stage{ position:absolute; left:50%; top:50%; width:120rem; height:67.5rem; transform:translate(-50%,-50%); overflow:hidden; background:var(--paper) }
-  #stage.oscuro{ background:var(--navy) }
+  #stage.oscuro{ background:#E3EEFC }
+  /* fondo ambiental: manchas de luz azul que derivan despacio detrás de las tarjetas */
+  #stage:before{ content:""; position:absolute; inset:-20%; pointer-events:none; background:radial-gradient(circle at 18% 22%,rgba(120,170,235,.32) 0,transparent 26%),radial-gradient(circle at 82% 70%,rgba(160,205,245,.4) 0,transparent 30%),radial-gradient(circle at 60% 12%,rgba(255,226,150,.22) 0,transparent 22%); animation:ambiente 38s ease-in-out infinite alternate }
+  @keyframes ambiente{ from{ transform:translate(-3%,-2%) scale(1) } to{ transform:translate(3%,3%) scale(1.08) } }
+  #stage.oscuro:before{ display:none }
   #banda{ position:absolute; left:0; right:0; bottom:0; height:.55rem; display:flex; z-index:30 }
-  #banda i{ flex:1 } #banda i:nth-child(1){ background:#0B1F5E } #banda i:nth-child(2){ background:#E5484D }
-  #banda i:nth-child(3){ background:#1FBF5B } #banda i:nth-child(4){ background:#FDB913 }
+  #banda i{ flex:1 } #banda i:nth-child(1){ background:#3866B5 } #banda i:nth-child(2){ background:#EE7A80 }
+  #banda i:nth-child(3){ background:#5CCB8E } #banda i:nth-child(4){ background:#FFD25E }
 
   /* ---------- barra superior ---------- */
   #top{ position:absolute; left:var(--sp,0rem); right:0; top:0; height:6.4rem; display:flex; align-items:center; gap:2rem; padding:0 3.2rem; z-index:10; transition:left .45s ease }
@@ -119,7 +123,7 @@
   #nav .ln:before{ content:""; position:absolute; left:0; right:0; top:calc(50% + 1rem); height:.32rem; background:var(--ink); border-radius:1rem }
   #nav .ln:after{ content:""; position:absolute; left:0; top:calc(50% + 1rem); height:.32rem; width:var(--p,0%); background:var(--sol); border-radius:1rem; transition:width .8s cubic-bezier(.5,0,.2,1) }
   #nav .sts{ position:absolute; left:0; right:0; top:calc(50% + 1rem); display:flex; justify-content:space-between }
-  #nav .st{ position:relative; z-index:1; width:3.6rem; height:3.6rem; margin-top:-1.7rem; border-radius:50%; background:var(--paper); box-shadow:inset 0 0 0 .3rem var(--c,#0F1F52); font:800 1.6rem var(--fd); color:var(--ink); display:flex; align-items:center; justify-content:center; transition:transform .25s cubic-bezier(.3,1.5,.5,1), background .25s }
+  #nav .st{ position:relative; z-index:1; width:3.6rem; height:3.6rem; margin-top:-1.7rem; border-radius:50%; background:var(--paper); box-shadow:inset 0 0 0 .3rem var(--c,#1F3C78); font:800 1.6rem var(--fd); color:var(--ink); display:flex; align-items:center; justify-content:center; transition:transform .25s cubic-bezier(.3,1.5,.5,1), background .25s }
   #nav .st:hover{ transform:scale(1.15) }
   #nav .st.act{ background:var(--c); color:var(--cx,#fff); transform:scale(1.28) }
   #nav .st svg{ width:1.9rem; height:1.9rem }
@@ -133,31 +137,33 @@
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-bus" viewBox="0 0 140 76">
     <path d="M6 14Q6 6 14 6H108Q124 6 130 24L136 44V58H6Z" fill="currentColor"/>
-    <rect x="6" y="40" width="130" height="7" fill="#FDB913"/>
+    <rect x="6" y="40" width="130" height="7" fill="#FFD25E"/>
     <path d="M14 14h20v18H14zM38 14h20v18H38zM62 14h20v18H62zM86 14h18v18H86z" fill="#DCEBFF"/>
     <path d="M108 14h8q8 0 12 12l1 6h-21z" fill="#DCEBFF"/>
     <rect x="131" y="47" width="5" height="5" fill="#FFF3B0"/>
-    <circle cx="34" cy="60" r="11" fill="#16213E"/><circle cx="34" cy="60" r="4.5" fill="#C9D2EA"/>
-    <circle cx="108" cy="60" r="11" fill="#16213E"/><circle cx="108" cy="60" r="4.5" fill="#C9D2EA"/>
+    <circle cx="34" cy="60" r="11" fill="#3A4C78"/><circle cx="34" cy="60" r="4.5" fill="#C9D2EA"/>
+    <circle cx="108" cy="60" r="11" fill="#3A4C78"/><circle cx="108" cy="60" r="4.5" fill="#C9D2EA"/>
   </symbol>
   <symbol id="i-art" viewBox="0 0 270 64">
     <rect x="2" y="8" width="122" height="40" rx="15" fill="currentColor"/><rect x="146" y="8" width="122" height="40" rx="15" fill="currentColor"/>
-    <path d="M124 14q11 6 22 0v28q-11-6-22 0z" fill="#16213E" opacity=".6"/>
-    <g fill="#16213E" opacity=".78"><rect x="14" y="16" width="26" height="15" rx="4"/><rect x="46" y="16" width="26" height="15" rx="4"/><rect x="78" y="16" width="26" height="15" rx="4"/><rect x="160" y="16" width="26" height="15" rx="4"/><rect x="192" y="16" width="26" height="15" rx="4"/><rect x="224" y="16" width="28" height="15" rx="4"/></g>
+    <path d="M124 14q11 6 22 0v28q-11-6-22 0z" fill="#3A4C78" opacity=".6"/>
+    <g fill="#3A4C78" opacity=".78"><rect x="14" y="16" width="26" height="15" rx="4"/><rect x="46" y="16" width="26" height="15" rx="4"/><rect x="78" y="16" width="26" height="15" rx="4"/><rect x="160" y="16" width="26" height="15" rx="4"/><rect x="192" y="16" width="26" height="15" rx="4"/><rect x="224" y="16" width="28" height="15" rx="4"/></g>
     <rect x="2" y="36" width="266" height="4" fill="#fff" opacity=".55"/>
-    <g fill="#16213E"><circle cx="34" cy="52" r="8"/><circle cx="96" cy="52" r="8"/><circle cx="174" cy="52" r="8"/><circle cx="236" cy="52" r="8"/></g>
+    <g fill="#3A4C78"><circle cx="34" cy="52" r="8"/><circle cx="96" cy="52" r="8"/><circle cx="174" cy="52" r="8"/><circle cx="236" cy="52" r="8"/></g>
   </symbol>
-  <symbol id="i-coin" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#F0A800" stroke="#B37A00" stroke-width="2"/><circle cx="16" cy="16" r="9.5" fill="none" stroke="#FFD56B" stroke-width="1.5"/><text x="16" y="21.5" text-anchor="middle" font-size="14" font-weight="800" fill="#7A5200">$</text></symbol>
-  <symbol id="i-env" viewBox="0 0 48 34"><rect x="2" y="2" width="44" height="30" rx="4" fill="#fff" stroke="#0F1F52" stroke-width="2.5"/><path d="M3 5L24 20L45 5" fill="none" stroke="#0F1F52" stroke-width="3" stroke-linejoin="round"/></symbol>
-  <symbol id="i-doc" viewBox="0 0 40 50"><path d="M4 2h22l10 10v36H4z" fill="currentColor"/><path d="M26 2v10h10" fill="#0B1F5E" opacity=".25"/><g stroke="#0B1F5E" stroke-width="2.8" stroke-linecap="round"><path d="M10 22h20M10 29h20M10 36h13"/></g></symbol>
+  <symbol id="i-coin" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#F6BD4B" stroke="#C58F1F" stroke-width="2"/><circle cx="16" cy="16" r="9.5" fill="none" stroke="#FFD56B" stroke-width="1.5"/><text x="16" y="21.5" text-anchor="middle" font-size="14" font-weight="800" fill="#8F6420">$</text></symbol>
+  <symbol id="i-env" viewBox="0 0 48 34"><rect x="2" y="2" width="44" height="30" rx="4" fill="#fff" stroke="#1F3C78" stroke-width="2.5"/><path d="M3 5L24 20L45 5" fill="none" stroke="#1F3C78" stroke-width="3" stroke-linejoin="round"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 40 50"><path d="M4 2h22l10 10v36H4z" fill="currentColor"/><path d="M26 2v10h10" fill="#3866B5" opacity=".25"/><g stroke="#3866B5" stroke-width="2.8" stroke-linecap="round"><path d="M10 22h20M10 29h20M10 36h13"/></g></symbol>
   <symbol id="i-home" viewBox="0 0 40 40"><path d="M4 20L20 6l16 14v16H26V26H14v10H4z" fill="currentColor"/></symbol>
   <symbol id="i-flag" viewBox="0 0 40 40"><path d="M9 4v34" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M11 6h23l-6 8 6 8H11z" fill="currentColor"/></symbol>
   <symbol id="i-drag" viewBox="0 0 40 40"><path d="M4 20h32M4 20l8-8M4 20l8 8M36 20l-8-8M36 20l-8 8" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-tap" viewBox="0 0 40 40"><circle cx="20" cy="20" r="5" fill="currentColor"/><circle cx="20" cy="20" r="11" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2.4" opacity=".5"/></symbol>
   <symbol id="i-lock" viewBox="0 0 40 40"><rect x="7" y="17" width="26" height="19" rx="3" fill="currentColor"/><path d="M12 17v-5a8 8 0 0 1 16 0v5" fill="none" stroke="currentColor" stroke-width="4"/></symbol>
   <symbol id="i-leaf" viewBox="0 0 40 40"><path d="M6 35C6 16 19 5 37 5c0 18-10 30-31 30z" fill="currentColor"/><path d="M6 35L27 15" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-people" viewBox="0 0 40 40"><circle cx="14" cy="13" r="6" fill="currentColor"/><circle cx="27" cy="15" r="5" fill="currentColor" opacity=".75"/><path d="M3 34a11 11 0 0 1 22 0z" fill="currentColor"/><path d="M22 34a9 9 0 0 1 15-6.5V34z" fill="currentColor" opacity=".75"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 40 40"><path d="M20 3l14 5v11c0 9-6 15-14 18C12 34 6 28 6 19V8z" fill="currentColor"/><path d="M13 20l5 5 9-10" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-building" viewBox="0 0 40 40"><path d="M3 14L20 4l17 10z" fill="currentColor"/><g fill="currentColor"><rect x="6" y="16" width="5" height="15"/><rect x="14" y="16" width="5" height="15"/><rect x="21" y="16" width="5" height="15"/><rect x="29" y="16" width="5" height="15"/><rect x="3" y="33" width="34" height="4"/></g></symbol>
-  <symbol id="i-hardhat" viewBox="0 0 40 40"><path d="M6 27a14 14 0 0 1 28 0z" fill="currentColor"/><rect x="2" y="27" width="36" height="6" rx="2" fill="currentColor"/><rect x="15" y="7" width="10" height="9" rx="2" fill="currentColor"/><path d="M13 24V18M27 24V18" stroke="#E7ECF5" stroke-width="2.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-hardhat" viewBox="0 0 40 40"><path d="M6 27a14 14 0 0 1 28 0z" fill="currentColor"/><rect x="2" y="27" width="36" height="6" rx="2" fill="currentColor"/><rect x="15" y="7" width="10" height="9" rx="2" fill="currentColor"/><path d="M13 24V18M27 24V18" stroke="#EAF2FD" stroke-width="2.4" stroke-linecap="round"/></symbol>
   <symbol id="i-factory" viewBox="0 0 40 40"><path d="M4 35V17l10 6v-6l10 6V10h7v25z" fill="currentColor"/></symbol>
   <symbol id="i-plane" viewBox="0 0 40 40"><path d="M36 20L22 15V6l-4-2v11L4 20v3l14-3v9l-5 3v2l7-2 7 2v-2l-5-3v-9l14 3z" fill="currentColor"/></symbol>
   <symbol id="i-fs" viewBox="0 0 40 40"><path d="M6 15V6h9M25 6h9v9M34 25v9h-9M15 34H6v-9" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
@@ -235,15 +241,16 @@ limpiar.push(ocultaTip);
 
 /* ---------- guion de escenas ---------- */
 const ESC = [{tipo:'portada'},{tipo:'panorama'}];
+if(MOSTRAR_CAMBIOS) ESC.push({tipo:'cambios'});
 ALERTAS.forEach(a=>{ ESC.push({tipo:'resumen',a}); a.vistas.forEach((v,i)=>ESC.push({tipo:'explorar',a,v,i,de:a.vistas.length})); });
 ESC.push({tipo:'ruta'},{tipo:'fin'});
 const idxAlerta = n => ESC.findIndex(s=>s.a && s.a.n===n);
 const idxTipo   = t => ESC.findIndex(s=>s.tipo===t);
-const RAIL = [{i:idxTipo('panorama'), c:'#0F1F52', cx:'#fff', ic:'i-home', lbl:'Panorama'},
+const RAIL = [{i:idxTipo('panorama'), c:'#1F3C78', cx:'#fff', ic:'i-home', lbl:'Panorama'},
   ...ALERTAS.map(a=>({i:idxAlerta(a.n), c:CAT[a.cat].c, cx:CAT[a.cat].tx, t:a.n, lbl:a.corto})),
-  {i:idxTipo('ruta'), c:'#FDB913', cx:'#0F1F52', ic:'i-flag', lbl:'Hoja de ruta'}];
+  {i:idxTipo('ruta'), c:'#FFD25E', cx:'#1F3C78', ic:'i-flag', lbl:'Hoja de ruta'}];
 const etiqueta = s => s.tipo==='resumen' ? ['Alerta '+s.a.n,'Resumen'] : s.tipo==='explorar' ? ['Alerta '+s.a.n,'Explorar'+(s.de>1?' '+(s.i+1)+' de '+s.de:'')]
-  : s.tipo==='panorama' ? ['Panorama','Las 9 alertas'] : s.tipo==='ruta' ? ['Hoja de ruta','Quién, qué y cuándo'] : ['',''];
+  : s.tipo==='panorama' ? ['Panorama','Las 9 alertas'] : s.tipo==='cambios' ? ['Novedades','Qué cambió desde el 26 jun'] : s.tipo==='ruta' ? ['Hoja de ruta','Quién, qué y cuándo'] : ['',''];
 
 let idx = -1;
 function ir(n){
@@ -258,8 +265,9 @@ function ir(n){
   /* el conteo de cifras arranca solo cuando la entrada (fade+desplazamiento) ya terminó,
      para que no se vean dos animaciones distintas peleando al mismo tiempo */
   const nRv = $$('.rv',nodo).length;
-  const tCont = setTimeout(()=>contar(nodo), Math.min(900, 120 + nRv*80 + 550));
+  const tCont = setTimeout(()=>contar(nodo), +nodo.dataset.delay || Math.min(900, 120 + nRv*80 + 550));
   limpiar.push(()=>clearTimeout(tCont));
+  $('#corteTxt').textContent = s.a ? s.a.corte : CORTE_ACT.txt;
   const st=$('#stage'); st.classList.toggle('oscuro', s.tipo==='portada'||s.tipo==='fin');
   st.style.setProperty('--sp', s.tipo==='resumen'?'20rem':s.tipo==='explorar'?'7rem':'0rem');
   actualizaNav();
@@ -267,7 +275,7 @@ function ir(n){
 }
 function actualizaNav(){
   const s=ESC[idx]; let act=-1;
-  RAIL.forEach((r,k)=>{ const e=$('#st'+k); const es = s.a ? r.t===s.a.n : (s.tipo==='panorama'&&k===0)||(s.tipo==='ruta'&&k===RAIL.length-1); if(es) act=k; e.classList.toggle('act',es); });
+  RAIL.forEach((r,k)=>{ const e=$('#st'+k); const es = s.a ? r.t===s.a.n : ((s.tipo==='panorama'||s.tipo==='cambios')&&k===0)||(s.tipo==='ruta'&&k===RAIL.length-1); if(es) act=k; e.classList.toggle('act',es); });
   const [a,b]=etiqueta(s); $('#navtxt').innerHTML = a ? `${a}<small>${b}</small>` : '';
   $('#prev').disabled = idx<=0; $('#next').disabled = idx>=ESC.length-1;
   if(act<0) return;
@@ -279,7 +287,7 @@ function actualizaNav(){
 $('#sts').innerHTML = RAIL.map((r,k)=>`<button class="st" id="st${k}" style="--c:${r.c};--cx:${r.cx}" title="${r.lbl}">${r.ic?`<svg viewBox="0 0 40 40"><use href="#${r.ic}"/></svg>`:r.t}</button>`).join('');
 RAIL.forEach((r,k)=>$('#st'+k).onclick=()=>ir(r.i));
 $('#prev').onclick=()=>ir(idx-1); $('#next').onclick=()=>ir(idx+1);
-$('#corteTxt').textContent=CORTE.txt;
+$('#corteTxt').textContent=CORTE_ACT.txt;
 $('#fs').onclick=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();
 window.addEventListener('resize',()=>{ if(idx>=0) actualizaNav(); });
 document.addEventListener('keydown',e=>{
@@ -289,11 +297,13 @@ document.addEventListener('keydown',e=>{
   else if(e.key==='Home') ir(0); else if(e.key==='End') ir(ESC.length-1);
   else if(/^[1-9]$/.test(e.key)) ir(idxAlerta(+e.key));
   else if(e.key==='p'||e.key==='P') ir(idxTipo('panorama'));
+  else if((e.key==='n'||e.key==='N') && MOSTRAR_CAMBIOS) ir(idxTipo('cambios'));
   else if(e.key==='r'||e.key==='R') ir(idxTipo('ruta'));
   else if(e.key==='f'||e.key==='F') $('#fs').click();
 });
 </script>
 <script src="escenas.js"></script>
+<script src="viaje.js"></script>
 <script src="visuales.js"></script>
 <script>
   const h0 = parseInt(location.hash.slice(1),10);
