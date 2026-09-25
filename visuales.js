@@ -226,10 +226,15 @@ estilo(`
 .mp-l button u{ align-self:stretch; border-radius:.5rem; background:var(--c) } .mp-l button b{ display:block; font:700 1.6rem/1.1 var(--fd); color:inherit } .mp-l button small{ display:block; font:500 1.5rem var(--ft); color:var(--mut) } .mp-l button.sel small{ color:#C5CFEE }
 .mp-l button i{ font:800 1.5rem var(--fd); font-style:normal; padding:.1rem .8rem; border-radius:.5rem; background:var(--c); color:#fff; white-space:nowrap } .mp-l button i{ text-shadow:0 0 .2rem rgba(0,0,0,.25) }
 .mp-m{ position:relative; overflow:hidden; border-radius:.8rem; background:#E6ECF5 } .mp-m #mapa{ position:absolute; inset:0 }
-.mp-lg{ position:absolute; left:1rem; top:1rem; max-width:52rem; z-index:5; background:rgba(255,255,255,.93); border-radius:.8rem; padding:.8rem 1.2rem; box-shadow:0 .4rem 1.2rem rgba(31,60,120,.18); font-size:1.5rem; color:var(--ink) } .mp-lg b{ font:800 1.5rem var(--fd); color:var(--mut) }
-.mp-lg .g{ display:grid; grid-template-columns:repeat(3,auto); gap:.2rem 1.6rem; margin:.3rem 0 0 } .mp-lg span{ display:flex; align-items:center; gap:.6rem; white-space:nowrap } .mp-lg i{ width:1.3rem; height:1.3rem; border-radius:50% }
-.mp-lg .n{ display:flex; gap:1.6rem } .mp-lg u{ display:inline-block; width:2.6rem; height:0; border-top:.45rem solid var(--ink); border-radius:1rem } .mp-lg u.d{ border-top-style:dashed }
-.mp-f{ background:var(--card); border-left:.8rem solid var(--c,var(--navy)); padding:.9rem 2rem 1rem; display:flex; flex-direction:column; gap:.4rem; min-height:0; overflow:hidden; transition:border-color .3s }
+.mp-l button.off{ opacity:.45 }
+.mp-f{ position:relative; background:var(--card); border-left:.8rem solid var(--c,var(--navy)); padding:.9rem 2rem 1rem; display:flex; flex-direction:column; gap:.4rem; min-height:0; overflow:hidden; transition:border-color .3s }
+.ff-x{ position:absolute; right:1.6rem; bottom:.9rem; padding:.3rem 1.2rem !important }
+.cv{ display:grid; grid-template-columns:1.15fr .95fr 1.1fr .9fr; gap:0 1.6rem; height:100%; align-content:center }
+.cv>div{ min-width:0 } .cv h6{ font:800 1.5rem var(--fd); color:var(--mut); text-transform:uppercase; letter-spacing:.06em; margin:0 0 .15rem .2rem }
+.cv button{ display:flex; align-items:center; gap:.9rem; width:100%; padding:.1rem .6rem .1rem .2rem; border-radius:.6rem; font:600 1.55rem/1.15 var(--ft); color:var(--ink); text-align:left; transition:.2s } .cv button:hover{ background:var(--paper) }
+.cv button svg,.cv button img{ flex:none; width:3.4rem; height:2.4rem; object-fit:contain } .cv button span{ white-space:nowrap }
+.cv button.off{ opacity:.4 } .cv button.off span{ text-decoration:line-through }
+.cv .cv-pa{ flex:none; width:2.4rem; height:2.4rem; margin:0 .5rem; background:var(--azul); border:.2rem solid #fff; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; box-shadow:0 .2rem .5rem rgba(31,60,120,.35) } .cv .cv-pa svg{ width:1.4rem; height:1.4rem }
 .ff-h{ display:flex; align-items:center; gap:1.2rem } .ff-h .st{ font:800 1.55rem var(--fd); color:#fff; padding:.2rem 1.1rem; border-radius:.6rem; text-shadow:0 0 .2rem rgba(0,0,0,.25) } .ff-h h3{ font:800 2.5rem var(--fd); color:var(--ink); letter-spacing:-.01em } .ff-h em{ font:600 1.65rem var(--ft); font-style:normal; color:var(--mut) }
 .ff-d{ margin-left:auto; display:flex; gap:2.4rem } .ff-d span{ font-size:1.5rem; color:var(--mut); line-height:1.1 } .ff-d b{ display:block; font:800 2.2rem var(--fd); color:var(--ink) }
 .mp-f p{ font:600 1.7rem/1.22 var(--ft); color:var(--tx) } .mp-f small{ font:700 1.5rem var(--ft); color:var(--mut) }
@@ -623,70 +628,90 @@ VIS.obraA = root => {
 
 /* ---------- 8b · mapa de proyectos por frente y fase ---------- */
 VIS.obraB = root => {
-  const EST={ ejecutado:{n:'Terminada',c:'#3AA56D'}, ejecucion:{n:'En obra',c:'#F6BD4B'}, estructuracion:{n:'Estructuración',c:'#5B91E3'}, estudios:{n:'Radicado en UMUS',c:'#8CBCF5'} };
+  const EST={ ejecutado:{n:'Terminada',c:'#3AA56D'}, ejecucion:{n:'En obra',c:'#F6BD4B'}, estructuracion:{n:'Estructuración',c:'#4D7FCB'}, estudios:{n:'Radicado en UMUS',c:'#79AAEE'} };
   const FR=[['todos','Todos'],['vias','Vías'],['sem','Semáforos'],['par','Paraderos'],['pat','Patiotalleres']];
-  /* cada proyecto se evalúa caso por caso: tener KMZ no significa que esté en ejecución. Fuentes: KMZ del SETP, presentación de proyectos y respuestas del 25 sep */
+  /* cada proyecto se evalúa caso por caso: tener KMZ no significa que esté en ejecución.
+     Valores: tablero del SETP (contratos 037, 042, 046 y 117) y presentación de proyectos; los puntos solo se dibujan, no se cuentan.
+     z = zoom desde el cual el punto pasa de marca simple a ícono; r = radio de la marca simple. */
   const PR=[
     {id:'ferro', fr:'vias', n:'Av. Ferrocarril', fase:'Diseños Fase III', e:'estudios', t:'lin', k:['ferrocarril'], txt:'Estudios y diseños radicados en la UMUS el 10 de junio de 2026, en trámite de elegibilidad. Rehabilitación y ajuste geométrico entre la Cl 19 y la Carrera 5.', ch:[['10 jun','radicado en UMUS'],['$34.157 M','obra + interventoría']], mp:'Línea discontinua azul: traza de la intervención (Cl 19 hasta la Carrera 5).'},
     {id:'c5f1', fr:'vias', n:'Carrera 5 · Fase I', fase:'Cl 64 → Cl 103 + Ambalá', e:'ejecutado', t:'lin', k:['carrera5FaseI'], txt:'Fase I del Contrato de Obra 046 de 2025: Carrera 5 entre la Cl 64 y la Cl 103 y Av. Ambalá entre la Cl 103 y la Cl 95. Ejecutada.', ch:[['$13.919,8 M','obra + interventoría'],['Ejecutada','estado de la fase']], mp:'Línea continua verde: Cra 5 de la Cl 64 a la Cl 100. El tramo de Ambalá Cl 103–95 aún no tiene traza.'},
-    {id:'c5f2', fr:'vias', n:'Carrera 5 · Fase II', fase:'Cl 10 → Cl 58', e:'ejecutado', t:'lin', k:['carrera5'], txt:'Contrato de Obra 046 de 2025: obra terminada el 18 de febrero de 2026 (acta de inicio el 10 de abril de 2025), con accesibilidad universal en los pasos peatonales.', ch:[['10.160 m','longitud intervenida'],['$37.578,5 M','obra + interventoría']], mp:'Línea continua verde: obra terminada.'},
-    {id:'ambala', fr:'vias', n:'Av. Ambalá', fase:'Fase III · 2 tramos', e:'ejecucion', t:'lin', k:['ambala1','ambala2'], txt:'Contrato de Obra 042 de 2026 en ejecución: tramo 1 (Cra 5 a Cl 37, 3.526 m) y tramo 2 (Cl 77 a Cl 63, 1.481 m), con reposición de unos 2.100 m de alcantarillado.', ch:[['$25.978 M','obra + interventoría'],['5.007 m','longitud de los tramos']], mp:'Línea continua ámbar: tramos con obra en ejecución.'},
-    {id:'ciclo', fr:'vias', n:'Ciclorruta Cra 5', fase:'Cl 10 → Cl 44', e:'estudios', t:'lin', k:['cicloCarrera5'], txt:'Estudios y diseños Fase III de cicloinfraestructura y andenes con accesibilidad universal, radicados en la UMUS el 3 de julio de 2026.', ch:[['3 jul','radicado en UMUS'],['7.217 m','longitud a intervenir']], mp:'Línea discontinua azul: traza de los estudios.'},
-    {id:'sem1', fr:'sem', n:'Semaforización Fase I', fase:'Contrato 117 de 2025', e:'ejecucion', t:'sem', s:'I', img:'sem-a', sz:1, txt:'Obra en la etapa final: planeamiento, configuración, integración y pruebas. 30 de 34 intersecciones en servicio y seguimiento; el plazo vence el 29 de septiembre.', ch:[['93,62 %','avance real al 20 sep'],['33 puntos','en el KMZ (34 en el informe)']], mp:'Semáforos color ámbar: intersecciones de la Fase I.'},
-    {id:'sem2', fr:'sem', n:'Semaforización Fase II', fase:'Estudios y diseños', e:'estructuracion', t:'sem', s:'II', img:'sem-b', sz:.9, txt:'En estudios y diseños, proyectada para 2026: obra por $11.525 M e interventoría por $990 M. Las intersecciones aún no tienen obra.', ch:[['$12.515 M','obra + interventoría'],['40 puntos','intersecciones en el KMZ']], mp:'Semáforos color azul: intersecciones por intervenir.'},
-    {id:'par3', fr:'par', n:'Paraderos Tipo III', fase:'Bandera informativa', e:'ejecutado', t:'par', img:'par-v', sz:.5, pts:PARADEROS_3, txt:'1.150 señales verticales tipo banderín instaladas, con mejoramiento puntual de andenes (Contrato de Obra 037 de 2025). El proyecto está en liquidación.', ch:[['1.150','señales instaladas'],['1.063 puntos','en el KMZ de balance']], mp:'Íconos verdes pequeños: paraderos con bandera informativa instalada.'},
-    {id:'par1', fr:'par', n:'Paraderos Tipo I', fase:'Cubierto con informador', e:'estudios', t:'par', img:'par-b', sz:1.1, pts:PARADEROS_12.slice(0,10), txt:'Etapa II del suministro e instalación de paraderos Tipo I y II con MUPI, radicada en la UMUS el 10 de julio de 2026.', ch:[['10','paraderos Tipo I'],['10 jul','radicado en UMUS']], mp:'Íconos azules grandes: paraderos por construir.'},
-    {id:'par2', fr:'par', n:'Paraderos Tipo II', fase:'Con mobiliario y bandera', e:'estudios', t:'par', img:'par-b', sz:.85, pts:PARADEROS_12.slice(10), txt:'Etapa II del suministro e instalación de paraderos Tipo I y II con MUPI. El proceso vale $9.366 M e incluye obras complementarias, estudios y diseños.', ch:[['71','paraderos Tipo II'],['$9.366 M','proceso Etapa II']], mp:'Íconos azules: paraderos por construir.'},
+    {id:'c5f2', fr:'vias', n:'Carrera 5 · Fase II', fase:'Cl 10 → Cl 58', e:'ejecutado', t:'lin', k:['carrera5'], txt:'Contrato de Obra 046 de 2025: obra terminada el 18 de febrero de 2026 (acta de inicio el 10 de abril de 2025), con accesibilidad universal en los pasos peatonales.', ch:[['$35.399,9 M','contrato de obra'],['10.160 m','longitud intervenida']], mp:'Línea continua verde: obra terminada.'},
+    {id:'ambala', fr:'vias', n:'Av. Ambalá', fase:'Fase III · 2 tramos', e:'ejecucion', t:'lin', k:['ambala1','ambala2'], txt:'Contrato de Obra 042 de 2026 (acta de inicio el 15 de abril, fin estimado el 26 de noviembre): tramo 1 (Cra 5 a Cl 37, 3.526 m) y tramo 2 (Cl 77 a Cl 63, 1.481 m), con reposición de unos 2.100 m de alcantarillado.', ch:[['$25.978 M','obra + interventoría'],['5.007 m','longitud de los tramos']], mp:'Línea continua ámbar: tramos con obra en ejecución.'},
+    {id:'ciclo', fr:'vias', n:'Ciclorruta Cra 5', fase:'Cl 10 → Cl 44', e:'estudios', t:'lin', k:['cicloCarrera5'], txt:'Estudios y diseños Fase III de cicloinfraestructura y andenes con accesibilidad universal, radicados en la UMUS el 3 de julio de 2026 (7.217 m de longitud).', ch:[['3 jul','radicado en UMUS'],['$29.098,3 M','obra, interventoría y diseños']], mp:'Línea discontinua azul: traza de los estudios.'},
+    {id:'sem1', fr:'sem', n:'Semaforización Fase I', fase:'Contrato 117 de 2024', e:'ejecucion', t:'sem', z:13.4, r:3.8, sz:1, txt:'Obra en la etapa final: planeamiento, configuración, integración y pruebas de la red. El plazo del contrato vence el 29 de septiembre de 2026 (acta de inicio el 20 de febrero de 2025).', ch:[['$9.778,7 M','obra + interventoría'],['29 sep 2026','fin del plazo']], mp:'Semáforos ámbar: intersecciones de la Fase I.'},
+    {id:'sem2', fr:'sem', n:'Semaforización Fase II', fase:'Estudios y diseños', e:'estructuracion', t:'sem', z:13.4, r:3.8, sz:.9, txt:'En estudios y diseños, proyectada para 2026: obra por $11.525 M e interventoría por $990 M. Las intersecciones se ubican con el KMZ de la Fase II.', ch:[['$12.515 M','obra + interventoría'],['2026','año proyectado']], mp:'Semáforos azules: intersecciones por intervenir.'},
+    {id:'par3', fr:'par', n:'Paraderos Tipo III', fase:'Bandera informativa', e:'ejecutado', t:'par', z:15, r:3.2, sz:.5, pts:PARADEROS_3, txt:'Señales verticales tipo banderín con mejoramiento de andenes, en corredores y barrios de la ciudad (Contrato de Obra 037 de 2025). Obra terminada, en liquidación; el mapa muestra los puntos ya georreferenciados.', ch:[['$9.341,4 M','obra + interventoría'],['28 feb 2026','fin del contrato']], mp:'mancha verde al alejar el mapa; puntos y luego íconos al acercarte.'},
+    {id:'par1', fr:'par', n:'Paraderos Tipo I', fase:'Cubierto con informador', e:'estudios', t:'par', z:14, r:4.2, sz:1.1, pts:PARADEROS_12.slice(0,10), txt:'Etapa II del suministro e instalación de paraderos Tipo I y II con MUPI, radicada en la UMUS el 10 de julio de 2026, modalidad llave en mano.', ch:[['10 jul','radicado en UMUS'],['Con MUPI','informador electrónico']], mp:'Íconos azul claro grandes: paraderos por construir.'},
+    {id:'par2', fr:'par', n:'Paraderos Tipo II', fase:'Con mobiliario y bandera', e:'estudios', t:'par', z:14, r:4.2, sz:.85, pts:PARADEROS_12.slice(10), txt:'Etapa II del suministro e instalación de paraderos Tipo I y II con MUPI. El proceso vale $9.366,3 M e incluye obras complementarias, estudios y diseños.', ch:[['$9.366,3 M','proceso Etapa II'],['10 jul','radicado en UMUS']], mp:'Íconos azul claro: paraderos por construir.'},
     {id:'patios', fr:'pat', n:'Patiotalleres', fase:'Adquisición de predios', e:'estudios', t:'pat', txt:'Adquisición predial radicada en la UMUS el 17 de julio de 2026. Seis lotes previstos: 3 con compra en 2026, 2 en 2027 y 1 para el centro de control. Predios en gestión: Picaleña, El Salado, Boquerón y Nueva Castilla.', ch:[['6 lotes','previstos'],['17 jul','radicado en UMUS']], mp:'Íconos de fábrica: predios en gestión (ubicaciones referenciales).'}
   ];
-  let fr='todos', sel=null;
+  /* convenciones: cada fila muestra el símbolo tal como se dibuja en el mapa y oculta o muestra sus proyectos */
+  const CV=[['Vías',[['Terminada','lin','ejecutado',['c5f1','c5f2']],['En obra','lin','ejecucion',['ambala']],['Radicado en UMUS','lin','estudios',['ferro','ciclo']]]],
+    ['Semáforos',[['Fase I · en obra','sem','ejecucion',['sem1']],['Fase II · estructuración','sem','estructuracion',['sem2']]]],
+    ['Paraderos',[['Tipo III · instalados','par','ejecutado',['par3']],['Tipo I y II · radicados','par','estudios',['par1','par2']]]],
+    ['Patiotalleres',[['Predios en gestión','pat','estudios',['patios']]]]];
+  const ORD=['ferro','c5f1','c5f2','ambala','ciclo','par3','sem1','sem2','par1','par2'];
+  let fr='todos', sel=null; const off=new Set();
   root.innerHTML=`<div class="mp">
     <div class="mp-t rv"><span>Frente:</span>${FR.map(([k,n])=>`<button class="chip${k==='todos'?' on':''}" data-f="${k}">${n} <b>${k==='todos'?PR.length:PR.filter(p=>p.fr===k).length}</b></button>`).join('')}</div>
-    <div class="mp-b"><div class="mp-l rv" id="ml"></div>
-      <div class="mp-m rv"><div id="mapa"></div><div class="mp-lg"><b>Estado del proyecto</b><div class="g">${Object.values(EST).map(s=>`<span><i style="background:${s.c}"></i>${s.n}</span>`).join('')}</div>
-</div></div></div>
+    <div class="mp-b"><div class="mp-l rv" id="ml"></div><div class="mp-m rv"><div id="mapa"></div></div></div>
     <div class="mp-f rv" id="mf"></div></div>`;
-  const lista=()=>{ const vis=PR.filter(p=>fr==='todos'||p.fr===fr); let h='', ult='';
-    vis.forEach(p=>{ if(p.fr!==ult){ ult=p.fr; h+=`<h5>${FR.find(f=>f[0]===p.fr)[1]}</h5>`; } const s=EST[p.e];
-      h+=`<button data-id="${p.id}" class="${sel===p.id?'sel':''}" style="--c:${s.c}"><u></u><span><b>${p.n}</b><small>${p.fase}</small></span><i>${s.n}</i></button>`; });
-    $('#ml',root).innerHTML=h; $$('#ml button',root).forEach(b=>b.onclick=()=>elige(b.dataset.id===sel?null:b.dataset.id)); const sb=$('#ml button.sel',root); if(sb) sb.scrollIntoView({block:'nearest'}); };
-  const ficha=()=>{ const f=$('#mf',root), p=PR.find(x=>x.id===sel);
-    if(!p){ const c={}; PR.forEach(x=>c[x.e]=(c[x.e]||0)+1);
-      f.innerHTML=`<div class="ff-h"><h3>Panorama de los ${PR.length} proyectos</h3><em>Toca uno en la lista o en el mapa</em></div><div class="ff-r">${Object.entries(EST).filter(([k])=>c[k]).map(([k,s])=>`<span style="--c:${s.c}"><i></i><b>${c[k]}</b> ${s.n.toLowerCase()}</span>`).join('')}</div><p>Cada proyecto se muestra por frente y fase. Que un proyecto tenga KMZ no significa que esté en ejecución: el color indica su estado real.</p>`; return; }
-    const s=EST[p.e]; f.style.setProperty('--c',s.c);
-    f.innerHTML=`<div class="ff-h"><span class="st" style="background:${s.c}">${s.n}</span><h3>${p.n}</h3><em>${p.fase}</em><div class="ff-d">${p.ch.map(([v,l])=>`<span><b>${v}</b>${l}</span>`).join('')}</div></div><p>${p.txt}</p><small>En el mapa: ${p.mp}</small>`; };
   const flip=c=>[c[1],c[0]], R=parseFloat(getComputedStyle(document.documentElement).fontSize), lim=([la,lo])=>la>4.38&&la<4.47&&lo>-75.27&&lo<-75.12;
-  const map=new maplibregl.Map({container:'mapa',center:[-75.205,4.437],zoom:12.2,attributionControl:{compact:true},
-    style:{version:8,sources:{base:{type:'raster',tileSize:256,maxzoom:19,attribution:'© OpenStreetMap contributors',tiles:['https://a.tile.openstreetmap.org/{z}/{x}/{y}.png','https://b.tile.openstreetmap.org/{z}/{x}/{y}.png','https://c.tile.openstreetmap.org/{z}/{x}/{y}.png']}},
-      layers:[{id:'fondo',type:'background',paint:{'background-color':'#E6ECF5'}},{id:'base',type:'raster',source:'base',paint:{'raster-saturation':-0.95,'raster-contrast':-0.15,'raster-brightness-min':.35,'raster-opacity':.9}}]}});
-  window.__mapa=map; limpiar.push(()=>{ try{ map.remove(); }catch(e){} }); const M=[];
-  const icono=(id,tipo,color)=>{ const S=44, c=document.createElement('canvas'); c.width=c.height=S; const g=c.getContext('2d'), rr=(x,y,w,h,r)=>{ g.beginPath(); g.moveTo(x+r,y); g.arcTo(x+w,y,x+w,y+h,r); g.arcTo(x+w,y+h,x,y+h,r); g.arcTo(x,y+h,x,y,r); g.arcTo(x,y,x+w,y,r); g.closePath(); };
+  const pinta=(tipo,color)=>{ const S=44, c=document.createElement('canvas'); c.width=c.height=S; const g=c.getContext('2d'), rr=(x,y,w,h,r)=>{ g.beginPath(); g.moveTo(x+r,y); g.arcTo(x+w,y,x+w,y+h,r); g.arcTo(x+w,y+h,x,y+h,r); g.arcTo(x,y+h,x,y,r); g.arcTo(x,y,x+w,y,r); g.closePath(); };
     g.shadowColor='rgba(31,60,120,.4)'; g.shadowBlur=5; g.shadowOffsetY=2; g.fillStyle='#fff'; g.beginPath(); g.arc(S/2,S/2,S/2-4,0,7); g.fill(); g.shadowColor='transparent';
     g.fillStyle=color; g.beginPath(); g.arc(S/2,S/2,S/2-8,0,7); g.fill(); g.fillStyle='#fff';
     if(tipo==='sem'){ rr(S/2-6.5,S/2-11.5,13,23,4); g.fill(); ['#E5626A','#F6BD4B','#3AA56D'].forEach((cc,i)=>{ g.fillStyle=cc; g.beginPath(); g.arc(S/2,S/2-6.2+i*6.2,2.4,0,7); g.fill(); }); }
     else { g.fillRect(S/2-1.7,S/2-1,3.4,12); rr(S/2-8.5,S/2-11,17,11,3); g.fill(); g.fillStyle=color; g.fillRect(S/2-5.5,S/2-8,11,2.4); g.fillRect(S/2-5.5,S/2-4.4,7.5,2.2); }
-    map.addImage(id,g.getImageData(0,0,S,S),{pixelRatio:2}); };
-  const capas=p=>p.t==='lin'?['pl-'+p.id,'pc-'+p.id]:p.t==='pat'?[]:(p.t==='nada'?[]:['pt-'+p.id]);
-  const geo=p=>p.t==='lin'?p.k.flatMap(k=>CORREDORES[k].coords):p.t==='sem'?SEMAFOROS.filter(s=>s.fase===p.s).map(s=>s.coord):p.t==='par'?p.pts.filter(lim):p.t==='pat'?PATIOS.map(x=>x.coord):[];
-  const aplica=()=>{ if(!map.isStyleLoaded()&&!map.getLayer('pl-ferro')) return;
-    PR.forEach(p=>{ const vis=(fr==='todos'||p.fr===fr), act=(sel===null||sel===p.id);
-      capas(p).forEach(l=>{ if(!map.getLayer(l)) return; map.setLayoutProperty(l,'visibility',vis?'visible':'none'); if(p.t==='lin') map.setPaintProperty(l,'line-opacity',act?1:.18); else map.setPaintProperty(l,'icon-opacity',act?1:.2); }); });
-    M.forEach(m=>{ const vis=(fr==='todos'||fr==='pat'), act=(sel===null||sel==='patios'); m.getElement().style.display=vis?'':'none'; const ii=m.getElement().querySelector('i'); if(ii) ii.style.opacity=act?1:.25; }); };
-  const encuadra=p=>{ const pts=p?geo(p):PR.flatMap(x=>fr==='todos'||x.fr===fr?geo(x):[]); if(!pts.length) return; const b=new maplibregl.LngLatBounds(); pts.forEach(c=>b.extend(flip(c))); map.fitBounds(b,{padding:{left:3*R,top:3*R,right:3*R,bottom:3*R},maxZoom:15.2,duration:1300}); };
-  function elige(id){ sel=id; lista(); ficha(); aplica(); const p=PR.find(x=>x.id===id); encuadra(p||null); }
-  $$('.mp-t .chip',root).forEach(b=>b.onclick=()=>{ fr=b.dataset.f; sel=null; $$('.mp-t .chip',root).forEach(x=>x.classList.toggle('on',x===b)); lista(); ficha(); aplica(); encuadra(null); });
+    return c; };
+  const imgId=p=>'i-'+p.t+'-'+p.e;
+  const simbolo=(t,e)=>t==='lin'?`<svg viewBox="0 0 34 22"><path d="M3 11H31" stroke="#fff" stroke-width="10" stroke-linecap="round"/><path d="M3 11H31" stroke="${EST[e].c}" stroke-width="5" ${e==='estudios'||e==='estructuracion'?'stroke-dasharray="5 4"':'stroke-linecap="round"'}/></svg>`:t==='pat'?`<i class="cv-pa">${ico('i-factory')}</i>`:`<img src="${pinta(t,EST[e].c).toDataURL()}" alt="">`;
+  const vis=p=>(fr==='todos'||p.fr===fr)&&!off.has(p.id);
+  const lista=()=>{ const v=PR.filter(p=>fr==='todos'||p.fr===fr); let h='', ult='';
+    v.forEach(p=>{ if(p.fr!==ult){ ult=p.fr; h+=`<h5>${FR.find(f=>f[0]===p.fr)[1]}</h5>`; } const s=EST[p.e];
+      h+=`<button data-id="${p.id}" class="${sel===p.id?'sel':''}${off.has(p.id)?' off':''}" style="--c:${s.c}"><u></u><span><b>${p.n}</b><small>${p.fase}</small></span><i>${s.n}</i></button>`; });
+    $('#ml',root).innerHTML=h; $$('#ml button',root).forEach(b=>b.onclick=()=>elige(b.dataset.id===sel?null:b.dataset.id)); const sb=$('#ml button.sel',root); if(sb) sb.scrollIntoView({block:'nearest'}); };
+  const ficha=()=>{ const f=$('#mf',root), p=PR.find(x=>x.id===sel);
+    if(!p){ f.style.setProperty('--c','var(--navy)');
+      f.innerHTML=`<div class="cv">${CV.map(([g,rows])=>`<div><h6>${g}</h6>${rows.map(([n,t,e,ids])=>`<button data-g="${ids.join(' ')}" class="${ids.every(id=>off.has(id))?'off':''}">${simbolo(t,e)}<span>${n}</span></button>`).join('')}</div>`).join('')}</div>`;
+      $$('.cv button',f).forEach(b=>b.onclick=()=>{ const ids=b.dataset.g.split(' '), ocultar=!ids.every(id=>off.has(id)); ids.forEach(id=>ocultar?off.add(id):off.delete(id)); ficha(); lista(); aplica(); }); return; }
+    const s=EST[p.e]; f.style.setProperty('--c',s.c);
+    f.innerHTML=`<div class="ff-h"><span class="st" style="background:${s.c}">${s.n}</span><h3>${p.n}</h3><em>${p.fase}</em><div class="ff-d">${p.ch.map(([v,l])=>`<span><b>${v}</b>${l}</span>`).join('')}</div></div><p>${p.txt}</p><small>En el mapa: ${p.mp}</small><button class="chip ff-x">Ver convenciones</button>`;
+    $('.ff-x',f).onclick=()=>elige(null); };
+  const map=new maplibregl.Map({container:'mapa',center:[-75.205,4.437],zoom:12.2,attributionControl:{compact:true},
+    style:{version:8,sources:{base:{type:'raster',tileSize:256,maxzoom:19,attribution:'© OpenStreetMap contributors',tiles:['https://a.tile.openstreetmap.org/{z}/{x}/{y}.png','https://b.tile.openstreetmap.org/{z}/{x}/{y}.png','https://c.tile.openstreetmap.org/{z}/{x}/{y}.png']}},
+      layers:[{id:'fondo',type:'background',paint:{'background-color':'#E6ECF5'}},{id:'base',type:'raster',source:'base',paint:{'raster-saturation':-0.95,'raster-contrast':-0.15,'raster-brightness-min':.35,'raster-opacity':.9}}]}});
+  map.addControl(new maplibregl.NavigationControl({showCompass:false}),'top-right');
+  window.__mapa=map; limpiar.push(()=>{ try{ map.remove(); }catch(e){} }); const M=[];
+  const capas=p=>p.t==='lin'?['pl-'+p.id,'pc-'+p.id]:p.t==='pat'?[]:['pd-'+p.id,'pt-'+p.id].concat(p.id==='par3'?['pk-par3']:[]);
+  const geo=p=>p.t==='lin'?p.k.flatMap(k=>CORREDORES[k].coords):p.t==='sem'?SEMAFOROS.filter(s=>s.fase===(p.id==='sem1'?'I':'II')).map(s=>s.coord):p.t==='par'?p.pts.filter(lim):p.t==='pat'?PATIOS.map(x=>x.coord):[];
+  const op=(l,v)=>{ const t=map.getLayer(l).type; if(t==='line') map.setPaintProperty(l,'line-opacity',v); else if(t==='symbol') map.setPaintProperty(l,'icon-opacity',v); else if(t==='heatmap') map.setPaintProperty(l,'heatmap-intensity',['interpolate',['linear'],['zoom'],10,.4*v,14,1.2*v]); else{ map.setPaintProperty(l,'circle-opacity',v); map.setPaintProperty(l,'circle-stroke-opacity',v); } };
+  function aplica(){ if(!map.isStyleLoaded()&&!map.getLayer('pl-ferro')) return;
+    PR.forEach(p=>{ const v=vis(p), act=(sel===null||sel===p.id);
+      capas(p).forEach(l=>{ if(!map.getLayer(l)) return; map.setLayoutProperty(l,'visibility',v?'visible':'none'); op(l,act?1:.18); }); });
+    M.forEach(m=>{ const p=PR.find(x=>x.id==='patios'), act=(sel===null||sel==='patios'); m.getElement().style.display=vis(p)?'':'none'; const ii=m.getElement().querySelector('i'); if(ii) ii.style.opacity=act?1:.25; }); }
+  function encuadra(p){ const pts=p?geo(p):PR.flatMap(x=>vis(x)?geo(x):[]); if(!pts.length) return; const b=new maplibregl.LngLatBounds(); pts.forEach(c=>b.extend(flip(c))); map.fitBounds(b,{padding:{left:3*R,top:3*R,right:6*R,bottom:3*R},maxZoom:15.2,duration:1300}); }
+  function elige(id,quieto){ sel=id; if(id) off.delete(id); lista(); ficha(); aplica(); if(!quieto) encuadra(PR.find(x=>x.id===id)||null); }
+  $$('.mp-t .chip',root).forEach(b=>b.onclick=()=>{ fr=b.dataset.f; sel=null; off.clear(); $$('.mp-t .chip',root).forEach(x=>x.classList.toggle('on',x===b)); lista(); ficha(); aplica(); encuadra(null); });
   map.on('load',()=>{
-    icono('sem-a','sem','#F6BD4B'); icono('sem-b','sem','#5B91E3'); icono('par-v','par','#3AA56D'); icono('par-b','par','#5B91E3');
-    PR.forEach(p=>{ const s=EST[p.e].c;
+    PR.filter(p=>p.t==='sem'||p.t==='par').forEach(p=>{ const k=imgId(p); if(!map.hasImage(k)){ const c=pinta(p.t,EST[p.e].c); map.addImage(k,c.getContext('2d').getImageData(0,0,c.width,c.height),{pixelRatio:2}); } });
+    const feats=p=>({type:'FeatureCollection',features:geo(p).map(c=>({type:'Feature',properties:{},geometry:{type:'Point',coordinates:flip(c)}}))});
+    /* Tipo III: mancha de densidad al alejar (sin burbujas ni cifras), puntos desde el zoom 13,4 e íconos desde el 15; va debajo de las líneas */
+    const P3=PR.find(p=>p.id==='par3');
+    map.addSource('s-par3',{type:'geojson',data:feats(P3)});
+    map.addLayer({id:'pk-par3',type:'heatmap',source:'s-par3',paint:{'heatmap-intensity':['interpolate',['linear'],['zoom'],10,.4,14,1.2],'heatmap-radius':['interpolate',['linear'],['zoom'],10,8,12,16,14,30],'heatmap-opacity':['interpolate',['linear'],['zoom'],13.2,.9,14.4,0],
+      'heatmap-color':['interpolate',['linear'],['heatmap-density'],0,'rgba(58,165,109,0)',.15,'rgba(58,165,109,.22)',.5,'rgba(58,165,109,.5)',1,'rgba(40,150,95,.78)']}});
+    ORD.map(id=>PR.find(p=>p.id===id)).forEach(p=>{ const s=EST[p.e].c;
       if(p.t==='lin'){ map.addSource('s-'+p.id,{type:'geojson',data:{type:'Feature',properties:{},geometry:{type:'MultiLineString',coordinates:p.k.map(k=>CORREDORES[k].coords.map(flip))}}});
         const dash=(p.e==='estudios'||p.e==='estructuracion');
         map.addLayer({id:'pc-'+p.id,type:'line',source:'s-'+p.id,layout:{'line-cap':'round','line-join':'round'},paint:{'line-color':'#fff','line-width':dash?9:13}});
         map.addLayer({id:'pl-'+p.id,type:'line',source:'s-'+p.id,layout:{'line-cap':dash?'butt':'round','line-join':'round'},paint:dash?{'line-color':s,'line-width':5,'line-dasharray':[1.6,1.2]}:{'line-color':s,'line-width':7}}); }
-      else if(p.t==='sem'||p.t==='par'){ map.addSource('s-'+p.id,{type:'geojson',data:{type:'FeatureCollection',features:geo(p).map(c=>({type:'Feature',properties:{},geometry:{type:'Point',coordinates:flip(c)}}))}});
-        map.addLayer({id:'pt-'+p.id,type:'symbol',source:'s-'+p.id,layout:{'icon-image':p.img,'icon-size':['interpolate',['linear'],['zoom'],11,p.sz*.5,14,p.sz*.9,17,p.sz*1.4],'icon-allow-overlap':true}}); }
-      capas(p).forEach(l=>{ map.on('click',l,()=>elige(p.id)); map.on('mousemove',l,e=>{ map.getCanvas().style.cursor='pointer'; verTip(`<b>${p.n}</b> · ${EST[p.e].n}`,e.originalEvent); }); map.on('mouseleave',l,()=>{ map.getCanvas().style.cursor=''; ocultaTip(); }); }); });
+      else{ if(p.id!=='par3') map.addSource('s-'+p.id,{type:'geojson',data:feats(p)});
+        map.addLayer({id:'pd-'+p.id,type:'circle',source:'s-'+p.id,minzoom:p.id==='par3'?13.4:0,maxzoom:p.z,paint:{'circle-color':s,'circle-radius':['interpolate',['linear'],['zoom'],10,p.r*.7,p.z,p.r],'circle-stroke-color':'#fff','circle-stroke-width':1.4}});
+        map.addLayer({id:'pt-'+p.id,type:'symbol',source:'s-'+p.id,minzoom:p.z,layout:{'icon-image':imgId(p),'icon-size':['interpolate',['linear'],['zoom'],p.z,p.sz*.7,17,p.sz*1.4],'icon-allow-overlap':true}}); }
+      capas(p).filter(l=>l!=='pk-par3').forEach(l=>{ map.on('click',l,()=>elige(p.id,p.t!=='lin')); map.on('mousemove',l,e=>{ map.getCanvas().style.cursor='pointer'; verTip(`<b>${p.n}</b> · ${EST[p.e].n}`,e.originalEvent); }); map.on('mouseleave',l,()=>{ map.getCanvas().style.cursor=''; ocultaTip(); }); }); });
     PATIOS.forEach(x=>{ const el=document.createElement('div'); el.className='mk-pa'; el.innerHTML=`<i>${ico('i-factory')}</i>`; el.title=x.nombre; el.onclick=()=>elige('patios'); const mk=new maplibregl.Marker({element:el}).setLngLat(flip(x.coord)).addTo(map); M.push(mk); });
-    const bb=new maplibregl.LngLatBounds(); PR.forEach(p=>geo(p).forEach(c=>bb.extend(flip(c)))); map.fitBounds(bb,{padding:{left:3*R,top:3*R,right:3*R,bottom:3*R},duration:0}); aplica(); });
+    const bb=new maplibregl.LngLatBounds(); PR.forEach(p=>geo(p).forEach(c=>bb.extend(flip(c)))); map.fitBounds(bb,{padding:{left:3*R,top:3*R,right:6*R,bottom:3*R},duration:0}); aplica(); });
   lista(); ficha();
 };
 

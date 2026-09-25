@@ -133,7 +133,7 @@ const ALERTAS = [
     antes:'Ciclorruta Cra 5 y Paraderos Tipo 1 y 2 por radicar (previstos el 30 jun y el 7 jul).',
     ahora:'Radicados en la UMUS: ciclorruta Cra 5 (3 jul), Paraderos Tipo I y II (10 jul) y patiotalleres (17 jul).',
     vistas:[{ vis:'obraA', icono:'drag', pregunta:'Arrastra la línea «hoy» y toca una barra para ver el estado de cada frente.' },
-            { vis:'obraB', icono:'tap',  pregunta:'Toca un frente en la lista o en el mapa.' }] },
+            { vis:'obraB', icono:'tap',  pregunta:'Toca un proyecto o un símbolo de las convenciones.' }] },
 
   { n:9, id:'tecno', corto:'Tecnología', titulo:'FET y componente tecnológico', t:'Rezagos en los avances para la estructuración e implementación del FET y componente tecnológico',
     per:'2026-II', comp:'Operaciones', cat:'critica', act:true, corte:'25 sep 2026',
@@ -180,7 +180,7 @@ const ESTADO = {
 };
 
 const GANTT = [
-  { g:'Infraestructura', n:'Carrera 5',               a:18, b:37, est:'ejecutado',      nota:'Contrato de Obra 046 de 2025: Fase I (Cl 64–103 y Av. Ambalá Cl 103–95, $13.919,8 M) y Fase II (Cl 10–58, 10.160 m, $37.578,5 M) ejecutadas.' },
+  { g:'Infraestructura', n:'Carrera 5',               a:18, b:37, est:'ejecutado',      nota:'Contrato de Obra 046 de 2025: Fase I (Cl 64–103 y Av. Ambalá Cl 103–95, $13.919,8 M con interventoría) y Fase II (Cl 10–58, 10.160 m, obra por $35.399,9 M) ejecutadas.' },
   { g:'Infraestructura', n:'Avenida Jordán',          a:18, b:44, est:'sindato',        nota:'Sin estado reportado en el corte de la presentación.' },
   { g:'Infraestructura', n:'Av. Jordán Paralela',     a:18, b:44, est:'bloqueado',      nota:'Por el tope presupuestal del componente se priorizaron los demás corredores. En revisión la posibilidad de redistribución.' },
   { g:'Infraestructura', n:'Avenida Ambalá',          a:24, b:53, est:'ejecucion',      nota:'Contrato de Obra 042 de 2026 en ejecución.' },
@@ -188,7 +188,7 @@ const GANTT = [
   { g:'Estaciones y paraderos', n:'Paraderos Tipo 1 y 2', a:21, b:35, est:'estudios', nota:'Etapa II (Tipo I, Tipo II y MUPI, $9.366,3 M) radicada en la UMUS el 10 de julio de 2026, modalidad llave en mano.' },
   { g:'Estaciones y paraderos', n:'Paraderos Tipo 3',  a:9,  b:35, est:'ejecutado',      nota:'1.150 de 1.150 señales instaladas (Contrato 037 de 2025).' },
   { g:'Estaciones y paraderos', n:'Estaciones de integración', a:9, b:62, est:'retirado', nota:'Con la actualización del estudio de demanda operacional (septiembre 2025) no se contemplan estaciones de integración.' },
-  { g:'Patiotalleres y terminales', n:'Patiotalleres (Grupos 1 y 2)', a:10, b:71, est:'estructuracion', nota:'Adquisición de Predio 1 ($15.075 M) y Predio 2 ($15.061 M) en estructuración. El estudio de septiembre 2025 indica que se requerirían 5 patiotalleres.' },
+  { g:'Patiotalleres y terminales', n:'Patiotalleres (Grupos 1 y 2)', a:10, b:71, est:'estudios', nota:'Adquisición de Predio 1 ($15.075 M) y Predio 2 ($15.061 M) radicada en la UMUS el 17 de julio de 2026; aún no se ha comprado ningún lote. El estudio de septiembre 2025 indica que se requerirían 5 patiotalleres.' },
   { g:'Infraestructura complementaria', n:'Intervención Centro', a:22, b:41, est:'ejecucion', nota:'Acciones institucionales articuladas; zonas azules como medida de regulación del espacio público en el centro.' },
   { g:'Infraestructura complementaria', n:'Cicloinfraestructura', a:22, b:62, est:'estudios', nota:'Estudios y diseños Fase III de la Carrera 5 (Cl 10–44, 7.217 m, $29.098,3 M) radicados en la UMUS el 3 de julio de 2026.' },
   { g:'Tecnología', n:'Recaudo y control de flota', a:4,  b:26, est:'estructuracion', nota:'Adquisición de equipos: proceso a estructurar en 2026; recursos a comprometer del 2027. Se precisan sus condiciones técnicas y su articulación con el modelo operacional.' },
