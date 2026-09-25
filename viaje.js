@@ -54,14 +54,14 @@ estilo(`
 .vj .vj-nt{ font:900 30px var(--fd); animation:ntA 1.9s ease-out forwards; pointer-events:none } @keyframes ntA{ 0%{ transform:translate(0,0) rotate(-8deg) scale(.6); opacity:0 } 15%{ opacity:1 } 100%{ transform:translate(var(--dx,10px),-96px) rotate(12deg) scale(1.15); opacity:0 } }
 
 /* texto sobre el cielo */
-.vj .cv{ position:absolute; left:6rem; top:9.4rem; width:76rem; z-index:4 }
+.vj .cv{ position:absolute; left:6rem; top:8.6rem; width:76rem; z-index:4 }
 .vj .cv .kick{ font:800 1.5rem var(--fd); letter-spacing:.13em; text-transform:uppercase; color:#94681A; white-space:nowrap }
 .vj .cv .kick b{ color:var(--ink) }
-.vj .cv h1{ font:900 5rem/1.02 var(--fd); color:var(--ink); letter-spacing:-.03em; margin:.8rem 0 .8rem }
+.vj .cv h1{ font:900 4.5rem/1.02 var(--fd); color:var(--ink); letter-spacing:-.03em; margin:.6rem 0 .6rem }
 .vj .cv h1 mark{ background:linear-gradient(transparent 62%,var(--sol) 62% 92%,transparent 92%) no-repeat; background-size:100% 100%; color:inherit; padding:0 .15em; animation:marca 1s .6s both cubic-bezier(.2,.8,.2,1) }
 @keyframes marca{ from{ background-size:0 100% } }
-.vj .cv p{ font:600 2rem/1.25 var(--ft); color:var(--tx) }
-.vj .lg-f{ display:flex; gap:.8rem; align-items:center; margin-top:1.3rem; pointer-events:auto }
+.vj .cv p{ font:600 1.9rem/1.25 var(--ft); color:var(--tx) }
+.vj .lg-f{ display:flex; gap:.8rem; align-items:center; margin-top:.9rem; pointer-events:auto }
 .vj .lg-f button{ display:flex; align-items:center; gap:.7rem; padding:.55rem 1.3rem; border-radius:99rem; font:800 1.6rem var(--fd); color:var(--ink); box-shadow:inset 0 0 0 .2rem var(--c); background:rgba(255,255,255,.6); transition:.2s }
 .vj .lg-f button i{ width:1.3rem; height:1.3rem; border-radius:50%; background:var(--c) }
 .vj .lg-f button:hover, .vj .lg-f button.on{ background:var(--c); color:var(--cx) }
@@ -135,9 +135,8 @@ const VJ_LM = {
   3: `<g><rect x="-5" y="-70" width="10" height="70" rx="3" fill="#8093B8"/><rect x="-21" y="-120" width="42" height="66" rx="14" fill="#34456E"/>
       <circle class="vr" cx="0" cy="-104" r="9.5" fill="#F26B71"/><circle class="vy" cx="0" cy="-87" r="9.5" fill="#FFD04D"/><circle class="vg" cx="0" cy="-70" r="9.5" fill="#4FD693"/>
       <rect x="-15" y="-46" width="30" height="9" rx="3" fill="#5B6E96"/></g>`,
-  4: `<g><path d="M-54 -6h108" stroke="#8093B8" stroke-width="4" stroke-linecap="round"/><path d="M-54 -14h108" stroke="#8093B8" stroke-width="3" opacity=".55"/>
-      <g class="vj-tram"><rect x="-36" y="-54" width="72" height="34" rx="13" fill="#F3F7FF" stroke="#BCCDE9" stroke-width="2"/><rect x="-36" y="-36" width="72" height="5" fill="#3AA56D"/><rect x="-36" y="-31" width="72" height="3" fill="#F6BD4B"/>
-        <g fill="#8CB3EF"><rect x="-30" y="-49" width="15" height="10" rx="3"/><rect x="-11" y="-49" width="15" height="10" rx="3"/><rect x="8" y="-49" width="15" height="10" rx="3"/></g><circle cx="-21" cy="-20" r="6" fill="#34456E"/><circle cx="21" cy="-20" r="6" fill="#34456E"/></g></g>`,
+  4: `<g><path d="M-62 -6h124" stroke="#8093B8" stroke-width="4" stroke-linecap="round"/><path d="M-62 -13h124" stroke="#9CC4FF" stroke-width="3" stroke-dasharray="8 6"/>
+      <g class="vj-tram"><use href="#i-art" x="-60" y="-32" width="120" height="24.4"/></g></g>`,
   5: `<g><path d="M-30 0L-22 -30M30 0L22 -30" stroke="#8093B8" stroke-width="5" stroke-linecap="round"/><rect x="-48" y="-98" width="96" height="70" rx="10" fill="#fff" stroke="#8093B8" stroke-width="4"/>
       ${[['#5B91E3',46],['#3AA56D',32],['#F6BD4B',52],['#E5626A',38]].map(([c,h],k)=>`<rect class="vj-bar" style="--d:${k*.4}s" x="${-35+k*20}" y="${-36-h}" width="13" height="${h}" rx="3" fill="${c}"/>`).join('')}</g>`,
   6: `<g class="vj-doc"><path d="M-30 -98h44l16 16v82h-60z" fill="#fff" stroke="#8093B8" stroke-width="4" stroke-linejoin="round"/><path d="M14 -98v16h16" fill="#DCE7F8" stroke="#8093B8" stroke-width="3" stroke-linejoin="round"/>
@@ -220,7 +219,7 @@ function montarViaje(root, {tipo='portada', cover='', barra=''}={}){
   /* paradas */
   $('#vjParadas',el).innerHTML=ALERTAS.map((a,i)=>{ const c=CAT[a.cat], p=PS[i];
     return `<g class="pa f-${a.cat}" data-n="${a.n}" data-i="${i}" transform="translate(${p.x.toFixed(1)} ${p.y.toFixed(1)})" style="--x:${p.x.toFixed(1)}px;--y:${p.y.toFixed(1)}px;--c:${c.c};--cx:${c.tx};--d:${(i*.28).toFixed(2)}s" tabindex="0" role="button" aria-label="Alerta ${a.n}: ${a.titulo}">
-      <ellipse class="pad" cx="0" cy="-36" rx="66" ry="14"/><g class="lm" transform="translate(0 -36)">${VJ_LM[a.n]}</g>
+      <ellipse class="pad" cx="0" cy="-36" rx="66" ry="14"/><g transform="translate(0 -34) scale(.9)"><g class="lm">${VJ_LM[a.n]}</g></g>
       <circle class="ping" cx="0" cy="0" r="20"/><circle class="bd" cx="0" cy="0" r="22"/><text class="bn" y="8.5">${a.n}</text>
       <g class="ck"><circle cx="18" cy="-18" r="10" fill="#3AA56D" stroke="#fff" stroke-width="2.5"/><path d="M13.5 -18l3.4 3.4 6 -7" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></g>
       <g transform="translate(0 66)"><rect class="pill" x="-70" y="-22" width="140" height="44" rx="22"/><text class="lb" y="7">${a.corto}</text>${a.act?'<circle class="nv" cx="0" cy="-22" r="7"/>':''}</g>
@@ -315,3 +314,17 @@ let AUDIO=null;
 function tono(f){ try{ AUDIO=AUDIO||new (window.AudioContext||window.webkitAudioContext)(); const a=AUDIO, t=a.currentTime, o=a.createOscillator(), o2=a.createOscillator(), g=a.createGain();
     o.type='triangle'; o2.type='sine'; o.frequency.value=f; o2.frequency.value=f*2; g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(.2,t+.015); g.gain.exponentialRampToValueAtTime(.0001,t+1.1);
     o.connect(g); o2.connect(g); g.connect(a.destination); o.start(t); o2.start(t); o.stop(t+1.2); o2.stop(t+1.2); }catch(e){} }
+
+/* ---- ajustes: ilustración como marca de agua, CTA de la trivia ---- */
+estilo(`
+.vj #vjBg{ filter:saturate(.42) blur(.7px); opacity:.78 }
+.vj .pa .lm, .vj .pa .pad{ filter:saturate(.55); opacity:.8; transition:transform .35s cubic-bezier(.34,1.6,.5,1), opacity .3s, filter .3s }
+.vj .pa:hover .lm, .vj .pa.on .lm{ filter:none; opacity:1 }
+.vj:before{ background:radial-gradient(circle at 88% 13%,rgba(255,236,180,.7) 0,rgba(255,236,180,0) 24rem),radial-gradient(circle at 10% 34%,rgba(255,255,255,.75) 0,rgba(255,255,255,0) 32rem) }
+.vj .cbar .btn.cta{ position:relative; background:linear-gradient(180deg,#FFDD7A,#FFC83D); color:var(--ink); font-size:2.05rem; padding:1.25rem 3rem; box-shadow:0 .5rem 1.6rem rgba(255,196,61,.6), inset 0 0 0 .25rem rgba(255,255,255,.55); animation:ctaPulso 2.2s ease-in-out infinite }
+.vj .cbar .btn.cta:hover{ background:linear-gradient(180deg,#FFE594,#FFD25E) }
+@keyframes ctaPulso{ 0%,100%{ transform:scale(1); box-shadow:0 .5rem 1.6rem rgba(255,196,61,.55), 0 0 0 0 rgba(255,210,94,.7) } 50%{ transform:scale(1.045); box-shadow:0 .7rem 2rem rgba(255,196,61,.7), 0 0 0 1.4rem rgba(255,210,94,0) } }
+.vj .cta-tip{ position:absolute; bottom:8.2rem; font:800 1.6rem var(--fd); color:var(--ink); background:#fff; padding:.6rem 1.4rem; border-radius:1.4rem; box-shadow:0 .6rem 1.6rem rgba(31,60,120,.22); z-index:8; animation:tipFlota 2.2s ease-in-out infinite; pointer-events:none; white-space:nowrap }
+.vj .cta-tip:after{ content:""; position:absolute; left:50%; bottom:-.7rem; width:1.4rem; height:1.4rem; background:#fff; transform:translateX(-50%) rotate(45deg) }
+@keyframes tipFlota{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-.5rem) } }
+`);

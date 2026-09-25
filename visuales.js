@@ -35,8 +35,11 @@ estilo(`
 .cob b{ font:800 4.8rem/1 var(--fd); color:var(--ink) } .cob span{ display:block; font:600 1.5rem var(--ft); color:var(--mut) } .cob.lleno b, .cob.lleno span{ color:#fff; text-shadow:0 .1rem .5rem rgba(0,0,0,.4) }
 .sls{ display:flex; flex-direction:column; justify-content:space-between; min-height:0 }
 .sl span{ display:flex; justify-content:space-between; align-items:baseline; font:600 1.65rem var(--ft); color:var(--tx) }
-.sl span b{ font:800 2.2rem var(--fd); color:var(--ink) }
+.sl span b{ font:800 2.2rem var(--fd); color:var(--ink) } .sl input{ height:2.5rem !important; margin-top:-.2rem } .sl{ display:block }
 .sls .nota{ font-size:1.5rem; color:var(--mut) }
+.sls{ gap:.3rem } .guia{ display:flex; align-items:center; gap:.7rem; font:700 1.55rem var(--fd); color:var(--ink); flex-wrap:wrap } .guia b{ color:var(--mut); margin-right:.4rem } .guia em{ width:2.7rem; height:2.7rem; border-radius:50%; background:var(--sol); color:var(--ink); font:800 1.55rem var(--fd); font-style:normal; display:grid; place-items:center } .guia i{ color:var(--mut); font-style:normal; font-size:2rem }
+.pres{ display:flex; align-items:center; gap:.7rem; flex-wrap:nowrap } .pres span{ font:700 1.5rem var(--fd); color:var(--mut) } .pres button{ padding:.5rem 1.2rem; border-radius:99rem; font:700 1.5rem var(--fd); color:var(--ink); box-shadow:inset 0 0 0 .2rem var(--ink); transition:.2s } .pres button:hover{ background:var(--ink); color:#fff }
+.tank.demo:after{ content:"Demostración"; position:absolute; left:50%; top:.2rem; transform:translateX(-50%); white-space:nowrap; font:800 1.5rem var(--fd); background:var(--sol); color:var(--ink); padding:.3rem 1.2rem; border-radius:.7rem }
 .kres{ display:flex; flex-direction:column; gap:1.4rem; min-height:0 }
 .kres .caja{ flex:1; display:flex; flex-direction:column; justify-content:center; padding:1rem 1.8rem }
 .kres .caja span{ font-size:1.5rem; color:var(--mut); line-height:1.15; margin-top:.4rem }
@@ -106,32 +109,6 @@ estilo(`
 .acl{ display:flex; flex-direction:column; gap:.8rem }
 .acl button{ text-align:left; padding:.6rem 1.2rem; background:#F8E2E0; border-left:.5rem solid var(--rojo); font:700 1.55rem/1.15 var(--ft); color:#A83C45; transition:.2s } .acl button:hover{ background:#F3CFCB }
 
-.appb{ display:grid; grid-template-rows:auto minmax(0,1fr); gap:1.6rem; height:100% }
-.zt{ position:relative; padding:.6rem 2.4rem 0; height:26.5rem }
-.zt-in{ position:relative; height:21.6rem; --dl:0s }
-.zt-rail{ position:absolute; left:0; right:0; top:3.6rem; height:.5rem; border-radius:1rem; background:repeating-linear-gradient(90deg,#8093B8 0 1.5rem,transparent 1.5rem 2.4rem) }
-.zt-tab{ position:absolute; top:4.7rem; width:10.6rem; height:4.6rem; margin-left:-5.3rem; text-align:center; font:800 1.5rem/4.6rem var(--fd); color:#fff; cursor:pointer; z-index:2; opacity:.28; transform:scale(.86); transition:opacity .4s var(--dl), transform .5s cubic-bezier(.3,1.7,.5,1) var(--dl) }
-.zt-tab:before{ content:""; position:absolute; inset:0; background:var(--navy); transform:skewX(-14deg); border-radius:.5rem; z-index:-1; transition:background .3s }
-.zt-tab.on{ opacity:1; transform:none } .zt-tab.act:before{ background:var(--ink) }
-.zt-tab.nuevo{ color:var(--ink) } .zt-tab.nuevo:before{ background:var(--sol) }
-.zt-st{ position:absolute; top:9.3rem; width:.35rem; margin-left:-.175rem; background:var(--navy); border-radius:1rem; transform:scaleY(0); transform-origin:top; transition:transform .4s var(--dl) }
-.zt-st.sh{ height:2.2rem } .zt-st.lg{ height:5.9rem } .zt-st.on{ transform:none }
-.zt-st:after{ content:""; position:absolute; left:50%; bottom:-.45rem; width:1rem; height:1rem; margin-left:-.5rem; border-radius:50%; background:inherit }
-.zt-lb{ position:absolute; width:18rem; margin-left:-9rem; text-align:center; font:600 1.55rem/1.15 var(--ft); color:var(--ink); cursor:pointer; opacity:0; transform:translateY(1rem) scale(.92); transition:opacity .4s var(--dl), transform .5s cubic-bezier(.3,1.6,.5,1) var(--dl) }
-.zt-lb.sh{ top:11.9rem } .zt-lb.lg{ top:15.6rem } .zt-lb.on{ opacity:1; transform:none } .zt-lb.nuevo{ font-weight:700 }
-.zt-tram{ position:absolute; top:.1rem; left:-12%; width:14rem; height:3.4rem; margin-left:-7rem; color:#8CC152; cursor:grab; z-index:4; touch-action:none; transition:left .9s cubic-bezier(.45,0,.25,1); filter:drop-shadow(0 .35rem .3rem rgba(31,60,120,.25)) }
-.zt-tram.arr{ cursor:grabbing; transition:none }
-.zt-det{ position:absolute; left:2.4rem; right:19rem; bottom:.6rem; font:600 1.65rem/1.22 var(--ft); color:var(--ink); min-height:4rem } .zt-det em{ font:800 1.65rem var(--fd); font-style:normal; color:#B94750 }
-.zt-re{ position:absolute; right:2.4rem; bottom:.8rem }
-.zt-det .gp{ color:var(--mut); font-weight:600 }
-.appb-b{ display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); gap:1.8rem; min-height:0 }
-.puertas{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:.8rem; margin-top:.8rem }
-.puerta{ display:flex; align-items:center; gap:1rem; padding:.4rem 1rem; background:var(--paper); cursor:pointer; transition:.2s; font:700 1.55rem/1.1 var(--fd); color:var(--ink) } .puerta:hover{ background:#DFE6F2 }
-.puerta .ck{ flex:none; width:2.5rem; height:2.5rem; border-radius:.4rem; box-shadow:inset 0 0 0 .25rem var(--rojo); transition:.2s; position:relative }
-.puerta.on .ck{ background:var(--verde); box-shadow:none } .puerta.on .ck:before{ content:""; position:absolute; left:.8rem; top:.45rem; width:.9rem; height:1.5rem; border-right:.32rem solid #fff; border-bottom:.32rem solid #fff; transform:rotate(45deg) }
-.comp{ display:flex; flex-direction:column; gap:.3rem; margin-top:.5rem }
-.comp div{ display:grid; grid-template-columns:3rem minmax(0,1fr) auto; gap:1rem; align-items:center; font-size:1.55rem; line-height:1.12; color:var(--ink); font-weight:600; padding:.3rem 0; border-bottom:.12rem solid #DBE3F0 }
-.comp div em{ font:800 1.8rem var(--fd); font-style:normal; color:var(--mut) }
 
 /* ---------- desembolsos ---------- */
 .des{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:2.4rem; height:100% }
@@ -150,11 +127,25 @@ estilo(`
 .fs4{ display:flex; gap:.3rem } .fs4 i{ width:1.6rem; height:.8rem; background:#CCD6E6 } .fs4 i.on{ background:var(--azul) } .fs4 i.cur{ background:var(--ambar) }
 .split{ display:flex; height:2.6rem; margin-top:.6rem; font:700 1.5rem var(--fd); color:#fff } .split i{ display:flex; align-items:center; justify-content:center; font-style:normal; width:0; transition:width 1s cubic-bezier(.2,.8,.2,1); overflow:hidden; white-space:nowrap }
 .dcard{ margin-top:.7rem; padding:.7rem 1.4rem; background:var(--paper); border-left:.6rem solid var(--ink); font-size:1.65rem; line-height:1.2; color:var(--ink) }
-.cart{ display:flex; flex-direction:column; gap:.9rem; margin:1rem 0 }
-.cart button{ display:flex; align-items:center; gap:1rem; text-align:left; padding:.8rem 1.3rem; background:var(--paper); border-left:.6rem solid #C0CCDF; font:700 1.6rem/1.12 var(--fd); color:var(--ink); transition:.2s }
-.cart button.on{ background:#E1F1E6; border-left-color:var(--verde) } .cart button b{ margin-left:auto; white-space:nowrap; font-size:1.7rem } .cart button small{ display:block; font:500 1.5rem var(--ft); color:var(--mut) }
-.cbar{ height:3rem; background:#D5DDEC; position:relative } .cbar i{ display:block; height:100%; width:0; background:var(--verde); transition:width .7s cubic-bezier(.2,.8,.2,1) }
-.cbar span{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font:800 1.6rem var(--fd); color:var(--ink) }
+.gr .tk{ font:600 15px var(--ft); fill:#66799F } .gr .ut{ font:700 15px var(--fd); fill:#66799F } .gr .xa{ font:800 16px var(--fd); fill:#1F3C78; text-anchor:middle }
+.gr .pc{ font:800 17px var(--fd); fill:#fff; text-anchor:middle } .gr .pc2{ font:800 26px var(--fd); fill:#1F3C78; text-anchor:middle } .gr .pc3{ font:700 15px var(--ft); fill:#66799F; text-anchor:middle }
+.gr .lg{ font:800 16px var(--fd); text-anchor:middle } .gr .lg2{ font:700 16px var(--ft); fill:#1F3C78; text-anchor:middle }
+.gb{ transform-box:fill-box; transform-origin:50% 100%; animation:crece .9s cubic-bezier(.2,.8,.2,1) both; animation-delay:calc(var(--i)*110ms) } @keyframes crece{ from{ transform:scaleY(0) } }
+.gr .dn{ animation:dona 1.3s .5s ease-out both } @keyframes dona{ from{ stroke-dasharray:0 400 } }
+.leyenda .uni{ margin-left:auto; font-size:1.5rem; color:var(--mut); background:var(--paper); padding:.15rem 1rem; border-radius:.5rem }
+.pn2{ display:flex; align-items:center; gap:1rem } .pn2 em{ flex:none; width:3.2rem; height:3.2rem; border-radius:50%; background:var(--navy); color:#fff; font:800 1.8rem var(--fd); font-style:normal; display:grid; place-items:center } .pn2 b{ font:800 1.95rem var(--fd); color:var(--ink); white-space:nowrap } .pn2 span{ margin-left:auto; font-size:1.55rem; color:var(--mut); text-align:right }
+.fl{ display:flex; flex-wrap:wrap; align-items:center; gap:.5rem; font-size:1.5rem; color:var(--mut); margin-top:.6rem } .fl em{ font-style:normal; background:var(--paper); padding:.1rem .7rem; border-radius:.4rem; color:var(--ink); font-weight:600 } .fl i{ font-style:normal }
+.meta{ display:grid; grid-template-columns:1fr auto; align-items:center; gap:1.2rem; margin-top:.9rem } .meta span, .paso2 span{ display:flex; align-items:center; gap:.8rem; font:700 1.55rem/1.15 var(--fd); color:var(--ink) } .meta em, .paso2 em, .res em{ flex:none; width:2.6rem; height:2.6rem; border-radius:50%; background:var(--sol); font:800 1.5rem var(--fd); font-style:normal; display:grid; place-items:center; color:var(--ink) } .meta b{ font:800 3.1rem var(--fd); letter-spacing:-.02em; white-space:nowrap }
+.paso2{ display:flex; align-items:center; justify-content:space-between; gap:1rem } .paso2 i{ display:flex; gap:.6rem; font-style:normal } .paso2 .chip{ padding:.3rem 1rem; font-size:1.5rem; white-space:nowrap }
+.pila{ position:relative; height:4.4rem; background:#D5DDEC; border-radius:.8rem; margin:2.3rem 0 1rem } .pila-b{ display:flex; height:100%; border-radius:.8rem; overflow:hidden }
+.pila-b i{ display:flex; align-items:center; justify-content:center; font:800 1.5rem var(--fd); font-style:normal; color:#fff; text-shadow:0 .1rem .3rem rgba(0,0,0,.3); overflow:hidden; white-space:nowrap; transition:width .7s cubic-bezier(.2,.8,.2,1); animation:sale .55s cubic-bezier(.2,.8,.2,1) } @keyframes sale{ from{ transform:scaleX(.2); opacity:0 } }
+.pila-m{ position:absolute; top:-.9rem; bottom:-.9rem; width:0; border-left:.35rem dashed var(--ink); transition:left .7s cubic-bezier(.2,.8,.2,1) } .pila-m span{ position:absolute; top:-2.5rem; left:0; transform:translateX(-50%); font:800 1.5rem var(--fd); background:var(--ink); color:#fff; padding:.05rem .9rem; border-radius:.4rem }
+.cart{ display:flex; flex-direction:column; gap:.7rem; margin:.2rem 0 .8rem }
+.cart button{ display:flex; align-items:center; gap:1rem; text-align:left; padding:.5rem 1.2rem .5rem .8rem; background:var(--paper); border-radius:.8rem; font:700 1.6rem/1.12 var(--fd); color:var(--ink); transition:.2s } .cart button:hover{ background:#DCE8F9 }
+.cart button u{ align-self:stretch; width:1.2rem; border-radius:.4rem; background:var(--c) } .cart button span{ flex:1 } .cart button small{ display:block; font:500 1.5rem var(--ft); color:var(--mut) } .cart button b{ white-space:nowrap; font-size:1.6rem }
+.cart button em{ font:800 1.5rem var(--fd); font-style:normal; background:var(--ink); color:#fff; padding:.25rem 1rem; border-radius:.5rem; white-space:nowrap } .cart button.on{ background:#E1F1E6 } .cart button.on em{ background:var(--verde) }
+.cart button.pide{ animation:pide 1.4s ease-out infinite } @keyframes pide{ 0%{ box-shadow:0 0 0 0 rgba(91,145,227,.65) } 100%{ box-shadow:0 0 0 1rem rgba(91,145,227,0) } }
+.dcard.res{ min-height:5.4rem; margin-top:auto; display:flex; align-items:flex-start; gap:1rem }
 
 /* ---------- actos: el borrador se arma pieza por pieza ---------- */
 .acto{ position:relative; display:grid; grid-template-rows:auto minmax(0,1fr); gap:1.6rem; height:100% }
@@ -227,23 +218,32 @@ estilo(`
 .gt-play .mango{ position:absolute; left:0; top:0; transform:translateX(-50%); background:var(--sol); color:var(--ink); font:800 1.5rem var(--fd); padding:.35rem 1.2rem; cursor:ew-resize; white-space:nowrap; pointer-events:auto }
 .gt-d{ background:var(--card); border-left:.7rem solid var(--ink); padding:.6rem 1.8rem; font-size:1.6rem; line-height:1.2; color:var(--ink); flex:1; min-height:0 }
 .gt-d b.t{ font:800 1.8rem var(--fd) }
-.mp{ position:absolute; inset:0 } .mp #mapa{ position:absolute; inset:0 }
-.mp-l{ position:absolute; left:0; top:0; bottom:9.6rem; width:35rem; z-index:5; overflow:auto; display:flex; flex-direction:column; gap:.6rem; background:var(--paper); padding:.8rem; scrollbar-width:thin }
-.mp-l button{ display:flex; align-items:center; gap:1rem; text-align:left; padding:.7rem 1rem; background:var(--card); border-left:.6rem solid var(--c); font:700 1.6rem/1.1 var(--fd); color:var(--ink); transition:.2s } .mp-l button:hover{ background:#E3E9F4 } .mp-l button.sel{ background:var(--ink); color:#fff }
-.mp-l button small{ display:block; font:500 1.5rem var(--ft); color:var(--mut) } .mp-l button.sel small{ color:#C5CFEE }
-.mp-d{ position:absolute; left:0; right:0; bottom:0; height:9rem; z-index:5; background:var(--navy); color:#fff; padding:1rem 2rem; font-size:1.6rem; line-height:1.2 } .mp-d b{ color:var(--sol); font:800 1.8rem var(--fd) }
-.mp-c{ position:absolute; right:1rem; top:1rem; z-index:5; display:flex; gap:.6rem } .mp-c .chip{ background:var(--paper) } .mp-c .chip.on{ background:var(--ink) }
-.mk-p{ width:1rem; height:1rem; border-radius:50%; background:var(--azul); border:.18rem solid #fff }
+.mp{ display:grid; grid-template-rows:auto minmax(0,1fr) 12.8rem; gap:1.2rem; height:100% }
+.mp-t{ display:flex; align-items:center; gap:.8rem; font:700 1.6rem var(--fd); color:var(--mut) } .mp-t .chip b{ margin-left:.5rem; background:var(--sol); color:var(--ink); border-radius:.4rem; padding:0 .6rem } .mp-t .chip.on b{ background:var(--sol) }
+.mp-b{ display:grid; grid-template-columns:35rem minmax(0,1fr); gap:1.4rem; min-height:0 }
+.mp-l{ overflow:auto; background:var(--card); padding:.6rem; scrollbar-width:thin; min-height:0 } .mp-l h5{ font:800 1.5rem var(--fd); color:var(--mut); text-transform:uppercase; letter-spacing:.06em; margin:.7rem .4rem .3rem }
+.mp-l button{ display:grid; grid-template-columns:1rem minmax(0,1fr) auto; align-items:center; gap:.9rem; width:100%; text-align:left; padding:.5rem .8rem .5rem .5rem; margin-bottom:.35rem; background:var(--paper); border-radius:.7rem; transition:.2s } .mp-l button:hover{ background:#DCE8F9 } .mp-l button.sel{ background:var(--ink); color:#fff }
+.mp-l button u{ align-self:stretch; border-radius:.5rem; background:var(--c) } .mp-l button b{ display:block; font:700 1.6rem/1.1 var(--fd); color:inherit } .mp-l button small{ display:block; font:500 1.5rem var(--ft); color:var(--mut) } .mp-l button.sel small{ color:#C5CFEE }
+.mp-l button i{ font:800 1.5rem var(--fd); font-style:normal; padding:.1rem .8rem; border-radius:.5rem; background:var(--c); color:#fff; white-space:nowrap } .mp-l button i{ text-shadow:0 0 .2rem rgba(0,0,0,.25) }
+.mp-m{ position:relative; overflow:hidden; border-radius:.8rem; background:#E6ECF5 } .mp-m #mapa{ position:absolute; inset:0 }
+.mp-lg{ position:absolute; left:1rem; top:1rem; max-width:52rem; z-index:5; background:rgba(255,255,255,.93); border-radius:.8rem; padding:.8rem 1.2rem; box-shadow:0 .4rem 1.2rem rgba(31,60,120,.18); font-size:1.5rem; color:var(--ink) } .mp-lg b{ font:800 1.5rem var(--fd); color:var(--mut) }
+.mp-lg .g{ display:grid; grid-template-columns:repeat(3,auto); gap:.2rem 1.6rem; margin:.3rem 0 0 } .mp-lg span{ display:flex; align-items:center; gap:.6rem; white-space:nowrap } .mp-lg i{ width:1.3rem; height:1.3rem; border-radius:50% }
+.mp-lg .n{ display:flex; gap:1.6rem } .mp-lg u{ display:inline-block; width:2.6rem; height:0; border-top:.45rem solid var(--ink); border-radius:1rem } .mp-lg u.d{ border-top-style:dashed }
+.mp-f{ background:var(--card); border-left:.8rem solid var(--c,var(--navy)); padding:.9rem 2rem 1rem; display:flex; flex-direction:column; gap:.4rem; min-height:0; overflow:hidden; transition:border-color .3s }
+.ff-h{ display:flex; align-items:center; gap:1.2rem } .ff-h .st{ font:800 1.55rem var(--fd); color:#fff; padding:.2rem 1.1rem; border-radius:.6rem; text-shadow:0 0 .2rem rgba(0,0,0,.25) } .ff-h h3{ font:800 2.5rem var(--fd); color:var(--ink); letter-spacing:-.01em } .ff-h em{ font:600 1.65rem var(--ft); font-style:normal; color:var(--mut) }
+.ff-d{ margin-left:auto; display:flex; gap:2.4rem } .ff-d span{ font-size:1.5rem; color:var(--mut); line-height:1.1 } .ff-d b{ display:block; font:800 2.2rem var(--fd); color:var(--ink) }
+.mp-f p{ font:600 1.7rem/1.22 var(--ft); color:var(--tx) } .mp-f small{ font:700 1.5rem var(--ft); color:var(--mut) }
+.ff-r{ display:flex; gap:2rem } .ff-r span{ display:flex; align-items:center; gap:.7rem; font:600 1.7rem var(--ft); color:var(--ink) } .ff-r i{ width:1.4rem; height:1.4rem; border-radius:50%; background:var(--c) } .ff-r b{ font:800 2rem var(--fd) }
 .mk-pa{ position:relative; width:0; height:0 }
-.mk-pa i{ position:absolute; left:-2rem; top:-2rem; width:4rem; height:4rem; background:var(--ink); border:.3rem solid #fff; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; cursor:pointer } .mk-pa i svg{ width:2.2rem; height:2.2rem }
+.mk-pa i{ position:absolute; left:-1.9rem; top:-1.9rem; width:3.8rem; height:3.8rem; background:var(--azul); border:.3rem solid #fff; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; cursor:pointer; box-shadow:0 .3rem .8rem rgba(31,60,120,.35) } .mk-pa i svg{ width:2.1rem; height:2.1rem }
 
 /* ---------- tecnología ---------- */
-.tec{ display:grid; grid-template-rows:minmax(0,1.55fr) minmax(0,1fr); gap:1.6rem; height:100% }
-.tec-n{ position:relative; background:var(--card); min-height:0 } .tec-n svg{ position:absolute; inset:0; width:100%; height:100% }
+.tec{ display:grid; grid-template-rows:minmax(0,1fr) 16.6rem; gap:1.4rem; height:100% }
+.tec-n{ position:relative; background:var(--card); min-height:0 } .tec-n svg{ position:absolute; left:0; right:0; top:5.6rem; bottom:3rem; width:100%; height:calc(100% - 8.6rem) }
 .tec-n .lk{ stroke:#A9B8CE; stroke-width:3; stroke-dasharray:8 8 } .tec-n .lk.ok{ stroke:var(--verde); stroke-dasharray:none; stroke-width:5 }
 .tec-n .nd{ cursor:grab } .tec-n .nd rect{ transition:fill .4s } .tec-n .nd text{ fill:#fff; font-weight:700; text-anchor:middle; pointer-events:none } .tec-n .nd .s{ font-size:15px; font-weight:500 }
 .tec-n .pk{ fill:var(--ink) }
-.tec-b{ position:absolute; left:1.4rem; top:1.2rem; display:flex; gap:1.2rem; align-items:center; z-index:2 } .tec-s{ position:absolute; left:50%; bottom:.7rem; transform:translateX(-50%); font-size:1.55rem; color:var(--mut); white-space:nowrap; z-index:2 }
+.tec-b{ position:absolute; left:2rem; right:2rem; top:1.1rem; display:flex; gap:1.6rem; align-items:center; z-index:2 } .tec-b .btn{ font-size:1.8rem; padding:1rem 2.4rem } .tec-b .tip2{ font-size:1.6rem; color:var(--mut); margin-left:auto } .tec-s{ position:absolute; left:50%; bottom:.7rem; transform:translateX(-50%); font-size:1.55rem; color:var(--mut); white-space:nowrap; z-index:2 }
 .tec-g{ background:var(--card); padding:0 0 0; overflow:hidden } .tec-g .gt{ padding-top:.2rem }
 `);
 
@@ -270,8 +270,9 @@ VIS.fet = root => {
           <path d="M35 60v274a95 24 0 0 0 190 0V60" fill="none" stroke="#1F3C78" stroke-width="5"/><ellipse cx="130" cy="60" rx="95" ry="24" fill="none" stroke="#1F3C78" stroke-width="5"/>
           <line x1="14" x2="246" y1="64" y2="64" stroke="#1F3C78" stroke-dasharray="7 7" stroke-width="2.5"/></svg>
         <div class="cob"><b id="cob">0 %</b><span>del fondo requerido</span></div></div>
-      <div class="sls rv">${sl('tt','Tarifa técnica por viaje',2500,5000,50)}${sl('tu','Tarifa al usuario por viaje',2000,4000,50)}${sl('via','Viajes pagos por día (miles)',40,200,5)}${sl('apo','Aporte anual al FET ($ mil millones)',0,40,1)}
-        <div class="nota">Horizonte de cobertura: 24 meses. Cifras ilustrativas.</div></div>
+      <div class="sls rv"><div class="guia"><em>1</em>Mueve<i>›</i><em>2</em>Mira el fondo<i>›</i><em>3</em>Lee el resultado</div>
+        ${sl('tt','Tarifa técnica por viaje',2500,5000,50)}${sl('tu','Tarifa al usuario por viaje',2000,4000,50)}${sl('via','Viajes pagos por día (miles)',40,200,5)}${sl('apo','Aporte anual al FET ($ mil millones)',0,40,1)}
+        <div class="pres"><button data-e="0">Sin aporte</button><button data-e="1">Aporte parcial</button><button data-e="2">Cubre el fondo</button></div></div>
       <div class="kres rv"><div class="caja"><div class="k-num" id="k-def">$0</div><span>déficit por viaje</span></div><div class="caja"><div class="k-num" id="k-req">$0</div><span>fondo requerido</span></div><div class="caja"><div class="k-num" id="k-apo">$0</div><span>aportado en el horizonte</span></div></div>
     </div></div>`;
   function calc(){
@@ -283,7 +284,16 @@ VIS.fet = root => {
     const col = cob>=1?'#3AA56D':cob>=.5?'#F6BD4B':'#E5626A'; $('#w1',root).style.fill=col; $('#w2',root).style.fill=col;
     $('#agua',root).style.transform=`translateY(${360-300*niv}px)`; $('#mons',root).style.opacity=P.apo>0?1:0;
   }
-  $$('input',root).forEach(i=>i.oninput=calc); calc();
+  let demo=null, rafd=0; limpiar.push(()=>{ clearTimeout(demo); cancelAnimationFrame(rafd); });
+  const paraCubrir=()=>{ const def=Math.max(0,+$('#tt',root).value-+$('#tu',root).value), req=def*(+$('#via',root).value)*1000*365*P.mes/12; return clamp(Math.ceil(req/1e9*12/P.mes),0,40); };
+  /* mueve el deslizador del aporte con animación para mostrar el efecto */
+  const lleva=(a,ms=1300,fin)=>{ cancelAnimationFrame(rafd); const el=$('#apo',root), d=+el.value, t0=performance.now(); (function f(t){ const p=Math.min(1,(t-t0)/ms), e=1-Math.pow(1-p,3); el.value=Math.round(d+(a-d)*e); calc(); if(p<1) rafd=requestAnimationFrame(f); else fin&&fin(); })(t0); };
+  const paraDemo=()=>{ clearTimeout(demo); cancelAnimationFrame(rafd); $('.tank',root).classList.remove('demo'); };
+  $$('input',root).forEach(i=>{ i.oninput=()=>{ paraDemo(); calc(); }; i.onpointerdown=paraDemo; });
+  $$('.pres button',root).forEach(b=>b.onclick=()=>{ paraDemo(); const e=+b.dataset.e, c=paraCubrir(); lleva(e===0?0:e===1?Math.max(1,Math.round(c/2)):c); });
+  calc();
+  /* demostración inicial: el aporte sube solo hasta cubrir el fondo y vuelve a cero */
+  demo=setTimeout(()=>{ $('.tank',root).classList.add('demo'); lleva(paraCubrir(),2600,()=>{ demo=setTimeout(()=>lleva(0,1400,()=>$('.tank',root).classList.remove('demo')),1300); }); },1500);
   /* ruta de estructuración: dónde estamos hoy */
   const pasos=[['Modelo operacional','Estudio de actualización del modelo operacional (SAIK & IKON): base de los escenarios de operación.','hecho'],
     ['Resultados del modelo financiero','El SETP ya cuenta con los resultados del modelo financiero del sistema.','hecho'],
@@ -401,7 +411,7 @@ VIS.appA = root => {
         <circle cx="55" cy="650" r="9" fill="#F6BD4B" stroke="#fff" stroke-width="3"/><text x="20" y="690" class="lbl">Inicio de D</text>
         <use href="#i-plane" x="900" y="380" width="44" height="44" style="color:#8A93AD"/><text x="965" y="450" text-anchor="end" class="lbl" style="fill:#66799F">Aeropuerto</text>
         ${Object.entries(LN).map(([k,l])=>`<g class="bd" data-k="${k}"><line x1="${l.bd[0]}" y1="${l.bd[1]}" x2="${l.bd[2]}" y2="${l.bd[3]}"/><rect x="${l.bd[0]-150}" y="${l.bd[1]-22}" width="300" height="44" rx="5"/><text x="${l.bd[0]}" y="${l.bd[1]+8}" text-anchor="middle">${l.bd[4]}</text></g>`).join('')}
-        ${Object.entries(LN).map(([k,l])=>`<g class="tr" data-k="${k}" style="color:${l.c}"><use href="#i-art" width="130" height="34" x="-65" y="-27"/><animateMotion dur="${l.dur}s" repeatCount="indefinite" rotate="auto" path="${l.d}"/></g>`).join('')}
+        ${Object.entries(LN).map(([k,l])=>`<g class="tr" data-k="${k}" style="color:${l.c}"><use href="#i-art" width="176" height="35.7" x="-88" y="-29"/><animateMotion dur="${l.dur}s" repeatCount="indefinite" rotate="auto" path="${l.d}"/></g>`).join('')}
       </svg><div class="nota">Esquema no georreferenciado, basado en la Figura 8 de la propuesta</div></div>
     <div class="app-i rv">
       <div class="lns" id="lg">${Object.entries(LN).map(([k,l])=>`<button data-k="${k}" style="--c:${l.c}">${k}</button>`).join('')}</div>
@@ -425,109 +435,84 @@ VIS.appA = root => {
 };
 
 /* =====================================================================
-   4b · Tranvía — trazabilidad (el tranvía recorre la línea de tiempo), condiciones y compromisos
-   ===================================================================== */
-VIS.appB = root => {
-  const H=TRAZA, n=H.length, xs=i=>5.6+i*(88.8/(n-1));
-  const COND=['Nuevo CONPES','Evaluación integral del sistema','Aclaraciones al proponente','Estudios prediales, estructurales y de demanda'];
-  const fN=d=>d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear();
-  root.innerHTML=`<div class="appb">
-    <div class="caja zt rv"><div class="zt-in" id="zi"><div class="zt-rail"></div>
-      ${H.map((h,i)=>{ const larga=i%2===0, gap=i>0?Math.round((h.f-H[i-1].f)/864e5):0;
-        return `<div class="zt-st ${larga?'lg':'sh'}" data-i="${i}" style="left:${xs(i)}%"></div>
-          <button class="zt-tab${h.nuevo?' nuevo':''}" data-i="${i}" style="left:${xs(i)}%">${fN(h.f)}</button>
-          <div class="zt-lb ${larga?'lg':'sh'}${h.nuevo?' nuevo':''}" data-i="${i}" style="left:${xs(i)}%${i===0?';margin-left:-4rem;text-align:left':i===n-2?';width:24rem;margin-left:-12rem':i===n-1?';width:17.6rem;margin-left:-12.8rem;text-align:right':''}">${h.c||h.t}</div>
-          `; }).join('')}
-      <svg class="zt-tram" id="tram" viewBox="0 0 270 64"><use href="#i-art"/></svg></div>
-      <div class="zt-det" id="zd"></div><button class="chip zt-re" id="zr">↺ Repetir recorrido</button></div>
-    <div class="appb-b">
-      <div class="caja rv"><div class="hd" style="display:flex;justify-content:space-between;align-items:baseline">Condiciones para avanzar · tócalas<b id="mt" style="color:var(--rojo);font:800 1.8rem var(--fd)">0 de 4</b></div><div class="puertas" id="pu">${COND.map((c,i)=>`<div class="puerta" data-i="${i}"><span class="ck"></span>${c}</div>`).join('')}</div></div>
-      <div class="caja rv"><div class="hd">Compromisos de la mesa interinstitucional</div><div class="comp">
-        <div><em>1</em><span>Concepto del DNP remitido a la APP privada · SETP</span><span class="pill ok">10 jun</span></div>
-        <div><em>2</em><span>Mesa con MinHacienda, DNP y MinTransporte · SETP</span><span class="pill pr">Programada · 24 sep</span></div>
-        <div><em>3</em><span>Avances de la prefactibilidad · APP privada</span><span class="pill sf">Solicitados · 24 sep</span></div></div></div></div></div>`;
-  const zi=$('#zi',root), tram=$('#tram',root), tabs=$$('.zt-tab',zi), sts=$$('.zt-st',zi), lbs=$$('.zt-lb',zi); let tm=[];
-  const parar=()=>{ tm.forEach(clearTimeout); tm=[]; }; limpiar.push(parar);
-  function pinta(k){ tabs.forEach((e,i)=>{ e.classList.toggle('on',i<=k); e.classList.toggle('act',i===k); }); sts.forEach((e,i)=>e.classList.toggle('on',i<=k)); lbs.forEach((e,i)=>e.classList.toggle('on',i<=k));
-    $('#zd',root).innerHTML = k>=0 ? `<em>${fFecha(H[k].f)}</em> · ${H[k].t}${k>0&&(H[k].f-H[k-1].f)/864e5>60?` <span class="gp">(≈ ${((H[k].f-H[k-1].f)/864e5/30.4).toFixed(1).replace(".",",")} meses después del paso anterior)</span>`:""}` : `<span class="mut">Toca una fecha, arrastra el tranvía o repite el recorrido.</span>`; }
-  const va=(k,ms=900)=>{ tram.style.transitionDuration=ms+'ms'; tram.style.left=xs(k)+'%'; };
-  function juega(){ parar(); zi.style.setProperty('--dl','0s'); pinta(-1); tram.style.transition='none'; tram.style.left='-12%'; void tram.offsetWidth; tram.style.transition='';
-    zi.style.setProperty('--dl','.55s');
-    H.forEach((_,i)=>tm.push(setTimeout(()=>{ va(i,i?820:1300); pinta(i); },500+i*1050))); tm.push(setTimeout(()=>zi.style.setProperty('--dl','0s'),500+n*1050)); }
-  const salta=i=>{ parar(); zi.style.setProperty('--dl','0s'); va(i,600); pinta(i); };
-  tabs.forEach((t,i)=>t.onclick=()=>salta(i)); lbs.forEach((t,i)=>t.onclick=()=>salta(i));
-  $('#zr',root).onclick=juega;
-  arrastrar(tram,{ inicio:()=>{ parar(); zi.style.setProperty('--dl','0s'); tram.classList.add('arr'); },
-    mueve:e=>{ const r=zi.getBoundingClientRect(), p=clamp((e.clientX-r.left)/r.width*100,xs(0),xs(n-1)); tram.style.left=p+'%'; let k=-1; H.forEach((_,i)=>{ if(xs(i)<=p+.8) k=i; }); pinta(k); },
-    fin:()=>{ tram.classList.remove('arr'); const f=parseFloat(tram.style.left); salta(H.reduce((b,_,i)=>Math.abs(xs(i)-f)<Math.abs(xs(b)-f)?i:b,0)); } });
-  const on=new Set();
-  $$('.puerta',root).forEach(p=>p.onclick=()=>{ const i=+p.dataset.i; on.has(i)?on.delete(i):on.add(i); p.classList.toggle('on',on.has(i)); const k=on.size;
-    $('#mt',root).style.color=k===4?'#2E8B5A':k?'#94681A':'#B94750'; $('#mt',root).textContent=k===4?'4 de 4: puede avanzar':k+' de 4'; });
-  juega();
-};
-
-/* =====================================================================
-   5a · Desembolsos — aportes del Municipio y cofinanciación Nación
+   5a · Desembolsos — aportes del Municipio y cofinanciación de la Nación
    ===================================================================== */
 VIS.desA = root => {
-  const M=MUNICIPIO, N=NACION, sum=a=>a.reduce((x,y)=>x+y,0);
+  const M=MUNICIPIO, N=NACION, sum=a=>a.reduce((x,y)=>x+y,0), c1=n=>(n/1e9).toFixed(1).replace('.',','), peso=n=>'$'+fm(n);
   const totM=sum(M.aporte)+sum(M.indexacion), totN=sum(N.convenio), adj=sum(N.adjudicado), rep=sum(N.reprogramar);
   let conIdx=true;
+  const DEFS=`<defs><linearGradient id="gA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86B3F2"/><stop offset="1" stop-color="#4A82DE"/></linearGradient>
+    <linearGradient id="gI" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFDD84"/><stop offset="1" stop-color="#F2AE2E"/></linearGradient>
+    <linearGradient id="gV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6FD1A0"/><stop offset="1" stop-color="#34A06A"/></linearGradient>
+    <linearGradient id="gR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F49AA0"/><stop offset="1" stop-color="#DE5860"/></linearGradient>
+    <filter id="sh" x="-20%" y="-10%" width="140%" height="130%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#1F3C78" flood-opacity=".25"/></filter></defs>`;
   root.innerHTML=`<div class="des">
     <div class="gr rv"><div class="hd">Aportes del Municipio · 100 % desembolsado cada año</div>
-      <div class="tot"><span data-count="${totM/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</span> <small>2021–2026</small></div>
-      <svg viewBox="0 0 480 320" id="gm"></svg>
-      <div class="leyenda"><span><i style="background:#5B91E3"></i>Aporte</span><span id="lgix"><i style="background:#F6BD4B"></i>Indexación</span></div>
+      <div class="tot"><span data-count="${totM/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</span> <small>acumulado 2021–2026</small></div>
+      <svg viewBox="0 0 470 330" id="gm"></svg>
+      <div class="leyenda"><span><i style="background:#5B91E3"></i>Aporte</span><span id="lgix"><i style="background:#F6BD4B"></i>Indexación</span><span class="uni">$ mil M = miles de millones de pesos</span></div>
       <label class="sw on" id="swi"><i></i>Incluir indexación</label></div>
-    <div class="gr rv"><div class="hd">Cofinanciación de la Nación · 2024–2026</div>
+    <div class="gr rv"><div class="hd">Cofinanciación de la Nación · convenio 2024–2026</div>
       <div class="tot"><span data-count="${totN/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</span> <small>convenio, todo el período</small></div>
-      <div class="gnote">Adjudicado ${(adj/totN*100).toFixed(1).replace('.',',')} % · Por reprogramar ${(rep/totN*100).toFixed(1).replace('.',',')} % en total</div>
-      <svg viewBox="0 0 480 340" id="gn"></svg>
-      <div class="leyenda"><span><i style="background:#3AA56D"></i>Adjudicado</span><span><i style="background:#E5626A"></i>Por reprogramar</span></div></div></div>`;
-  const rect=(x,w,v,max,col,base,H)=>{ const h=v/max*H; return `<rect x="${x}" width="${w}" y="${base-h}" height="${h}" fill="${col}"/>`; };
-  function dibujaM(){ const H=195, base=248, max=21e9, w=46; let s='';
-    M.anios.forEach((a,i)=>{ const x=22+i*74, ap=M.aporte[i], ix=conIdx?M.indexacion[i]:0, tot=ap+ix;
-      s+=`<g class="b" data-t="${a}: aporte ${fM(ap)}${M.indexacion[i]?` + indexación ${fM(M.indexacion[i])}`:''}" style="cursor:pointer">${rect(x,w,ap,max,'#5B91E3',base,H)}${ix?rect(x,w,ix,max,'#F6BD4B',base-ap/max*H,H):''}
-        <text class="vl" x="${x+w/2}" y="${base-tot/max*H-8}">$${(tot/1e9).toFixed(1).replace('.',',')}</text></g><g class="ax"><text x="${x+w/2}" y="${base+22}">${a}</text></g>`; });
+      <svg viewBox="0 0 470 330" id="gn"></svg>
+      <div class="leyenda"><span><i style="background:#3AA56D"></i>Adjudicado</span><span><i style="background:#E5626A"></i>Por reprogramar</span><span class="uni">* 2026 proyectado</span></div></div></div>`;
+  const plot=(n,max,ticks,{L=66,R=10,T=36,B=46}={})=>{ const W=470,H=330,pw=W-L-R,ph=H-T-B; return { W,H,L,T,pw,ph,n,band:pw/n, y:v=>T+ph-(v/max)*ph, ejes:()=>ticks.map(t=>`<line x1="${L}" x2="${W-R}" y1="${T+ph-(t/max)*ph}" y2="${T+ph-(t/max)*ph}" stroke="#D9E3F3" stroke-width="1.5"/><text x="${L-9}" y="${T+ph-(t/max)*ph+5}" text-anchor="end" class="tk">$${t}</text>`).join('')+`<text x="${L-56}" y="20" class="ut">Miles de millones de pesos ($ mil M)</text><line x1="${L}" x2="${W-R}" y1="${T+ph}" y2="${T+ph}" stroke="#66799F" stroke-width="2"/>` }; };
+  function dibujaM(){ const pl=plot(M.anios.length,22e9,[0,5,10,15,20].map(x=>x)); const P={...pl, ejes:()=>[0,5,10,15,20].map(t=>`<line x1="${pl.L}" x2="${pl.W-10}" y1="${pl.y(t*1e9)}" y2="${pl.y(t*1e9)}" stroke="#D9E3F3" stroke-width="1.5"/><text x="${pl.L-9}" y="${pl.y(t*1e9)+5}" text-anchor="end" class="tk">$${t}</text>`).join('')+`<text x="10" y="20" class="ut">Miles de millones de pesos ($ mil M)</text><line x1="${pl.L}" x2="${pl.W-10}" y1="${pl.y(0)}" y2="${pl.y(0)}" stroke="#66799F" stroke-width="2"/>` };
+    let s=DEFS+P.ejes(); const bw=P.band*.62;
+    M.anios.forEach((a,i)=>{ const x=P.L+i*P.band+(P.band-bw)/2, ap=M.aporte[i], ix=conIdx?M.indexacion[i]:0, tot=ap+ix, ya=P.y(ap), yt=P.y(tot);
+      s+=`<g class="b" data-t="<b>${a}</b><br>Aporte: ${peso(ap)}${M.indexacion[i]?`<br>Indexación: ${peso(M.indexacion[i])}`:''}<br>Total: ${peso(ap+M.indexacion[i])}<br><span style='opacity:.8'>= $${c1(ap+M.indexacion[i])} mil M</span>" style="cursor:pointer">
+        <g class="gb" style="--i:${i}" filter="url(#sh)"><rect x="${x}" y="${ya}" width="${bw}" height="${P.y(0)-ya}" rx="6" fill="url(#gA)"/>${ix?`<rect x="${x}" y="${yt}" width="${bw}" height="${ya-yt+4}" rx="6" fill="url(#gI)"/>`:''}</g>
+        <text class="vl" x="${x+bw/2}" y="${yt-9}">$${c1(tot)}</text></g><text class="xa" x="${x+bw/2}" y="${P.y(0)+26}">${a}</text>`; });
     $('#gm',root).innerHTML=s; $$('#gm .b',root).forEach(g=>{ g.onmousemove=e=>verTip(g.dataset.t,e); g.onmouseleave=ocultaTip; });
     $('#lgix',root).style.opacity=conIdx?1:.3; }
-  function dibujaN(){ const H=190, base=248, max=72e9, w=92; let s='';
-    N.anios.forEach((a,i)=>{ const x=48+i*146, cx=x+w/2, ad=N.adjudicado[i], rp=N.reprogramar[i];
-      s+=`<g class="b" data-t="${a}${a===2026?'*':''}: convenio ${fM(N.convenio[i])} · adjudicado ${fM(ad)} · por reprogramar ${fM(rp)}" style="cursor:pointer">${rect(x,w,ad,max,'#3AA56D',base,H)}${rect(x,w,rp,max,'#E5626A',base-ad/max*H,H)}
-        <text class="vl" x="${cx}" y="${base-N.convenio[i]/max*H-8}">$${(N.convenio[i]/1e9).toFixed(1).replace('.',',')}</text></g>
-        <g class="ax"><text x="${cx}" y="${base+22}">${a}${a===2026?'*':''}</text></g>
-        <text x="${cx}" y="${base+40}" style="font:700 13px 'Source Sans 3';fill:#3AA56D;text-anchor:middle">Adj. $${(ad/1e9).toFixed(1).replace('.',',')}</text>
-        <text x="${cx}" y="${base+56}" style="font:700 13px 'Source Sans 3';fill:#E5626A;text-anchor:middle">Repr. $${(rp/1e9).toFixed(1).replace('.',',')}</text>`; });
-    $('#gn',root).innerHTML=s+`<text x="470" y="336" text-anchor="end" style="font:500 15px Source Sans 3;fill:#66799F">* 2026 proyectado</text>`;
-    $$('#gn .b',root).forEach(g=>{ g.onmousemove=e=>verTip(g.dataset.t,e); g.onmouseleave=ocultaTip; }); }
+  function dibujaN(){ const pl=plot(3,75e9,[0,25,50,75],{R:170}); let s=DEFS; const bw=pl.band*.66, X=pl.L;
+    s+=[0,25,50,75].map(t=>`<line x1="${X}" x2="${pl.W-170}" y1="${pl.y(t*1e9)}" y2="${pl.y(t*1e9)}" stroke="#D9E3F3" stroke-width="1.5"/><text x="${X-9}" y="${pl.y(t*1e9)+5}" text-anchor="end" class="tk">$${t}</text>`).join('')+`<text x="10" y="20" class="ut">Miles de millones de pesos ($ mil M)</text><line x1="${X}" x2="${pl.W-170}" y1="${pl.y(0)}" y2="${pl.y(0)}" stroke="#66799F" stroke-width="2"/>`;
+    N.anios.forEach((a,i)=>{ const x=X+i*pl.band+(pl.band-bw)/2, ad=N.adjudicado[i], rp=N.reprogramar[i], tot=N.convenio[i], y0=pl.y(0), ya=pl.y(ad), yt=pl.y(ad+rp), pa=Math.round(ad/tot*100), pr=100-pa;
+      s+=`<g class="b" data-t="<b>${a}${a===2026?'*':''}</b> · convenio ${peso(tot)}<br>Adjudicado: ${peso(ad)} (${pa} %)<br>Por reprogramar: ${peso(rp)} (${pr} %)" style="cursor:pointer"><g class="gb" style="--i:${i}" filter="url(#sh)"><rect x="${x}" y="${ya}" width="${bw}" height="${y0-ya}" rx="6" fill="url(#gV)"/><rect x="${x}" y="${yt}" width="${bw}" height="${ya-yt+4}" rx="6" fill="url(#gR)"/></g>
+        ${y0-ya>26?`<text class="pc" x="${x+bw/2}" y="${(y0+ya)/2+6}">${pa} %</text>`:''}${ya-yt>26?`<text class="pc" x="${x+bw/2}" y="${(ya+yt)/2+6}">${pr} %</text>`:''}
+        <text class="vl" x="${x+bw/2}" y="${yt-9}">$${c1(tot)}</text></g><text class="xa" x="${x+bw/2}" y="${y0+26}">${a}${a===2026?'*':''}</text>`; });
+    /* dona: cuánto del convenio está adjudicado */
+    const R=54, C=2*Math.PI*R, pa=adj/totN, cx=392, cy=126;
+    s+=`<g><circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="url(#gR)" stroke-width="26"/><circle class="dn" cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="url(#gV)" stroke-width="26" stroke-dasharray="${(C*pa).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 ${cx} ${cy})" filter="url(#sh)"/>
+      <text class="pc2" x="${cx}" y="${cy+4}">${Math.round(pa*100)} %</text><text class="pc3" x="${cx}" y="${cy+22}">adjudicado</text></g>
+      <text class="lg" x="${cx}" y="220" style="fill:#2E8B5A">Adjudicado</text><text class="lg2" x="${cx}" y="240">$${c1(adj)} mil M</text>
+      <text class="lg" x="${cx}" y="272" style="fill:#B94750">Por reprogramar</text><text class="lg2" x="${cx}" y="292">$${c1(rep)} mil M · ${Math.round((1-pa)*100)} %</text>`;
+    $('#gn',root).innerHTML=s; $$('#gn .b',root).forEach(g=>{ g.onmousemove=e=>verTip(g.dataset.t,e); g.onmouseleave=ocultaTip; }); }
   dibujaM(); dibujaN();
   $('#swi',root).onclick=()=>{ conIdx=!conIdx; $('#swi',root).classList.toggle('on',conIdx); dibujaM(); };
 };
 
 /* =====================================================================
-   5b · Desembolsos — seis frentes 2026 y cartera
+   5b · Desembolsos — los 6 frentes de 2026 y el simulador de la cartera
    ===================================================================== */
 VIS.desB = root => {
-  const tot=k=>PROY26.reduce((a,p)=>a+p[k],0), rep26=NACION.reprogramar[2];
-  let sel=0; const cartOn=new Set();
+  const tot=k=>PROY26.reduce((a,p)=>a+p[k],0), meta=NACION.reprogramar[2], COL=['#5B91E3','#3AA56D','#F6BD4B'];
+  let sel=0; const on=new Set();
   root.innerHTML=`<div class="des2">
-    <div class="gr rv"><div class="hd">Seis frentes de 2026 · toca una fila</div>
-      <div class="tot"><span data-count="${(tot('mun')+tot('nac'))/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</span> <small>en total</small></div>
+    <div class="gr rv"><div class="pn2"><em>A</em><b>Lo que está en marcha</b><span>Toca un frente</span></div>
+      <div class="tot"><span data-count="${(tot('mun')+tot('nac'))/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</span> <small>en seis frentes</small></div>
       <div class="split"><i id="sn" style="background:#3AA56D">Nación</i><i id="sm" style="background:#5B91E3">Municipio</i></div>
-      <table class="tp"><thead><tr><th>Frente</th><th style="text-align:right">Nación</th><th style="text-align:right">Municipio</th><th>Fase</th></tr></thead><tbody id="tp">
+      <table class="tp"><thead><tr><th>Frente</th><th style="text-align:right">Nación</th><th style="text-align:right">Municipio</th><th>Avance</th></tr></thead><tbody id="tp">
         ${PROY26.map((p,i)=>`<tr data-i="${i}"><td>${p.n}</td><td class="v">${p.nac?fM(p.nac):'—'}</td><td class="v">${p.mun?fM(p.mun):'—'}</td><td><div class="fs4">${FASES.map((f,k)=>`<i class="${k<p.fase?'on':k===p.fase?'cur':''}" title="${f}"></i>`).join('')}</div></td></tr>`).join('')}</tbody></table>
+      <div class="fl"><span>Avance:</span>${FASES.map(f=>`<em>${f}</em>`).join('<i>›</i>')}</div>
       <div class="dcard" id="dc"></div></div>
-    <div class="gr rv"><div class="hd">¿Alcanza la cartera para lo por reprogramar?</div>
-      <div class="tot" style="color:#E5626A"><span data-count="${rep26/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</span> <small>sin proyecto en 2026</small></div>
-      <div class="cart" id="ct">${CARTERA.map((c,i)=>`<button data-i="${i}"><span>${c.n}<small>${c.req}</small></span><b>${fM(c.v)}</b></button>`).join('')}</div>
-      <div class="cbar"><i id="cb"></i><span id="cbt">0 %</span></div><div class="dcard" id="cd"></div></div></div>`;
+    <div class="gr rv"><div class="pn2"><em>B</em><b>Lo que falta financiar</b><span>Simulador</span></div>
+      <div class="meta"><span><em>1</em>Meta: por reprogramar sin proyecto</span><b style="color:#E5626A" data-count="${meta/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</b></div>
+      <div class="pila"><div class="pila-b" id="pb"></div><div class="pila-m" id="pm"><span>Meta</span></div></div>
+      <div class="paso2"><span><em>2</em>Toca para sumar proyectos</span><i><button class="chip" id="ta">Sumar todos</button><button class="chip" id="tl">Limpiar</button></i></div>
+      <div class="cart" id="ct">${CARTERA.map((c,i)=>`<button data-i="${i}" style="--c:${COL[i]}" title="${c.req}"><u></u><span>${c.n}<small>${c.req.split(" · ")[1]}</small></span><b>${fM(c.v)}</b><em>+ Sumar</em></button>`).join('')}</div>
+      <div class="dcard res" id="cd"></div></div></div>`;
   requestAnimationFrame(()=>setTimeout(()=>{ const n=tot('nac')/(tot('nac')+tot('mun'))*100; $('#sn',root).style.width=n+'%'; $('#sn',root).textContent='Nación '+Math.round(n)+' %'; $('#sm',root).style.width=(100-n)+'%'; $('#sm',root).textContent='Municipio '+Math.round(100-n)+' %'; },300));
   const dc=()=>{ const p=PROY26[sel]; $$('#tp tr[data-i]',root).forEach(r=>r.classList.toggle('sel',+r.dataset.i===sel)); $('#dc',root).innerHTML=`<b>${p.n}</b><br>${p.txt}`; };
   $$('#tp tr[data-i]',root).forEach(r=>r.onclick=()=>{ sel=+r.dataset.i; dc(); }); dc();
-  function cart(){ const v=[...cartOn].reduce((a,i)=>a+CARTERA[i].v,0), pc=v/rep26*100;
-    $('#cb',root).style.width=Math.min(100,pc)+'%'; $('#cbt',root).textContent=Math.round(pc)+' % de lo por reprogramar';
-    $('#cd',root).innerHTML = !cartOn.size ? 'Suma proyectos con presupuesto identificado (obra + interventoría, referencial).' : pc>=100 ? `<b style="color:#3AA56D">La cartera cubre lo por reprogramar.</b> El cuello de botella no es falta de proyectos: es tener estudios y elegibilidad a tiempo.` : `Cubre ${fB(v)}; faltan ${fB(rep26-v)}.`; }
-  $$('#ct button',root).forEach(b=>b.onclick=()=>{ const i=+b.dataset.i; cartOn.has(i)?cartOn.delete(i):cartOn.add(i); b.classList.toggle('on',cartOn.has(i)); cart(); }); cart();
+  function cart(){ const idx=[...on].sort(), v=idx.reduce((a,i)=>a+CARTERA[i].v,0), pc=v/meta*100, mx=Math.max(meta,v)*1.04;
+    $('#pb',root).innerHTML=idx.map(i=>`<i style="width:${CARTERA[i].v/mx*100}%;background:${COL[i]}">${CARTERA[i].v/mx>.16?fM(CARTERA[i].v):''}</i>`).join('');
+    $('#pm',root).style.left=(meta/mx*100)+'%';
+    $$('#ct button',root).forEach(b=>{ const s=on.has(+b.dataset.i); b.classList.toggle('on',s); $('em',b).textContent=s?'✓ Sumado':'+ Sumar'; });
+    $('#cd',root).innerHTML = '<em>3</em><div>'+(!on.size ? '<b>Resultado.</b> Suma un proyecto y verás cuánto de la meta cubre.' : pc>=100 ? `<b style="color:#2E8B5A">La cartera cubre la meta: ${Math.round(pc)} %.</b> Sobran ${fB(v-meta)}. El cuello de botella no es falta de proyectos, sino tener estudios y elegibilidad a tiempo.` : `<b>Cubre ${Math.round(pc)} % de la meta</b> (${fB(v)}). Faltan ${fB(meta-v)}.`)+'</div>'; }
+  $$('#ct button',root).forEach(b=>b.onclick=()=>{ const i=+b.dataset.i; on.has(i)?on.delete(i):on.add(i); b.classList.remove('pide'); cart(); });
+  $('#ta',root).onclick=()=>{ CARTERA.forEach((_,i)=>on.add(i)); cart(); }; $('#tl',root).onclick=()=>{ on.clear(); cart(); };
+  $('#ct button',root).classList.add('pide'); cart();
 };
 
 /* =====================================================================
@@ -635,55 +620,88 @@ VIS.obraA = root => {
   api.set(CORTE.fecha);
 };
 
-/* ---------- 8b · mapa ---------- */
+/* ---------- 8b · mapa de proyectos por frente y fase ---------- */
 VIS.obraB = root => {
-  root.innerHTML=`<div class="mp"><div id="mapa"></div>
-    <div class="mp-l rv" id="ml"></div>
-    <div class="mp-c"><button class="chip on" id="tp1">Paraderos Tipo 1 y 2</button><button class="chip on" id="tpa">Patiotalleres</button></div>
-    <div class="mp-d rv" id="md"><b>Frentes pendientes de infraestructura.</b> Toca un corredor en el mapa o en la lista.</div></div>`;
-  const F=[
-    {id:'ferrocarril',n:'Av. Ferrocarril',s:'Consultoría radicada · 10 jun',c:ESTADO.estudios.c,k:['ferrocarril'],t:'Estudios y diseños Fase III radicados en UMUS el 10 de junio de 2026. Presupuesto de obra $32.035 M + interventoría $2.122 M.'},
-    {id:'ambala',n:'Av. Ambalá',s:'En ejecución',c:ESTADO.ejecucion.c,k:['ambala1','ambala2'],t:'Contrato de Obra 042 de 2026. Tramo 1 (Cra 5 a Cl 37) y tramo 2 (Cl 77 a Cl 63): 5.007 m.'},
-    {id:'cra5',n:'Carrera 5',s:'Ejecutada',c:ESTADO.ejecutado.c,k:['carrera5','carrera5FaseI'],t:'Fases I y II ejecutadas: eje troncal del SETP, con accesibilidad universal en los pasos peatonales.'},
-    {id:'ciclo',n:'Ciclorruta Cra 5',s:'Radicar · 30 jun',c:ESTADO.estructuracion.c,k:['cicloCarrera5'],t:'Consultoría de cicloinfraestructura y andenes (Cl 10 a 44) en estructuración, próxima a radicar. Estimado $1.222 M.'},
-    {id:'paraderos',n:'Paraderos Tipo 1 y 2',s:'Llave en mano · radicar 7 jul',c:ESTADO.estructuracion.c,k:[],t:'10 paraderos Tipo I y 71 Tipo II con MUPI, en estructuración. Nación $8.669 M.'},
-    {id:'patios',n:'Patiotalleres',s:'4 predios · se requieren 5',c:ESTADO.estructuracion.c,k:[],t:'Predio 1 ($15.075 M, Municipio) y Predio 2 ($15.061 M, Nación) en estructuración. El estudio de sep. 2025 indica 5 patiotalleres; hay 4 puntos en el KMZ.'},
-    {id:'jordan',n:'Av. Jordán Paralela',s:'Sin recursos · en revisión',c:ESTADO.bloqueado.c,k:[],t:'Por el tope presupuestal del componente se priorizaron los demás corredores; en revisión la redistribución. Sin traza georreferenciada.'}];
-  $('#ml',root).innerHTML=F.map(f=>`<button data-id="${f.id}" style="--c:${f.c}"><span>${f.n}<small>${f.s}</small></span></button>`).join('');
-  const M=[], flip=c=>[c[1],c[0]], R=parseFloat(getComputedStyle(document.documentElement).fontSize);
+  const EST={ ejecutado:{n:'Terminada',c:'#3AA56D'}, ejecucion:{n:'En obra',c:'#F6BD4B'}, estructuracion:{n:'Estructuración',c:'#5B91E3'}, estudios:{n:'Diseños radicados',c:'#8CBCF5'}, bloqueado:{n:'Sin recursos',c:'#E5626A'}, prevista:{n:'Prevista 2027',c:'#A9B8CE'} };
+  const FR=[['todos','Todos'],['vias','Vías'],['sem','Semáforos'],['par','Paraderos'],['pat','Patiotalleres']];
+  /* cada proyecto se evalúa caso por caso: tener KMZ no significa que esté en ejecución */
+  const PR=[
+    {id:'ferro', fr:'vias', n:'Av. Ferrocarril', fase:'Diseños Fase III', e:'estudios', t:'lin', k:['ferrocarril'], txt:'Estudios y diseños radicados en la UMUS el 10 de junio de 2026, para concepto de elegibilidad. Obra: $32.035 M + interventoría $2.122 M.', ch:[['10 jun','radicado en UMUS'],['$34.157 M','obra + interventoría']], mp:'Línea discontinua: traza de la intervención (Cl 19 hasta la Carrera 5).'},
+    {id:'c5f1', fr:'vias', n:'Carrera 5 · Fase I', fase:'Cl 64 → Cl 100', e:'ejecutado', t:'lin', k:['carrera5FaseI'], txt:'Rehabilitación de la Carrera 5 con el Contrato de Obra 046 de 2025. El seguimiento UMUS la reporta ejecutada; falta confirmar recibo y liquidación.', ch:[['046 de 2025','contrato de obra'],['Por confirmar','recibo y liquidación']], mp:'Línea continua verde: tramo con obra terminada.'},
+    {id:'c5f2', fr:'vias', n:'Carrera 5 · Fase II', fase:'Cl 10 → Cl 58', e:'ejecutado', t:'lin', k:['carrera5'], txt:'Rehabilitación de la malla vial de la Carrera 5, eje troncal del SETP, con accesibilidad universal en los pasos peatonales. Obra terminada.', ch:[['046 de 2025','contrato de obra'],['Terminada','estado de la obra']], mp:'Línea continua verde: obra terminada.'},
+    {id:'ambala', fr:'vias', n:'Av. Ambalá', fase:'Fase III · 2 tramos', e:'ejecucion', t:'lin', k:['ambala1','ambala2'], txt:'Contrato de Obra 042 de 2026 en ejecución. Tramo 1 (Cra 5 a Cl 37) y tramo 2 (Cl 77 a Cl 63).', ch:[['042 de 2026','contrato de obra'],['5.007 m','longitud de los tramos']], mp:'Línea continua ámbar: tramos con obra en ejecución.'},
+    {id:'ciclo', fr:'vias', n:'Ciclorruta Cra 5', fase:'Cl 10 → Cl 44', e:'estructuracion', t:'lin', k:['cicloCarrera5'], txt:'Consultoría de cicloinfraestructura y andenes por la Carrera 5, en estructuración y por radicar.', ch:[['$1.222 M','consultoría estimada'],['Por radicar','estado del trámite']], mp:'Línea discontinua azul: traza de los estudios.'},
+    {id:'jordan', fr:'vias', n:'Av. Jordán Paralela', fase:'Sin traza', e:'bloqueado', t:'nada', txt:'Por el tope presupuestal del componente se priorizaron los demás corredores. En revisión la redistribución de recursos.', ch:[['En revisión','redistribución del tope']], mp:'No tiene traza georreferenciada todavía.'},
+    {id:'sem1', fr:'sem', n:'Semaforización Fase I', fase:'Intersecciones', e:'ejecucion', t:'sem', s:'I', img:'sem-a', sz:1, txt:'Obra en la etapa final: planeamiento, configuración, integración y pruebas. 30 de 34 intersecciones en servicio y seguimiento; el plazo vence el 29 de septiembre.', ch:[['93,62 %','avance real al 20 sep'],['33 puntos','en el KMZ (34 en el informe)']], mp:'Semáforos color ámbar: intersecciones de la Fase I.'},
+    {id:'sem2', fr:'sem', n:'Semaforización Fase II', fase:'Intersecciones', e:'estructuracion', t:'sem', s:'II', img:'sem-b', sz:.9, txt:'En estructuración, con $12.515 M del Municipio. Las intersecciones georreferenciadas todavía no tienen obra.', ch:[['$12.515 M','Municipio'],['40 puntos','en el KMZ']], mp:'Semáforos color azul: intersecciones por intervenir.'},
+    {id:'sem3', fr:'sem', n:'Semaforización Fase III', fase:'Sin traza', e:'prevista', t:'nada', txt:'Obra e interventoría prevista para 2027, con un valor identificado de $9.361 M.', ch:[['$9.361 M','obra + interventoría'],['2027','vigencia prevista']], mp:'Aún sin intersecciones georreferenciadas.'},
+    {id:'par3', fr:'par', n:'Paraderos Tipo III', fase:'Bandera informativa', e:'ejecutado', t:'par', img:'par-v', sz:.7, pts:PARADEROS_3, txt:'1.150 señales instaladas (Contrato 037 de 2025). El proyecto está en liquidación.', ch:[['1.150','señales instaladas'],['164 puntos','en el inventario']], mp:'Íconos verdes: paraderos con bandera informativa instalada.'},
+    {id:'par1', fr:'par', n:'Paraderos Tipo I', fase:'Con informador electrónico', e:'estructuracion', t:'par', img:'par-b', sz:1.1, pts:PARADEROS_12.slice(0,10), txt:'Paraderos cubiertos con informador electrónico, en estructuración llave en mano junto con el Tipo II.', ch:[['10','paraderos'],['$8.669 M','Nación (Tipos I y II)']], mp:'Íconos azules grandes: paraderos por construir.'},
+    {id:'par2', fr:'par', n:'Paraderos Tipo II', fase:'Con mobiliario y bandera', e:'estructuracion', t:'par', img:'par-b', sz:.9, pts:PARADEROS_12.slice(10), txt:'Paraderos cubiertos con mobiliario y bandera, en estructuración llave en mano.', ch:[['71','paraderos'],['7 jul','radicación prevista']], mp:'Íconos azules: paraderos por construir.'},
+    {id:'patios', fr:'pat', n:'Patiotalleres', fase:'Adquisición de predios', e:'estructuracion', t:'pat', txt:'Predio 1 ($15.075 M, Municipio) y Predio 2 ($15.061 M, Nación) en estructuración. Se requieren 5 patiotalleres; el KMZ tiene 4 puntos.', ch:[['4 de 5','predios georreferenciados'],['$30.136 M','Predios 1 y 2']], mp:'Íconos de fábrica: predios en gestión (referenciales).'}
+  ];
+  let fr='todos', sel=null;
+  root.innerHTML=`<div class="mp">
+    <div class="mp-t rv"><span>Frente:</span>${FR.map(([k,n])=>`<button class="chip${k==='todos'?' on':''}" data-f="${k}">${n} <b>${k==='todos'?PR.length:PR.filter(p=>p.fr===k).length}</b></button>`).join('')}</div>
+    <div class="mp-b"><div class="mp-l rv" id="ml"></div>
+      <div class="mp-m rv"><div id="mapa"></div><div class="mp-lg"><b>Estado del proyecto</b><div class="g">${Object.values(EST).map(s=>`<span><i style="background:${s.c}"></i>${s.n}</span>`).join('')}</div></div></div></div>
+    <div class="mp-f rv" id="mf"></div></div>`;
+  const lista=()=>{ const vis=PR.filter(p=>fr==='todos'||p.fr===fr); let h='', ult='';
+    vis.forEach(p=>{ if(p.fr!==ult){ ult=p.fr; h+=`<h5>${FR.find(f=>f[0]===p.fr)[1]}</h5>`; } const s=EST[p.e];
+      h+=`<button data-id="${p.id}" class="${sel===p.id?'sel':''}" style="--c:${s.c}"><u></u><span><b>${p.n}</b><small>${p.fase}</small></span><i>${s.n}</i></button>`; });
+    $('#ml',root).innerHTML=h; $$('#ml button',root).forEach(b=>b.onclick=()=>elige(b.dataset.id===sel?null:b.dataset.id)); const sb=$('#ml button.sel',root); if(sb) sb.scrollIntoView({block:'nearest'}); };
+  const ficha=()=>{ const f=$('#mf',root), p=PR.find(x=>x.id===sel);
+    if(!p){ const c={}; PR.forEach(x=>c[x.e]=(c[x.e]||0)+1);
+      f.innerHTML=`<div class="ff-h"><h3>Panorama de los ${PR.length} proyectos</h3><em>Toca uno en la lista o en el mapa</em></div><div class="ff-r">${Object.entries(EST).filter(([k])=>c[k]).map(([k,s])=>`<span style="--c:${s.c}"><i></i><b>${c[k]}</b> ${s.n.toLowerCase()}</span>`).join('')}</div><p>Cada proyecto se muestra por frente y fase. Que un proyecto tenga KMZ no significa que esté en ejecución: el color indica su estado real.</p>`; return; }
+    const s=EST[p.e]; f.style.setProperty('--c',s.c);
+    f.innerHTML=`<div class="ff-h"><span class="st" style="background:${s.c}">${s.n}</span><h3>${p.n}</h3><em>${p.fase}</em><div class="ff-d">${p.ch.map(([v,l])=>`<span><b>${v}</b>${l}</span>`).join('')}</div></div><p>${p.txt}</p><small>En el mapa: ${p.mp}</small>`; };
+  const flip=c=>[c[1],c[0]], R=parseFloat(getComputedStyle(document.documentElement).fontSize), lim=([la,lo])=>la>4.38&&la<4.47&&lo>-75.27&&lo<-75.12;
   const map=new maplibregl.Map({container:'mapa',center:[-75.205,4.437],zoom:12.2,attributionControl:{compact:true},
     style:{version:8,sources:{base:{type:'raster',tileSize:256,maxzoom:19,attribution:'© OpenStreetMap contributors',tiles:['https://a.tile.openstreetmap.org/{z}/{x}/{y}.png','https://b.tile.openstreetmap.org/{z}/{x}/{y}.png','https://c.tile.openstreetmap.org/{z}/{x}/{y}.png']}},
-      layers:[{id:'fondo',type:'background',paint:{'background-color':'#E2E8F1'}},{id:'base',type:'raster',source:'base',paint:{'raster-saturation':-0.92,'raster-contrast':-0.05,'raster-brightness-min':.25,'raster-opacity':.95}}]}});
-  window.__mapa=map; limpiar.push(()=>{ try{ map.remove(); }catch(e){} });
-  const lugar=f=>{ $$('#ml button',root).forEach(b=>b.classList.toggle('sel',b.dataset.id===f.id)); $('#md',root).innerHTML=`<b>${f.n}</b> · ${f.s}<br>${f.t}`;
-    let pts=[]; f.k.forEach(k=>pts.push(...CORREDORES[k].coords)); if(f.id==='paraderos') pts=PARADEROS_12; if(f.id==='patios') pts=PATIOS.map(p=>p.coord);
-    if(pts.length){ const b=new maplibregl.LngLatBounds(); pts.forEach(c=>b.extend(flip(c))); map.fitBounds(b,{padding:{left:37*R,top:4*R,right:4*R,bottom:11*R},maxZoom:15.4,duration:1500}); } };
-  $$('#ml button',root).forEach(b=>b.onclick=()=>lugar(F.find(f=>f.id===b.dataset.id)));
+      layers:[{id:'fondo',type:'background',paint:{'background-color':'#E6ECF5'}},{id:'base',type:'raster',source:'base',paint:{'raster-saturation':-0.95,'raster-contrast':-0.15,'raster-brightness-min':.35,'raster-opacity':.9}}]}});
+  window.__mapa=map; limpiar.push(()=>{ try{ map.remove(); }catch(e){} }); const M=[];
+  const icono=(id,tipo,color)=>{ const S=44, c=document.createElement('canvas'); c.width=c.height=S; const g=c.getContext('2d'), rr=(x,y,w,h,r)=>{ g.beginPath(); g.moveTo(x+r,y); g.arcTo(x+w,y,x+w,y+h,r); g.arcTo(x+w,y+h,x,y+h,r); g.arcTo(x,y+h,x,y,r); g.arcTo(x,y,x+w,y,r); g.closePath(); };
+    g.shadowColor='rgba(31,60,120,.4)'; g.shadowBlur=5; g.shadowOffsetY=2; g.fillStyle='#fff'; g.beginPath(); g.arc(S/2,S/2,S/2-4,0,7); g.fill(); g.shadowColor='transparent';
+    g.fillStyle=color; g.beginPath(); g.arc(S/2,S/2,S/2-8,0,7); g.fill(); g.fillStyle='#fff';
+    if(tipo==='sem'){ rr(S/2-6.5,S/2-11.5,13,23,4); g.fill(); ['#E5626A','#F6BD4B','#3AA56D'].forEach((cc,i)=>{ g.fillStyle=cc; g.beginPath(); g.arc(S/2,S/2-6.2+i*6.2,2.4,0,7); g.fill(); }); }
+    else { g.fillRect(S/2-1.7,S/2-1,3.4,12); rr(S/2-8.5,S/2-11,17,11,3); g.fill(); g.fillStyle=color; g.fillRect(S/2-5.5,S/2-8,11,2.4); g.fillRect(S/2-5.5,S/2-4.4,7.5,2.2); }
+    map.addImage(id,g.getImageData(0,0,S,S),{pixelRatio:2}); };
+  const capas=p=>p.t==='lin'?['pl-'+p.id,'pc-'+p.id]:p.t==='pat'?[]:(p.t==='nada'?[]:['pt-'+p.id]);
+  const geo=p=>p.t==='lin'?p.k.flatMap(k=>CORREDORES[k].coords):p.t==='sem'?SEMAFOROS.filter(s=>s.fase===p.s).map(s=>s.coord):p.t==='par'?p.pts.filter(lim):p.t==='pat'?PATIOS.map(x=>x.coord):[];
+  const aplica=()=>{ if(!map.isStyleLoaded()&&!map.getLayer('pl-ferro')) return;
+    PR.forEach(p=>{ const vis=(fr==='todos'||p.fr===fr), act=(sel===null||sel===p.id);
+      capas(p).forEach(l=>{ if(!map.getLayer(l)) return; map.setLayoutProperty(l,'visibility',vis?'visible':'none'); if(p.t==='lin') map.setPaintProperty(l,'line-opacity',act?1:.18); else map.setPaintProperty(l,'icon-opacity',act?1:.2); }); });
+    M.forEach(m=>{ const vis=(fr==='todos'||fr==='pat'), act=(sel===null||sel==='patios'); m.getElement().style.display=vis?'':'none'; m.getElement().style.opacity=act?1:.25; }); };
+  const encuadra=p=>{ const pts=p?geo(p):PR.flatMap(x=>fr==='todos'||x.fr===fr?geo(x):[]); if(!pts.length) return; const b=new maplibregl.LngLatBounds(); pts.forEach(c=>b.extend(flip(c))); map.fitBounds(b,{padding:{left:3*R,top:3*R,right:3*R,bottom:3*R},maxZoom:15.2,duration:1300}); };
+  function elige(id){ sel=id; lista(); ficha(); aplica(); const p=PR.find(x=>x.id===id); encuadra(p||null); }
+  $$('.mp-t .chip',root).forEach(b=>b.onclick=()=>{ fr=b.dataset.f; sel=null; $$('.mp-t .chip',root).forEach(x=>x.classList.toggle('on',x===b)); lista(); ficha(); aplica(); encuadra(null); });
   map.on('load',()=>{
-    F.forEach(f=>f.k.forEach(k=>{ map.addSource('c-'+k,{type:'geojson',data:{type:'Feature',properties:{},geometry:{type:'LineString',coordinates:CORREDORES[k].coords.map(flip)}}});
-      if(f.id!=='ciclo') map.addLayer({id:'cs-'+k,type:'line',source:'c-'+k,layout:{'line-cap':'round','line-join':'round'},paint:{'line-color':'#fff','line-width':12}});
-      map.addLayer({id:'c-'+k,type:'line',source:'c-'+k,layout:{'line-cap':'round','line-join':'round'},paint:f.id==='ciclo'?{'line-color':f.c,'line-width':5,'line-dasharray':[1.4,1.4]}:{'line-color':f.c,'line-width':7}});
-      map.on('click','c-'+k,()=>lugar(f)); map.on('mouseenter','c-'+k,()=>map.getCanvas().style.cursor='pointer'); map.on('mouseleave','c-'+k,()=>map.getCanvas().style.cursor=''); }));
-    PARADEROS_12.forEach(c=>{ const el=document.createElement('div'); el.className='mk-p'; M.push(['p1',new maplibregl.Marker({element:el}).setLngLat(flip(c)).addTo(map)]); });
-    PATIOS.forEach(p=>{ const el=document.createElement('div'); el.className='mk-pa'; el.innerHTML=`<i>${ico('i-factory')}</i>`; el.title=p.nombre; el.onclick=()=>lugar(F.find(f=>f.id==='patios')); M.push(['pa',new maplibregl.Marker({element:el}).setLngLat(flip(p.coord)).addTo(map)]); });
-    const bb=new maplibregl.LngLatBounds(); Object.values(CORREDORES).forEach(c=>c.coords.forEach(p=>bb.extend(flip(p)))); PATIOS.forEach(p=>bb.extend(flip(p.coord)));
-    map.fitBounds(bb,{padding:{left:37*R,top:4*R,right:4*R,bottom:11*R},duration:0}); });
-  const tog=(id,tipo)=>$('#'+id,root).onclick=()=>{ const b=$('#'+id,root); b.classList.toggle('on'); M.filter(m=>m[0]===tipo).forEach(m=>b.classList.contains('on')?m[1].addTo(map):m[1].remove()); };
-  tog('tp1','p1'); tog('tpa','pa');
+    icono('sem-a','sem','#F6BD4B'); icono('sem-b','sem','#5B91E3'); icono('par-v','par','#3AA56D'); icono('par-b','par','#5B91E3');
+    PR.forEach(p=>{ const s=EST[p.e].c;
+      if(p.t==='lin'){ map.addSource('s-'+p.id,{type:'geojson',data:{type:'Feature',properties:{},geometry:{type:'MultiLineString',coordinates:p.k.map(k=>CORREDORES[k].coords.map(flip))}}});
+        const dash=(p.e==='estudios'||p.e==='estructuracion');
+        map.addLayer({id:'pc-'+p.id,type:'line',source:'s-'+p.id,layout:{'line-cap':'round','line-join':'round'},paint:{'line-color':'#fff','line-width':dash?9:13}});
+        map.addLayer({id:'pl-'+p.id,type:'line',source:'s-'+p.id,layout:{'line-cap':dash?'butt':'round','line-join':'round'},paint:dash?{'line-color':s,'line-width':5,'line-dasharray':[1.6,1.2]}:{'line-color':s,'line-width':7}}); }
+      else if(p.t==='sem'||p.t==='par'){ map.addSource('s-'+p.id,{type:'geojson',data:{type:'FeatureCollection',features:geo(p).map(c=>({type:'Feature',properties:{},geometry:{type:'Point',coordinates:flip(c)}}))}});
+        map.addLayer({id:'pt-'+p.id,type:'symbol',source:'s-'+p.id,layout:{'icon-image':p.img,'icon-size':['interpolate',['linear'],['zoom'],11,p.sz*.5,14,p.sz*.9,17,p.sz*1.4],'icon-allow-overlap':true}}); }
+      capas(p).forEach(l=>{ map.on('click',l,()=>elige(p.id)); map.on('mousemove',l,e=>{ map.getCanvas().style.cursor='pointer'; verTip(`<b>${p.n}</b> · ${EST[p.e].n}`,e.originalEvent); }); map.on('mouseleave',l,()=>{ map.getCanvas().style.cursor=''; ocultaTip(); }); }); });
+    PATIOS.forEach(x=>{ const el=document.createElement('div'); el.className='mk-pa'; el.innerHTML=`<i>${ico('i-factory')}</i>`; el.title=x.nombre; el.onclick=()=>elige('patios'); const mk=new maplibregl.Marker({element:el}).setLngLat(flip(x.coord)).addTo(map); M.push(mk); });
+    const bb=new maplibregl.LngLatBounds(); PR.forEach(p=>geo(p).forEach(c=>bb.extend(flip(c)))); map.fitBounds(bb,{padding:{left:3*R,top:3*R,right:3*R,bottom:3*R},duration:0}); aplica(); });
+  lista(); ficha();
 };
 
 /* =====================================================================
    9 · Tecnología — red arrastrable + cronograma
    ===================================================================== */
 VIS.tecno = root => {
-  const ND=[{id:'cc',n:'Centro de control',s:'Lote 6 · compra 2027',x:500,y:150,w:230,est:'estructuracion',g:'Centro de control'},
-    {id:'rec',n:'Recaudo centralizado',s:'Estructurar en 2026',x:175,y:80,w:250,est:'estructuracion',g:'Recaudo y control de flota'},
-    {id:'flo',n:'Gestión y control de flota',s:'Recursos desde 2027',x:185,y:225,w:290,est:'estructuracion',g:'Recaudo y control de flota'},
-    {id:'usu',n:'Información al usuario',s:'En formulación',x:830,y:80,w:230,est:'estructuracion',g:'Información al usuario'},
-    {id:'sem',n:'Semáforos',s:'Fase I al 93,6 %',x:830,y:225,w:200,est:'ejecucion',g:'Semaforización'},
-    {id:'fet',n:'FET y modelo financiero',s:'Modelo actualizado',x:500,y:52,w:250,est:'estructuracion',g:null}];
+  const ND=[{id:'cc',n:'Centro de control',s:'Lote 6 · compra 2027',x:500,y:108,w:230,est:'estructuracion',g:'Centro de control'},
+    {id:'rec',n:'Recaudo centralizado',s:'Estructurar en 2026',x:175,y:60,w:250,est:'estructuracion',g:'Recaudo y control de flota'},
+    {id:'flo',n:'Gestión y control de flota',s:'Recursos desde 2027',x:185,y:152,w:290,est:'estructuracion',g:'Recaudo y control de flota'},
+    {id:'usu',n:'Información al usuario',s:'En formulación',x:830,y:60,w:230,est:'estructuracion',g:'Información al usuario'},
+    {id:'sem',n:'Semáforos',s:'Fase I al 93,6 %',x:830,y:152,w:200,est:'ejecucion',g:'Semaforización'},
+    {id:'fet',n:'FET y modelo financiero',s:'Modelo actualizado',x:500,y:38,w:250,est:'estructuracion',g:null}];
   const LK=[['cc','rec'],['cc','flo'],['cc','usu'],['cc','sem'],['cc','fet'],['fet','rec']];
-  root.innerHTML=`<div class="tec"><div class="tec-n rv"><div class="tec-b"><button class="btn sol" id="si">Simular integración</button><button class="btn borde" id="re" style="display:none">Restablecer</button></div><svg viewBox="0 0 1000 285" id="sv"></svg><div class="tec-s" id="tx">Azul: en estructuración · Ámbar: en ejecución · Verde: integrado</div></div><div class="tec-g rv" id="gh"></div></div>`;
+  root.innerHTML=`<div class="tec"><div class="tec-n rv"><div class="tec-b"><button class="btn sol" id="si">▶ Simular integración</button><button class="btn borde" id="re" style="display:none">↺ Restablecer</button><span class="tip2">Arrastra los nodos para reordenar el esquema</span></div><svg viewBox="0 0 1000 200" id="sv"></svg><div class="tec-s" id="tx">Azul: en estructuración · Ámbar: en ejecución · Verde: integrado</div></div><div class="tec-g rv" id="gh"></div></div>`;
   const sv=$('#sv',root), N={}; ND.forEach(n=>N[n.id]={...n,ok:false});
   const col=n=>n.ok?'#3AA56D':ESTADO[n.est].c;
   sv.innerHTML=LK.map((l,i)=>`<line class="lk" id="lk${i}"/>`).join('')+LK.map((l,i)=>`<circle class="pk" id="pk${i}" r="7" style="display:none"/>`).join('')+
@@ -691,7 +709,7 @@ VIS.tecno = root => {
   const pos=()=>{ ND.forEach(n=>{ const o=N[n.id]; $(`.nd[data-id=${n.id}]`,sv).setAttribute('transform',`translate(${o.x},${o.y})`); });
     LK.forEach((l,i)=>{ const a=N[l[0]], b=N[l[1]], e=$('#lk'+i,sv); e.setAttribute('x1',a.x); e.setAttribute('y1',a.y); e.setAttribute('x2',b.x); e.setAttribute('y2',b.y); e.classList.toggle('ok',a.ok&&b.ok); }); }; pos();
   $$('.nd',sv).forEach(g=>{ const o=N[g.dataset.id]; let off=[0,0];
-    arrastrar(g,{ inicio:e=>{ const p=svgPt(sv,e); off=[p.x-o.x,p.y-o.y]; }, mueve:e=>{ const p=svgPt(sv,e); o.x=clamp(p.x-off[0],120,880); o.y=clamp(p.y-off[1],40,250); pos(); } });
+    arrastrar(g,{ inicio:e=>{ const p=svgPt(sv,e); off=[p.x-o.x,p.y-o.y]; }, mueve:e=>{ const p=svgPt(sv,e); o.x=clamp(p.x-off[0],120,880); o.y=clamp(p.y-off[1],34,166); pos(); } });
     g.onmouseenter=e=>{ const r=o.g&&GANTT.find(x=>x.n===o.g); if(r) verTip(`<b>${r.n}</b><br>Plan: ${mesTxt(r.a)} a ${mesTxt(r.b)}<br>${r.nota}`,e); }; g.onmouseleave=ocultaTip; });
   let raf; const loop=t=>{ LK.forEach((l,i)=>{ const a=N[l[0]], b=N[l[1]], c=$('#pk'+i,sv), on=a.ok&&b.ok; c.style.display=on?'':'none'; if(on){ const p=((t/1400)+i*.17)%1; c.setAttribute('cx',a.x+(b.x-a.x)*p); c.setAttribute('cy',a.y+(b.y-a.y)*p); } }); raf=requestAnimationFrame(loop); };
   raf=requestAnimationFrame(loop); limpiar.push(()=>cancelAnimationFrame(raf));

@@ -9,14 +9,18 @@ estilo(`
 .cifra b.m{ font-size:4.7rem; white-space:normal; line-height:1.02; letter-spacing:-.02em }
 
 /* ---------- resumen: llegada del tranvía (alerta 4) ---------- */
-.tw .tw-in{ position:absolute; inset:0; animation:twWipe 2.4s cubic-bezier(.45,.05,.25,1) both }
+.tw .tw-in{ position:absolute; inset:0; animation:twWipe 3.4s cubic-bezier(.45,.05,.25,1) both }
 .tw .rv{ opacity:1; transform:none; animation:none }
 @keyframes twWipe{ 0%{ clip-path:inset(0 100% 0 0) } 70%,100%{ clip-path:inset(0 0 0 0) } }
-.tw .tw-rail{ position:absolute; left:20rem; right:0; top:46.9rem; height:.55rem; background:repeating-linear-gradient(90deg,#8093B8 0 1.4rem,transparent 1.4rem 2.3rem); opacity:.7 }
-.tw .tw-tram{ position:absolute; top:39.9rem; width:30rem; height:7.1rem; z-index:8; animation:twTram 2.4s cubic-bezier(.45,.05,.25,1) both; filter:drop-shadow(0 .6rem .6rem rgba(31,60,120,.25)); pointer-events:none }
-.tw .tw-tram use{ animation:twBob .28s ease-in-out infinite alternate }
-@keyframes twTram{ 0%{ left:-28rem } 70%{ left:92rem } 100%{ left:152rem } }
-@keyframes twBob{ to{ transform:translateY(-.15rem) } }
+.tw .tw-rail{ position:absolute; left:20rem; right:0; top:46.7rem; height:.5rem; border-radius:1rem; background:repeating-linear-gradient(90deg,#9CC4FF 0 2.2rem,transparent 2.2rem 3.6rem); box-shadow:0 0 1rem rgba(120,175,255,.85) }
+.tw .tw-tram{ position:absolute; top:34.9rem; width:62rem; height:12.6rem; z-index:8; animation:twTram 3.4s cubic-bezier(.45,.05,.25,1) both; pointer-events:none }
+.tw .tw-tram svg{ display:block; width:100%; height:100%; overflow:visible; filter:drop-shadow(0 .7rem .6rem rgba(31,60,120,.25)); animation:twBob .3s ease-in-out infinite alternate }
+.tw .tw-tram .wh{ transform-box:fill-box; transform-origin:center; animation:twWh .42s linear infinite }
+.tw .tw-beam{ position:absolute; left:61.4rem; top:6.6rem; width:28rem; height:5.4rem; background:linear-gradient(90deg,rgba(255,236,170,.9),transparent); clip-path:polygon(0 30%,100% 0,100% 100%,0 70%) }
+.tw .tw-sp{ position:absolute; left:-9rem; height:.3rem; border-radius:1rem; background:#fff; opacity:.9 } .tw .tw-sp:nth-of-type(2){ top:3rem; width:11rem } .tw .tw-sp:nth-of-type(3){ top:6.4rem; width:7rem } .tw .tw-sp:nth-of-type(4){ top:9.4rem; width:9rem }
+@keyframes twTram{ 0%{ left:-62rem } 70%{ left:58rem } 100%{ left:126rem } }
+@keyframes twBob{ to{ transform:translateY(-.22rem) } }
+@keyframes twWh{ to{ transform:rotate(360deg) } }
 
 /* ---------- panorama ---------- */
 .pn{ position:absolute; inset:0 }
@@ -118,8 +122,8 @@ NODO.resumen = s => {
       </div>
     </div>
     <div class="postura rv"><span>Postura del SETP</span><p>${a.postura}</p></div>`;
-  n.innerHTML = tram ? `<div class="tw-in">${cuerpo}<div class="tw-rail"></div></div><svg class="tw-tram" viewBox="0 0 270 64" style="color:#8CC152"><use href="#i-art"/></svg>` : cuerpo;
-  if(tram) n.dataset.delay=1500;
+  n.innerHTML = tram ? `<div class="tw-in">${cuerpo}<div class="tw-rail"></div></div><div class="tw-tram">${tramSVG()}<i class="tw-beam"></i><i class="tw-sp"></i><i class="tw-sp"></i><i class="tw-sp"></i></div>` : cuerpo;
+  if(tram) n.dataset.delay=2400;
   return n;
 };
 
@@ -142,7 +146,10 @@ VIS.portada = root => {
       <h1>Seguimiento general de <mark>alertas</mark></h1>
       <p>Sube al bus: deja que recorra las 9 paradas o arrástralo por la ruta.</p>
       <div class="lg-f">${leyendaCat()}</div></div>`,
-    barra:`<button class="btn borde" id="vjPlay"></button><button class="btn" id="btr">¿Sabías que…?</button>${MOSTRAR_CAMBIOS?'<button class="btn" id="bcm">Qué cambió</button>':''}<button class="btn sol" id="bin">Iniciar recorrido</button>` });
+    barra:`<button class="btn borde" id="vjPlay"></button>${MOSTRAR_CAMBIOS?'<button class="btn borde" id="bcm">Qué cambió</button>':''}<button class="btn" id="bin">Iniciar recorrido</button><button class="btn cta" id="btr">¿Sabías que…?</button>` });
+  const tip=document.createElement('div'); tip.className='cta-tip'; tip.textContent='¡Empieza con una pregunta!'; v.el.append(tip);
+  const u=parseFloat(getComputedStyle(document.documentElement).fontSize), br=$('#btr',root).getBoundingClientRect(), sr=$('#stage').getBoundingClientRect(); tip.style.left=((br.left-sr.left+br.width/2)/u)+'rem'; tip.style.translate='-50% 0';
+  const tq=setTimeout(()=>tip.remove(),16000); limpiar.push(()=>clearTimeout(tq)); $('#btr',root).addEventListener('click',()=>tip.remove());
   const abre = trivia(v.el);
   $('#btr',root).onclick = abre;
   const bc=$('#bcm',root); if(bc) bc.onclick = () => ir(idxTipo('cambios'));
@@ -259,8 +266,7 @@ VIS.fin = root => {
   const v = montarViaje(root,{ tipo:'fin',
     cover:`<div class="fin-t"><small>Muchas</small><div class="keys" id="keys">${'Gracias'.split('').map((ch,i)=>`<button class="key" data-i="${i}" style="--kc:${NOTAS_COL[i%NOTAS_COL.length]}">${ch}</button>`).join('')}</div>
       <div class="fin-sub">Toca las teclas · y toca una parada para volver a esa alerta</div></div>`,
-    barra:`<span class="hint">Nueve alertas, una posición clara.</span>
-      <button class="btn sol" id="v1">Volver al panorama</button><button class="btn" id="v2">Hoja de ruta</button><button class="btn borde" id="v3">Reiniciar</button>` });
+    barra:`<button class="btn sol" id="v1">Volver al panorama</button><button class="btn" id="v2">Hoja de ruta</button><button class="btn borde" id="v3">Reiniciar</button>` });
   $('#v1',root).onclick=()=>ir(idxTipo('panorama')); $('#v2',root).onclick=()=>ir(idxTipo('ruta')); $('#v3',root).onclick=()=>ir(0);
   const host=v.el, R=()=>parseFloat(getComputedStyle(document.documentElement).fontSize), stage=$('#stage');
   $$('.key',root).forEach(k=>{

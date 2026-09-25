@@ -82,7 +82,8 @@ const ALERTAS = [
     antes:'Trazabilidad hasta el 1 de junio: mesa técnica para socializar el concepto del DNP.',
     ahora:'Nueva fecha en la trazabilidad: 24 de septiembre, oficio con la programación de la mesa interinstitucional y solicitud del informe de avance de la factibilidad.',
     vistas:[{ vis:'appA', icono:'tap',  pregunta:'Toca una línea para ver con qué proyecto del SETP se superpone.' },
-            { vis:'appB', icono:'drag', pregunta:'Arrastra el tranvía por la trazabilidad, toca una fecha o repite el recorrido.' }] },
+            { vis:'appB', icono:'tap', pregunta:'El tranvía recorre las fechas. Pausa, avanza o salta a cualquier paso con la línea de abajo.' },
+            { vis:'appC', icono:'tap', pregunta:'Toca cada condición: enciende una luz. Con las 4, el tranvía avanza.' }] },
 
   { n:5, id:'desembolsos', corto:'Desembolsos', titulo:'Desembolsos frente al POAI', t:'Desembolsos Nación y Municipio no solicitados frente a POAI',
     per:'2026-I', comp:'Financiero', cat:'leve', act:false, corte:'26 jun 2026',
@@ -92,8 +93,8 @@ const ALERTAS = [
             'En 2026, seis frentes suman $53,9 mil M.'],
     cifras:[{ n:100, suf:' %', l:'de los aportes del Municipio, desembolsados' }, { n:43.6, dec:1, suf:' %', l:'del convenio de la Nación, por reprogramar' }],
     postura:'Cada peso tiene proyecto y fase. Lo que no alcance a contratarse en la vigencia se reprograma con calendario.',
-    vistas:[{ vis:'desA', icono:'tap', pregunta:'Toca las barras para ver los valores. Activa o quita la indexación.' },
-            { vis:'desB', icono:'tap', pregunta:'Toca un frente de 2026 y suma proyectos para ver si alcanzan lo por reprogramar.' }] },
+    vistas:[{ vis:'desA', icono:'tap', pregunta:'Cifras en miles de millones de pesos ($ mil M). Toca una barra para ver el valor exacto en pesos.' },
+            { vis:'desB', icono:'tap', pregunta:'A: mira los frentes de 2026. B: toca los proyectos y comprueba si alcanzan lo que falta financiar.' }] },
 
   { n:6, id:'actos', corto:'Actos', titulo:'Actos administrativos sin definir', t:'Indefinición de los actos administrativos que adopten las condiciones del modelo operacional',
     per:'2026-I', comp:'Jurídico', cat:'critica', act:true, corte:'25 sep 2026',
