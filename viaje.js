@@ -317,8 +317,8 @@ function tono(f){ try{ AUDIO=AUDIO||new (window.AudioContext||window.webkitAudio
 
 /* ---- ajustes: ilustración como marca de agua, CTA de la trivia ---- */
 estilo(`
-.vj #vjBg{ filter:saturate(.3) blur(2.2px); opacity:.56 }
-.vj .pa .lm, .vj .pa .pad{ filter:saturate(.36) blur(1.1px); opacity:.6; transition:transform .35s cubic-bezier(.34,1.6,.5,1), opacity .3s, filter .3s }
+.vj #vjBg{ filter:saturate(.4) blur(2.4px); opacity:.72 }
+.vj .pa .lm, .vj .pa .pad{ filter:saturate(.55); opacity:.8; transition:transform .35s cubic-bezier(.34,1.6,.5,1), opacity .3s, filter .3s }
 .vj .pa:hover .lm, .vj .pa.on .lm{ filter:none; opacity:1 }
 .vj:before{ background:radial-gradient(circle at 88% 13%,rgba(255,236,180,.7) 0,rgba(255,236,180,0) 24rem),radial-gradient(circle at 10% 34%,rgba(255,255,255,.75) 0,rgba(255,255,255,0) 32rem) }
 .vj .cbar .btn.cta{ position:relative; background:linear-gradient(180deg,#FFDD7A,#FFC83D); color:var(--ink); font-size:2.05rem; padding:1.25rem 3rem; box-shadow:0 .5rem 1.6rem rgba(255,196,61,.6), inset 0 0 0 .25rem rgba(255,255,255,.55); animation:ctaPulso 2.2s ease-in-out infinite }
