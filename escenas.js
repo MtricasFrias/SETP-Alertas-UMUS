@@ -113,15 +113,15 @@ NODO.resumen = s => {
     <div class="rmain">
       <h1 class="rv">${a.titulo}</h1>
       <p class="ofi rv">Alerta identificada: ${a.t}</p>
-      <div class="rcols">
-        <div><p class="frase rv">${md(a.frase)}</p><ul class="hechos">${a.hechos.map(h=>`<li class="rv">${h}</li>`).join('')}</ul></div>
-        <div class="cifras">${a.cifras.map(f=>{
+      <div class="rcols${a.cifras.length?'':' uno'}${a.hechos.length>3?' denso':''}">
+        <div>${a.frase?`<p class="frase rv">${md(a.frase)}</p>`:''}<ul class="hechos">${a.hechos.map(h=>`<li class="rv">${h}</li>`).join('')}</ul></div>
+        ${a.cifras.length?`<div class="cifras">${a.cifras.map(f=>{
           const txt = f.n!==undefined ? f.n.toLocaleString('es-CO',{minimumFractionDigits:f.dec||0,maximumFractionDigits:f.dec||0})+(f.suf||'') : f.t;
           const dato = f.n!==undefined ? ` data-count="${f.n}" data-dec="${f.dec||0}" data-suf="${f.suf||''}"` : '';
-          return `<div class="cifra rv"><b class="${txt.length>7?'m':''}"${dato}>${f.n!==undefined?'0':f.t}</b><span>${f.l}</span></div>`; }).join('')}</div>
+          return `<div class="cifra rv"><b class="${txt.length>7?'m':''}"${dato}>${f.n!==undefined?'0':f.t}</b><span>${f.l}</span></div>`; }).join('')}</div>`:''}
       </div>
     </div>
-    <div class="postura rv"><span>Postura del SETP</span><p>${a.postura}</p></div>`;
+    <div class="postura rv"><span>Línea de actividades del SETP</span><p>${a.postura}</p></div>`;
   n.innerHTML = tram ? `<div class="tw-in">${cuerpo}<div class="tw-rail"></div></div><div class="tw-tram">${tramSVG()}<i class="tw-beam"></i><i class="tw-sp"></i><i class="tw-sp"></i><i class="tw-sp"></i></div>` : cuerpo;
   if(tram) n.dataset.delay=2400;
   return n;
@@ -134,7 +134,7 @@ NODO.explorar = s => {
   n.innerHTML=`
     <div class="spine"><div class="num">${a.n}</div></div>
     <div class="emain">
-      <div class="ehead"><h2>${a.titulo}</h2><p class="prompt">${ico('i-'+v.icono)}<span>${v.pregunta}</span></p></div>
+      <div class="ehead"><h2>${a.titulo}</h2><p class="prompt">${v.icono?ico("i-"+v.icono):""}<span>${v.pregunta}</span></p></div>
       <div class="viz"></div></div>`;
   return n;
 };

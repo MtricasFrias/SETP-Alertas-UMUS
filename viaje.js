@@ -231,7 +231,7 @@ function montarViaje(root, {tipo='portada', cover='', barra=''}={}){
   const ficha=i=>{ if(!F) return; const a=i>=0?ALERTAS[i]:null;
     if(!a){ F.style.setProperty('--c','#1F3C78'); F.innerHTML=`<div class="fh"><span class="fb">▶</span><span class="fk">Recorrido de las 9 alertas</span></div><h3>Sube al bus</h3><p>Deja que recorra la ruta, arrástralo hasta la parada que quieras o toca cualquier parada del mapa.</p>`; return; }
     F.style.setProperty('--c',CAT[a.cat].c); F.style.setProperty('--cx',CAT[a.cat].tx);
-    F.innerHTML=`<div class="fh"><span class="fb">${a.n}</span><span class="fk">Parada ${a.n} de 9 · ${CAT[a.cat].n}</span>${a.act?`<i class="fu">Nueva</i>`:''}</div><h3>${a.titulo}</h3><p>${a.frase.replace(/\*/g,'')}</p><button class="btn" id="vjGo">Ver la alerta ${a.n} →</button>`;
+    F.innerHTML=`<div class="fh"><span class="fb">${a.n}</span><span class="fk">Parada ${a.n} de 9 · ${CAT[a.cat].n}</span>${a.act?`<i class="fu">Nueva</i>`:''}</div><h3>${a.titulo}</h3><p>${(a.frase||a.hechos[0]).replace(/\*/g,'')}</p><button class="btn" id="vjGo">Ver la alerta ${a.n} →</button>`;
     $('#vjGo',F).onclick=()=>ir(idxAlerta(a.n)); F.classList.remove('cambia'); void F.offsetWidth; F.classList.add('cambia'); };
   if(F) ficha(-1);
   /* estado del bus */
@@ -267,7 +267,7 @@ function montarViaje(root, {tipo='portada', cover='', barra=''}={}){
     const n=+g.dataset.n, a=ALERTAS[n-1];
     g.onclick=()=>ir(idxAlerta(n)); g.onkeydown=e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); ir(idxAlerta(n)); } };
     g.onmouseenter=()=>{ if(F) ficha(i); };
-    g.onmousemove=e=>{ if(!F) verTip(`<b>Alerta ${n} · ${a.titulo}</b><br><span style="opacity:.85">${CAT[a.cat].n}${a.act?' · actualizada '+a.corte:''}</span><br>${a.frase.replace(/\*/g,'')}`,e); };
+    g.onmousemove=e=>{ if(!F) verTip(`<b>Alerta ${n} · ${a.titulo}</b><br><span style="opacity:.85">${CAT[a.cat].n}${a.act?' · actualizada '+a.corte:''}</span><br>${(a.frase||a.hechos[0]).replace(/\*/g,'')}`,e); };
     g.onmouseleave=()=>{ ocultaTip(); if(F) ficha(cur>=0?cur:(prev!==null?prev:-1)); }; });
   $$('.lg-f button',el).forEach(b=>{ const on=()=>{ el.dataset.f=b.dataset.k; b.classList.add('on'); $$('.pa',el).forEach(g=>g.classList.toggle('f',g.classList.contains('f-'+b.dataset.k))); }, off=()=>{ el.removeAttribute('data-f'); b.classList.remove('on'); };
     b.onmouseenter=on; b.onmouseleave=off; b.onfocus=on; b.onblur=off; });

@@ -24,25 +24,8 @@ estilo(`
 .paso.act{ color:var(--ink) } .paso.act span{ outline:.35rem solid var(--ink); outline-offset:.25rem }
 .pasos.p4{ grid-template-columns:repeat(4,minmax(0,1fr)) } .pasos.p4:before{ left:12.5%; right:12.5% } .pasos.p4:after{ left:12.5%; width:calc(var(--p,0)*25%) }
 .paso-d{ margin-top:.7rem; font-size:1.7rem; line-height:1.2; color:var(--ink); min-height:2.1rem }
-.fmain{ display:grid; grid-template-columns:24rem minmax(0,1fr) 30rem; gap:3rem; min-height:0 }
-.tank{ position:relative; min-height:0 } .tank svg{ width:100%; height:100% }
-.tank .o1{ animation:ola 4.5s linear infinite } .tank .o2{ animation:ola 7s linear infinite reverse }
 @keyframes ola{ to{ transform:translateX(-190px) } }
-.tank #agua{ transition:transform .9s cubic-bezier(.2,.8,.2,1) }
-.tank .mon{ animation:cae 1.6s ease-in infinite }
 @keyframes cae{ 0%{ transform:translateY(-34px); opacity:0 } 15%{ opacity:1 } 85%{ opacity:1 } 100%{ transform:translateY(130px); opacity:0 } }
-.cob{ position:absolute; left:0; right:0; top:44%; text-align:center; pointer-events:none }
-.cob b{ font:800 4.8rem/1 var(--fd); color:var(--ink) } .cob span{ display:block; font:600 1.5rem var(--ft); color:var(--mut) } .cob.lleno b, .cob.lleno span{ color:#fff; text-shadow:0 .1rem .5rem rgba(0,0,0,.4) }
-.sls{ display:flex; flex-direction:column; justify-content:space-between; min-height:0 }
-.sl span{ display:flex; justify-content:space-between; align-items:baseline; font:600 1.65rem var(--ft); color:var(--tx) }
-.sl span b{ font:800 2.2rem var(--fd); color:var(--ink) } .sl input{ height:2.5rem !important; margin-top:-.2rem } .sl{ display:block }
-.sls .nota{ font-size:1.5rem; color:var(--mut) }
-.sls{ gap:.3rem } .guia{ display:flex; align-items:center; gap:.7rem; font:700 1.55rem var(--fd); color:var(--ink); flex-wrap:wrap } .guia b{ color:var(--mut); margin-right:.4rem } .guia em{ width:2.7rem; height:2.7rem; border-radius:50%; background:var(--sol); color:var(--ink); font:800 1.55rem var(--fd); font-style:normal; display:grid; place-items:center } .guia i{ color:var(--mut); font-style:normal; font-size:2rem }
-.pres{ display:flex; align-items:center; gap:.7rem; flex-wrap:nowrap } .pres span{ font:700 1.5rem var(--fd); color:var(--mut) } .pres button{ padding:.5rem 1.2rem; border-radius:99rem; font:700 1.5rem var(--fd); color:var(--ink); box-shadow:inset 0 0 0 .2rem var(--ink); transition:.2s } .pres button:hover{ background:var(--ink); color:#fff }
-.tank.demo:after{ content:"Demostración"; position:absolute; left:50%; top:.2rem; transform:translateX(-50%); white-space:nowrap; font:800 1.5rem var(--fd); background:var(--sol); color:var(--ink); padding:.3rem 1.2rem; border-radius:.7rem }
-.kres{ display:flex; flex-direction:column; gap:1.4rem; min-height:0 }
-.kres .caja{ flex:1; display:flex; flex-direction:column; justify-content:center; padding:1rem 1.8rem }
-.kres .caja span{ font-size:1.5rem; color:var(--mut); line-height:1.15; margin-top:.4rem }
 
 /* ---------- Concertación ---------- */
 .con{ display:grid; grid-template-columns:minmax(0,1fr) 25rem; grid-template-rows:minmax(0,1fr) minmax(0,1fr) 10rem; gap:1.6rem; height:100% }
@@ -119,49 +102,18 @@ estilo(`
 .gr .ax text{ font:700 16px var(--fd); fill:var(--mut); text-anchor:middle } .gr .vl{ font:800 17px var(--fd); fill:var(--ink); text-anchor:middle } .gr .g{ font:800 15px var(--ft); fill:var(--verde); text-anchor:middle }
 .leyenda{ display:flex; gap:2rem; font-size:1.55rem; color:var(--ink); margin-top:.5rem; transition:.2s } .leyenda i{ display:inline-block; width:1.4rem; height:1.4rem; margin-right:.6rem; vertical-align:-.1rem; border-radius:.3rem }
 .gnote{ font-size:1.5rem; color:var(--mut); margin-top:-.3rem }
-.des2{ display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr); gap:2.4rem; height:100% }
-.tp{ width:100%; border-collapse:collapse; margin-top:.8rem }
-.tp th{ font:700 1.5rem var(--fd); color:var(--mut); text-align:left; padding:.3rem .6rem; border-bottom:.22rem solid var(--ink) }
-.tp td{ font-size:1.6rem; padding:.34rem .6rem; border-bottom:.12rem solid #DBE3F0; line-height:1.1; font-weight:600; color:var(--ink) }
-.tp tr{ cursor:pointer } .tp tbody tr:hover, .tp tr.sel{ background:#E6ECF7 } .tp td.v{ text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums; font-weight:500 }
-.fs4{ display:flex; gap:.3rem } .fs4 i{ width:1.6rem; height:.8rem; background:#CCD6E6 } .fs4 i.on{ background:var(--azul) } .fs4 i.cur{ background:var(--ambar) }
-.split{ display:flex; height:2.6rem; margin-top:.6rem; font:700 1.5rem var(--fd); color:#fff } .split i{ display:flex; align-items:center; justify-content:center; font-style:normal; width:0; transition:width 1s cubic-bezier(.2,.8,.2,1); overflow:hidden; white-space:nowrap }
-.dcard{ margin-top:.7rem; padding:.7rem 1.4rem; background:var(--paper); border-left:.6rem solid var(--ink); font-size:1.65rem; line-height:1.2; color:var(--ink) }
 .gr .tk{ font:600 15px var(--ft); fill:var(--mut) } .gr .ut{ font:700 15px var(--fd); fill:var(--mut) } .gr .xa{ font:800 16px var(--fd); fill:var(--ink); text-anchor:middle }
 .gr .pc{ font:800 17px var(--fd); fill:#fff; text-anchor:middle } .gr .pc2{ font:800 26px var(--fd); fill:var(--ink); text-anchor:middle } .gr .pc3{ font:700 15px var(--ft); fill:var(--mut); text-anchor:middle }
 .gr .lg{ font:800 16px var(--fd); text-anchor:middle } .gr .lg2{ font:700 16px var(--ft); fill:var(--ink); text-anchor:middle }
 .gb{ transform-box:fill-box; transform-origin:50% 100%; animation:crece .9s cubic-bezier(.2,.8,.2,1) both; animation-delay:calc(var(--i)*110ms) } @keyframes crece{ from{ transform:scaleY(0) } }
 .gr .dn{ animation:dona 1.3s .5s ease-out both } @keyframes dona{ from{ stroke-dasharray:0 400 } }
 .leyenda .uni{ margin-left:auto; font-size:1.5rem; color:var(--mut); background:var(--paper); padding:.15rem 1rem; border-radius:.5rem }
-.pn2{ display:flex; align-items:center; gap:1rem } .pn2 em{ flex:none; width:3.2rem; height:3.2rem; border-radius:50%; background:var(--navy); color:#fff; font:800 1.8rem var(--fd); font-style:normal; display:grid; place-items:center } .pn2 b{ font:800 1.95rem var(--fd); color:var(--ink); white-space:nowrap } .pn2 span{ margin-left:auto; font-size:1.55rem; color:var(--mut); text-align:right }
-.fl{ display:flex; flex-wrap:wrap; align-items:center; gap:.5rem; font-size:1.5rem; color:var(--mut); margin-top:.6rem } .fl em{ font-style:normal; background:var(--paper); padding:.1rem .7rem; border-radius:.4rem; color:var(--ink); font-weight:600 } .fl i{ font-style:normal }
-.meta{ display:grid; grid-template-columns:1fr auto; align-items:center; gap:1.2rem; margin-top:.9rem } .meta span, .paso2 span{ display:flex; align-items:center; gap:.8rem; font:700 1.55rem/1.15 var(--fd); color:var(--ink) } .meta em, .paso2 em, .res em{ flex:none; width:2.6rem; height:2.6rem; border-radius:50%; background:var(--sol); font:800 1.5rem var(--fd); font-style:normal; display:grid; place-items:center; color:var(--ink) } .meta b{ font:800 3.1rem var(--fd); letter-spacing:-.02em; white-space:nowrap }
-.paso2{ display:flex; align-items:center; justify-content:space-between; gap:1rem } .paso2 i{ display:flex; gap:.6rem; font-style:normal } .paso2 .chip{ padding:.3rem 1rem; font-size:1.5rem; white-space:nowrap }
-.pila{ position:relative; height:4.4rem; background:#D5DDEC; border-radius:.8rem; margin:2.3rem 0 1rem } .pila-b{ display:flex; height:100%; border-radius:.8rem; overflow:hidden }
-.pila-b i{ display:flex; align-items:center; justify-content:center; font:800 1.5rem var(--fd); font-style:normal; color:#fff; text-shadow:0 .1rem .3rem rgba(0,0,0,.3); overflow:hidden; white-space:nowrap; transition:width .7s cubic-bezier(.2,.8,.2,1); animation:sale .55s cubic-bezier(.2,.8,.2,1) } @keyframes sale{ from{ transform:scaleX(.2); opacity:0 } }
-.pila-m{ position:absolute; top:-.9rem; bottom:-.9rem; width:0; border-left:.35rem dashed var(--ink); transition:left .7s cubic-bezier(.2,.8,.2,1) } .pila-m span{ position:absolute; top:-2.5rem; left:0; transform:translateX(-50%); font:800 1.5rem var(--fd); background:var(--ink); color:#fff; padding:.05rem .9rem; border-radius:.4rem }
-.cart{ display:flex; flex-direction:column; gap:.7rem; margin:.2rem 0 .8rem }
-.cart button{ display:flex; align-items:center; gap:1rem; text-align:left; padding:.5rem 1.2rem .5rem .8rem; background:var(--paper); border-radius:.8rem; font:700 1.6rem/1.12 var(--fd); color:var(--ink); transition:.2s } .cart button:hover{ background:#DCE8F9 }
-.cart button u{ align-self:stretch; width:1.2rem; border-radius:.4rem; background:var(--c) } .cart button span{ flex:1 } .cart button small{ display:block; font:500 1.5rem var(--ft); color:var(--mut) } .cart button b{ white-space:nowrap; font-size:1.6rem }
-.cart button em{ font:800 1.5rem var(--fd); font-style:normal; background:var(--ink); color:#fff; padding:.25rem 1rem; border-radius:.5rem; white-space:nowrap } .cart button.on{ background:#E1F1E6 } .cart button.on em{ background:var(--verde) }
-.cart button.pide{ animation:pide 1.4s ease-out infinite } @keyframes pide{ 0%{ box-shadow:0 0 0 0 rgba(91,145,227,.65) } 100%{ box-shadow:0 0 0 1rem rgba(91,145,227,0) } }
-.dcard.res{ min-height:5.4rem; margin-top:auto; display:flex; align-items:flex-start; gap:1rem }
 
 /* ---------- actos: el borrador se arma pieza por pieza ---------- */
 .acto{ position:relative; display:grid; grid-template-rows:auto minmax(0,1fr); gap:1.6rem; height:100% }
 .ac-e{ padding:1.2rem 2rem }
-.ac-c{ display:grid; grid-template-columns:40rem minmax(0,1fr); gap:2rem; min-height:0 }
-.ac-l{ display:flex; flex-direction:column; gap:.9rem; min-height:0 }
-.ac-pool{ display:flex; flex-direction:column; gap:.9rem; padding:1.2rem; background:#DCE8F6; flex:1; min-height:0; overflow:hidden }
-.ac-pool:empty:after{ content:"Todas las piezas están en el documento"; text-align:center; font-size:1.7rem; color:var(--mut); padding:6rem 0 }
-.ac-pz{ display:flex; align-items:center; gap:1.2rem; padding:1rem 1.4rem; background:var(--navy); color:#fff; font:600 1.6rem/1.15 var(--ft); cursor:grab; user-select:none; touch-action:none; transition:transform .2s, box-shadow .2s }
-.ac-pz em{ flex:none; width:3rem; height:3rem; border-radius:50%; background:var(--sol); color:var(--ink); font:800 1.6rem var(--fd); font-style:normal; display:grid; place-items:center }
-.ac-pz:hover{ transform:translateY(-.2rem) }
-.ac-pz.vuela{ position:absolute; z-index:50; cursor:grabbing; box-shadow:0 1.2rem 2.4rem rgba(31,60,120,.3); transform:rotate(-1.5deg) scale(1.03); transition:none }
-.act-h{ min-height:2.2rem; font:700 1.65rem var(--ft); color:var(--ambar-t) }
 @keyframes sacude{ 20%,60%{ transform:translateX(-.6rem) } 40%,80%{ transform:translateX(.6rem) } }
 .ac-d{ position:relative; overflow:hidden; background:#fff; border-top:.8rem solid var(--navy); padding:1.3rem 2.2rem 1.3rem; display:flex; flex-direction:column; gap:.8rem; box-shadow:0 .8rem 2rem rgba(31,60,120,.12); transition:box-shadow .3s; min-height:0 }
-.ac-d.over{ box-shadow:0 0 0 .5rem var(--sol), 0 1rem 2.4rem rgba(31,60,120,.2) }
 .ad-h{ display:flex; align-items:center; gap:1.4rem } .ad-h svg{ width:3.8rem; height:3.8rem; color:var(--navy) } .ad-h b{ display:block; font:800 2.1rem var(--fd); color:var(--ink) } .ad-h span{ font-size:1.55rem; color:var(--mut) }
 .ad-i{ font:700 1.55rem var(--fd); color:var(--ambar-t); background:#FCF1D0; padding:.3rem 1.2rem; align-self:flex-start }
 .ad-sl{ display:flex; flex-direction:column; gap:.7rem; flex:1; min-height:0 }
@@ -242,6 +194,34 @@ estilo(`
 .mk-pa{ position:relative; width:0; height:0 }
 .mk-pa i{ position:absolute; left:-1.9rem; top:-1.9rem; width:3.8rem; height:3.8rem; background:var(--azul); border:.3rem solid #fff; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; cursor:pointer; box-shadow:0 .3rem .8rem rgba(31,60,120,.35) } .mk-pa i svg{ width:2.1rem; height:2.1rem }
 
+/* ---------- FET: etapas de la estructuración ---------- */
+.fet{ gap:1.6rem }
+.fet .fet-p{ padding:2.6rem 2.4rem 2.2rem }
+.fet .pasos:before, .fet .pasos:after{ top:2.2rem }
+.fet .paso{ font-size:1.9rem; cursor:pointer } .fet .paso span{ width:4.6rem; height:4.6rem; font-size:2.2rem; margin-bottom:.8rem } .fet .paso.hecho span:before{ width:1.8rem; height:1rem }
+.fdet{ padding:3rem 4.4rem; display:flex; flex-direction:column; justify-content:center; gap:1.3rem; border-left:.9rem solid var(--c,var(--ink)) }
+.fdet .fd-k{ font:800 1.7rem var(--fd); letter-spacing:.04em; text-transform:uppercase; color:var(--ct,var(--mut)) }
+.fdet h3{ font:800 4rem/1.05 var(--fd); color:var(--ink); letter-spacing:-.02em }
+.fdet p{ font:600 2.9rem/1.3 var(--ft); color:var(--tx); max-width:96rem }
+.fdet.cambia > *{ animation:fichaIn .4s cubic-bezier(.22,.8,.3,1) }
+/* ---------- actos: borrador fijo ---------- */
+.ac-d.fijo{ transition:none }
+.ac-d.fijo .ad-sl{ display:grid; grid-template-columns:1fr 1fr; grid-auto-rows:1fr; gap:1.2rem }
+.ac-d.fijo .slot{ align-items:flex-start; padding:1.2rem 1.6rem; animation:none }
+.ac-d.fijo .slot b{ font-size:2rem } .ac-d.fijo .slot span{ font-size:1.8rem; line-height:1.25 }
+.ac-d.fijo .ad-sello{ transform:none; opacity:1 }
+/* ---------- proyectos 2026 (tabla de Planeación) ---------- */
+.pj{ height:100%; display:flex; flex-direction:column; padding:1.4rem 2.4rem 1.2rem }
+.pj-t{ display:flex; align-items:baseline; gap:1.6rem } .pj-t b{ font:800 2.6rem var(--fd); color:var(--ink) } .pj-t span{ font-size:1.6rem; color:var(--mut) }
+.pj table{ width:100%; border-collapse:collapse; margin-top:.7rem; table-layout:fixed } .pj col.c1{ width:38% } .pj col.c2, .pj col.c3{ width:16% } .pj col.c4{ width:30% }
+.pj th{ font:800 1.5rem var(--fd); letter-spacing:.04em; text-transform:uppercase; color:var(--mut); text-align:left; padding:.3rem .8rem; border-bottom:.25rem solid var(--ink) }
+.pj .v{ text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums } .pj .pj-n{ text-align:center; color:var(--tx) }
+.pj td{ font:600 1.6rem/1.1 var(--ft); color:var(--ink); padding:.2rem .8rem; border-bottom:.12rem solid #DBE3F0 }
+.pj tr.g td{ font:800 1.5rem var(--fd); letter-spacing:.05em; text-transform:uppercase; color:var(--navy); background:#E1ECFA; border:0; padding:.15rem .8rem }
+.pj .fe{ display:inline-flex; align-items:center; gap:.7rem; font:700 1.5rem var(--fd); white-space:nowrap } .pj .fe i{ flex:none; width:1.2rem; height:1.2rem; border-radius:50%; background:var(--c) }
+.pj tr.tot td{ font:800 1.7rem var(--fd); border-top:.25rem solid var(--ink); border-bottom:0; padding-top:.5rem }
+.pj tbody tr:not(.g):not(.tot):hover{ background:#E6ECF7 }
+
 /* ---------- tecnología ---------- */
 .tec{ display:grid; grid-template-rows:minmax(0,1fr) 16.6rem; gap:1.4rem; height:100% }
 .tec-n{ position:relative; background:var(--card); min-height:0 } .tec-n svg{ position:absolute; left:0; right:0; top:5.6rem; bottom:3rem; width:100%; height:calc(100% - 8.6rem) }
@@ -262,56 +242,19 @@ const clamp = (v,a,b) => Math.min(b,Math.max(a,v));
    1 · FET — dónde estamos y simulador del fondo
    ===================================================================== */
 VIS.fet = root => {
-  const P = {tt:3500, tu:3000, via:100, mes:24, apo:0};
-  const sl = (id,lbl,min,max,step) => `<label class="sl"><span>${lbl}<b id="v-${id}"></b></span><input type="range" id="${id}" min="${min}" max="${max}" step="${step}" value="${P[id]}"></label>`;
-  root.innerHTML = `<div class="fet">
-    <div class="caja fet-p rv"><div class="pasos" id="pasos"></div><div class="paso-d" id="pd"></div></div>
-    <div class="fmain">
-      <div class="tank rv"><svg viewBox="0 0 260 400"><defs><clipPath id="cp"><path d="M35 60v274a95 24 0 0 0 190 0V60a95 24 0 0 1-190 0z"/></clipPath></defs>
-          <path d="M100 4h60l-12 28h-36z" fill="#A9B8CE"/>
-          <g id="mons">${[0,.5,1].map(d=>`<use class="mon" href="#i-coin" x="${112+d*8}" y="0" width="32" height="32" style="animation-delay:${d}s;animation-duration:${1.5+d*.3}s"/>`).join('')}</g>
-          <path d="M35 60v274a95 24 0 0 0 190 0V60a95 24 0 0 1-190 0z" fill="#fff"/>
-          <g clip-path="url(#cp)"><g id="agua" style="transform:translateY(360px)"><g class="o2" opacity=".55"><path id="w2" d="M-190 0q47.5-16 95 0t95 0t95 0t95 0t95 0t95 0v420h-570z"/></g><g class="o1"><path id="w1" d="M-190 6q47.5 14 95 0t95 0t95 0t95 0t95 0t95 0v420h-570z"/></g></g></g>
-          <path d="M35 60v274a95 24 0 0 0 190 0V60" fill="none" stroke="#1F3C78" stroke-width="5"/><ellipse cx="130" cy="60" rx="95" ry="24" fill="none" stroke="#1F3C78" stroke-width="5"/>
-          <line x1="14" x2="246" y1="64" y2="64" stroke="#1F3C78" stroke-dasharray="7 7" stroke-width="2.5"/></svg>
-        <div class="cob"><b id="cob">0 %</b><span>del fondo requerido</span></div></div>
-      <div class="sls rv"><div class="guia"><em>1</em>Mueve<i>›</i><em>2</em>Mira el fondo<i>›</i><em>3</em>Lee el resultado</div>
-        ${sl('tt','Tarifa técnica por viaje',2500,5000,50)}${sl('tu','Tarifa al usuario por viaje',2000,4000,50)}${sl('via','Viajes pagos por día (miles)',40,200,5)}${sl('apo','Aporte anual al FET ($ mil millones)',0,40,1)}
-        <div class="pres"><button data-e="0">Sin aporte</button><button data-e="1">Aporte parcial</button><button data-e="2">Cubre el fondo</button></div>
-</div>
-      <div class="kres rv"><div class="caja"><div class="k-num" id="k-def">$0</div><span>déficit por viaje</span></div><div class="caja"><div class="k-num" id="k-req">$0</div><span>fondo requerido</span></div><div class="caja"><div class="k-num" id="k-apo">$0</div><span>aportado en el horizonte</span></div></div>
-    </div></div>`;
-  function calc(){
-    ['tt','tu','via','apo'].forEach(k=>P[k]=+$('#'+k,root).value);
-    const def=Math.max(0,P.tt-P.tu), req=def*P.via*1000*365*P.mes/12, apo=P.apo*1e9*P.mes/12, cob=req>0?apo/req:(apo>0?1:0), niv=Math.min(1,cob);
-    $('#v-tt',root).textContent='$'+fm(P.tt); $('#v-tu',root).textContent='$'+fm(P.tu); $('#v-via',root).textContent=P.via+' mil'; $('#v-apo',root).textContent='$'+P.apo+' mil M';
-    $('#k-def',root).textContent='$'+fm(def); $('#k-req',root).textContent=fB(req); $('#k-apo',root).textContent=fB(apo);
-    $('#cob',root).textContent=Math.round(cob*100)+' %'; $(".cob",root).classList.toggle("lleno",niv>.42);
-    const col = cob>=1?'#3AA56D':cob>=.5?'#F6BD4B':'#E5626A'; $('#w1',root).style.fill=col; $('#w2',root).style.fill=col;
-    $('#agua',root).style.transform=`translateY(${360-300*niv}px)`; $('#mons',root).style.opacity=P.apo>0?1:0;
-  }
-  let demo=null, rafd=0; limpiar.push(()=>{ clearTimeout(demo); cancelAnimationFrame(rafd); });
-  const paraCubrir=()=>{ const def=Math.max(0,+$('#tt',root).value-+$('#tu',root).value), req=def*(+$('#via',root).value)*1000*365*P.mes/12; return clamp(Math.ceil(req/1e9*12/P.mes),0,40); };
-  /* mueve el deslizador del aporte con animación para mostrar el efecto */
-  const lleva=(a,ms=1300,fin)=>{ cancelAnimationFrame(rafd); const el=$('#apo',root), d=+el.value, t0=performance.now(); (function f(t){ const p=Math.min(1,(t-t0)/ms), e=1-Math.pow(1-p,3); el.value=Math.round(d+(a-d)*e); calc(); if(p<1) rafd=requestAnimationFrame(f); else fin&&fin(); })(t0); };
-  const paraDemo=()=>{ clearTimeout(demo); cancelAnimationFrame(rafd); $('.tank',root).classList.remove('demo'); };
-  $$('input',root).forEach(i=>{ i.oninput=()=>{ paraDemo(); calc(); }; i.onpointerdown=paraDemo; });
-  $$('.pres button',root).forEach(b=>b.onclick=()=>{ paraDemo(); const e=+b.dataset.e, c=paraCubrir(); lleva(e===0?0:e===1?Math.max(1,Math.round(c/2)):c); });
-  calc();
-  /* demostración inicial: el aporte sube solo hasta cubrir el fondo y vuelve a cero */
-  demo=setTimeout(()=>{ $('.tank',root).classList.add('demo'); lleva(paraCubrir(),2600,()=>{ demo=setTimeout(()=>lleva(0,1400,()=>$('.tank',root).classList.remove('demo')),1300); }); },1500);
-  /* ruta de estructuración: dónde estamos hoy */
-  const pasos=[['Modelo operacional','Estudio de actualización del modelo operacional (SAIP & IKON): base de los escenarios de operación.','hecho'],
-    ['Resultados del modelo financiero','El SETP ya cuenta con los resultados del modelo financiero del sistema.','hecho'],
-    ['Calibración de escenarios','Se calibran los escenarios de entrada en operación: ingresos, costos y necesidades de financiación proyectadas.','curso'],
-    ['Fuentes de recursos','En paralelo, se analizan las posibles fuentes de recursos para financiar el fondo.','curso'],
-    ['Esquema de financiación','Con esos análisis se define un esquema de financiación acorde con la operación y la implementación progresiva del Sistema.','sig']];
-  const ETQ={hecho:'Listo',curso:'En curso',sig:'Siguiente'};
-  const ps=$('#pasos',root);
+  const pasos=[['Modelo operacional','Estudio de actualización del modelo operacional realizado por SAIP & IKON: base de los escenarios de operación del Sistema.','hecho'],
+    ['Resultados del modelo financiero','El SETP cuenta con los resultados del modelo financiero del Sistema.','hecho'],
+    ['Calibración de escenarios','Calibración de escenarios con el estudio de SAIP & IKON, evaluando la participación de los distintos actores e identificando el mínimo impacto del déficit financiero.','curso'],
+    ['Fuentes de alimentación','En análisis, las fuentes para la alimentación del Fondo.','curso'],
+    ['Esquema de alimentación','Con estos análisis se define el esquema de alimentación del Fondo, acorde con las condiciones de operación y la implementación progresiva del Sistema.','sig']];
+  const ETQ={hecho:'Listo',curso:'En curso',sig:'Siguiente'}, COL={hecho:['var(--verde)','var(--verde-t)'],curso:['var(--ambar)','var(--ambar-t)'],sig:['#8A93AD','var(--mut)']};
+  root.innerHTML=`<div class="fet"><div class="caja fet-p rv"><div class="pasos" id="pasos" style="--p:0"></div></div><div class="caja fdet rv" id="pd"></div></div>`;
+  const ps=$('#pasos',root), pd=$('#pd',root);
   ps.innerHTML=pasos.map((p,i)=>`<button class="paso ${p[2]}" data-i="${i}"><span>${p[2]==='hecho'?'':i+1}</span>${p[0]}<em>${ETQ[p[2]]}</em></button>`).join('');
-  const marca=i=>{ $$('.paso',ps).forEach((e,k)=>e.classList.toggle('act',k===i)); $('#pd',root).innerHTML=`<b>${pasos[i][0]}.</b> ${pasos[i][1]}`; };
+  const marca=i=>{ const p=pasos[i]; $$('.paso',ps).forEach((e,k)=>e.classList.toggle('act',k===i)); pd.style.setProperty('--c',COL[p[2]][0]); pd.style.setProperty('--ct',COL[p[2]][1]);
+    pd.innerHTML=`<div class="fd-k">Etapa ${i+1} de ${pasos.length} · ${ETQ[p[2]]}</div><h3>${p[0]}</h3><p>${p[1]}</p>`; pd.classList.remove('cambia'); void pd.offsetWidth; pd.classList.add('cambia'); };
   $$('.paso',ps).forEach(b=>b.onclick=()=>marca(+b.dataset.i)); marca(2);
-  ps.style.setProperty('--p',0); const t=setTimeout(()=>ps.style.setProperty('--p',2),350); limpiar.push(()=>clearTimeout(t));
+  const t=setTimeout(()=>ps.style.setProperty('--p',2),350); limpiar.push(()=>clearTimeout(t));
 };
 
 /* =====================================================================
@@ -362,7 +305,7 @@ VIS.sem = root => {
       <div class="brecha" id="brecha"></div>
       <div class="sem-k"><div><b id="kc">30<em> / 34</em></b><span>intersecciones en servicio y seguimiento</span></div><div><b>29 sep</b><span>fin del plazo contractual</span></div></div></div>
     <div class="sem-c rv"><div class="leg" id="fl">
-        <button class="chip on" data-f="todas">Las 34</button><button class="chip" data-f="serv" style="--c:#46BC7C"><i></i><span id="c-sv">30</span> en servicio</button><button class="chip" data-f="pend" style="--c:#A9B8CE"><i></i><span id="c-pe">4</span> por integrar</button></div>
+        <button class="chip on" data-f="todas">Las 34</button><button class="chip" data-f="serv" style="--c:#46BC7C"><i></i><span id="c-sv">30</span> en servicio</button><button class="chip" data-f="pend" style="--c:#A9B8CE"><i></i><span id="c-pe">4</span> restantes</button></div>
       <div class="dots" id="dots"></div></div>
     <div class="sem-d rv"><div class="fnx">Plazo vigente hasta el <b>29 sep 2026</b> · <b>9 días</b> entre el corte del 20 sep y el cierre</div><button class="btn sol" id="sim" style="margin-left:auto">Simular cierre de Fase I</button><button class="btn borde" id="rst" style="display:none">Restablecer</button></div></div>`;
   const dots=$('#dots',root); dots.innerHTML=Array.from({length:34},()=>'<div class="dt"></div>').join('');
@@ -374,13 +317,13 @@ VIS.sem = root => {
     const c=CUT[S.c], real=S.sim?CUT[1].real+(100-CUT[1].real)*((S.serv-30)/4):c.real, prog=c.prog, d=real-prog, ok=S.sim&&S.serv>=34;
     tw('vp',prog,' %'); tw('vr',real,' %'); $('#bp',root).style.width=prog+'%'; $('#br',root).style.width=real+'%';
     const b=$('#brecha',root), bien=d>=0;
-    b.textContent = ok ? 'Meta alcanzada: Fase I integrada' : bien ? 'Adelantado '+fx(d)+' puntos frente al cronograma' : 'Diferencia de '+fx(-d)+' puntos frente al cronograma';
+    b.textContent = ok ? 'Las 34 intersecciones en servicio y seguimiento' : bien ? 'Adelantado '+fx(d)+' puntos frente al cronograma' : 'Diferencia de '+fx(-d)+' puntos frente al cronograma';
     b.style.color=bien?'#2E8B5A':''; b.style.borderLeftColor=bien?'var(--verde)':''; b.style.background=bien?'#DDF1E4':'';
     $$('.dt',dots).forEach((x,i)=>{ const e=i<S.serv?'serv':'pend'; x.className='dt '+e+(filtro!=='todas'&&e!==filtro?' dim':''); x.dataset.e=e; });
     $('#c-sv',root).textContent=S.serv; $('#c-pe',root).textContent=34-S.serv; $('#kc',root).innerHTML=`${S.serv}<em> / 34</em>`;
     $$('#seg button',root).forEach(x=>x.classList.toggle('on',+x.dataset.c===S.c));
   }
-  $$('.dt',dots).forEach(d=>{ d.onmouseenter=e=>verTip({serv:'En servicio y seguimiento',pend:'Por integrar y probar'}[d.dataset.e],e); d.onmouseleave=ocultaTip; });
+  $$('.dt',dots).forEach(d=>{ d.onmouseenter=e=>verTip({serv:'En servicio y seguimiento',pend:'Restante de la Fase I'}[d.dataset.e],e); d.onmouseleave=ocultaTip; });
   $$('#fl .chip',root).forEach(b=>b.onclick=()=>{ filtro=b.dataset.f; $$('#fl .chip',root).forEach(x=>x.classList.toggle('on',x===b)); pinta(); });
   $$('#seg button',root).forEach(b=>b.onclick=()=>{ if(S.sim) return; S.c=+b.dataset.c; pinta(); });
   const lamps={r:$('.r',root),a:$('.a',root),v:$('.v',root)}; let fase=0, tm; const NOM=['Rojo','Verde','Ámbar'], SEQ=['r','v','a'], DUR=[2600,2600,900];
@@ -492,62 +435,29 @@ VIS.desA = root => {
    5b · Desembolsos — los 6 frentes de 2026 y el simulador de la cartera
    ===================================================================== */
 VIS.desB = root => {
-  const meta=NACION.reprogramar[2], COL=['#5B91E3','#3AA56D','#F6BD4B'];
-  let sel=0; const on=new Set();
-  root.innerHTML=`<div class="des2">
-    <div class="gr rv"><div class="pn2"><em>A</em><b>Lo que está en marcha</b><span>Toca un frente</span></div>
-      <div class="tot"><span data-count="${TOT26.total/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</span> <small>total 2026 · tabla de Planeación</small></div>
-      <div class="split"><i id="sn" style="background:#3AA56D">Nación</i><i id="sm" style="background:#5B91E3">Municipio</i></div>
-      <table class="tp"><thead><tr><th>Frente</th><th style="text-align:right">Nación</th><th style="text-align:right">Municipio</th><th>Avance</th></tr></thead><tbody id="tp">
-        ${PROY26.map((p,i)=>`<tr data-i="${i}"><td>${p.n}</td><td class="v">${p.nac?fM(p.nac):'—'}</td><td class="v">${p.mun?fM(p.mun):'—'}</td><td><div class="fs4">${FASES.map((f,k)=>`<i class="${k<p.fase?'on':k===p.fase?'cur':''}" title="${f}"></i>`).join('')}</div></td></tr>`).join('')}</tbody></table>
-      <div class="fl"><span>Avance:</span>${FASES.map(f=>`<em>${f}</em>`).join('<i>›</i>')}</div>
-      <div class="dcard" id="dc"></div></div>
-    <div class="gr rv"><div class="pn2"><em>B</em><b>Lo que falta financiar</b><span>Simulador</span></div>
-      <div class="meta"><span><em>1</em>Meta: por reprogramar sin proyecto</span><b style="color:#E5626A" data-count="${meta/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</b></div>
-      <div class="pila"><div class="pila-b" id="pb"></div><div class="pila-m" id="pm"><span>Meta</span></div></div>
-      <div class="paso2"><span><em>2</em>Toca para sumar proyectos</span><i><button class="chip" id="ta">Sumar todos</button><button class="chip" id="tl">Limpiar</button></i></div>
-      <div class="cart" id="ct">${CARTERA.map((c,i)=>`<button data-i="${i}" style="--c:${COL[i]}" title="${c.req}"><u></u><span>${c.n}<small>${c.req.split(" · ")[1]}</small></span><b>${fM(c.v)}</b><em>+ Sumar</em></button>`).join('')}</div>
-      <div class="dcard res" id="cd"></div></div></div>`;
-  requestAnimationFrame(()=>setTimeout(()=>{ const n=TOT26.nac/(TOT26.nac+TOT26.mun)*100; $('#sn',root).style.width=n+'%'; $('#sn',root).textContent='Nación '+Math.round(n)+' %'; $('#sm',root).style.width=(100-n)+'%'; $('#sm',root).textContent='Municipio '+Math.round(100-n)+' %'; },300));
-  const dc=()=>{ const p=PROY26[sel]; $$('#tp tr[data-i]',root).forEach(r=>r.classList.toggle('sel',+r.dataset.i===sel)); $('#dc',root).innerHTML=`<b>${p.n}</b><br>${p.txt}`; };
-  $$('#tp tr[data-i]',root).forEach(r=>r.onclick=()=>{ sel=+r.dataset.i; dc(); }); dc();
-  function cart(){ const idx=[...on].sort(), v=idx.reduce((a,i)=>a+CARTERA[i].v,0), pc=v/meta*100, mx=Math.max(meta,v)*1.04;
-    $('#pb',root).innerHTML=idx.map(i=>`<i style="width:${CARTERA[i].v/mx*100}%;background:${COL[i]}">${CARTERA[i].v/mx>.16?fM(CARTERA[i].v):''}</i>`).join('');
-    $('#pm',root).style.left=(meta/mx*100)+'%';
-    $$('#ct button',root).forEach(b=>{ const s=on.has(+b.dataset.i); b.classList.toggle('on',s); $('em',b).textContent=s?'✓ Sumado':'+ Sumar'; });
-    $('#cd',root).innerHTML = '<em>3</em><div>'+(!on.size ? '<b>Resultado.</b> Suma un proyecto y verás cuánto de la meta cubre.' : pc>=100 ? `<b style="color:#2E8B5A">La cartera cubre la meta: ${Math.round(pc)} %.</b> Sobran ${fB(v-meta)}. El cuello de botella no es falta de proyectos, sino tener estudios y elegibilidad a tiempo.` : `<b>Cubre ${Math.round(pc)} % de la meta</b> (${fB(v)}). Faltan ${fB(meta-v)}.`)+'</div>'; }
-  $$('#ct button',root).forEach(b=>b.onclick=()=>{ const i=+b.dataset.i; on.has(i)?on.delete(i):on.add(i); b.classList.remove('pide'); cart(); });
-  $('#ta',root).onclick=()=>{ CARTERA.forEach((_,i)=>on.add(i)); cart(); }; $('#tl',root).onclick=()=>{ on.clear(); cart(); };
-  $('#ct button',root).classList.add('pide'); cart();
+  const $$$=n=>n?'$ '+fm(n):'', GR=['Infraestructura','Patiotalleres','Tecnología'];
+  const fase=p=>`<span class="fe" style="--c:${ESTADO[p.est].c}"><i></i>${p.f}</span>`;
+  const fila=p=>p.nota ? `<tr><td>${p.n}</td><td colspan="2" class="pj-n">${p.nota}</td><td>${fase(p)}</td></tr>`
+    : `<tr><td>${p.n}</td><td class="v">${$$$(p.nac)}</td><td class="v">${$$$(p.mun)}</td><td>${fase(p)}</td></tr>`;
+  root.innerHTML=`<div class="pj caja rv"><div class="pj-t"><b>Proyectos 2026</b><span>Alerta 5 · información de la Dirección de Planeación, 25 sep 2026</span></div>
+    <table><colgroup><col class="c1"><col class="c2"><col class="c3"><col class="c4"></colgroup><thead><tr><th>Componentes</th><th class="v">Nación</th><th class="v">Municipio</th><th>Fase actual</th></tr></thead><tbody>
+      ${GR.map(g=>`<tr class="g"><td colspan="4">${g}</td></tr>${PROY26.filter(p=>p.g===g).map(fila).join('')}`).join('')}
+      <tr class="tot"><td>Total 2026</td><td class="v">${$$$(TOT26.nac)}</td><td class="v">${$$$(TOT26.mun)}</td><td class="v">${$$$(TOT26.total)}</td></tr></tbody></table></div>`;
 };
 
 /* =====================================================================
    6 · Actos administrativos — el borrador se arma pieza por pieza
    ===================================================================== */
 VIS.actos = root => {
-  const P=ACTO_PARTES; let puestos=0;
+  const P=ACTO_PARTES;
   const ETAPAS=[['Borrador','Listo','hecho'],['Revisión','Estamos aquí','curso'],['Adopción','Siguiente','sig'],['Expedición','Después','sig']];
-  root.innerHTML=`<div class="acto" id="acto">
-    <div class="caja ac-e rv"><div class="pasos p4" id="ap" style="--p:0">${ETAPAS.map((e,i)=>`<div class="paso ${e[2]}"><span>${e[2]==='hecho'?'':i+1}</span>${e[0]}<em>${e[1]}</em></div>`).join('')}</div></div>
-    <div class="ac-c">
-      <div class="ac-l rv"><div class="hd">Piezas del borrador · arrástralas al documento o tócalas</div><div class="ac-pool" id="apool"></div><div class="act-h" id="ah"></div></div>
-      <div class="ac-d rv" id="adoc">
-        <div class="ad-h">${ico('i-doc')}<div><b>Acto administrativo</b><span>Adopción del componente operacional del SETP</span></div></div>
-        <div class="ad-i">Insumo: estudio de actualización del modelo operacional</div>
-        <div class="ad-sl">${P.map((p,i)=>`<div class="slot" data-i="${i}"><em>${i+1}</em><div><b>${p.s}</b><span>Pendiente de ubicar</span></div></div>`).join('')}</div>
-        <div class="ad-f"><div class="bar"><i id="apr"></i></div><b id="apt">0 de ${P.length} secciones</b></div>
-        <div class="ad-sello" id="asel">EN REVISIÓN</div></div></div></div>`;
-  const cont=$('#acto',root), pool=$('#apool',root), doc=$('#adoc',root);
-  const sobre=e=>document.elementsFromPoint(e.clientX,e.clientY).includes(doc);
-  const pon=(p,i,c)=>{ const sl=$(`.slot[data-i="${i}"]`,doc); sl.classList.add('lleno'); $('span',sl).textContent=p.t; c.remove(); puestos++;
-    $('#apr',root).style.width=puestos/P.length*100+'%'; $('#apt',root).textContent=`${puestos} de ${P.length} secciones`;
-    if(puestos===P.length){ doc.classList.add('listo'); $('#ah',root).textContent='Borrador armado: sigue la revisión y el trámite de adopción.'; } };
-  P.forEach((p,i)=>{ const c=document.createElement('div'); c.className='ac-pz'; c.innerHTML=`<em>${i+1}</em><span>${p.t}</span>`; pool.append(c); let off, mov=false;
-    arrastrar(c,{ inicio:e=>{ const r=c.getBoundingClientRect(), b=cont.getBoundingClientRect(); off=[e.clientX-r.left,e.clientY-r.top]; mov=false; c.style.width=r.width+'px'; c.classList.add('vuela'); c.style.left=(r.left-b.left)+'px'; c.style.top=(r.top-b.top)+'px'; },
-      mueve:e=>{ mov=true; const b=cont.getBoundingClientRect(); c.style.left=(e.clientX-b.left-off[0])+'px'; c.style.top=(e.clientY-b.top-off[1])+'px'; doc.classList.toggle('over',sobre(e)); },
-      fin:e=>{ doc.classList.remove('over'); c.classList.remove('vuela'); c.style.width=c.style.left=c.style.top=''; if(!mov||sobre(e)) pon(p,i,c); } }); });
-  /* la marca de «estamos aquí» avanza sola de Borrador a Revisión */
-  const t=setTimeout(()=>$('#ap',root).style.setProperty('--p',1),500); limpiar.push(()=>clearTimeout(t));
+  root.innerHTML=`<div class="acto">
+    <div class="caja ac-e rv"><div class="pasos p4" style="--p:1">${ETAPAS.map((e,i)=>`<div class="paso ${e[2]}"><span>${e[2]==='hecho'?'':i+1}</span>${e[0]}<em>${e[1]}</em></div>`).join('')}</div></div>
+    <div class="ac-d fijo rv">
+      <div class="ad-h">${ico('i-doc')}<div><b>Acto administrativo</b><span>Adopción del componente operacional del SETP</span></div></div>
+      <div class="ad-i">Insumo: estudio de actualización del modelo operacional</div>
+      <div class="ad-sl">${P.map((p,i)=>`<div class="slot lleno"><em>${i+1}</em><div><b>${p.s}</b><span>${p.t}</span></div></div>`).join('')}</div>
+      <div class="ad-sello">EN REVISIÓN</div></div></div>`;
 };
 
 /* =====================================================================
@@ -563,7 +473,7 @@ VIS.pma = root => {
       ${C.map((c,i)=>`<div class="cam" style="top:${11.7+i*2.1}rem"></div><div class="sob" id="sob${i}" style="left:12%;top:${10.25+i*2.1}rem;--c:${c.c}"><svg viewBox="0 0 48 34"><use href="#i-env"/></svg></div>`).join('')}</div>
     <div class="pma-b">${C.map((c,i)=>`<div class="pcard rv" style="--c:${c.c}" id="pc${i}"><div class="pc-h">${ico(c.ic)}<b>${c.n}</b><i class="pc-s" id="ps${i}"></i></div><p>${c.t}</p>
         <div class="pc-e"><div class="pc-d" id="pd${i}">${E.map(()=>'<u></u>').join('')}</div><span id="pe${i}"></span></div><button class="btn" id="pb${i}"></button></div>`).join('')}</div>
-    <div class="pma-r rv"><div class="k-num" id="pt">0 de ${C.length}</div><span>remitidos al Ente Gestor</span><div class="msg" id="msg">Cierre contractual y liquidación: en espera del soporte completo</div><button class="btn borde" id="pre" style="display:none">Reiniciar</button></div></div>`;
+    <div class="pma-r rv"><div class="msg" id="msg">Cierre contractual y liquidación: en espera del soporte completo</div><button class="btn borde" id="pre" style="display:none">Reiniciar</button></div></div>`;
   const ACC=['','Radicar informes y soportes','Completar la verificación','Remitir al Ente Gestor'];
   function pinta(i){
     const e=est[i], ob=C[i].obs&&!atendida[i];
@@ -572,7 +482,7 @@ VIS.pma = root => {
     const s=$('#ps'+i,root); s.textContent = e>=4?'Remitido':ob?'Con observaciones':e>=2?'En revisión':'En preparación'; s.className='pc-s '+(e>=4?'ok':ob?'ob':e>=2?'rv':'pr');
     const b=$('#pb'+i,root); b.disabled=e>=4; b.textContent = e>=4?'✓ Remitido':ob?'Atender observaciones':ACC[e]; b.classList.toggle('borde',ob);
     const sob=$('#sob'+i,root); sob.style.left=(e>=4?X[2]:e>=2?X[1]:X[0])+'%';
-    const k=est.filter(x=>x>=4).length; $('#pt',root).textContent=`${k} de ${C.length}`;
+    const k=est.filter(x=>x>=4).length;
     const ok=k===C.length; $('#msg',root).textContent = ok?'Soportes completos: se habilita el cierre contractual y la liquidación':'Cierre contractual y liquidación: en espera del soporte completo'; $('#msg',root).classList.toggle('ok',ok); $('#pre',root).style.display=ok?'':'none';
   }
   C.forEach((c,i)=>{ $('#pb'+i,root).onclick=()=>{ if(C[i].obs&&!atendida[i]) atendida[i]=true; else if(est[i]<4) est[i]++; pinta(i); }; pinta(i); });
@@ -582,7 +492,7 @@ VIS.pma = root => {
 /* =====================================================================
    Gantt reutilizable (alertas 8 y 9)
    ===================================================================== */
-function gantt(host, rows, {fecha=CORTE_ACT.fecha, onSel}={}){
+function gantt(host, rows, {fecha=CORTE_ACT.fecha, onSel, sinRezago=false}={}){
   const ANIOS=[2023,2024,2025,2026,2027,2028]; let hoy=idxFecha(fecha), sel=null;
   host.innerHTML=`<div class="gt"><div class="gt-h"><div></div><div class="gt-hy">${ANIOS.map(a=>`<div class="y">${a}</div>`).join('')}</div></div>
     ${rows.map((r,i)=>`<div class="gt-r${i>0&&rows[i-1].g!==r.g?' gsep':''}" data-i="${i}"><div class="lb" title="${r.n}">${r.n}</div><div class="gt-t"></div></div>`).join('')}
@@ -595,7 +505,7 @@ function gantt(host, rows, {fecha=CORTE_ACT.fecha, onSel}={}){
       else { const dn=Math.max(0,Math.min(hoy,fin)-r.a);
         if(dn>0) h+=`<div class="bd" style="left:${p(r.a)};width:${p(dn)};background:${col}"></div>`;
         if(hoy<fin) h+=`<div class="bd ft" style="left:${p(Math.max(hoy,r.a))};width:${p(fin-Math.max(hoy,r.a))};background-color:${col}"></div>`;
-        if(!cerrado&&hoy>fin){ h+=`<div class="bd lt" style="left:${p(fin)};width:${p(hoy-fin)}"></div><span class="tg" style="left:${p(hoy)}">+${Math.round(hoy-fin)} m</span>`; late.push([r,hoy-fin]); } }
+        if(!cerrado&&!sinRezago&&hoy>fin){ h+=`<div class="bd lt" style="left:${p(fin)};width:${p(hoy-fin)}"></div><span class="tg" style="left:${p(hoy)}">+${Math.round(hoy-fin)} m</span>`; late.push([r,hoy-fin]); } }
       t.innerHTML=h; });
     play.style.setProperty('--f',clamp(hoy/72,0,1));
     const mi=Math.floor(hoy), dim=new Date(2023,mi+1,0).getDate(), d=new Date(2023,mi,1+Math.min(dim-1,Math.floor((hoy-mi)*dim+1e-6)));
@@ -737,5 +647,5 @@ VIS.tecno = root => {
   $('#si',root).onclick=()=>{ $('#si',root).style.display='none'; ['sem','rec','flo','usu','cc','fet'].forEach((id,i)=>tms.push(setTimeout(()=>{ N[id].ok=true; pinta(); pos();
     if(i===5){ $('#tx',root).innerHTML='<b style="color:#3AA56D">Paquete integrado</b>: recaudo, control de flota, información, control, semáforos y FET.'; $('#re',root).style.display=''; } },i*700))); };
   $('#re',root).onclick=()=>{ tms.forEach(clearTimeout); ND.forEach(n=>N[n.id].ok=false); pinta(); pos(); $('#re',root).style.display='none'; $('#si',root).style.display=''; $("#tx",root).textContent="Azul: en estructuración · Ámbar: en ejecución · Verde: integrado"; };
-  gantt($('#gh',root),GANTT.filter(g=>g.g==='Tecnología'),{fecha:CORTE_ACT.fecha});
+  gantt($('#gh',root),GANTT.filter(g=>g.g==='Tecnología'),{fecha:CORTE_ACT.fecha,sinRezago:true});
 };
