@@ -301,7 +301,7 @@ VIS.fet = root => {
   /* demostración inicial: el aporte sube solo hasta cubrir el fondo y vuelve a cero */
   demo=setTimeout(()=>{ $('.tank',root).classList.add('demo'); lleva(paraCubrir(),2600,()=>{ demo=setTimeout(()=>lleva(0,1400,()=>$('.tank',root).classList.remove('demo')),1300); }); },1500);
   /* ruta de estructuración: dónde estamos hoy */
-  const pasos=[['Modelo operacional','Estudio de actualización del modelo operacional (SAIK & IKON): base de los escenarios de operación.','hecho'],
+  const pasos=[['Modelo operacional','Estudio de actualización del modelo operacional (SAIP & IKON): base de los escenarios de operación.','hecho'],
     ['Resultados del modelo financiero','El SETP ya cuenta con los resultados del modelo financiero del sistema.','hecho'],
     ['Calibración de escenarios','Se calibran los escenarios de entrada en operación: ingresos, costos y necesidades de financiación proyectadas.','curso'],
     ['Fuentes de recursos','En paralelo, se analizan las posibles fuentes de recursos para financiar el fondo.','curso'],

@@ -38,7 +38,7 @@ const ALERTAS = [
     per:'2025-IV', comp:'Financiero', cat:'critica', act:true, corte:'25 sep 2026',
     frase:'El fondo *aún no se constituye*, pero el modelo financiero *ya tiene resultados* y se calibra.',
     hechos:['Resultados del modelo financiero del SETP disponibles.',
-            'Calibración de escenarios con el estudio de SAIK & IKON.',
+            'Calibración de escenarios con el estudio de SAIP & IKON.',
             'Análisis de fuentes de recursos para financiar el fondo.'],
     cifras:[{ t:'Con resultados', l:'modelo financiero del SETP' }, { n:2, l:'frentes en paralelo: calibrar escenarios y analizar fuentes de recursos' }],
     postura:'Primero las cifras, después el fondo: ingresos, costos y necesidades de financiación por escenario, y luego el esquema de financiación.',
