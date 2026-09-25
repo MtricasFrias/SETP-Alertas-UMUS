@@ -12,8 +12,20 @@
 
   /* ===== Lienzo 1920×1080 = 120×67,5 rem. Regla de lectura a distancia: nada de texto por debajo de 1,5 rem (24 px). ===== */
   :root{
-    --paper:#EAF2FD; --card:#F8FBFF; --ink:#1F3C78; --tx:#3A5488; --mut:#66799F; --rule:#D4E1F2; --navy:#3866B5; --navy2:#4D7FCB;
-    --rojo:#E5626A; --ambar:#F6BD4B; --verde:#3AA56D; --azul:#5B91E3; --sol:#FFD25E;
+    /* PALETA · una sola escala para todo el mazo (los estados de los proyectos viven en datos.js › ESTADO)
+       Marca: azul institucional, de oscuro a claro */
+    --ink:#1F3C78;    /* títulos y cifras */
+    --tx:#3A5488;     /* texto corrido */
+    --mut:#66799F;    /* texto de apoyo, ejes y notas */
+    --navy:#3866B5;   /* acciones y bloques de énfasis */
+    --navy2:#4D7FCB;  /* hover y segundo énfasis */
+    --azul:#5B91E3;   /* datos: barras, íconos y «en estructuración» */
+    /* Superficies */
+    --paper:#EAF2FD; --card:#F8FBFF; --rule:#D4E1F2;
+    /* Semáforo: severidad de la alerta y señal de avance; «-t» es la versión oscura para texto sobre fondo claro */
+    --rojo:#E5626A; --rojo-t:#B94750; --ambar:#F6BD4B; --ambar-t:#94681A; --verde:#3AA56D; --verde-t:#2E8B5A;
+    /* Resalte */
+    --sol:#FFD25E;
     --fd:'Montserrat',system-ui,'Segoe UI',sans-serif; --ft:'Source Sans 3',system-ui,'Segoe UI',sans-serif;
   }
   *{ box-sizing:border-box; margin:0; padding:0 }
@@ -30,8 +42,8 @@
   @keyframes ambiente{ from{ transform:translate(-3%,-2%) scale(1) } to{ transform:translate(3%,3%) scale(1.08) } }
   #stage.oscuro:before{ display:none }
   #banda{ position:absolute; left:0; right:0; bottom:0; height:.55rem; display:flex; z-index:30 }
-  #banda i{ flex:1 } #banda i:nth-child(1){ background:#3866B5 } #banda i:nth-child(2){ background:#EE7A80 }
-  #banda i:nth-child(3){ background:#5CCB8E } #banda i:nth-child(4){ background:#FFD25E }
+  #banda i{ flex:1 } #banda i:nth-child(1){ background:var(--navy) } #banda i:nth-child(2){ background:#EE7A80 }
+  #banda i:nth-child(3){ background:#5CCB8E } #banda i:nth-child(4){ background:var(--sol) }
 
   /* ---------- barra superior ---------- */
   #top{ position:absolute; left:var(--sp,0rem); right:0; top:0; height:6.4rem; display:flex; align-items:center; gap:2rem; padding:0 3.2rem; z-index:10; transition:left .45s ease }
@@ -123,7 +135,7 @@
   #nav .ln:before{ content:""; position:absolute; left:0; right:0; top:calc(50% + 1rem); height:.32rem; background:var(--ink); border-radius:1rem }
   #nav .ln:after{ content:""; position:absolute; left:0; top:calc(50% + 1rem); height:.32rem; width:var(--p,0%); background:var(--sol); border-radius:1rem; transition:width .8s cubic-bezier(.5,0,.2,1) }
   #nav .sts{ position:absolute; left:0; right:0; top:calc(50% + 1rem); display:flex; justify-content:space-between }
-  #nav .st{ position:relative; z-index:1; width:3.6rem; height:3.6rem; margin-top:-1.7rem; border-radius:50%; background:var(--paper); box-shadow:inset 0 0 0 .3rem var(--c,#1F3C78); font:800 1.6rem var(--fd); color:var(--ink); display:flex; align-items:center; justify-content:center; transition:transform .25s cubic-bezier(.3,1.5,.5,1), background .25s }
+  #nav .st{ position:relative; z-index:1; width:3.6rem; height:3.6rem; margin-top:-1.7rem; border-radius:50%; background:var(--paper); box-shadow:inset 0 0 0 .3rem var(--c,var(--ink)); font:800 1.6rem var(--fd); color:var(--ink); display:flex; align-items:center; justify-content:center; transition:transform .25s cubic-bezier(.3,1.5,.5,1), background .25s }
   #nav .st:hover{ transform:scale(1.15) }
   #nav .st.act{ background:var(--c); color:var(--cx,#fff); transform:scale(1.28) }
   #nav .st svg{ width:1.9rem; height:1.9rem }

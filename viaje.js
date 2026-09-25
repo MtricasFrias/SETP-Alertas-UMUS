@@ -44,7 +44,7 @@ estilo(`
 .vj .vr{ animation:tlR 8s infinite } .vj .vy{ animation:tlY 8s infinite } .vj .vg{ animation:tlG 8s infinite }
 @keyframes tlR{ 0%,40%{ opacity:1 } 44%,100%{ opacity:.18 } } @keyframes tlG{ 0%,44%{ opacity:.18 } 48%,86%{ opacity:1 } 90%,100%{ opacity:.18 } } @keyframes tlY{ 0%,86%{ opacity:.18 } 88%,97%{ opacity:1 } 99%,100%{ opacity:.18 } }
 .vj .vj-pet{ animation:petA 5s ease-in infinite; animation-delay:var(--d,0s); opacity:0 } @keyframes petA{ 0%{ transform:translate(0,0) rotate(0); opacity:0 } 15%{ opacity:.9 } 100%{ transform:translate(var(--dx,12px),58px) rotate(220deg); opacity:0 } }
-.vj .sg{ fill:none; stroke:#5B91E3; stroke-width:5; stroke-linecap:round; opacity:0; animation:sgA 2.2s ease-out infinite; animation-delay:var(--d,0s) } @keyframes sgA{ 0%{ opacity:0 } 30%{ opacity:1 } 100%{ opacity:0 } }
+.vj .sg{ fill:none; stroke:var(--azul); stroke-width:5; stroke-linecap:round; opacity:0; animation:sgA 2.2s ease-out infinite; animation-delay:var(--d,0s) } @keyframes sgA{ 0%{ opacity:0 } 30%{ opacity:1 } 100%{ opacity:0 } }
 .vj .vj-dot{ animation:dotA 1.4s infinite; animation-delay:var(--d,0s) } @keyframes dotA{ 0%,100%{ opacity:.25 } 50%{ opacity:1 } }
 .vj .blk{ animation:blkA 1.2s steps(1) infinite } @keyframes blkA{ 50%{ opacity:.15 } }
 
@@ -55,7 +55,7 @@ estilo(`
 
 /* texto sobre el cielo */
 .vj .cv{ position:absolute; left:6rem; top:8.6rem; width:76rem; z-index:4 }
-.vj .cv .kick{ font:800 1.5rem var(--fd); letter-spacing:.13em; text-transform:uppercase; color:#94681A; white-space:nowrap }
+.vj .cv .kick{ font:800 1.5rem var(--fd); letter-spacing:.13em; text-transform:uppercase; color:var(--ambar-t); white-space:nowrap }
 .vj .cv .kick b{ color:var(--ink) }
 .vj .cv h1{ font:900 4.5rem/1.02 var(--fd); color:var(--ink); letter-spacing:-.03em; margin:.6rem 0 .6rem }
 .vj .cv h1 mark{ background:linear-gradient(transparent 62%,var(--sol) 62% 92%,transparent 92%) no-repeat; background-size:100% 100%; color:inherit; padding:0 .15em; animation:marca 1s .6s both cubic-bezier(.2,.8,.2,1) }
@@ -89,7 +89,7 @@ estilo(`
 .trv.on{ opacity:1; pointer-events:auto }
 .trv-c{ position:relative; width:74rem; background:var(--card); border-radius:2rem; padding:3rem 3.6rem; box-shadow:0 2.4rem 6rem rgba(31,60,120,.35); transform:translateY(2rem) scale(.96); transition:transform .45s cubic-bezier(.34,1.5,.5,1) }
 .trv.on .trv-c{ transform:none }
-.trv-k{ font:800 1.55rem var(--fd); letter-spacing:.12em; text-transform:uppercase; color:#94681A; display:flex; justify-content:space-between; padding-right:4rem }
+.trv-k{ font:800 1.55rem var(--fd); letter-spacing:.12em; text-transform:uppercase; color:var(--ambar-t); display:flex; justify-content:space-between; padding-right:4rem }
 .trv-q{ font:800 3.1rem/1.15 var(--fd); color:var(--ink); margin:1rem 0 2rem; letter-spacing:-.02em }
 .trv-o{ display:flex; flex-direction:column; gap:1rem }
 .trv-o button{ text-align:left; font:700 2.3rem var(--fd); color:var(--ink); padding:1.2rem 2rem; border-radius:1.2rem; background:var(--paper); box-shadow:inset 0 0 0 .22rem #C5D5EC; transition:transform .15s, background .2s }
@@ -280,12 +280,12 @@ const leyendaCat = () => ['critica','moderada','leve'].map(k=>{ const n=ALERTAS.
 /* ---------- trivia: «¿Sabías que…?» ---------- */
 const TRIVIA = [
   { n:3, q:'¿Cuántas intersecciones de la Fase I ya están en servicio y seguimiento?', o:['22','30','34'], c:1, x:'30 de 34 al corte del 20 de septiembre. El plazo del contrato vence el 29.' },
-  { n:5, q:'¿Qué parte de sus aportes ha desembolsado el Municipio?', o:['43,6 %','80 %','100 %'], c:2, x:'El 100 %: $80,8 mil M entre 2021 y 2026.' },
+  { n:5, q:'¿Qué parte de sus aportes ha desembolsado el Municipio?', o:['56 %','80 %','100 %'], c:2, x:'El 100 %: $80,8 mil M entre 2021 y 2026.' },
   { n:4, q:'¿Cuántos viajes por día proyecta la propuesta del tranvía?', o:['32.106','321.065','3.210.650'], c:1, x:'321.065 viajes por día. Aun así, el CONPES 4017 no permite el tranvía.' },
   { n:9, q:'¿Cuántos sistemas forman el paquete tecnológico del SETP?', o:['2','3','5'], c:1, x:'Tres: gestión y control de flota, información al usuario y recaudo.' },
   { n:7, q:'¿Qué componentes del PMA están en revisión?', o:['Solo el ambiental','Ambiental, social y SST','Ninguno todavía'], c:1, x:'Ambiental, social y SST. El social concentra las observaciones.' },
   { n:1, q:'¿En qué estado está el modelo financiero del SETP?', o:['Sin iniciar','Con resultados','Suspendido'], c:1, x:'Ya tiene resultados y se calibra para dimensionar el FET.' },
-  { n:8, q:'¿Qué corredor tiene sus diseños radicados en la UMUS desde el 10 de junio?', o:['Av. Ferrocarril','Av. Ambalá','Carrera 5'], c:0, x:'Av. Ferrocarril: consultoría radicada el 10 de junio de 2026.' },
+  { n:8, q:'¿Qué obtuvieron el 22 de septiembre Ferrocarril, la ciclorruta y los paraderos Tipo I y II?', o:['Elegibilidad de la UMUS','Contrato de obra','Acta de inicio'], c:0, x:'Elegibilidad. Paraderos pasa a Junta Directiva para iniciar la etapa precontractual.' },
   { n:6, q:'¿En qué etapa está el acto del componente operacional?', o:['Ya expedido','Borrador en revisión','Sin iniciar'], c:1, x:'Tiene borrador y está en revisión; sigue el trámite de adopción.' },
   { n:2, q:'¿Qué norma fija los requisitos que se pidieron a los transportadores?', o:['Decreto 1079','CONPES 4017','Ley 336'], c:0, x:'El Decreto 1079: se pidió a las empresas información sobre su cumplimiento.' }
 ];
@@ -317,12 +317,12 @@ function tono(f){ try{ AUDIO=AUDIO||new (window.AudioContext||window.webkitAudio
 
 /* ---- ajustes: ilustración como marca de agua, CTA de la trivia ---- */
 estilo(`
-.vj #vjBg{ filter:saturate(.42) blur(.7px); opacity:.78 }
-.vj .pa .lm, .vj .pa .pad{ filter:saturate(.55); opacity:.8; transition:transform .35s cubic-bezier(.34,1.6,.5,1), opacity .3s, filter .3s }
+.vj #vjBg{ filter:saturate(.3) blur(2.2px); opacity:.56 }
+.vj .pa .lm, .vj .pa .pad{ filter:saturate(.36) blur(1.1px); opacity:.6; transition:transform .35s cubic-bezier(.34,1.6,.5,1), opacity .3s, filter .3s }
 .vj .pa:hover .lm, .vj .pa.on .lm{ filter:none; opacity:1 }
 .vj:before{ background:radial-gradient(circle at 88% 13%,rgba(255,236,180,.7) 0,rgba(255,236,180,0) 24rem),radial-gradient(circle at 10% 34%,rgba(255,255,255,.75) 0,rgba(255,255,255,0) 32rem) }
 .vj .cbar .btn.cta{ position:relative; background:linear-gradient(180deg,#FFDD7A,#FFC83D); color:var(--ink); font-size:2.05rem; padding:1.25rem 3rem; box-shadow:0 .5rem 1.6rem rgba(255,196,61,.6), inset 0 0 0 .25rem rgba(255,255,255,.55); animation:ctaPulso 2.2s ease-in-out infinite }
-.vj .cbar .btn.cta:hover{ background:linear-gradient(180deg,#FFE594,#FFD25E) }
+.vj .cbar .btn.cta:hover{ background:linear-gradient(180deg,#FFE594,var(--sol)) }
 @keyframes ctaPulso{ 0%,100%{ transform:scale(1); box-shadow:0 .5rem 1.6rem rgba(255,196,61,.55), 0 0 0 0 rgba(255,210,94,.7) } 50%{ transform:scale(1.045); box-shadow:0 .7rem 2rem rgba(255,196,61,.7), 0 0 0 1.4rem rgba(255,210,94,0) } }
 .vj .cta-tip{ position:absolute; bottom:8.2rem; font:800 1.6rem var(--fd); color:var(--ink); background:#fff; padding:.6rem 1.4rem; border-radius:1.4rem; box-shadow:0 .6rem 1.6rem rgba(31,60,120,.22); z-index:8; animation:tipFlota 2.2s ease-in-out infinite; pointer-events:none; white-space:nowrap }
 .vj .cta-tip:after{ content:""; position:absolute; left:50%; bottom:-.7rem; width:1.4rem; height:1.4rem; background:#fff; transform:translateX(-50%) rotate(45deg) }

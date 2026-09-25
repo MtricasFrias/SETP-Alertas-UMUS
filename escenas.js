@@ -90,9 +90,9 @@ estilo(`
 .hito b{ display:flex; align-items:center; gap:.6rem; font:700 1.5rem var(--fd); color:var(--c); margin-bottom:.15rem }
 .hito em{ display:block; font:700 1.5rem var(--fd); font-style:normal; margin-top:.15rem; color:var(--mut) }
 .hito span{ font-size:1.55rem; line-height:1.15; color:var(--ink); font-weight:600 }
-.hito.vence{ background:#FBE6E4; border-left-color:var(--rojo) } .hito.vence em{ color:#B94750 }
-.hito.pc{ background:#FBF0D2 } .hito.pc em{ color:#94681A }
-.hito.ok em{ color:#2E8B5A } .hito.dim{ opacity:.25 }
+.hito.vence{ background:#FBE6E4; border-left-color:var(--rojo) } .hito.vence em{ color:var(--rojo-t) }
+.hito.pc{ background:#FBF0D2 } .hito.pc em{ color:var(--ambar-t) }
+.hito.ok em{ color:var(--verde-t) } .hito.dim{ opacity:.25 }
 .rt-f{ position:absolute; left:3.4rem; right:3.4rem; bottom:.8rem; height:15.6rem; display:grid; grid-template-columns:44rem minmax(0,1fr); gap:3rem }
 .rt-f .caja{ background:var(--card); padding:1.3rem 1.8rem }
 .rt-f h4{ font:700 1.5rem var(--fd); color:var(--mut); margin-bottom:.5rem }

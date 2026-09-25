@@ -83,9 +83,9 @@ estilo(`
 .tc-c{ background:var(--card); padding:1.3rem 2rem 1.4rem; display:flex; flex-direction:column; gap:.7rem; border-radius:1.2rem }
 .tc-c h4{ font:800 1.9rem var(--fd); color:var(--ink) } .tc-c h4 small{ display:block; font:600 1.55rem var(--ft); color:var(--mut); margin-top:.2rem }
 .tc-o{ display:flex; align-items:center; gap:1.1rem; text-align:left; padding:.55rem 1.1rem; background:var(--paper); border-radius:1rem; font:700 1.7rem/1.12 var(--fd); color:var(--ink); transition:.25s; cursor:pointer } .tc-o:hover{ background:#DCE8F9 }
-.tc-o .ck{ flex:none; width:3rem; height:3rem; border-radius:.8rem; background:#fff; box-shadow:inset 0 0 0 .3rem #E5626A; position:relative; transition:.25s }
+.tc-o .ck{ flex:none; width:3rem; height:3rem; border-radius:.8rem; background:#fff; box-shadow:inset 0 0 0 .3rem var(--rojo); position:relative; transition:.25s }
 .tc-o.on .ck{ background:var(--verde); box-shadow:none } .tc-o.on .ck:before{ content:""; position:absolute; left:.9rem; top:.4rem; width:1rem; height:1.7rem; border-right:.4rem solid #fff; border-bottom:.4rem solid #fff; transform:rotate(45deg) }
-.tc-k{ font:800 2rem var(--fd); color:#B94750; text-align:right } .tc-k.ok{ color:#2E8B5A } .tc-rs{ position:absolute; right:2rem; bottom:1.6rem; z-index:6 }
+.tc-k{ font:800 2rem var(--fd); color:var(--rojo-t); text-align:right } .tc-k.ok{ color:var(--verde-t) } .tc-rs{ position:absolute; right:2rem; bottom:1.6rem; z-index:6 }
 .tc-p{ grid-column:1/3; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1.6rem }
 .tc-cm{ display:flex; align-items:center; gap:1.3rem; background:var(--card); border-radius:1rem; padding:.7rem 1.4rem; font:600 1.65rem/1.15 var(--ft); color:var(--ink) } .tc-cm em{ flex:none; width:3.2rem; height:3.2rem; border-radius:50%; background:var(--navy); color:#fff; font:800 1.7rem var(--fd); font-style:normal; display:grid; place-items:center }
 .tc-cm .pill{ margin-left:auto; flex:none }

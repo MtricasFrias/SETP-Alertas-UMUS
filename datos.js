@@ -4,8 +4,8 @@
    Único archivo a editar para actualizar el contenido.
    Fuentes: "SEGUIMIENTO GENERAL ALERTAS UMUS 26-06-2026" (corte 26 jun),
    tabla oficial de 9 alertas, y "RESPUESTAS ALERTAS UMUS DIR. OPERATIVA"
-   (25 sep 2026: alertas 1, 2, 3, 6, 7 y 9) + oficio del 24 sep (alerta 4).
-   Alertas 5 y 8 siguen con la información del corte 26 jun.
+   (25 sep 2026: alertas 1, 2, 3, 6, 7 y 9) + oficio del 24 sep (alerta 4) +
+   "Alertas Planeacion" de la Dirección de Planeación (25 sep 2026: alertas 5 y 8).
 
    ACTUALIZAR al cambiar el corte:
      · CORTE_ACT                 fecha de la última actualización
@@ -15,7 +15,7 @@
      · GANTT[].est               estado de cada frente (ver ESTADO)
    ===================================================================== */
 
-const CORTE     = { txt:'26 jun 2026', fecha:new Date(2026,5,26) };   // corte base (alertas 5 y 8 aún sin actualizar)
+const CORTE     = { txt:'26 jun 2026', fecha:new Date(2026,5,26) };   // corte base: la primera presentación de alertas
 const CORTE_ACT = { txt:'25 sep 2026', fecha:new Date(2026,8,25) };   // última actualización
 const MOSTRAR_CAMBIOS = true;                                        // escena «Qué cambió desde el corte anterior»
 
@@ -86,15 +86,15 @@ const ALERTAS = [
             { vis:'appC', icono:'tap', pregunta:'Toca cada condición: enciende una luz. Con las 4, el tranvía avanza.' }] },
 
   { n:5, id:'desembolsos', corto:'Desembolsos', titulo:'Desembolsos frente al POAI', t:'Desembolsos Nación y Municipio no solicitados frente a POAI',
-    per:'2026-I', comp:'Financiero', cat:'leve', act:true, corte:'17 jul 2026',
+    per:'2026-I', comp:'Financiero', cat:'leve', act:true, corte:'25 sep 2026',
     frase:'El Municipio cumplió *el 100 % de sus aportes*. Lo que falta es velocidad de contratación.',
-    hechos:['Aportes 2021–2026: $80,8 mil M desembolsados.',
-            'Convenio Nación 2024–2026: $190,6 mil M; $83,0 mil M por reprogramar.',
-            'En 2026, seis frentes suman $53,9 mil M; cinco ya están radicados.'],
-    cifras:[{ n:100, suf:' %', l:'de los aportes del Municipio, desembolsados' }, { n:43.6, dec:1, suf:' %', l:'del convenio de la Nación, por reprogramar' }],
+    hechos:['Aportes 2021–2026: $80,8 mil M desembolsados; el de 2026, el 30 de abril.',
+            'Convenio Nación 2024–2026: $190,6 mil M; $74,2 mil M por reprogramar.',
+            'Ferrocarril, ciclorruta y Paraderos I y II ya tienen elegibilidad (22 sep); patiotalleres subsana las recomendaciones de la UMUS.'],
+    cifras:[{ n:100, suf:' %', l:'de los aportes del Municipio, desembolsados' }, { n:38.9, dec:1, suf:' %', l:'del convenio de la Nación, por reprogramar' }],
     postura:'Cada peso tiene proyecto y fase. Lo que no alcance a contratarse en la vigencia se reprograma con calendario.',
-    antes:'Cinco de los seis frentes de 2026 en estructuración; solo Ferrocarril estaba radicado.',
-    ahora:'Radicados en la UMUS: Ferrocarril (10 jun), ciclorruta (3 jul), Paraderos Tipo I y II (10 jul) y predios de patiotalleres (17 jul). Los desembolsos siguen con el corte del 26 jun.',
+    antes:'Nación 2026: $23,7 mil M adjudicados y $37,8 mil M por reprogramar. Cuatro frentes radicados en la UMUS, sin elegibilidad.',
+    ahora:'Nación 2026: $32,5 mil M adjudicados y $29,0 mil M por reprogramar. Elegibilidad el 22 sep para Ferrocarril, ciclorruta y Paraderos Tipo I y II; los predios de patiotalleres subsanan las recomendaciones de la UMUS.',
     vistas:[{ vis:'desA', icono:'tap', pregunta:'Cifras en miles de millones de pesos ($ mil M). Toca una barra para ver el valor exacto en pesos.' },
             { vis:'desB', icono:'tap', pregunta:'A: mira los frentes de 2026. B: toca los proyectos y comprueba si alcanzan lo que falta financiar.' }] },
 
@@ -123,15 +123,15 @@ const ALERTAS = [
     vistas:[{ vis:'pma', icono:'tap', pregunta:'Avanza cada componente por la ruta: contratista, interventoría y Ente Gestor.' }] },
 
   { n:8, id:'obras', corto:'Obras', titulo:'Obras frente al cronograma CONPES', t:'Retrasos en ejecución de obras de acuerdo con el cronograma CONPES',
-    per:'2026-I', comp:'Cronograma', cat:'critica', act:true, corte:'17 jul 2026',
-    frase:'Ferrocarril, Ambalá y ciclorruta tienen ruta y fecha. El rezago real está en *paraderos, patiotalleres y Jordán Paralela*.',
-    hechos:['Ferrocarril: consultoría radicada el 10 de junio.',
+    per:'2026-I', comp:'Cronograma', cat:'critica', act:true, corte:'25 sep 2026',
+    frase:'Ferrocarril, ciclorruta y Paraderos I y II ya tienen *elegibilidad*. El rezago real está en *patiotalleres, paraderos y Jordán Paralela*.',
+    hechos:['Elegibilidad el 22 de septiembre: Ferrocarril, ciclorruta y Paraderos Tipo I y II.',
             'Ambalá en ejecución; Carrera 5, Fases I y II, ejecutada.',
-            'Ciclorruta, Paraderos y patiotalleres radicados en julio.'],
-    cifras:[{ t:'+6 meses', l:'de rezago en Paraderos Tipo 1 y 2 al corte' }, { t:'5 vs 4', l:'patiotalleres requeridos frente a predios georreferenciados' }],
-    postura:'Cada rezago tiene una decisión con fecha: redistribuir Jordán Paralela, obtener la elegibilidad de lo radicado y definir el modelo de patiotalleres.',
-    antes:'Ciclorruta Cra 5 y Paraderos Tipo 1 y 2 por radicar (previstos el 30 jun y el 7 jul).',
-    ahora:'Radicados en la UMUS: ciclorruta Cra 5 (3 jul), Paraderos Tipo I y II (10 jul) y patiotalleres (17 jul).',
+            'Patiotalleres: el SETP subsana las recomendaciones de la UMUS.'],
+    cifras:[{ t:'+9 meses', l:'de rezago en Paraderos Tipo 1 y 2 frente al plan' }, { t:'22 sep', l:'elegibilidad de Ferrocarril, ciclorruta y Paraderos I y II' }],
+    postura:'Cada rezago tiene una decisión pendiente: Junta Directiva, oficio de elegibilidad, patiotalleres y Jordán Paralela.',
+    antes:'Ferrocarril, ciclorruta, Paraderos I y II y patiotalleres radicados en la UMUS (junio y julio), a la espera de la elegibilidad.',
+    ahora:'Elegibilidad el 22 de septiembre para Ferrocarril, ciclorruta y Paraderos Tipo I y II. Paraderos pasa a Junta Directiva para iniciar la etapa precontractual; los patiotalleres subsanan las recomendaciones de la UMUS.',
     vistas:[{ vis:'obraA', icono:'drag', pregunta:'Arrastra la línea «hoy» y toca una barra para ver el estado de cada frente.' },
             { vis:'obraB', icono:'tap',  pregunta:'Toca un proyecto o un símbolo de las convenciones.' }] },
 
@@ -167,16 +167,20 @@ const TRAZA = [
 /* ---------------------------------------------------------------------
    CRONOGRAMA CONPES (calendario real).  a/b = mes de inicio/fin, contados
    desde ene-2023 (0) hasta dic-2028 (71). Extraído de la figura oficial.
-   est: ejecutado | ejecucion | estructuracion | estudios | bloqueado | retirado | sindato
+   est: ver ESTADO (más abajo)
    ------------------------------------------------------------------- */
+/* Escala de estados del proyecto: única fuente de color para el Gantt, el mapa, las listas y las leyendas.
+   Va del origen a la obra terminada: azul (se estructura) › cian (con elegibilidad) › ámbar (en obra) › verde (terminado).
+   Naranja = trámite con observaciones por atender · rojo = detenido · gris = sin dato o sin alcance. */
 const ESTADO = {
-  ejecutado     :{ n:'Ejecutado',                c:'#3AA56D' },
-  ejecucion     :{ n:'En ejecución',             c:'#F6BD4B' },
-  estructuracion:{ n:'En estructuración',        c:'#5B91E3' },
-  estudios      :{ n:'Estudios radicados',       c:'#5B91E3' },
-  bloqueado     :{ n:'Sin recursos, en revisión', c:'#E5626A' },
-  retirado      :{ n:'Sin alcance', c:'#8A93AD' },
-  sindato       :{ n:'Sin estado en el corte', c:'#8A93AD' }
+  estructuracion:{ n:'En estructuración',          c:'#5B91E3' },
+  elegible      :{ n:'Con elegibilidad',           c:'#2FB3C4' },
+  subsana       :{ n:'Subsanando recomendaciones', c:'#EF7F45' },
+  ejecucion     :{ n:'En ejecución',               c:'#F6BD4B' },
+  ejecutado     :{ n:'Ejecutado',                  c:'#3AA56D' },
+  bloqueado     :{ n:'Sin recursos, en revisión',  c:'#E5626A' },
+  retirado      :{ n:'Sin alcance',                c:'#8A93AD' },
+  sindato       :{ n:'Sin estado en el corte',     c:'#8A93AD' }
 };
 
 const GANTT = [
@@ -184,16 +188,16 @@ const GANTT = [
   { g:'Infraestructura', n:'Avenida Jordán',          a:18, b:44, est:'sindato',        nota:'Sin estado reportado en el corte de la presentación.' },
   { g:'Infraestructura', n:'Av. Jordán Paralela',     a:18, b:44, est:'bloqueado',      nota:'Por el tope presupuestal del componente se priorizaron los demás corredores. En revisión la posibilidad de redistribución.' },
   { g:'Infraestructura', n:'Avenida Ambalá',          a:24, b:53, est:'ejecucion',      nota:'Contrato de Obra 042 de 2026 en ejecución.' },
-  { g:'Infraestructura', n:'Avenida Ferrocarril',     a:24, b:59, est:'estudios',       nota:'Consultoría (estudios y diseños Fase III) radicada en UMUS el 10 de junio de 2026 para concepto de elegibilidad.' },
-  { g:'Estaciones y paraderos', n:'Paraderos Tipo 1 y 2', a:21, b:35, est:'estudios', nota:'Etapa II (Tipo I, Tipo II y MUPI, $9.366,3 M) radicada en la UMUS el 10 de julio de 2026, modalidad llave en mano.' },
+  { g:'Infraestructura', n:'Avenida Ferrocarril',     a:24, b:59, est:'elegible', nota:'Consultoría (estudios y diseños Fase III) radicada en la UMUS el 10 de junio de 2026. El 22 de septiembre obtuvo la elegibilidad; el oficio se ajusta en uno de sus puntos.' },
+  { g:'Estaciones y paraderos', n:'Paraderos Tipo 1 y 2', a:21, b:35, est:'elegible', nota:'Etapa II (Tipo I, Tipo II y MUPI, $9.366,3 M), llave en mano. Con elegibilidad desde el 22 de septiembre de 2026; se cita a la Junta Directiva para aprobarla e iniciar la etapa precontractual.' },
   { g:'Estaciones y paraderos', n:'Paraderos Tipo 3',  a:9,  b:35, est:'ejecutado',      nota:'1.150 de 1.150 señales instaladas (Contrato 037 de 2025).' },
   { g:'Estaciones y paraderos', n:'Estaciones de integración', a:9, b:62, est:'retirado', nota:'Con la actualización del estudio de demanda operacional (septiembre 2025) no se contemplan estaciones de integración.' },
-  { g:'Patiotalleres y terminales', n:'Patiotalleres (Grupos 1 y 2)', a:10, b:71, est:'estudios', nota:'Adquisición de Predio 1 ($15.075 M) y Predio 2 ($15.061 M) radicada en la UMUS el 17 de julio de 2026; aún no se ha comprado ningún lote. El estudio de septiembre 2025 indica que se requerirían 5 patiotalleres.' },
+  { g:'Patiotalleres y terminales', n:'Patiotalleres (Grupos 1 y 2)', a:10, b:71, est:'subsana', nota:'Adquisición de tres predios ($10.000 M cada uno) radicada en la UMUS el 17 de julio de 2026. El SETP subsana las recomendaciones de la UMUS; aún no se ha comprado ningún lote. Grupo 1: lotes 2 y 8; Grupo 2: lotes 1, 3, 4, 5, 6, 7 y 9. El estudio de septiembre 2025 indica que se requerirían 5 patiotalleres.' },
   { g:'Infraestructura complementaria', n:'Intervención Centro', a:22, b:41, est:'ejecucion', nota:'Acciones institucionales articuladas; zonas azules como medida de regulación del espacio público en el centro.' },
-  { g:'Infraestructura complementaria', n:'Cicloinfraestructura', a:22, b:62, est:'estudios', nota:'Estudios y diseños Fase III de la Carrera 5 (Cl 10–44, 7.217 m, $29.098,3 M) radicados en la UMUS el 3 de julio de 2026.' },
+  { g:'Infraestructura complementaria', n:'Cicloinfraestructura', a:22, b:62, est:'elegible', nota:'Estudios y diseños Fase III de la Carrera 5 (Cl 10–44, 7.217 m, $29.098,3 M), radicados el 3 de julio de 2026. Con elegibilidad desde el 22 de septiembre; el oficio se ajusta en uno de sus puntos.' },
   { g:'Tecnología', n:'Recaudo y control de flota', a:4,  b:26, est:'estructuracion', nota:'Adquisición de equipos: proceso a estructurar en 2026; recursos a comprometer del 2027. Se precisan sus condiciones técnicas y su articulación con el modelo operacional.' },
   { g:'Tecnología', n:'Información al usuario',    a:4,  b:25, est:'estructuracion', nota:'En estructuración junto con control de flota y recaudo, articulada con el modelo operacional.' },
-  { g:'Tecnología', n:'Semaforización',            a:12, b:31, est:'ejecucion',      nota:'Fase I al 93,62 % real (corte 20 sep; plazo hasta el 29 sep). Fase II en estructuración ($12.515 M).' },
+  { g:'Tecnología', n:'Semaforización',            a:12, b:31, est:'ejecucion',      nota:'Fase I al 93,62 % real (corte 20 sep; plazo hasta el 29 sep). Fase II en estructuración (obra por $11.525 M).' },
   { g:'Tecnología', n:'Centro de control',         a:0,  b:19, est:'estructuracion', nota:'Previsto en el Lote 6 de Patiotalleres: compra en 2027 y construcción en el segundo semestre de 2027.' }
 ];
 
@@ -210,6 +214,7 @@ const HITOS = [
   { f:new Date(2026,6,10), a:[8,5],   est:'cumplido',     c:'Paraderos Tipo I y II radicados',           t:'Paraderos Tipo I y II (Etapa II, llave en mano) radicados en la UMUS (estaban previstos el 7 jul)', r:'SETP' },
   { f:new Date(2026,6,17), a:[8,5],     est:'cumplido',     c:'Patiotalleres radicados en UMUS',           t:'Adquisición predial de patiotalleres radicada en la UMUS', r:'SETP' },
   { f:new Date(2026,6,24), a:[1,2,6], est:'cumplido',     c:'Resultados del modelo financiero',            t:'Resultados del modelo financiero (FET · viabilidad · actos); ahora en calibración', r:'Consultoría' },
+  { f:new Date(2026,8,22), a:[8,5],   est:'cumplido',     c:'Elegibilidad de la UMUS',                   t:'Elegibilidad de la UMUS para Ferrocarril, ciclorruta Cra 5 y Paraderos Tipo I y II', r:'UMUS' },
   { f:new Date(2026,8,24), a:[4],     est:'cumplido',     c:'Oficio: mesa interinstitucional y factibilidad', t:'Oficio con la programación de la mesa interinstitucional y solicitud del informe de avance de la factibilidad', r:'SETP' },
   { f:new Date(2026,8,29), a:[3],     est:'programado',   c:'Termina el plazo de la Fase I',               t:'Terminación del plazo vigente del contrato de semaforización Fase I', r:'Contratista' },
   { f:new Date(2026,11,31),a:[9],     est:'programado',   c:'Estructurar recaudo y control de flota',      t:'Estructurar el proceso de Recaudo y Control de flota', r:'SETP' },
@@ -221,7 +226,10 @@ const SIN_FECHA = [
   { a:4, c:'Informe de avance de la factibilidad',      t:'La APP privada remite el informe de avance de la etapa de factibilidad (solicitado el 24 sep)', r:'APP privada' },
   { a:6, c:'Adopción del acto administrativo',          t:'Fecha de adopción del acto del componente operacional (borrador en revisión)', r:'SETP' },
   { a:7, c:'Informes mensuales del PMA',                t:'Radicación formal de los informes mensuales pendientes y atención de observaciones', r:'Contratista' },
-  { a:8, c:'Elegibilidad de lo radicado',        t:'Concepto de elegibilidad de la UMUS sobre Ferrocarril, ciclorruta, paraderos y patiotalleres', r:'UMUS' },
+  { a:8, c:'Junta Directiva: Paraderos I y II',    t:'Citación a Junta Directiva para aprobar Paraderos Tipo I y II e iniciar la etapa precontractual', r:'SETP' },
+  { a:8, c:'Oficio de elegibilidad ajustado',      t:'Modificar un punto del oficio de elegibilidad de Ferrocarril y ciclorruta',                      r:'UMUS · SETP' },
+  { a:8, c:'Recomendaciones sobre patiotalleres',  t:'Subsanar las recomendaciones de la UMUS sobre la adquisición de predios de patiotalleres',       r:'SETP' },
+  { a:5, c:'Contratación de lo elegible',          t:'Contratar Ferrocarril, ciclorruta y Paraderos I y II con los recursos de 2026',                 r:'SETP' },
   { a:8, c:'Decisión sobre el tope de Jordán Paralela', t:'Decisión sobre redistribución del tope de Av. Jordán Paralela',      r:'SETP' },
   { a:8, c:'Decisión sobre el modelo de patiotalleres', t:'Decisión sobre el modelo de patiotalleres (5 requeridos)',           r:'SETP' }
 ];
@@ -237,20 +245,23 @@ const MUNICIPIO = {   // aportes del territorio, desembolsos e indexación
 const NACION = {      // convenio de cofinanciación
   anios      :[2024, 2025, 2026],
   convenio   :[60387986840, 68654718016, 61521319030],
-  adjudicado :[57830325615, 25978400818, 23730378098],          // 2026 = proyectado (*)
-  reprogramar:[2557661225, 42676317198, 37790940932]            // 2026 = proyectado (*)
+  adjudicado :[57830325615, 25978400818, 32537282487],          // 2026 = proyectado (*)
+  reprogramar:[2557661225, 42676317198, 28984036543]            // 2026 = proyectado (*)
 };
 
-/* proyectos 2026: fase 0 estructuración · 1 radicado UMUS · 2 contratación · 3 desembolso */
+/* proyectos 2026 según Planeación (25 sep): fase 0 estructuración · 1 radicado UMUS · 2 con elegibilidad · 3 contratación · 4 desembolso */
 const PROY26 = [
-  { n:'Consultoría · Av. Ferrocarril',                 comp:'Infraestructura', mun:1329444200,  nac:0,           fase:1, txt:'Radicado en UMUS · 10 de junio' },
-  { n:'Paraderos Tipo I y II (llave en mano)',         comp:'Infraestructura', mun:0,           nac:8669062713,  fase:1, txt:'Radicado en UMUS · 10 de julio' },
-  { n:'Consultoría · Cicloinfraestructura y andenes',  comp:'Infraestructura', mun:1221606656,  nac:0,           fase:1, txt:'Radicado en UMUS · 3 de julio' },
-  { n:'Adquisición Predio 1 · Patiotalleres',          comp:'Patiotalleres',   mun:15075119666, nac:0,           fase:1, txt:'Radicado en UMUS · 17 de julio' },
-  { n:'Adquisición Predio 2 · Patiotalleres',          comp:'Patiotalleres',   mun:0,           nac:15061315385, fase:1, txt:'Radicado en UMUS · 17 de julio' },
-  { n:'Semáforos Fase II',                             comp:'Tecnología',      mun:12515324909, nac:0,           fase:0, txt:'Estudios y diseños · proyectada para 2026' }
+  { n:'Consultoría · Av. Ferrocarril',                 comp:'Infraestructura', mun:1329444200,  nac:0,           fase:2, txt:'Con elegibilidad · 22 de septiembre. El oficio se ajusta en uno de sus puntos.' },
+  { n:'Paraderos Tipo I y II (llave en mano)',         comp:'Infraestructura', mun:0,           nac:9366315493,  fase:2, txt:'Con elegibilidad · 22 de septiembre. Se cita a la Junta Directiva para aprobarla e iniciar la etapa precontractual.' },
+  { n:'Consultoría · Ciclorruta y andenes',  comp:'Infraestructura', mun:1256243333,  nac:0,           fase:2, txt:'Con elegibilidad · 22 de septiembre. El oficio se ajusta en uno de sus puntos.' },
+  { n:'Adquisición Predio 1 · Patiotalleres',          comp:'Patiotalleres',   mun:10000000000, nac:0,           fase:1, txt:'Radicado en UMUS · 17 de julio. Subsanando las recomendaciones de la UMUS.' },
+  { n:'Adquisición Predio 2 · Patiotalleres',          comp:'Patiotalleres',   mun:0,           nac:10000000000, fase:1, txt:'Radicado en UMUS · 17 de julio. Subsanando las recomendaciones de la UMUS.' },
+  { n:'Adquisición Predio 3 · Patiotalleres',          comp:'Patiotalleres',   mun:0,           nac:10000000000, fase:1, txt:'Radicado en UMUS · 17 de julio. Subsanando las recomendaciones de la UMUS.' },
+  { n:'Semáforos Fase II',                             comp:'Tecnología',      mun:11525121714, nac:0,           fase:0, txt:'En estructuración · obra por $11.525 M (con interventoría suma $12.515 M).' }
 ];
-const FASES = ['Estructuración','Radicado UMUS','Contratación','Desembolso'];
+/* totales de la tabla de Planeación (no cambiaron y no coinciden con la suma de las filas: se muestran tal cual y se consultó) */
+const TOT26 = { nac:23730378098, mun:30141495431, total:53871873528 };
+const FASES = ['Estructuración','Radicado','Con elegibilidad','Contratación','Desembolso'];
 
 /* cartera con presupuesto identificado en las fichas del SETP (obra + interventoría), en pesos.
    Referencial: valores totales del proyecto, sin discriminar aporte Nación / Municipio. */
