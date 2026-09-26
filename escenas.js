@@ -9,16 +9,20 @@ estilo(`
 .cifra b.m{ font-size:4.7rem; white-space:normal; line-height:1.02; letter-spacing:-.02em }
 
 /* ---------- resumen: llegada del tranvía (alerta 4) ---------- */
-.tw .tw-in{ position:absolute; inset:0; animation:twWipe 3.4s cubic-bezier(.45,.05,.25,1) both }
+/* el «destape» se hace con transform (ventana que avanza + contenido que retrocede), no con clip-path, para que no se repinte en cada cuadro */
+.tw .tw-clip{ position:absolute; inset:0; overflow:hidden; will-change:transform; animation:twClip 3.4s cubic-bezier(.45,.05,.25,1) both }
+.tw .tw-in{ position:absolute; inset:0; will-change:transform; animation:twIn 3.4s cubic-bezier(.45,.05,.25,1) both }
 .tw .rv{ opacity:1; transform:none; animation:none }
-@keyframes twWipe{ 0%{ clip-path:inset(0 100% 0 0) } 70%,100%{ clip-path:inset(0 0 0 0) } }
+@keyframes twClip{ 0%{ transform:translateX(-120rem) } 70%,100%{ transform:none } }
+@keyframes twIn{ 0%{ transform:translateX(120rem) } 70%,100%{ transform:none } }
 .tw .tw-rail{ position:absolute; left:20rem; right:0; top:46.7rem; height:.5rem; border-radius:1rem; background:repeating-linear-gradient(90deg,#9CC4FF 0 2.2rem,transparent 2.2rem 3.6rem); box-shadow:0 0 1rem rgba(120,175,255,.85) }
-.tw .tw-tram{ position:absolute; top:34.9rem; width:62rem; height:12.6rem; z-index:8; animation:twTram 3.4s cubic-bezier(.45,.05,.25,1) both; pointer-events:none }
-.tw .tw-tram svg{ display:block; width:100%; height:100%; overflow:visible; filter:drop-shadow(0 .7rem .6rem rgba(31,60,120,.25)); animation:twBob .3s ease-in-out infinite alternate }
-.tw .tw-tram .wh{ transform-box:fill-box; transform-origin:center; animation:twWh .42s linear infinite }
+.tw .tw-tram{ position:absolute; left:-62rem; top:34.9rem; width:62rem; height:12.6rem; z-index:8; will-change:transform; animation:twTram 3.4s cubic-bezier(.45,.05,.25,1) both; pointer-events:none }
+.tw .tw-tram:after{ content:""; position:absolute; left:3rem; right:3rem; bottom:-.2rem; height:1.4rem; background:radial-gradient(ellipse at center,rgba(31,60,120,.28),transparent 70%) }
+.tw .tw-tram svg{ display:block; width:100%; height:100%; overflow:visible; animation:twBob .3s ease-in-out infinite alternate }
+.tw .tw-tram .wh{ transform-box:fill-box; transform-origin:center; animation:twWh .42s steps(8) infinite }
 .tw .tw-beam{ position:absolute; left:61.4rem; top:6.6rem; width:28rem; height:5.4rem; background:linear-gradient(90deg,rgba(255,236,170,.9),transparent); clip-path:polygon(0 30%,100% 0,100% 100%,0 70%) }
 .tw .tw-sp{ position:absolute; left:-9rem; height:.3rem; border-radius:1rem; background:#fff; opacity:.9 } .tw .tw-sp:nth-of-type(2){ top:3rem; width:11rem } .tw .tw-sp:nth-of-type(3){ top:6.4rem; width:7rem } .tw .tw-sp:nth-of-type(4){ top:9.4rem; width:9rem }
-@keyframes twTram{ 0%{ left:-62rem } 70%{ left:58rem } 100%{ left:126rem } }
+@keyframes twTram{ 0%{ transform:translateX(0) } 70%{ transform:translateX(120rem) } 100%{ transform:translateX(188rem) } }
 @keyframes twBob{ to{ transform:translateY(-.22rem) } }
 @keyframes twWh{ to{ transform:rotate(360deg) } }
 
@@ -122,8 +126,8 @@ NODO.resumen = s => {
       </div>
     </div>
     <div class="postura rv"><span>Línea de actividades del SETP</span><p>${a.postura}</p></div>`;
-  n.innerHTML = tram ? `<div class="tw-in">${cuerpo}<div class="tw-rail"></div></div><div class="tw-tram">${tramSVG()}<i class="tw-beam"></i><i class="tw-sp"></i><i class="tw-sp"></i><i class="tw-sp"></i></div>` : cuerpo;
-  if(tram) n.dataset.delay=2400;
+  n.innerHTML = tram ? `<div class="tw-clip"><div class="tw-in">${cuerpo}<div class="tw-rail"></div></div></div><div class="tw-tram">${tramSVG()}<i class="tw-beam"></i><i class="tw-sp"></i><i class="tw-sp"></i><i class="tw-sp"></i></div>` : cuerpo;
+  if(tram){ n.dataset.delay=2400; n.addEventListener('animationend',e=>{ if(e.animationName==='twTram') $('.tw-tram',n).remove(); }); }
   return n;
 };
 
@@ -134,7 +138,7 @@ NODO.explorar = s => {
   n.innerHTML=`
     <div class="spine"><div class="num">${a.n}</div></div>
     <div class="emain">
-      <div class="ehead"><h2>${a.titulo}</h2><p class="prompt">${v.icono?ico("i-"+v.icono):""}<span>${v.pregunta}</span></p></div>
+      <div class="ehead rv"><h2>${a.titulo}</h2><p class="prompt">${v.icono?ico("i-"+v.icono):""}<span>${v.pregunta}</span></p></div>
       <div class="viz"></div></div>`;
   return n;
 };
@@ -250,7 +254,7 @@ VIS.ruta = root => {
       b.classList.toggle('vence',vence); b.classList.toggle('pc',pc); b.classList.toggle('ok',h.est==='cumplido'); b.classList.toggle('dim',filt!==null&&!h.a.includes(filt));
       $("em",b).textContent = h.est==="cumplido"?"Cumplido":vence?"Fecha superada":pc?"Por confirmar estado":""; });
   }
-  $('#rg',root).oninput=e=>{ fecha=+e.target.value; pinta(); };
+  let rgR=0; $('#rg',root).oninput=e=>{ fecha=+e.target.value; if(!rgR) rgR=requestAnimationFrame(()=>{ rgR=0; pinta(); }); }; limpiar.push(()=>cancelAnimationFrame(rgR));
   $('#bc',root).onclick=()=>{ fecha=CORTE_ACT.fecha.getTime(); $('#rg',root).value=fecha; pinta(); };
   $('#bh',root).onclick=()=>{ fecha=Math.min(Date.now(),T1); $('#rg',root).value=fecha; pinta(); };
   $$('.hito',bd).forEach(b=>{ b.onclick=()=>{ const h=HITOS[+b.dataset.i]; filt = (filt!==null && h.a.includes(filt)) ? null : h.a[0]; pinta(); };

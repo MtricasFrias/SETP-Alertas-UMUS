@@ -38,8 +38,9 @@
   #stage{ position:absolute; left:50%; top:50%; width:120rem; height:67.5rem; transform:translate(-50%,-50%); overflow:hidden; background:var(--paper) }
   #stage.oscuro{ background:#E3EEFC }
   /* fondo ambiental: manchas de luz azul que derivan despacio detrás de las tarjetas */
-  #stage:before{ content:""; position:absolute; inset:-20%; pointer-events:none; background:radial-gradient(circle at 18% 22%,rgba(120,170,235,.32) 0,transparent 26%),radial-gradient(circle at 82% 70%,rgba(160,205,245,.4) 0,transparent 30%),radial-gradient(circle at 60% 12%,rgba(255,226,150,.22) 0,transparent 22%); animation:ambiente 38s ease-in-out infinite alternate }
-  @keyframes ambiente{ from{ transform:translate(-3%,-2%) scale(1) } to{ transform:translate(3%,3%) scale(1.08) } }
+  #stage:before{ content:""; position:absolute; inset:-20%; pointer-events:none; background:radial-gradient(circle at 18% 22%,rgba(120,170,235,.32) 0,transparent 26%),radial-gradient(circle at 82% 70%,rgba(160,205,245,.4) 0,transparent 30%),radial-gradient(circle at 60% 12%,rgba(255,226,150,.22) 0,transparent 22%); will-change:transform; animation:ambiente 90s steps(360) infinite alternate }
+  /* deriva lenta a 4 pasos por segundo y sin escalado: un fondo que anima a 60 cuadros por segundo obliga a recomponer toda la pantalla en cada cuadro */
+  @keyframes ambiente{ from{ transform:translate(-4%,-3%) } to{ transform:translate(4%,4%) } }
   #stage.oscuro:before{ display:none }
   #banda{ position:absolute; left:0; right:0; bottom:0; height:.55rem; display:flex; z-index:30 }
   #banda i{ flex:1 } #banda i:nth-child(1){ background:var(--navy) } #banda i:nth-child(2){ background:#EE7A80 }
@@ -59,15 +60,16 @@
   /* ---------- escenas ---------- */
   #escena{ position:absolute; left:0; right:0; top:0; bottom:6.6rem }
   #stage.oscuro #escena{ bottom:0 }
-  .scene{ position:absolute; inset:0; animation:entra .5s cubic-bezier(.22,.8,.3,1) }
-  .scene.atras{ animation-name:entraAtras }
-  @keyframes entra{ from{ opacity:0; transform:translateX(2rem) } }
-  @keyframes entraAtras{ from{ opacity:0; transform:translateX(-2rem) } }
+  /* la escena no anima entera (obligaba a componer toda la pantalla como una sola capa): entran el lomo y cada bloque .rv */
+  .scene{ position:absolute; inset:0 }
+  @keyframes spineIn{ from{ opacity:0; transform:translateX(-4rem) } }
   .rv{ opacity:0; transform:translateY(.8rem); animation:rv .55s cubic-bezier(.22,.8,.3,1) forwards; animation-delay:calc(var(--i,0)*80ms + 120ms) }
   @keyframes rv{ to{ opacity:1; transform:none } }
+  /* al terminar la entrada se suelta la animación (con fill-mode forwards el elemento se queda como capa compuesta para siempre) */
+  .rv.rvf{ animation:none; opacity:1; transform:none }
 
   /* --- resumen de alerta --- */
-  .spine{ position:absolute; left:0; top:0; bottom:0; width:20rem; background:var(--cat); color:var(--catx); padding:8.4rem 2.4rem 2rem 2.8rem }
+  .spine{ animation:spineIn .5s cubic-bezier(.22,.8,.3,1); position:absolute; left:0; top:0; bottom:0; width:20rem; background:var(--cat); color:var(--catx); padding:8.4rem 2.4rem 2rem 2.8rem }
   .spine .lab{ font:700 1.75rem var(--fd); opacity:.9 }
   .spine .num{ font:800 17rem/.86 var(--fd); letter-spacing:-.05em; margin:.6rem 0 2.6rem -.5rem }
   .spine dl{ font-size:1.5rem; line-height:1.15 }
@@ -240,17 +242,22 @@ function arrastrar(nodo,{inicio,mueve,fin}){
   nodo.style.touchAction='none';
   nodo.addEventListener('pointerdown',e=>{
     e.preventDefault(); nodo.setPointerCapture(e.pointerId); inicio&&inicio(e);
-    const mv=ev=>mueve&&mueve(ev), up=ev=>{ nodo.removeEventListener('pointermove',mv); nodo.removeEventListener('pointerup',up); nodo.removeEventListener('pointercancel',up); fin&&fin(ev); };
+    /* el movimiento se aplica una vez por cuadro (con el mouse llegan más eventos que cuadros y cada uno repintaba) */
+    let ult=null, raf=0; const va=()=>{ raf=0; if(ult){ const u=ult; ult=null; mueve&&mueve(u); } };
+    const mv=ev=>{ ult=ev; if(!raf) raf=requestAnimationFrame(va); }, up=ev=>{ cancelAnimationFrame(raf); va(); nodo.removeEventListener('pointermove',mv); nodo.removeEventListener('pointerup',up); nodo.removeEventListener('pointercancel',up); fin&&fin(ev); };
     nodo.addEventListener('pointermove',mv); nodo.addEventListener('pointerup',up); nodo.addEventListener('pointercancel',up);
   });
 }
 const svgPt = (svg,e) => { const p=svg.createSVGPoint(); p.x=e.clientX; p.y=e.clientY; return p.matrixTransform(svg.getScreenCTM().inverse()); };
 
 const tip=$('#tip');
-function verTip(html,e){ tip.innerHTML=html; tip.classList.add('ver'); const r=$('#stage').getBoundingClientRect();
-  tip.style.left=Math.min(e.clientX-r.left+16, r.width-tip.offsetWidth-8)+'px';
-  tip.style.top=(e.clientY-r.top-tip.offsetHeight-16<0 ? e.clientY-r.top+22 : e.clientY-r.top-tip.offsetHeight-16)+'px'; }
-function ocultaTip(){ tip.classList.remove('ver'); }
+/* el globo solo reescribe su contenido si cambió y se coloca una vez por cuadro (leer medidas en cada mousemove forzaba el diseño de la página) */
+let tipHtml='', tipE=null, tipRaf=0;
+function verTip(html,e){ if(html!==tipHtml){ tip.innerHTML=html; tipHtml=html; } tip.classList.add('ver'); tipE=e;
+  if(!tipRaf) tipRaf=requestAnimationFrame(()=>{ tipRaf=0; const r=$('#stage').getBoundingClientRect(), w=tip.offsetWidth, h=tip.offsetHeight;
+    tip.style.left=Math.min(tipE.clientX-r.left+16, r.width-w-8)+'px';
+    tip.style.top=(tipE.clientY-r.top-h-16<0 ? tipE.clientY-r.top+22 : tipE.clientY-r.top-h-16)+'px'; }); }
+function ocultaTip(){ tip.classList.remove('ver'); tipHtml=''; }
 limpiar.push(ocultaTip);
 
 /* ---------- guion de escenas ---------- */
@@ -269,11 +276,11 @@ const etiqueta = s => s.tipo==='resumen' ? ['Alerta '+s.a.n,'Resumen'] : s.tipo=
 let idx = -1;
 function ir(n){
   n=Math.max(0,Math.min(ESC.length-1,n)); if(n===idx) return;
-  const atras=n<idx; limpiar.splice(0).forEach(salvo); idx=n; const s=ESC[n];
+  limpiar.splice(0).forEach(salvo); idx=n; const s=ESC[n];
   const nodo = (NODO[s.tipo] || (()=>{ const e=document.createElement('section'); e.className='scene'; return e; }))(s);
-  if(atras) nodo.classList.add('atras');
   const cont=$('#escena'); cont.innerHTML=''; cont.append(nodo);
   $$('.rv',nodo).forEach((e,i)=>e.style.setProperty('--i',i));
+  nodo.addEventListener('animationend',e=>{ if(e.animationName==='rv') e.target.classList.add('rvf'); });
   const fn = s.tipo==='explorar' ? VIS[s.v.vis] : VIS[s.tipo];
   if(fn) salvo(()=>fn(s.tipo==='explorar'?$('.viz',nodo):nodo, s));
   /* el conteo de cifras arranca solo cuando la entrada (fade+desplazamiento) ya terminó,

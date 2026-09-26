@@ -410,19 +410,19 @@ VIS.desA = root => {
     let s=DEFS+P.ejes(); const bw=P.band*.62;
     M.anios.forEach((a,i)=>{ const x=P.L+i*P.band+(P.band-bw)/2, ap=M.aporte[i], ix=conIdx?M.indexacion[i]:0, tot=ap+ix, ya=P.y(ap), yt=P.y(tot);
       s+=`<g class="b" data-t="<b>${a}</b><br>Aporte: ${peso(ap)}${M.indexacion[i]?`<br>Indexación: ${peso(M.indexacion[i])}`:''}<br>Total: ${peso(ap+M.indexacion[i])}<br><span style='opacity:.8'>= $${c1(ap+M.indexacion[i])} mil M</span>${a===2026?'<br>Desembolsado el 30 de abril de 2026':''}" style="cursor:pointer">
-        <g class="gb" style="--i:${i}" filter="url(#sh)"><rect x="${x}" y="${ya}" width="${bw}" height="${P.y(0)-ya}" rx="6" fill="url(#gA)"/>${ix?`<rect x="${x}" y="${yt}" width="${bw}" height="${ya-yt+4}" rx="6" fill="url(#gI)"/>`:''}</g>
+        <g class="gb" style="--i:${i}"><rect x="${x+3}" y="${yt+4}" width="${bw}" height="${P.y(0)-yt}" rx="6" fill="rgba(31,60,120,.16)"/><rect x="${x}" y="${ya}" width="${bw}" height="${P.y(0)-ya}" rx="6" fill="url(#gA)"/>${ix?`<rect x="${x}" y="${yt}" width="${bw}" height="${ya-yt+4}" rx="6" fill="url(#gI)"/>`:''}</g>
         <text class="vl" x="${x+bw/2}" y="${yt-9}">$${c1(tot)}</text></g><text class="xa" x="${x+bw/2}" y="${P.y(0)+26}">${a}</text>`; });
     $('#gm',root).innerHTML=s; $$('#gm .b',root).forEach(g=>{ g.onmousemove=e=>verTip(g.dataset.t,e); g.onmouseleave=ocultaTip; });
     $('#lgix',root).style.opacity=conIdx?1:.3; }
   function dibujaN(){ const pl=plot(3,75e9,[0,25,50,75],{R:170}); let s=DEFS; const bw=pl.band*.66, X=pl.L;
     s+=[0,25,50,75].map(t=>`<line x1="${X}" x2="${pl.W-170}" y1="${pl.y(t*1e9)}" y2="${pl.y(t*1e9)}" stroke="#D9E3F3" stroke-width="1.5"/><text x="${X-9}" y="${pl.y(t*1e9)+5}" text-anchor="end" class="tk">$${t}</text>`).join('')+`<text x="10" y="20" class="ut">Miles de millones de pesos ($ mil M)</text><line x1="${X}" x2="${pl.W-170}" y1="${pl.y(0)}" y2="${pl.y(0)}" stroke="#66799F" stroke-width="2"/>`;
     N.anios.forEach((a,i)=>{ const x=X+i*pl.band+(pl.band-bw)/2, ad=N.adjudicado[i], rp=N.reprogramar[i], tot=N.convenio[i], y0=pl.y(0), ya=pl.y(ad), yt=pl.y(ad+rp), pa=Math.round(ad/tot*100), pr=100-pa;
-      s+=`<g class="b" data-t="<b>${a}${a===2026?'*':''}</b> · convenio ${peso(tot)}<br>Adjudicado: ${peso(ad)} (${pa} %)<br>Por reprogramar: ${peso(rp)} (${pr} %)" style="cursor:pointer"><g class="gb" style="--i:${i}" filter="url(#sh)"><rect x="${x}" y="${ya}" width="${bw}" height="${y0-ya}" rx="6" fill="url(#gV)"/><rect x="${x}" y="${yt}" width="${bw}" height="${ya-yt+4}" rx="6" fill="url(#gR)"/></g>
+      s+=`<g class="b" data-t="<b>${a}${a===2026?'*':''}</b> · convenio ${peso(tot)}<br>Adjudicado: ${peso(ad)} (${pa} %)<br>Por reprogramar: ${peso(rp)} (${pr} %)" style="cursor:pointer"><g class="gb" style="--i:${i}"><rect x="${x+3}" y="${yt+4}" width="${bw}" height="${y0-yt}" rx="6" fill="rgba(31,60,120,.16)"/><rect x="${x}" y="${ya}" width="${bw}" height="${y0-ya}" rx="6" fill="url(#gV)"/><rect x="${x}" y="${yt}" width="${bw}" height="${ya-yt+4}" rx="6" fill="url(#gR)"/></g>
         ${y0-ya>26?`<text class="pc" x="${x+bw/2}" y="${(y0+ya)/2+6}">${pa} %</text>`:''}${ya-yt>26?`<text class="pc" x="${x+bw/2}" y="${(ya+yt)/2+6}">${pr} %</text>`:''}
         <text class="vl" x="${x+bw/2}" y="${yt-9}">$${c1(tot)}</text></g><text class="xa" x="${x+bw/2}" y="${y0+26}">${a}${a===2026?'*':''}</text>`; });
     /* dona: cuánto del convenio está adjudicado */
     const R=54, C=2*Math.PI*R, pa=adj/totN, cx=392, cy=126;
-    s+=`<g><circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="url(#gR)" stroke-width="26"/><circle class="dn" cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="url(#gV)" stroke-width="26" stroke-dasharray="${(C*pa).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 ${cx} ${cy})" filter="url(#sh)"/>
+    s+=`<g><circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="url(#gR)" stroke-width="26"/><circle class="dn" cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="url(#gV)" stroke-width="26" stroke-dasharray="${(C*pa).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 ${cx} ${cy})"/>
       <text class="pc2" x="${cx}" y="${cy+4}">${Math.round(pa*100)} %</text><text class="pc3" x="${cx}" y="${cy+22}">adjudicado</text></g>
       <text class="lg" x="${cx}" y="220" style="fill:#2E8B5A">Adjudicado</text><text class="lg2" x="${cx}" y="240">$${c1(adj)} mil M</text>
       <text class="lg" x="${cx}" y="272" style="fill:#B94750">Por reprogramar</text><text class="lg2" x="${cx}" y="292">$${c1(rep)} mil M · ${Math.round((1-pa)*100)} %</text>`;
@@ -588,21 +588,13 @@ VIS.obraB = root => {
     const s=EST[p.e]; f.style.setProperty('--c',s.c);
     f.innerHTML=`<div class="ff-h"><span class="st" style="background:${s.c}">${s.n}</span><h3>${p.n}</h3><em>${p.fase}</em><div class="ff-d">${p.ch.map(([v,l])=>`<span><b>${v}</b>${l}</span>`).join('')}</div></div><p>${p.txt}</p><small>En el mapa: ${p.mp}</small><button class="chip ff-x">Ver convenciones</button>`;
     $('.ff-x',f).onclick=()=>elige(null); };
-  const map=new maplibregl.Map({container:'mapa',center:[-75.205,4.437],zoom:12.2,attributionControl:{compact:true},
+  let map=null; const M=[]; limpiar.push(()=>{ try{ map&&map.remove(); }catch(e){} });
+  /* el mapa se crea cuando termina la entrada de la escena: iniciarlo de golpe (estilo, teselas, íconos) congelaba la animación */
+  const iniciaMapa=()=>{ map=new maplibregl.Map({container:'mapa',center:[-75.205,4.437],zoom:12.2,attributionControl:{compact:true},
     style:{version:8,sources:{base:{type:'raster',tileSize:256,maxzoom:19,attribution:'© OpenStreetMap contributors',tiles:['https://a.tile.openstreetmap.org/{z}/{x}/{y}.png','https://b.tile.openstreetmap.org/{z}/{x}/{y}.png','https://c.tile.openstreetmap.org/{z}/{x}/{y}.png']}},
       layers:[{id:'fondo',type:'background',paint:{'background-color':'#E6ECF5'}},{id:'base',type:'raster',source:'base',paint:{'raster-saturation':-0.95,'raster-contrast':-0.15,'raster-brightness-min':.35,'raster-opacity':.9}}]}});
   map.addControl(new maplibregl.NavigationControl({showCompass:false}),'top-right');
-  window.__mapa=map; limpiar.push(()=>{ try{ map.remove(); }catch(e){} }); const M=[];
-  const capas=p=>p.t==='lin'?['pl-'+p.id,'pc-'+p.id]:p.t==='pat'?[]:['pd-'+p.id,'pt-'+p.id];
-  const geo=p=>p.t==='lin'?p.k.flatMap(k=>CORREDORES[k].coords):p.t==='sem'?SEMAFOROS.filter(s=>s.fase===(p.id==='sem1'?'I':'II')).map(s=>s.coord):p.t==='par'?p.pts.filter(lim):p.t==='pat'?PATIOS.map(x=>x.coord):[];
-  const op=(l,v)=>{ const t=map.getLayer(l).type; if(t==='line') map.setPaintProperty(l,'line-opacity',v); else if(t==='symbol') map.setPaintProperty(l,'icon-opacity',v);  else{ map.setPaintProperty(l,'circle-opacity',v); map.setPaintProperty(l,'circle-stroke-opacity',v); } };
-  function aplica(){ if(!map.isStyleLoaded()&&!map.getLayer('pl-ferro')) return;
-    PR.forEach(p=>{ const v=vis(p), act=(sel===null||sel===p.id);
-      capas(p).forEach(l=>{ if(!map.getLayer(l)) return; map.setLayoutProperty(l,'visibility',v?'visible':'none'); op(l,act?1:.18); }); });
-    M.forEach(m=>{ const p=PR.find(x=>x.id==='patios'), act=(sel===null||sel==='patios'); m.getElement().style.display=vis(p)?'':'none'; const ii=m.getElement().querySelector('i'); if(ii) ii.style.opacity=act?1:.25; }); }
-  function encuadra(p){ const pts=p?geo(p):PR.flatMap(x=>vis(x)?geo(x):[]); if(!pts.length) return; const b=new maplibregl.LngLatBounds(); pts.forEach(c=>b.extend(flip(c))); map.fitBounds(b,{padding:{left:3*R,top:3*R,right:6*R,bottom:3*R},maxZoom:15.2,duration:1300}); }
-  function elige(id,quieto){ sel=id; if(id) off.delete(id); lista(); ficha(); aplica(); if(!quieto) encuadra(PR.find(x=>x.id===id)||null); }
-  $$('.mp-t .chip',root).forEach(b=>b.onclick=()=>{ fr=b.dataset.f; sel=null; off.clear(); $$('.mp-t .chip',root).forEach(x=>x.classList.toggle('on',x===b)); lista(); ficha(); aplica(); encuadra(null); });
+  window.__mapa=map;
   map.on('load',()=>{
     PR.filter(p=>p.t==='sem'||p.t==='par').forEach(p=>{ const k=imgId(p); if(!map.hasImage(k)){ const c=pinta(p.t,EST[p.e].c); map.addImage(k,c.getContext('2d').getImageData(0,0,c.width,c.height),{pixelRatio:2}); } });
     const feats=p=>({type:'FeatureCollection',features:geo(p).map(c=>({type:'Feature',properties:{},geometry:{type:'Point',coordinates:flip(c)}}))});
@@ -617,6 +609,18 @@ VIS.obraB = root => {
       capas(p).forEach(l=>{ map.on('click',l,()=>elige(p.id,p.t!=='lin')); map.on('mousemove',l,e=>{ map.getCanvas().style.cursor='pointer'; verTip(`<b>${p.n}</b> · ${EST[p.e].n}`,e.originalEvent); }); map.on('mouseleave',l,()=>{ map.getCanvas().style.cursor=''; ocultaTip(); }); }); });
     PATIOS.forEach(x=>{ const el=document.createElement('div'); el.className='mk-pa'; el.innerHTML=`<i style="background:${EST.subsana.c}">${ico('i-factory')}</i>`; el.title=x.nombre; el.onclick=()=>elige('patios'); const mk=new maplibregl.Marker({element:el}).setLngLat(flip(x.coord)).addTo(map); M.push(mk); });
     const bb=new maplibregl.LngLatBounds(); PR.forEach(p=>geo(p).forEach(c=>bb.extend(flip(c)))); map.fitBounds(bb,{padding:{left:3*R,top:3*R,right:6*R,bottom:3*R},duration:0}); aplica(); });
+  };
+  const capas=p=>p.t==='lin'?['pl-'+p.id,'pc-'+p.id]:p.t==='pat'?[]:['pd-'+p.id,'pt-'+p.id];
+  const geo=p=>p.t==='lin'?p.k.flatMap(k=>CORREDORES[k].coords):p.t==='sem'?SEMAFOROS.filter(s=>s.fase===(p.id==='sem1'?'I':'II')).map(s=>s.coord):p.t==='par'?p.pts.filter(lim):p.t==='pat'?PATIOS.map(x=>x.coord):[];
+  const op=(l,v)=>{ const t=map.getLayer(l).type; if(t==='line') map.setPaintProperty(l,'line-opacity',v); else if(t==='symbol') map.setPaintProperty(l,'icon-opacity',v);  else{ map.setPaintProperty(l,'circle-opacity',v); map.setPaintProperty(l,'circle-stroke-opacity',v); } };
+  function aplica(){ if(!map||(!map.isStyleLoaded()&&!map.getLayer('pl-ferro'))) return;
+    PR.forEach(p=>{ const v=vis(p), act=(sel===null||sel===p.id);
+      capas(p).forEach(l=>{ if(!map.getLayer(l)) return; map.setLayoutProperty(l,'visibility',v?'visible':'none'); op(l,act?1:.18); }); });
+    M.forEach(m=>{ const p=PR.find(x=>x.id==='patios'), act=(sel===null||sel==='patios'); m.getElement().style.display=vis(p)?'':'none'; const ii=m.getElement().querySelector('i'); if(ii) ii.style.opacity=act?1:.25; }); }
+  function encuadra(p){ if(!map) return; const pts=p?geo(p):PR.flatMap(x=>vis(x)?geo(x):[]); if(!pts.length) return; const b=new maplibregl.LngLatBounds(); pts.forEach(c=>b.extend(flip(c))); map.fitBounds(b,{padding:{left:3*R,top:3*R,right:6*R,bottom:3*R},maxZoom:15.2,duration:1300}); }
+  function elige(id,quieto){ sel=id; if(id) off.delete(id); lista(); ficha(); aplica(); if(!quieto) encuadra(PR.find(x=>x.id===id)||null); }
+  $$('.mp-t .chip',root).forEach(b=>b.onclick=()=>{ fr=b.dataset.f; sel=null; off.clear(); $$('.mp-t .chip',root).forEach(x=>x.classList.toggle('on',x===b)); lista(); ficha(); aplica(); encuadra(null); });
+  const tmapa=setTimeout(iniciaMapa,450); limpiar.push(()=>clearTimeout(tmapa));
   lista(); ficha();
 };
 
@@ -636,16 +640,18 @@ VIS.tecno = root => {
   const col=n=>n.ok?'#3AA56D':ESTADO[n.est].c;
   sv.innerHTML=LK.map((l,i)=>`<line class="lk" id="lk${i}"/>`).join('')+LK.map((l,i)=>`<circle class="pk" id="pk${i}" r="7" style="display:none"/>`).join('')+
     ND.map(n=>`<g class="nd" data-id="${n.id}"><rect id="r-${n.id}" x="${-n.w/2}" y="-33" width="${n.w}" height="66" rx="6" fill="${col(N[n.id])}"/><text y="-4" font-size="19" style="fill:${n.est==='ejecucion'?'#1F3C78':'#fff'}">${n.n}</text><text class="s" y="20" style="fill:${n.est==='ejecucion'?'#1F3C78':'#fff'}">${n.s}</text></g>`).join('');
-  const pos=()=>{ ND.forEach(n=>{ const o=N[n.id]; $(`.nd[data-id=${n.id}]`,sv).setAttribute('transform',`translate(${o.x},${o.y})`); });
-    LK.forEach((l,i)=>{ const a=N[l[0]], b=N[l[1]], e=$('#lk'+i,sv); e.setAttribute('x1',a.x); e.setAttribute('y1',a.y); e.setAttribute('x2',b.x); e.setAttribute('y2',b.y); e.classList.toggle('ok',a.ok&&b.ok); }); }; pos();
+  const GE={}, LE=LK.map((l,i)=>$('#lk'+i,sv)); ND.forEach(n=>GE[n.id]=$(`.nd[data-id=${n.id}]`,sv));
+  const pos=()=>{ ND.forEach(n=>{ const o=N[n.id]; GE[n.id].setAttribute('transform',`translate(${o.x},${o.y})`); });
+    LK.forEach((l,i)=>{ const a=N[l[0]], b=N[l[1]], e=LE[i]; e.setAttribute('x1',a.x); e.setAttribute('y1',a.y); e.setAttribute('x2',b.x); e.setAttribute('y2',b.y); e.classList.toggle('ok',a.ok&&b.ok); }); }; pos();
   $$('.nd',sv).forEach(g=>{ const o=N[g.dataset.id]; let off=[0,0];
     arrastrar(g,{ inicio:e=>{ const p=svgPt(sv,e); off=[p.x-o.x,p.y-o.y]; }, mueve:e=>{ const p=svgPt(sv,e); o.x=clamp(p.x-off[0],120,880); o.y=clamp(p.y-off[1],34,166); pos(); } });
     g.onmouseenter=e=>{ const r=o.g&&GANTT.find(x=>x.n===o.g); if(r) verTip(`<b>${r.n}</b><br>Plan: ${mesTxt(r.a)} a ${mesTxt(r.b)}<br>${r.nota}`,e); }; g.onmouseleave=ocultaTip; });
-  let raf; const loop=t=>{ LK.forEach((l,i)=>{ const a=N[l[0]], b=N[l[1]], c=$('#pk'+i,sv), on=a.ok&&b.ok; c.style.display=on?'':'none'; if(on){ const p=((t/1400)+i*.17)%1; c.setAttribute('cx',a.x+(b.x-a.x)*p); c.setAttribute('cy',a.y+(b.y-a.y)*p); } }); raf=requestAnimationFrame(loop); };
-  raf=requestAnimationFrame(loop); limpiar.push(()=>cancelAnimationFrame(raf));
+  const PK=LK.map((l,i)=>$('#pk'+i,sv)); let raf=0;
+  const loop=t=>{ let hay=false; LK.forEach((l,i)=>{ const a=N[l[0]], b=N[l[1]], c=PK[i], on=a.ok&&b.ok; if(c.style.display!==(on?'':'none')) c.style.display=on?'':'none'; if(on){ hay=true; const p=((t/1400)+i*.17)%1; c.setAttribute('cx',a.x+(b.x-a.x)*p); c.setAttribute('cy',a.y+(b.y-a.y)*p); } }); raf=hay?requestAnimationFrame(loop):0; };
+  const arranca=()=>{ if(!raf) raf=requestAnimationFrame(loop); }; limpiar.push(()=>cancelAnimationFrame(raf));
   const pinta=()=>ND.forEach(n=>$('#r-'+n.id,sv).setAttribute('fill',col(N[n.id]))), tms=[]; limpiar.push(()=>tms.forEach(clearTimeout));
-  $('#si',root).onclick=()=>{ $('#si',root).style.display='none'; ['sem','rec','flo','usu','cc','fet'].forEach((id,i)=>tms.push(setTimeout(()=>{ N[id].ok=true; pinta(); pos();
+  $('#si',root).onclick=()=>{ $('#si',root).style.display='none'; ['sem','rec','flo','usu','cc','fet'].forEach((id,i)=>tms.push(setTimeout(()=>{ N[id].ok=true; pinta(); pos(); arranca();
     if(i===5){ $('#tx',root).innerHTML='<b style="color:#3AA56D">Paquete integrado</b>: recaudo, control de flota, información, control, semáforos y FET.'; $('#re',root).style.display=''; } },i*700))); };
-  $('#re',root).onclick=()=>{ tms.forEach(clearTimeout); ND.forEach(n=>N[n.id].ok=false); pinta(); pos(); $('#re',root).style.display='none'; $('#si',root).style.display=''; $("#tx",root).textContent="Azul: en estructuración · Ámbar: en ejecución · Verde: integrado"; };
+  $('#re',root).onclick=()=>{ tms.forEach(clearTimeout); ND.forEach(n=>N[n.id].ok=false); pinta(); pos(); arranca(); $('#re',root).style.display='none'; $('#si',root).style.display=''; $("#tx",root).textContent="Azul: en estructuración · Ámbar: en ejecución · Verde: integrado"; };
   gantt($('#gh',root),GANTT.filter(g=>g.g==='Tecnología'),{fecha:CORTE_ACT.fecha,sinRezago:true});
 };

@@ -48,9 +48,9 @@ estilo(`
 .tv-st svg{ width:100%; height:100% }
 .tv-st .pp{ transition:transform 1.6s ease-in, opacity 1.2s ease-in .2s } .tv-st.open .pp{ transform:translateX(var(--wx,20px)); opacity:0 }
 .tv-tram{ position:absolute; left:23.9rem; top:19rem; width:58rem; height:11.8rem; z-index:6 }
-.tv-tram svg{ display:block; width:100%; height:100%; overflow:visible; filter:drop-shadow(0 .5rem .5rem rgba(31,60,120,.22)) }
+.tv-tram svg{ display:block; width:100%; height:100%; overflow:visible }
 .tv-tram.mov svg{ animation:tvBob .32s ease-in-out infinite alternate } @keyframes tvBob{ to{ transform:translateY(-.25rem) } }
-.tv-tram .wh{ transform-box:fill-box; transform-origin:center; animation:tvWh .5s linear infinite; animation-play-state:paused } .tv-tram.mov .wh{ animation-play-state:running } @keyframes tvWh{ to{ transform:rotate(360deg) } }
+.tv-tram .wh{ transform-box:fill-box; transform-origin:center; animation:tvWh .5s steps(8) infinite; animation-play-state:paused } .tv-tram.mov .wh{ animation-play-state:running } @keyframes tvWh{ to{ transform:rotate(360deg) } }
 .tv-tram .dl{ transition:transform .8s cubic-bezier(.3,1.2,.5,1) } .tv-tram.abre .dl.l{ transform:translateX(-16px) } .tv-tram.abre .dl.r{ transform:translateX(16px) }
 .tv-beam{ position:absolute; left:81.2rem; top:26.2rem; width:24rem; height:5.6rem; z-index:5; background:linear-gradient(90deg,rgba(255,236,170,.85),transparent); clip-path:polygon(0 30%,100% 0,100% 100%,0 70%); opacity:0; transition:opacity .5s }
 .tv-sp{ position:absolute; left:6rem; height:.28rem; border-radius:1rem; background:#fff; opacity:0; z-index:4 }
@@ -76,8 +76,8 @@ estilo(`
 .tc{ display:grid; grid-template-columns:minmax(0,1fr) 40rem; grid-template-rows:minmax(0,1fr) auto; gap:1.6rem 2rem; height:100% }
 .tc-s{ position:relative; overflow:hidden; border-radius:1.2rem; background:linear-gradient(180deg,#CBE0F9 0%,#E6F1FE 55%,#F5F9FF 100%); box-shadow:0 .6rem 1.6rem rgba(31,60,120,.12) }
 .tc-s svg.esc{ position:absolute; inset:0; width:100%; height:100% }
-.tc-tram{ position:absolute; left:2rem; top:13.4rem; width:44rem; height:9rem; transition:transform 3.2s cubic-bezier(.6,0,.3,1) } .tc-tram svg{ display:block; width:100%; height:100%; overflow:visible; filter:drop-shadow(0 .5rem .5rem rgba(31,60,120,.22)) }
-.tc-tram.va{ transform:translateX(74rem) } .tc-tram .wh{ transform-box:fill-box; transform-origin:center; animation:tvWh .5s linear infinite; animation-play-state:paused } .tc-tram.va .wh{ animation-play-state:running } .tc-tram .dl{ transition:transform .8s }
+.tc-tram{ position:absolute; left:2rem; top:13.4rem; width:44rem; height:9rem; transition:transform 3.2s cubic-bezier(.6,0,.3,1) } .tc-tram svg{ display:block; width:100%; height:100%; overflow:visible }
+.tc-tram.va{ transform:translateX(74rem) } .tc-tram .wh{ transform-box:fill-box; transform-origin:center; animation:tvWh .5s steps(8) infinite; animation-play-state:paused } .tc-tram.va .wh{ animation-play-state:running } .tc-tram .dl{ transition:transform .8s }
 .tc-msg{ position:absolute; left:2.4rem; top:1.6rem; max-width:40rem; z-index:5; font:800 2.4rem/1.15 var(--fd); color:var(--ink) } .tc-msg span{ display:block; font:600 1.75rem var(--ft); color:var(--mut); margin-top:.3rem }
 .tc-l .luz{ transition:fill .4s } .tc-l .gate{ transform-origin:0 0; transition:transform 1.2s cubic-bezier(.5,0,.2,1) } .tc-s.ok .gate{ transform:rotate(-78deg) }
 .tc-c{ background:var(--card); padding:1.3rem 2rem 1.4rem; display:flex; flex-direction:column; gap:.7rem; border-radius:1.2rem }

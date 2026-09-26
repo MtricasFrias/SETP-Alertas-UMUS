@@ -5,14 +5,16 @@
    Cada parada tiene su propio dibujo y su ficha. Diseño propio del deck.
    ===================================================================== */
 estilo(`
+.vj{ animation:vjIn .45s ease }
+@keyframes vjIn{ from{ opacity:0 } }
 .vj{ position:absolute; inset:0; overflow:hidden; background:linear-gradient(180deg,#D3E5FA 0%,#E6F0FD 30%,#F5F9FF 62%,#F5F9FF 100%) }
 .vj:before{ content:""; position:absolute; inset:0; background:radial-gradient(circle at 88% 13%,rgba(255,229,150,.85) 0,rgba(255,229,150,0) 25rem),radial-gradient(circle at 10% 34%,rgba(255,255,255,.75) 0,rgba(255,255,255,0) 32rem) }
-.vj svg.cap{ position:absolute; left:0; top:0; width:120rem; height:60.83rem; display:block }
-.vj .nube{ animation:nubeVa var(--dur,120s) linear infinite; animation-delay:var(--dl,0s) }
-@keyframes nubeVa{ from{ transform:translateX(-300px) } to{ transform:translateX(1700px) } }
-.vj .rio{ fill:none; stroke:#fff; stroke-width:5; stroke-dasharray:2 28; stroke-linecap:round; animation:rioFluye 3s linear infinite }
-@keyframes rioFluye{ to{ stroke-dashoffset:-30 } }
-.vj .vj-dash{ fill:none; stroke:#fff; stroke-width:4.5; stroke-dasharray:22 20; stroke-linecap:round; animation:rutaFluye 1.1s linear infinite; opacity:.95 }
+.vj .cap{ position:absolute; left:0; top:0; width:120rem; height:60.83rem; display:block }
+.vj #vjRoad{ pointer-events:none }
+.vj .nubes{ position:absolute; inset:0; pointer-events:none }
+.vj .nube-c{ position:absolute; left:-1rem; width:10.8rem; height:8.3rem; animation:nubeVa var(--dur,120s) linear infinite; animation-delay:var(--dl,0s) }
+@keyframes nubeVa{ from{ transform:translateX(-25rem) } to{ transform:translateX(141.7rem) } }
+.vj .vj-dash{ fill:none; stroke:#fff; stroke-width:4.5; stroke-dasharray:22 20; stroke-linecap:round; animation:rutaFluye 1.1s steps(11) infinite; opacity:.95 }
 @keyframes rutaFluye{ to{ stroke-dashoffset:-42 } }
 
 /* paradas */
@@ -21,11 +23,12 @@ estilo(`
 .vj .pa .lm{ transition:transform .35s cubic-bezier(.34,1.6,.5,1); transform-box:fill-box; transform-origin:50% 100% }
 .vj .pa:hover .lm, .vj .pa:focus-visible .lm, .vj .pa.on .lm{ transform:scale(1.14) translateY(-4px) }
 .vj .pa:hover .pad, .vj .pa.on .pad{ opacity:.42 }
-.vj .pa .bd{ fill:var(--c); stroke:#fff; stroke-width:5; filter:drop-shadow(0 4px 6px rgba(31,60,120,.3)) }
+.vj .pa .shd{ fill:rgba(31,60,120,.26) }
+.vj .pa .bd{ fill:var(--c); stroke:#fff; stroke-width:5 }
 .vj .pa .bn{ fill:var(--cx); font:800 24px var(--fd); text-anchor:middle }
 .vj .pa .ping{ fill:none; stroke:var(--c); stroke-width:3.5; transform-box:fill-box; transform-origin:center; animation:pingA 2.6s ease-out infinite; animation-delay:var(--d,0s) }
 @keyframes pingA{ 0%{ transform:scale(.7); opacity:.9 } 100%{ transform:scale(2.4); opacity:0 } }
-.vj .pa .pill{ fill:#fff; stroke:var(--c); stroke-width:3.5; filter:drop-shadow(0 5px 8px rgba(31,60,120,.2)); transition:fill .25s }
+.vj .pa .pill{ fill:#fff; stroke:var(--c); stroke-width:3.5; transition:fill .25s }
 .vj .pa .lb{ fill:var(--ink); font:800 20px var(--fd); text-anchor:middle }
 .vj .pa:hover .pill, .vj .pa.on .pill{ fill:var(--c) } .vj .pa:hover .lb, .vj .pa.on .lb{ fill:var(--cx) }
 .vj .pa .ck{ opacity:0; transform:scale(.3); transform-box:fill-box; transform-origin:center; transition:opacity .3s, transform .4s cubic-bezier(.34,1.8,.5,1) }
@@ -49,8 +52,11 @@ estilo(`
 .vj .blk{ animation:blkA 1.2s steps(1) infinite } @keyframes blkA{ 50%{ opacity:.15 } }
 
 /* bus y notas */
-.vj #vjBus{ cursor:grab } .vj #vjBus.arr{ cursor:grabbing }
-.vj .rueda{ transform-box:fill-box; transform-origin:center; animation:girar .6s linear infinite } @keyframes girar{ to{ transform:rotate(360deg) } }
+/* los dibujos solo se animan en la parada activa o bajo el cursor: cada animación de un elemento SVG obliga a repintar su capa en cada cuadro */
+.vj .pa .ping,.vj .pa .vj-bob,.vj .pa .vj-bar,.vj .pa .vj-tram,.vj .pa .vj-doc,.vj .pa .vr,.vj .pa .vy,.vj .pa .vg,.vj .pa .vj-pet,.vj .pa .sg,.vj .pa .vj-dot,.vj .pa .blk{ animation-play-state:paused }
+.vj .pa.on .ping,.vj .pa.on .vj-bob,.vj .pa.on .vj-bar,.vj .pa.on .vj-tram,.vj .pa.on .vj-doc,.vj .pa.on .vr,.vj .pa.on .vy,.vj .pa.on .vg,.vj .pa.on .vj-pet,.vj .pa.on .sg,.vj .pa.on .vj-dot,.vj .pa.on .blk,.vj .pa:hover .ping,.vj .pa:hover .vj-bob,.vj .pa:hover .vj-bar,.vj .pa:hover .vj-tram,.vj .pa:hover .vj-doc,.vj .pa:hover .vr,.vj .pa:hover .vy,.vj .pa:hover .vg,.vj .pa:hover .vj-pet,.vj .pa:hover .sg,.vj .pa:hover .vj-dot,.vj .pa:hover .blk{ animation-play-state:running }
+.vj .vj-bus{ position:absolute; left:-7rem; top:-3.667rem; width:14rem; height:7rem; transform-origin:50% 52.4%; will-change:transform; cursor:grab; touch-action:none } .vj .vj-bus.arr{ cursor:grabbing } .vj .vj-bus svg{ display:block; width:100%; height:100%; overflow:visible }
+.vj .rueda{ transform-box:fill-box; transform-origin:center; animation:girar .6s steps(8) infinite } @keyframes girar{ to{ transform:rotate(360deg) } }
 .vj .vj-nt{ font:900 30px var(--fd); animation:ntA 1.9s ease-out forwards; pointer-events:none } @keyframes ntA{ 0%{ transform:translate(0,0) rotate(-8deg) scale(.6); opacity:0 } 15%{ opacity:1 } 100%{ transform:translate(var(--dx,10px),-96px) rotate(12deg) scale(1.15); opacity:0 } }
 
 /* texto sobre el cielo */
@@ -81,7 +87,7 @@ estilo(`
 .vj-f.cambia .fh, .vj-f.cambia h3, .vj-f.cambia p{ animation:fichaIn .45s cubic-bezier(.22,.8,.3,1) } @keyframes fichaIn{ from{ opacity:0; transform:translateY(.8rem) } }
 
 /* barra inferior */
-.vj .cbar{ position:absolute; left:0; right:0; bottom:0; height:7.4rem; z-index:7; display:flex; align-items:center; justify-content:flex-end; gap:1.4rem; padding:0 3rem; background:rgba(248,251,255,.92); backdrop-filter:blur(.8rem); border-top:.25rem solid rgba(31,60,120,.1) }
+.vj .cbar{ position:absolute; left:0; right:0; bottom:0; height:7.4rem; z-index:7; display:flex; align-items:center; justify-content:flex-end; gap:1.4rem; padding:0 3rem; background:rgba(248,251,255,.96); border-top:.25rem solid rgba(31,60,120,.1) }
 .vj .cbar .btn{ font-size:1.75rem; padding:1.15rem 2.2rem } .vj .cbar .hint{ margin-right:auto; font:700 1.65rem var(--ft); color:var(--tx) }
 
 /* trivia */
@@ -101,8 +107,6 @@ estilo(`
 .trv-cl{ position:absolute; top:1.8rem; right:2rem; width:4rem; height:4rem; border-radius:50%; font:800 2.4rem var(--fd); color:var(--mut); display:grid; place-items:center } .trv-cl:hover{ background:var(--paper); color:var(--ink) }
 
 /* confeti, notas y piano «Gracias» */
-.cft{ position:absolute; top:-3rem; z-index:8; pointer-events:none; animation:confCae var(--dur,4s) linear forwards; animation-delay:var(--dl,0s); opacity:0 }
-@keyframes confCae{ 0%{ transform:translate(0,0) rotate(0); opacity:1 } 100%{ transform:translate(var(--dx,0),72rem) rotate(var(--rot,540deg)); opacity:1 } }
 .ntf{ position:absolute; z-index:9; pointer-events:none; font-weight:900; animation:ntUp 1.6s ease-out forwards; text-shadow:0 .2rem .5rem rgba(0,0,0,.15) }
 @keyframes ntUp{ 0%{ transform:translateY(0) rotate(-8deg) scale(.7); opacity:0 } 15%{ opacity:1 } 100%{ transform:translateY(-14rem) rotate(10deg) scale(1.1); opacity:0 } }
 .vj .fin-t{ position:absolute; left:0; right:0; top:8.6rem; text-align:center; z-index:4; pointer-events:none }
@@ -118,6 +122,17 @@ estilo(`
 
 /* ---------- ruta y paradas ---------- */
 const VJ_D = 'M -80 522 C 80 470, 220 470, 340 522 S 580 574, 720 522 S 960 470, 1100 522 S 1340 574, 1520 512';
+/* la ruta se muestrea una sola vez con matemática de Bézier: getPointAtLength x721 costaba unos 90 ms cada vez que se montaba la escena */
+const VJ_RUTA = (()=>{ const seg=[]; let cx=0, cy=0, pc=null;
+  VJ_D.replace(/([MCS])([^MCS]*)/g,(_,c,a)=>{ const n=a.match(/-?\d+(\.\d+)?/g).map(Number);
+    if(c==='M'){ cx=n[0]; cy=n[1]; pc=null; return; }
+    let x1,y1,x2,y2,x,y; if(c==='C') [x1,y1,x2,y2,x,y]=n; else { [x2,y2,x,y]=n; x1=pc?2*cx-pc[0]:cx; y1=pc?2*cy-pc[1]:cy; }
+    seg.push([cx,cy,x1,y1,x2,y2,x,y]); pc=[x2,y2]; cx=x; cy=y; });
+  const P=[]; seg.forEach(([x0,y0,x1,y1,x2,y2,x3,y3])=>{ for(let k=0;k<=400;k++){ const t=k/400, u=1-t; P.push([u*u*u*x0+3*u*u*t*x1+3*u*t*t*x2+t*t*t*x3, u*u*u*y0+3*u*u*t*y1+3*u*t*t*y2+t*t*t*y3]); } });
+  const D=[0]; for(let i=1;i<P.length;i++) D.push(D[i-1]+Math.hypot(P[i][0]-P[i-1][0],P[i][1]-P[i-1][1]));
+  const L=D[D.length-1], N=720, PT=[]; let j=0;
+  for(let k=0;k<=N;k++){ const d=L*k/N; while(j<D.length-2&&D[j+1]<d) j++; const u=(d-D[j])/((D[j+1]-D[j])||1); PT.push({x:P[j][0]+(P[j+1][0]-P[j][0])*u, y:P[j][1]+(P[j+1][1]-P[j][1])*u}); }
+  return { L, N, PT }; })();
 const VJ_FR = ALERTAS.map((a,i)=>0.11+i*0.0988);            // posición de cada parada a lo largo de la ruta
 const NOTAS_COL = ['#F6BD4B','#3AA56D','#E5626A','#5B91E3','#FFD25E'];
 
@@ -170,9 +185,6 @@ const VJ_BG = () => {
   for(let i=0;i<26;i++){ const x=30+i*56+rnd()*30; if(xs.some(p=>Math.abs(p-x)<86)) continue; const y=616+rnd()*14, r=15+rnd()*10, pink=rnd()<.28;
     t+=`<g transform="translate(${x.toFixed(0)} ${y.toFixed(0)})"><rect x="-3.5" y="-${(r*.9).toFixed(0)}" width="7" height="${(r*.9).toFixed(0)}" fill="#A0714A"/><circle cy="-${(r*1.25).toFixed(0)}" r="${r.toFixed(0)}" fill="${pink?'#F4B9CF':'#9ED4B0'}"/><circle cx="${(r*.3).toFixed(0)}" cy="-${(r*1.4).toFixed(0)}" r="${(r*.55).toFixed(0)}" fill="${pink?'#FADCE8':'#BDE6C9'}"/></g>`; }
   return `<defs><linearGradient id="vjTierra" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D8EEDE"/><stop offset=".5" stop-color="#E5F1F7"/><stop offset="1" stop-color="#EEF5FD"/></linearGradient></defs>
-    <g class="nube" style="--dur:130s;--dl:-40s" transform="translate(0 70)" opacity=".92"><path d="M0 44a26 26 0 0 1 32-24a34 34 0 0 1 62 8a22 22 0 0 1 8 44h-92a20 20 0 0 1-10-28z" fill="#fff"/></g>
-    <g class="nube" style="--dur:170s;--dl:-110s" transform="translate(0 160)" opacity=".8"><path d="M0 34a20 20 0 0 1 26-18a28 28 0 0 1 50 8a18 18 0 0 1 6 36h-76a16 16 0 0 1-6-26z" fill="#fff"/></g>
-    <g class="nube" style="--dur:150s;--dl:-70s" transform="translate(0 40)" opacity=".85"><path d="M0 34a20 20 0 0 1 26-18a28 28 0 0 1 50 8a18 18 0 0 1 6 36h-76a16 16 0 0 1-6-26z" fill="#fff"/></g>
     <path d="M0 322L0 266C70 240 120 216 178 238C240 262 284 216 346 206C416 196 454 248 522 252C594 256 642 208 718 192C792 176 832 216 902 228L940 178L966 150L994 198L1020 180L1052 228C1122 238 1178 202 1252 190C1332 178 1392 216 1440 234L1440 322Z" fill="#CADCF4"/>
     <path d="M966 150L948 180L958 174L968 186L980 174L992 182L978 164Z" fill="#fff" opacity=".95"/>
     <path d="M0 356C120 322 200 334 300 350C420 370 500 326 620 324C760 322 830 370 960 364C1080 358 1160 322 1280 330C1350 334 1400 350 1440 344L1440 430L0 430Z" fill="#C4E4D2"/>
@@ -181,19 +193,39 @@ const VJ_BG = () => {
     ${t}`;
 };
 
+/* saturate(.55) calculado una sola vez sobre los colores (antes era un filter que se repintaba en cada cuadro) */
+const satHex = (h,k)=>{ let x=h.slice(1); if(x.length===3) x=x.split('').map(c=>c+c).join(''); const r=parseInt(x.slice(0,2),16), g=parseInt(x.slice(2,4),16), b=parseInt(x.slice(4,6),16), l=.213*r+.715*g+.072*b;
+  const f=v=>Math.max(0,Math.min(255,Math.round(l+(v-l)*k))).toString(16).padStart(2,'0'); return '#'+f(r)+f(g)+f(b); };
+Object.keys(VJ_LM).forEach(k=>{ VJ_LM[k]=VJ_LM[k].replace(/#[0-9A-Fa-f]{6}\b/g,h=>satHex(h,.55)); });
+
+/* nubes: capas propias que solo se desplazan (transform compuesto), fuera del fondo estático */
+const VJ_NUBES = [[130,-40,70,.92,'M0 44a26 26 0 0 1 32-24a34 34 0 0 1 62 8a22 22 0 0 1 8 44h-92a20 20 0 0 1-10-28z'],
+  [170,-110,160,.8,'M0 34a20 20 0 0 1 26-18a28 28 0 0 1 50 8a18 18 0 0 1 6 36h-76a16 16 0 0 1-6-26z'],
+  [150,-70,40,.85,'M0 34a20 20 0 0 1 26-18a28 28 0 0 1 50 8a18 18 0 0 1 6 36h-76a16 16 0 0 1-6-26z']]
+  .map(([dur,dl,ty,op,d])=>`<svg class="nube-c" viewBox="-12 -20 130 100" style="--dur:${dur}s;--dl:${dl}s;top:${((ty-20)/12).toFixed(3)}rem"><path d="${d}" fill="#fff" fill-opacity="${op}"/></svg>`).join('');
+
+/* fondo: se dibuja una vez en un canvas ya difuminado y desaturado (antes: filter blur sobre el SVG, recalculado en cada cuadro) */
+function hornearFondo(el){
+  const ph=$('#vjBg',el), W=960, H=487, url=URL.createObjectURL(new Blob([`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 730" width="${W}" height="${H}">${VJ_BG()}</svg>`],{type:'image/svg+xml'}));
+  const im=new Image(); im.onload=()=>{ const c=document.createElement('canvas'); c.width=W; c.height=H; c.id='vjBg'; c.className='cap'; c.setAttribute('aria-hidden','true'); const g=c.getContext('2d');
+    if('filter' in g) g.filter='blur(1.6px) saturate(.4)'; else c.style.filter='blur(2.4px) saturate(.4)';
+    g.drawImage(im,0,0,W,H); URL.revokeObjectURL(url); if(ph.isConnected) ph.replaceWith(c); };
+  im.src=url; }
+
 let VJ_XS = null;
 
 /* monta el viaje dentro de `root`. opts: tipo 'portada'|'fin', cover, barra */
 function montarViaje(root, {tipo='portada', cover='', barra=''}={}){
   root.innerHTML=`<div class="vj" data-tipo="${tipo}">
+    <div class="nubes" aria-hidden="true">${VJ_NUBES}</div>
     <svg class="cap" id="vjBg" viewBox="0 0 1440 730" preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg>
-    <svg class="cap" id="vjFg" viewBox="0 0 1440 730" preserveAspectRatio="xMidYMid meet">
+    <svg class="cap" id="vjRoad" viewBox="0 0 1440 730" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
       <path id="vjRB" d="${VJ_D}" fill="none" stroke="#6B7EA6" stroke-width="72" stroke-linecap="round"/>
       <path id="vjRA" d="${VJ_D}" fill="none" stroke="#9AABCE" stroke-width="62" stroke-linecap="round"/>
       <path id="vjRP" d="${VJ_D}" fill="none" stroke="#FFD25E" stroke-width="12" stroke-linecap="round" opacity=".95"/>
-      <path class="vj-dash" d="${VJ_D}"/>
-      <g id="vjParadas"></g><g id="vjNotas"></g>
-      <g id="vjBus"><rect x="-84" y="-44" width="168" height="84" fill="transparent"/>
+      <path class="vj-dash" d="${VJ_D}"/></svg>
+    <svg class="cap" id="vjFg" viewBox="0 0 1440 730" preserveAspectRatio="xMidYMid meet"><g id="vjParadas"></g><g id="vjNotas"></g></svg>
+    <div class="vj-bus" id="vjBus"><svg viewBox="-84 -44 168 84" aria-hidden="true">
         <ellipse cx="0" cy="28" rx="70" ry="7" fill="rgba(31,60,120,.25)"/>
         <rect x="-70" y="-28" width="140" height="50" rx="15" fill="#fff" stroke="#C4D3EC" stroke-width="2"/>
         <path d="M-70 5H70V9a13 13 0 0 1-13 13H-57A13 13 0 0 1-70 9Z" fill="#3AA56D"/><rect x="-70" y="0" width="140" height="5" fill="#F6BD4B"/>
@@ -201,31 +233,30 @@ function montarViaje(root, {tipo='portada', cover='', barra=''}={}){
         <rect x="-26" y="-36" width="52" height="11" rx="5.5" fill="#3866B5"/><text x="0" y="-26.5" text-anchor="middle" font-size="18" fill="#fff" font-weight="800">♪</text>
         <rect x="66" y="7" width="7" height="8" rx="2" fill="#FFE9A6"/>
         <circle cx="-38" cy="24" r="12" fill="#34456E"/><circle cx="38" cy="24" r="12" fill="#34456E"/>
-        <g class="rueda"><circle cx="-38" cy="24" r="5" fill="#DDE6F6"/><path d="M-38 19v10M-43 24h10" stroke="#34456E" stroke-width="2"/></g><g class="rueda"><circle cx="38" cy="24" r="5" fill="#DDE6F6"/><path d="M38 19v10M33 24h10" stroke="#34456E" stroke-width="2"/></g></g>
-    </svg>
+        <g class="rueda"><circle cx="-38" cy="24" r="5" fill="#DDE6F6"/><path d="M-38 19v10M-43 24h10" stroke="#34456E" stroke-width="2"/></g><g class="rueda"><circle cx="38" cy="24" r="5" fill="#DDE6F6"/><path d="M38 19v10M33 24h10" stroke="#34456E" stroke-width="2"/></g></svg></div>
     <div class="logos"><img src="img/logo-color.png" alt="TransMusical SETP"><img class="alc" src="img/alcaldia.png" alt="Alcaldía de Ibagué"></div>
     ${cover}
     ${tipo==='portada'?`<aside class="vj-f" id="vjF"></aside>`:''}
     <div class="cbar">${barra}</div>
   </div>`;
-  const el=$('.vj',root), fg=$('#vjFg',el), path=$('#vjRA',el), L=path.getTotalLength();
-  /* muestras de la ruta para proyectar el arrastre */
-  const N=720, PT=Array.from({length:N+1},(_,k)=>path.getPointAtLength(L*k/N));
+  const el=$('.vj',root), fg=$('#vjFg',el), {L,N,PT}=VJ_RUTA;
+  /* posición sobre la ruta a partir de las muestras (también fuera de sus extremos) */
   const pt=s=>{ if(s<0){ const a=PT[0], b=PT[1], d=Math.hypot(b.x-a.x,b.y-a.y); return {x:a.x+(b.x-a.x)/d*s,y:a.y+(b.y-a.y)/d*s}; }
-    if(s>L){ const a=PT[N-1], b=PT[N], d=Math.hypot(b.x-a.x,b.y-a.y); return {x:b.x+(b.x-a.x)/d*(s-L),y:b.y+(b.y-a.y)/d*(s-L)}; } return path.getPointAtLength(s); };
+    if(s>L){ const a=PT[N-1], b=PT[N], d=Math.hypot(b.x-a.x,b.y-a.y); return {x:b.x+(b.x-a.x)/d*(s-L),y:b.y+(b.y-a.y)/d*(s-L)}; }
+    const f=s/L*N, i=Math.min(N-1,f|0), a=PT[i], b=PT[i+1], u=f-i; return {x:a.x+(b.x-a.x)*u,y:a.y+(b.y-a.y)*u}; };
   const LS=VJ_FR.map(f=>f*L), PS=LS.map(pt);
   VJ_XS=PS.map(p=>p.x);
-  $('#vjBg',el).innerHTML=VJ_BG();
+  hornearFondo(el);
   /* paradas */
   $('#vjParadas',el).innerHTML=ALERTAS.map((a,i)=>{ const c=CAT[a.cat], p=PS[i];
     return `<g class="pa f-${a.cat}" data-n="${a.n}" data-i="${i}" transform="translate(${p.x.toFixed(1)} ${p.y.toFixed(1)})" style="--x:${p.x.toFixed(1)}px;--y:${p.y.toFixed(1)}px;--c:${c.c};--cx:${c.tx};--d:${(i*.28).toFixed(2)}s" tabindex="0" role="button" aria-label="Alerta ${a.n}: ${a.titulo}">
       <ellipse class="pad" cx="0" cy="-36" rx="66" ry="14"/><g transform="translate(0 -34) scale(.9)"><g class="lm">${VJ_LM[a.n]}</g></g>
-      <circle class="ping" cx="0" cy="0" r="20"/><circle class="bd" cx="0" cy="0" r="22"/><text class="bn" y="8.5">${a.n}</text>
+      <circle class="ping" cx="0" cy="0" r="20"/><circle class="shd" cx="0" cy="5" r="23"/><circle class="bd" cx="0" cy="0" r="22"/><text class="bn" y="8.5">${a.n}</text>
       <g class="ck"><circle cx="18" cy="-18" r="10" fill="#3AA56D" stroke="#fff" stroke-width="2.5"/><path d="M13.5 -18l3.4 3.4 6 -7" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></g>
-      <g transform="translate(0 66)"><rect class="pill" x="-70" y="-22" width="140" height="44" rx="22"/><text class="lb" y="7">${a.corto}</text>${a.act?'<circle class="nv" cx="0" cy="-22" r="7"/>':''}</g>
+      <g transform="translate(0 66)"><rect class="shd shp" x="-70" y="-16" width="140" height="44" rx="22"/><rect class="pill" x="-70" y="-22" width="140" height="44" rx="22"/><text class="lb" y="7">${a.corto}</text>${a.act?'<circle class="nv" cx="0" cy="-22" r="7"/>':''}</g>
       <rect x="-66" y="-150" width="132" height="240" fill="transparent"/></g>`; }).join('');
-  $$('.pa',el).forEach((g,i)=>{ const t=$('.lb',g), w=Math.max(120,(t.getComputedTextLength()||90)+44), r=$('.pill',g), nv=$('.nv',g);
-    r.setAttribute('x',-w/2); r.setAttribute('width',w); if(nv) nv.setAttribute('cx',w/2-8); });
+  $$('.pa',el).forEach((g,i)=>{ const t=$('.lb',g), w=Math.max(120,(t.getComputedTextLength()||90)+44), r=$('.pill',g), sp=$('.shp',g), nv=$('.nv',g);
+    r.setAttribute('x',-w/2); r.setAttribute('width',w); sp.setAttribute('x',-w/2); sp.setAttribute('width',w); if(nv) nv.setAttribute('cx',w/2-8); });
   /* ficha */
   const F=$('#vjF',el); let cur=-1, prev=null;
   const ficha=i=>{ if(!F) return; const a=i>=0?ALERTAS[i]:null;
@@ -238,14 +269,15 @@ function montarViaje(root, {tipo='portada', cover='', barra=''}={}){
   const bus=$('#vjBus',el), prog=$('#vjRP',el), notas=$('#vjNotas',el);
   prog.style.strokeDasharray=L+' '+(L+200);
   let s=tipo==='fin'?LS[8]:-70, modo=tipo==='fin'?'manual':'auto', pausa=0, ultimo=performance.now(), idle=0, sigNota=0, mueve=false;
+  const PAS=$$('.pa',el), visto=PAS.map(()=>false);
   const colocar=()=>{ const p=pt(s), q=pt(s+3), ang=Math.atan2(q.y-p.y,q.x-p.x)*180/Math.PI;
-    bus.setAttribute('transform',`translate(${p.x.toFixed(1)} ${(p.y-4).toFixed(1)}) rotate(${clampA(ang).toFixed(1)})`);
+    bus.style.transform=`translate(${(p.x/12).toFixed(3)}rem,${((p.y-4)/12).toFixed(3)}rem) rotate(${clampA(ang).toFixed(1)}deg)`;
     prog.style.strokeDashoffset=L-clamp(s,0,L);
-    $$('.pa',el).forEach((g,i)=>{ g.classList.toggle('vis',s>=LS[i]-4); });
+    PAS.forEach((g,i)=>{ const v=s>=LS[i]-4; if(v!==visto[i]){ visto[i]=v; g.classList.toggle('vis',v); } });
     let k=-1; LS.forEach((l,i)=>{ if(Math.abs(s-l)<26) k=i; });
-    if(k!==cur){ cur=k; $$('.pa',el).forEach((g,i)=>g.classList.toggle('on',i===k)); if(k>=0){ prev=k; ficha(k); } } };
+    if(k!==cur){ cur=k; PAS.forEach((g,i)=>g.classList.toggle('on',i===k)); if(k>=0){ prev=k; ficha(k); } } };
   const clampA=a=>Math.max(-40,Math.min(40,a));
-  const V=118;
+  const V=118; let colocado=false;
   const cuadro=t=>{ const dt=Math.min(.2,(t-ultimo)/1000); ultimo=t; let anda=false;
     if(modo==='auto'){ if(t>=pausa){ const antes=s; s+=V*dt; anda=true;
         const k=LS.findIndex(l=>antes<l&&s>=l); if(k>=0){ s=LS[k]; pausa=t+2600; }
@@ -253,7 +285,7 @@ function montarViaje(root, {tipo='portada', cover='', barra=''}={}){
     else if(mueve) anda=true;
     if(anda && t>sigNota){ sigNota=t+520; const p=pt(s), e=document.createElementNS(NSVG,'text'); e.setAttribute('class','vj-nt'); e.setAttribute('x',(p.x-20).toFixed(0)); e.setAttribute('y',(p.y-44).toFixed(0));
       e.style.setProperty('--dx',((Math.random()-.5)*50).toFixed(0)+'px'); e.setAttribute('fill',NOTAS_COL[(Math.random()*5)|0]); e.textContent=['♪','♫','♩','♬'][(Math.random()*4)|0]; notas.append(e); setTimeout(()=>e.remove(),2000); }
-    colocar(); raf=requestAnimationFrame(cuadro); };
+    if(anda||!colocado){ colocar(); colocado=true; } raf=requestAnimationFrame(cuadro); };
   let raf=requestAnimationFrame(cuadro); limpiar.push(()=>cancelAnimationFrame(raf), ()=>clearTimeout(idle));
   /* arrastrar el bus por la ruta */
   const cercano=p=>{ let mi=0,md=1e12; PT.forEach((q,k)=>{ const d=(q.x-p.x)**2+(q.y-p.y)**2; if(d<md){ md=d; mi=k; } }); return L*mi/N; };
@@ -272,7 +304,7 @@ function montarViaje(root, {tipo='portada', cover='', barra=''}={}){
   $$('.lg-f button',el).forEach(b=>{ const on=()=>{ el.dataset.f=b.dataset.k; b.classList.add('on'); $$('.pa',el).forEach(g=>g.classList.toggle('f',g.classList.contains('f-'+b.dataset.k))); }, off=()=>{ el.removeAttribute('data-f'); b.classList.remove('on'); };
     b.onmouseenter=on; b.onmouseleave=off; b.onfocus=on; b.onblur=off; });
   limpiar.push(ocultaTip);
-  return { el, saltar:k=>{ modo='manual'; s=LS[k]; }, colocar };
+  return { el, saltar:k=>{ modo='manual'; s=LS[k]; colocar(); }, colocar };
 }
 
 const leyendaCat = () => ['critica','moderada','leve'].map(k=>{ const n=ALERTAS.filter(a=>a.cat===k).length; return `<button data-k="${k}" style="--c:${CAT[k].c};--cx:${CAT[k].tx}"><i></i>${n} ${CAT[k].n.toLowerCase()}${n>1?'s':''}</button>`; }).join('');
@@ -306,9 +338,18 @@ function trivia(root){
 }
 
 /* ---------- confeti, notas y sonido ---------- */
-function confeti(host,n=70){ for(let k=0;k<n;k++){ const e=document.createElement('i'); e.className='cft';
-    const c=NOTAS_COL[k%NOTAS_COL.length], w=.7+Math.random()*.9; e.style.cssText=`left:${(Math.random()*118).toFixed(1)}rem;width:${w.toFixed(2)}rem;height:${(w*1.6).toFixed(2)}rem;background:${c};border-radius:${k%3?'.15rem':'50%'};--dx:${((Math.random()-.5)*16).toFixed(1)}rem;--rot:${(Math.random()*900-450)|0}deg;--dur:${(3+Math.random()*2.6).toFixed(2)}s;--dl:${(Math.random()*.9).toFixed(2)}s`;
-    host.append(e); setTimeout(()=>e.remove(),7500); } }
+/* confeti: un solo canvas con todas las piezas (antes eran 70 elementos con su propia animación y su propia capa) */
+function confeti(host,n=40){
+  /* medio tamaño: las piezas son grandes y de color plano, y un canvas de pantalla completa costaba más que todo lo demás */
+  const c=document.createElement('canvas'), esc=.4, W=c.width=Math.round(host.clientWidth*esc), H=c.height=Math.round(host.clientHeight*esc), u=parseFloat(getComputedStyle(document.documentElement).fontSize)*esc;
+  c.style.cssText='position:absolute;inset:0;width:100%;height:100%;z-index:8;pointer-events:none'; host.append(c);
+  const g=c.getContext('2d'), P=Array.from({length:n},(_,k)=>{ const w=(.7+Math.random()*.9)*u; return { x:Math.random()*W, w, h:w*1.6, c:NOTAS_COL[k%NOTAS_COL.length], r:k%3===0, dx:(Math.random()-.5)*16*u, rot:(Math.random()*900-450)*Math.PI/180, dur:(3+Math.random()*2.6)*1000, dl:Math.random()*900 }; });
+  const t0=performance.now(); let raf=0; limpiar.push(()=>{ cancelAnimationFrame(raf); c.remove(); });
+  let par=0; (function f(now){ if((par^=1)&&now>t0){ raf=requestAnimationFrame(f); return; } const t=now-t0; g.clearRect(0,0,W,H); let vivo=false;
+    for(const p of P){ const q=(t-p.dl)/p.dur; if(q<0){ vivo=true; continue; } if(q>=1) continue; vivo=true;
+      g.save(); g.translate(p.x+p.dx*q,-3*u+72*u*q); g.rotate(p.rot*q); g.fillStyle=p.c; if(p.r){ g.beginPath(); g.arc(0,0,p.w/2,0,7); g.fill(); } else g.fillRect(-p.w/2,-p.h/2,p.w,p.h); g.restore(); }
+    if(vivo&&t<7500) raf=requestAnimationFrame(f); else c.remove(); })(t0);
+}
 function notaFlota(host,xr,yr){ const e=document.createElement('span'); e.className='ntf'; e.textContent=['♪','♫','♩','♬'][(Math.random()*4)|0]; e.style.cssText=`left:${xr}rem;top:${yr}rem;color:${NOTAS_COL[(Math.random()*5)|0]};font-size:${(2.4+Math.random()*2).toFixed(1)}rem`; host.append(e); setTimeout(()=>e.remove(),1700); }
 let AUDIO=null;
 function tono(f){ try{ AUDIO=AUDIO||new (window.AudioContext||window.webkitAudioContext)(); const a=AUDIO, t=a.currentTime, o=a.createOscillator(), o2=a.createOscillator(), g=a.createGain();
@@ -317,13 +358,15 @@ function tono(f){ try{ AUDIO=AUDIO||new (window.AudioContext||window.webkitAudio
 
 /* ---- ajustes: ilustración como marca de agua, CTA de la trivia ---- */
 estilo(`
-.vj #vjBg{ filter:saturate(.4) blur(2.4px); opacity:.72 }
-.vj .pa .lm, .vj .pa .pad{ filter:saturate(.55); opacity:.8; transition:transform .35s cubic-bezier(.34,1.6,.5,1), opacity .3s, filter .3s }
-.vj .pa:hover .lm, .vj .pa.on .lm{ filter:none; opacity:1 }
+.vj #vjBg{ opacity:.72 } .vj canvas#vjBg{ animation:bgIn .5s ease both } @keyframes bgIn{ from{ opacity:0 } }
+.vj .pa .lm, .vj .pa .pad{ opacity:.8; transition:transform .35s cubic-bezier(.34,1.6,.5,1), opacity .3s }
+.vj .pa:hover .lm, .vj .pa.on .lm{ opacity:1 }
 .vj:before{ background:radial-gradient(circle at 88% 13%,rgba(255,236,180,.7) 0,rgba(255,236,180,0) 24rem),radial-gradient(circle at 10% 34%,rgba(255,255,255,.75) 0,rgba(255,255,255,0) 32rem) }
 .vj .cbar .btn.cta{ position:relative; background:linear-gradient(180deg,#FFDD7A,#FFC83D); color:var(--ink); font-size:2.05rem; padding:1.25rem 3rem; box-shadow:0 .5rem 1.6rem rgba(255,196,61,.6), inset 0 0 0 .25rem rgba(255,255,255,.55); animation:ctaPulso 2.2s ease-in-out infinite }
+.vj .cbar .btn.cta:after{ content:""; position:absolute; inset:0; border-radius:inherit; border:.35rem solid rgba(255,210,94,.75); pointer-events:none; animation:ctaAro 2.2s ease-out infinite }
 .vj .cbar .btn.cta:hover{ background:linear-gradient(180deg,#FFE594,var(--sol)) }
-@keyframes ctaPulso{ 0%,100%{ transform:scale(1); box-shadow:0 .5rem 1.6rem rgba(255,196,61,.55), 0 0 0 0 rgba(255,210,94,.7) } 50%{ transform:scale(1.045); box-shadow:0 .7rem 2rem rgba(255,196,61,.7), 0 0 0 1.4rem rgba(255,210,94,0) } }
+@keyframes ctaPulso{ 0%,100%{ transform:scale(1) } 50%{ transform:scale(1.045) } }
+@keyframes ctaAro{ 0%{ transform:scale(1); opacity:.9 } 70%,100%{ transform:scale(1.25,1.5); opacity:0 } }
 .vj .cta-tip{ position:absolute; bottom:8.2rem; font:800 1.6rem var(--fd); color:var(--ink); background:#fff; padding:.6rem 1.4rem; border-radius:1.4rem; box-shadow:0 .6rem 1.6rem rgba(31,60,120,.22); z-index:8; animation:tipFlota 2.2s ease-in-out infinite; pointer-events:none; white-space:nowrap }
 .vj .cta-tip:after{ content:""; position:absolute; left:50%; bottom:-.7rem; width:1.4rem; height:1.4rem; background:#fff; transform:translateX(-50%) rotate(45deg) }
 @keyframes tipFlota{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-.5rem) } }
