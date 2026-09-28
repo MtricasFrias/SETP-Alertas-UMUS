@@ -146,7 +146,7 @@ VIS.appB = root => {
   function ir2(i,{auto=false}={}){ clearTimeout(tm); clearTimeout(tm2); i=clamp(i,0,n-1); const dist=Math.abs(i-cur), dur=cur<0?2.6:clamp(1.5+.32*dist,1.7,3.6);
     const d0=cur>=0&&i>cur?Math.round((H[i].f-H[i-1].f)/864e5):0;
     sc.classList.add('mov'); tram.classList.add('mov'); tram.classList.remove('abre'); card.classList.add('off'); $$('.tv-st',root).forEach(e=>e.classList.remove('open'));
-    gapEl.classList.remove('on'); if(d0>60){ gapEl.textContent='≈ '+(d0/30.4).toFixed(1).replace('.',',')+' meses entre un paso y otro'; setTimeout(()=>gapEl.classList.add('on'),250); }
+    gapEl.classList.remove('on');
     cur=i; put(i,dur); rail(i);
     tm2=setTimeout(()=>{ sc.classList.remove('mov'); tram.classList.remove('mov'); gapEl.classList.remove('on'); tram.classList.add('abre'); $l('st'+i).classList.add('open'); info(i);
       if(jugando&&i<n-1) tm=setTimeout(()=>ir2(i+1,{auto:true}),4200); else if(i===n-1){ jugando=false; boton(); } },dur*1000+150); }

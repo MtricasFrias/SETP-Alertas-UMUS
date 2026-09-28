@@ -223,7 +223,7 @@ estilo(`
 .pj tbody tr:not(.g):not(.tot):hover{ background:#E6ECF7 }
 
 /* ---------- tecnología ---------- */
-.tec{ display:grid; grid-template-rows:minmax(0,1fr) 16.6rem; gap:1.4rem; height:100% }
+.tec{ display:grid; grid-template-rows:minmax(0,1fr); height:100% }
 .tec-n{ position:relative; background:var(--card); min-height:0 } .tec-n svg{ position:absolute; left:0; right:0; top:5.6rem; bottom:3rem; width:100%; height:calc(100% - 8.6rem) }
 .tec-n .lk{ stroke:#A9B8CE; stroke-width:3; stroke-dasharray:8 8 } .tec-n .lk.ok{ stroke:var(--verde); stroke-dasharray:none; stroke-width:5 }
 .tec-n .nd{ cursor:grab } .tec-n .nd rect{ transition:fill .4s } .tec-n .nd text{ fill:#fff; font-weight:700; text-anchor:middle; pointer-events:none } .tec-n .nd .s{ font-size:15px; font-weight:500 }
@@ -247,10 +247,10 @@ VIS.fet = root => {
     ['Calibración de escenarios','Calibración de escenarios con el estudio de SAIP & IKON, evaluando la participación de los distintos actores e identificando el mínimo impacto del déficit financiero.','curso'],
     ['Fuentes de alimentación','En análisis, las fuentes para la alimentación del Fondo.','curso'],
     ['Esquema de alimentación','Con estos análisis se define el esquema de alimentación del Fondo, acorde con las condiciones de operación y la implementación progresiva del Sistema.','sig']];
-  const ETQ={hecho:'Listo',curso:'En curso',sig:'Siguiente'}, COL={hecho:['var(--verde)','var(--verde-t)'],curso:['var(--ambar)','var(--ambar-t)'],sig:['#8A93AD','var(--mut)']};
+  const ETQ={hecho:'Listo',curso:'En curso',sig:'Siguiente'}, RIB={hecho:'',curso:'En curso',sig:'Siguiente'}, COL={hecho:['var(--verde)','var(--verde-t)'],curso:['var(--ambar)','var(--ambar-t)'],sig:['#8A93AD','var(--mut)']};
   root.innerHTML=`<div class="fet"><div class="caja fet-p rv"><div class="pasos" id="pasos" style="--p:0"></div></div><div class="caja fdet rv" id="pd"></div></div>`;
   const ps=$('#pasos',root), pd=$('#pd',root);
-  ps.innerHTML=pasos.map((p,i)=>`<button class="paso ${p[2]}" data-i="${i}"><span>${p[2]==='hecho'?'':i+1}</span>${p[0]}<em>${ETQ[p[2]]}</em></button>`).join('');
+  ps.innerHTML=pasos.map((p,i)=>`<button class="paso ${p[2]}" data-i="${i}"><span>${p[2]==='hecho'?'':i+1}</span>${p[0]}${RIB[p[2]]?`<em>${RIB[p[2]]}</em>`:''}</button>`).join('');
   const marca=i=>{ const p=pasos[i]; $$('.paso',ps).forEach((e,k)=>e.classList.toggle('act',k===i)); pd.style.setProperty('--c',COL[p[2]][0]); pd.style.setProperty('--ct',COL[p[2]][1]);
     pd.innerHTML=`<div class="fd-k">Etapa ${i+1} de ${pasos.length} · ${ETQ[p[2]]}</div><h3>${p[0]}</h3><p>${p[1]}</p>`; pd.classList.remove('cambia'); void pd.offsetWidth; pd.classList.add('cambia'); };
   $$('.paso',ps).forEach(b=>b.onclick=()=>marca(+b.dataset.i)); marca(2);
@@ -264,7 +264,7 @@ VIS.con = root => {
   const L=[{c:'#5B91E3',h:'1 · Viabilidad del sistema',p:[['Resultados del modelo','El SETP cuenta con los resultados del modelo financiero, articulados con los lineamientos del modelo operacional.'],['Mesas con transportadores','Los resultados del modelo se socializaron en mesas de trabajo con los transportadores actuales.'],['Modelo de cada empresa','Cada empresa estructura y evalúa su propio modelo financiero y empresarial, según sus condiciones y los escenarios de operación.']]},
            {c:'#3AA56D',h:'2 · Requisitos de los operadores',p:[['Mesas de trabajo','Mesas con los transportadores actuales, en el marco de su eventual participación como Agentes Operadores de Transporte (AOT).'],['Requisitos del Decreto 1079','Se solicitó a las empresas información sobre el cumplimiento de los requisitos aplicables del Decreto 1079.'],['Condiciones de participación','Con esa información se revisan las condiciones de participación de cada empresa como AOT.']]}];
   const pos=[-1,-1], X=p=>p<0?0:p>2?100:(p*2+1)/6*100;
-  const HOY=`<b>Hoy: etapa 3 en las dos vías</b><span>Las mesas y solicitudes son diálogo y preparación: no formalizan acuerdos ni reconocen a las empresas como operadores.</span>`;
+  const HOY=`<b>Hoy: etapa 2 en las dos vías</b><span>Las mesas y solicitudes son diálogo y preparación: no formalizan acuerdos ni reconocen a las empresas como operadores.</span>`;
   root.innerHTML=`<div class="con">
     ${L.map((l,k)=>`<div class="lane rv" style="--c:${l.c}"><h4>${l.h}</h4><div class="ctr" id="tr${k}">${l.p.map((s,i)=>`<button class="est" data-k="${k}" data-i="${i}"><em>${i+1}</em><b>${s[0]}</b></button>`).join('')}<svg class="cbus" id="b${k}" style="left:0%"><use href="#i-bus"/></svg></div></div>`).join('')}
     <div class="cfin rv" id="fin"><span class="sello">HABILITADO</span>${ico('i-doc')}<b>Definición de actos administrativos</b><p>Con la viabilidad demostrada y los requisitos de los operadores verificados.</p></div>
@@ -283,59 +283,30 @@ VIS.con = root => {
   [0,1].forEach(k=>{ const bus=$('#b'+k,root), tr=$('#tr'+k,root);
     arrastrar(bus,{ inicio:()=>bus.classList.add('arr'), mueve:e=>{ const r=tr.getBoundingClientRect(); bus.style.left=clamp((e.clientX-r.left)/r.width*100,0,100)+'%'; },
       fin:()=>{ bus.classList.remove('arr'); const f=parseFloat(bus.style.left), c=[0,X(0),X(1),X(2),100]; ver(k,c.reduce((b,v,i)=>Math.abs(v-f)<Math.abs(c[b]-f)?i:b,0)-1); } }); });
-  /* los buses salen solos y se detienen donde estamos hoy: etapa 3 */
+  /* los buses salen solos y se detienen donde estamos hoy: etapa 2 */
   const tms=[]; limpiar.push(()=>tms.forEach(clearTimeout));
-  [0,1,2].forEach(p=>tms.push(setTimeout(()=>{ ver(0,p,false); ver(1,p,false); },800+p*800)));
-  tms.push(setTimeout(()=>{ $('#det',root).innerHTML=HOY; },800+3*800));
+  [0,1].forEach(p=>tms.push(setTimeout(()=>{ ver(0,p,false); ver(1,p,false); },800+p*800)));
+  tms.push(setTimeout(()=>{ $('#det',root).innerHTML=HOY; },800+2*800));
 };
 
 /* =====================================================================
    3 · Semaforización — dos cortes, brecha y cierre de la Fase I
    ===================================================================== */
 VIS.sem = root => {
-  const CUT=[{f:'6 sep',prog:92.26,real:92.97},{f:'20 sep',prog:96.13,real:93.62}];
-  const S={c:0,serv:30,sim:false};
-  const fx=(n,d=2)=>n.toLocaleString('es-CO',{minimumFractionDigits:d,maximumFractionDigits:d});
+  /* Fase I terminada al 100 %: sin cortes que alternar ni simulación, solo el resultado final */
   root.innerHTML=`<div class="sem">
-    <div class="sem-a rv"><div class="tl" id="tl"><i class="r on"></i><i class="a"></i><i class="v"></i></div><b id="tle">Rojo</b></div>
+    <div class="sem-a rv"><div class="tl" id="tl"><i class="r"></i><i class="a"></i><i class="v on"></i></div><b>Verde</b></div>
     <div class="sem-b rv">
-      <div class="seg" id="seg"><button data-c="0" class="on">Corte 6 sep</button><button data-c="1">Corte 20 sep</button></div>
-      <div class="brow"><div class="top"><span>Avance programado</span><strong id="vp">0 %</strong></div><div class="b"><i id="bp" style="background:#5B91E3"></i></div></div>
-      <div class="brow"><div class="top"><span>Avance real ejecutado</span><strong id="vr">0 %</strong></div><div class="b"><i id="br" style="background:#F6BD4B"></i></div></div>
-      <div class="brecha" id="brecha"></div>
-      <div class="sem-k"><div><b id="kc">30<em> / 34</em></b><span>intersecciones en servicio y seguimiento</span></div><div><b>29 sep</b><span>fin del plazo contractual</span></div></div></div>
-    <div class="sem-c rv"><div class="leg" id="fl">
-        <button class="chip on" data-f="todas">Las 34</button><button class="chip" data-f="serv" style="--c:#46BC7C"><i></i><span id="c-sv">30</span> en servicio</button><button class="chip" data-f="pend" style="--c:#A9B8CE"><i></i><span id="c-pe">4</span> restantes</button></div>
-      <div class="dots" id="dots"></div></div>
-    <div class="sem-d rv"><div class="fnx">Plazo vigente hasta el <b>29 sep 2026</b> · <b>9 días</b> entre el corte del 20 sep y el cierre</div><button class="btn sol" id="sim" style="margin-left:auto">Simular cierre de Fase I</button><button class="btn borde" id="rst" style="display:none">Restablecer</button></div></div>`;
-  const dots=$('#dots',root); dots.innerHTML=Array.from({length:34},()=>'<div class="dt"></div>').join('');
-  let filtro='todas'; const raf={};
-  const tw=(id,to,suf)=>{ const e=$('#'+id,root), from=e._v||0, t0=performance.now(); e._v=to; cancelAnimationFrame(raf[id]);
-    (function f(t){ const p=Math.min(1,(t-t0)/900); e.textContent=fx(from+(to-from)*(1-Math.pow(1-p,3)))+suf; if(p<1) raf[id]=requestAnimationFrame(f); })(t0); };
-  limpiar.push(()=>Object.values(raf).forEach(cancelAnimationFrame));
-  function pinta(){
-    const c=CUT[S.c], real=S.sim?CUT[1].real+(100-CUT[1].real)*((S.serv-30)/4):c.real, prog=c.prog, d=real-prog, ok=S.sim&&S.serv>=34;
-    tw('vp',prog,' %'); tw('vr',real,' %'); $('#bp',root).style.width=prog+'%'; $('#br',root).style.width=real+'%';
-    const b=$('#brecha',root), bien=d>=0;
-    b.textContent = ok ? 'Las 34 intersecciones en servicio y seguimiento' : bien ? 'Adelantado '+fx(d)+' puntos frente al cronograma' : 'Diferencia de '+fx(-d)+' puntos frente al cronograma';
-    b.style.color=bien?'#2E8B5A':''; b.style.borderLeftColor=bien?'var(--verde)':''; b.style.background=bien?'#DDF1E4':'';
-    $$('.dt',dots).forEach((x,i)=>{ const e=i<S.serv?'serv':'pend'; x.className='dt '+e+(filtro!=='todas'&&e!==filtro?' dim':''); x.dataset.e=e; });
-    $('#c-sv',root).textContent=S.serv; $('#c-pe',root).textContent=34-S.serv; $('#kc',root).innerHTML=`${S.serv}<em> / 34</em>`;
-    $$('#seg button',root).forEach(x=>x.classList.toggle('on',+x.dataset.c===S.c));
-  }
-  $$('.dt',dots).forEach(d=>{ d.onmouseenter=e=>verTip({serv:'En servicio y seguimiento',pend:'Restante de la Fase I'}[d.dataset.e],e); d.onmouseleave=ocultaTip; });
-  $$('#fl .chip',root).forEach(b=>b.onclick=()=>{ filtro=b.dataset.f; $$('#fl .chip',root).forEach(x=>x.classList.toggle('on',x===b)); pinta(); });
-  $$('#seg button',root).forEach(b=>b.onclick=()=>{ if(S.sim) return; S.c=+b.dataset.c; pinta(); });
-  const lamps={r:$('.r',root),a:$('.a',root),v:$('.v',root)}; let fase=0, tm; const NOM=['Rojo','Verde','Ámbar'], SEQ=['r','v','a'], DUR=[2600,2600,900];
-  function luz(){ Object.entries(lamps).forEach(([k,e])=>e.classList.toggle('on',k===SEQ[fase])); $('#tle',root).textContent=S.sim&&S.serv>=34?'Red sincronizada':NOM[fase]; }
-  function ciclo(){ clearTimeout(tm); luz(); if(S.sim&&S.serv>=34) return; tm=setTimeout(()=>{ fase=(fase+1)%3; ciclo(); },DUR[fase]); }
-  $('#tl',root).onclick=()=>{ fase=(fase+1)%3; ciclo(); }; limpiar.push(()=>clearTimeout(tm)); ciclo();
-  let it; limpiar.push(()=>clearInterval(it));
-  $('#sim',root).onclick=()=>{ if(S.sim) return; S.sim=true; S.c=1; $('#sim',root).style.display='none';
-    it=setInterval(()=>{ if(S.serv<34) S.serv++; pinta(); if(S.serv>=34){ clearInterval(it); fase=1; ciclo(); $('#rst',root).style.display=''; } },520); };
-  $('#rst',root).onclick=()=>{ clearInterval(it); Object.assign(S,{serv:30,sim:false,c:1}); $('#rst',root).style.display='none'; $('#sim',root).style.display=''; fase=0; ciclo(); pinta(); };
-  /* entra en el corte del 6 de sep (iban adelante) y pasa solo al del 20 (2,51 puntos atrás) */
-  pinta(); const t2=setTimeout(()=>{ if(!S.sim){ S.c=1; pinta(); } },1900); limpiar.push(()=>clearTimeout(t2));
+      <div class="brow"><div class="top"><span>Avance físico y financiero</span><strong>100 %</strong></div><div class="b"><i style="background:#3AA56D;width:100%"></i></div></div>
+      <div class="brecha" style="color:#2E8B5A;border-left-color:var(--verde);background:#DDF1E4">Las 34 intersecciones en servicio y seguimiento</div>
+      <div class="sem-k"><div><b>34<em> / 34</em></b><span>intersecciones en servicio y seguimiento</span></div><div><b>29 sep</b><span>corte de cierre de la Fase I</span></div></div></div>
+    <div class="sem-c rv"><div class="dots" id="dots"></div></div>
+    <div class="sem-d rv"><div class="fnx">Contrato de Obra 117 de 2024 · Fase I terminada al 100 %</div></div></div>`;
+  const dots=$('#dots',root); dots.innerHTML=Array.from({length:34},()=>'<div class="dt serv"></div>').join('');
+  $$('.dt',dots).forEach(d=>{ d.onmouseenter=e=>verTip('En servicio y seguimiento',e); d.onmouseleave=ocultaTip; });
+  const lamps={r:$('.r',root),a:$('.a',root),v:$('.v',root)}; let fase=2, tm; const SEQ=['r','v','a'];
+  const luz=()=>Object.entries(lamps).forEach(([k,e])=>e.classList.toggle('on',k===SEQ[fase]));
+  $('#tl',root).onclick=()=>{ fase=(fase+1)%3; luz(); clearTimeout(tm); tm=setTimeout(()=>{ fase=2; luz(); },1800); }; limpiar.push(()=>clearTimeout(tm));
 };
 
 /* =====================================================================
@@ -345,9 +316,9 @@ VIS.appA = root => {
   const LN = {
     A:{ c:'#E5626A', n:'Línea A · Ambalá', d:'M90,130 C260,95 430,80 610,95 S830,135 905,240', dur:11, setp:'Coincide con la Av. Ambalá, que el SETP ya ejecuta (Contrato de Obra 042 de 2026).', bd:[330,52,346,94,'Av. Ambalá · en ejecución'] },
     B:{ c:'#5B91E3', n:'Línea B · Jordán y Carrera 5', d:'M110,215 C250,300 380,380 510,360 S710,230 905,240', dur:12, setp:'Coincide con la Carrera 5 (ejecutada) y con Av. Jordán Paralela (sin recursos, en revisión). La ciclorruta de la Cra 5 está por radicar.', bd:[440,215,425,352,'Cra 5 · ejecutada'] },
-    C:{ c:'#3AA56D', n:'Línea C · Picaleña, Mirolindo y Ferrocarril', d:'M135,285 C250,390 330,450 480,500 S700,640 830,610 S915,480 905,240', dur:17, setp:'Coincide con la Av. Ferrocarril (consultoría radicada el 10 de junio) y pasa por Picaleña, donde hay un predio de patiotalleres en gestión.', bd:[330,560,292,415,'Ferrocarril · radicada'] },
-    D:{ c:'#F6BD4B', n:'Línea D · Boquerón y Calle 19', d:'M55,650 C75,540 105,410 135,285', dur:6, setp:'Boquerón tiene un predio de patiotalleres en gestión; la Calle 19 es el arranque de la Av. Ferrocarril.', bd:[300,655,62,648,'Boquerón · predio en gestión'] } };
-  const ACL = [['¿100 % privado?','La propuesta declara inversión «100 % asumida por el privado» y, a la vez, pide recursos del CONPES 4017 para comprar vehículos. Hay que aclarar cuál es el aporte público real.'],
+    C:{ c:'#3AA56D', n:'Línea C · Picaleña, Mirolindo y Ferrocarril', d:'M135,285 C250,390 330,450 480,500 S700,640 830,610 S915,480 905,240', dur:17, setp:'Coincide con la Av. Ferrocarril, cuya consultoría se radicó el 10 de junio.', bd:[330,560,292,415,'Ferrocarril · radicada'] },
+    D:{ c:'#F6BD4B', n:'Línea D · Boquerón y Calle 19', d:'M55,650 C75,540 105,410 135,285', dur:6, setp:'La Calle 19 es el arranque de la Av. Ferrocarril.', bd:[300,655,62,648,'Boquerón'] } };
+  const ACL = [['¿100 % privado?','La propuesta declara inversión «100 % asumida por el privado» y, a la vez, pide recursos del CONPES 4017 para comprar vehículos.'],
     ['¿Único operador?','La exclusividad choca con el modelo del SETP, que se construye con los transportadores existentes.'],
     ['¿321.065 viajes por día?','En una ciudad de unos 0,55 a 0,6 millones de habitantes son más de medio viaje diario por habitante solo en el ART. Se contrasta con el estudio de demanda del SETP (sep. 2025).']];
   root.innerHTML=`<div class="app">
@@ -549,7 +520,7 @@ VIS.obraB = root => {
     {id:'c5f2', fr:'vias', n:'Carrera 5 · Fase II', fase:'Cl 10 → Cl 58', e:'ejecutado', t:'lin', k:['carrera5'], txt:'Contrato de Obra 046 de 2025: obra terminada el 18 de febrero de 2026 (acta de inicio el 10 de abril de 2025), con accesibilidad universal en los pasos peatonales.', ch:[['$35.399,9 M','contrato de obra'],['10.160 m','longitud intervenida']], mp:'Línea continua verde: obra terminada.'},
     {id:'ambala', fr:'vias', n:'Av. Ambalá', fase:'Fase III · 2 tramos', e:'ejecucion', t:'lin', k:['ambala1','ambala2'], txt:'Contrato de Obra 042 de 2026 (acta de inicio el 15 de abril, fin estimado el 26 de noviembre): tramo 1 (Cra 5 a Cl 37, 3.526 m) y tramo 2 (Cl 77 a Cl 63, 1.481 m), con reposición de unos 2.100 m de alcantarillado.', ch:[['$25.978 M','obra + interventoría'],['5.007 m','longitud de los tramos']], mp:'Línea continua ámbar: tramos con obra en ejecución.'},
     {id:'ciclo', fr:'vias', n:'Ciclorruta Cra 5', fase:'Cl 10 → Cl 44', e:'elegible', t:'lin', k:['cicloCarrera5'], txt:'Estudios y diseños Fase III de cicloinfraestructura y andenes con accesibilidad universal (7.217 m), radicados el 3 de julio de 2026. El 22 de septiembre obtuvieron la elegibilidad y el oficio se ajusta en uno de sus puntos.', ch:[['22 sep','elegibilidad de la UMUS'],['$29.098,3 M','obra, interventoría y diseños']], mp:'Línea discontinua cian: traza de los estudios.'},
-    {id:'sem1', fr:'sem', n:'Semaforización Fase I', fase:'Contrato 117 de 2024', e:'ejecucion', t:'sem', z:13.4, r:3.8, sz:1, txt:'Obra en la etapa final: planeamiento, configuración, integración y pruebas de la red. El plazo del contrato vence el 29 de septiembre de 2026 (acta de inicio el 20 de febrero de 2025).', ch:[['$9.778,7 M','obra + interventoría'],['29 sep 2026','fin del plazo']], mp:'Semáforos ámbar: intersecciones de la Fase I.'},
+    {id:'sem1', fr:'sem', n:'Semaforización Fase I', fase:'Contrato 117 de 2024', e:'ejecutado', t:'sem', z:13.4, r:3.8, sz:1, txt:'Fase I terminada al 100 %: 34 de 34 intersecciones en servicio y seguimiento. Corte de cierre el 29 de septiembre de 2026 (acta de inicio el 20 de febrero de 2025).', ch:[['$9.778,7 M','obra + interventoría'],['34 / 34','intersecciones terminadas']], mp:'Semáforos verdes: intersecciones de la Fase I, terminada.'},
     {id:'sem2', fr:'sem', n:'Semaforización Fase II', fase:'Estudios y diseños', e:'estructuracion', t:'sem', z:13.4, r:3.8, sz:.9, txt:'En estudios y diseños, proyectada para 2026: obra por $11.525 M e interventoría por $990 M. Las intersecciones se ubican con el KMZ de la Fase II.', ch:[['$12.515 M','obra + interventoría'],['2026','año proyectado']], mp:'Semáforos azules: intersecciones por intervenir.'},
     {id:'par3', fr:'par', n:'Paraderos Tipo III', fase:'Bandera informativa', e:'ejecutado', t:'par', z:15, r:3.6, sz:.5, pts:PARADEROS_3, txt:'Señales verticales tipo banderín con mejoramiento de andenes, en corredores y barrios de la ciudad (Contrato de Obra 037 de 2025). Obra terminada, en liquidación; el mapa muestra los puntos ya georreferenciados.', ch:[['$9.341,4 M','obra + interventoría'],['28 feb 2026','fin del contrato']], mp:'puntos verdes, uno por paradero; al acercarte se vuelven íconos.'},
     {id:'par1', fr:'par', n:'Paraderos Tipo I', fase:'Cubierto con informador', e:'elegible', t:'par', z:14, r:4.2, sz:1.1, pts:PARADEROS_12.slice(0,10), txt:'Etapa II de paraderos Tipo I y II con MUPI, llave en mano. Con elegibilidad desde el 22 de septiembre; se cita a la Junta Directiva para aprobarla e iniciar la etapa precontractual.', ch:[['22 sep','elegibilidad de la UMUS'],['Con MUPI','informador electrónico']], mp:'Íconos cian grandes: paraderos por construir.'},
@@ -558,7 +529,7 @@ VIS.obraB = root => {
   ];
   /* convenciones: cada fila muestra el símbolo tal como se dibuja en el mapa y oculta o muestra sus proyectos */
   const CV=[['Vías',[['Terminada','lin','ejecutado',['c5f1','c5f2']],['En obra','lin','ejecucion',['ambala']],['Con elegibilidad','lin','elegible',['ferro','ciclo']]]],
-    ['Semáforos',[['Fase I · en obra','sem','ejecucion',['sem1']],['Fase II · estructuración','sem','estructuracion',['sem2']]]],
+    ['Semáforos',[['Fase I · terminada','sem','ejecutado',['sem1']],['Fase II · estructuración','sem','estructuracion',['sem2']]]],
     ['Paraderos',[['Tipo III · instalados','par','ejecutado',['par3']],['Tipo I y II · con elegibilidad','par','elegible',['par1','par2']]]],
     ['Patiotalleres',[['Subsanando recomendaciones','pat','subsana',['patios']]]]];
   const ORD=['ferro','c5f1','c5f2','ambala','ciclo','par3','sem1','sem2','par1','par2'];
@@ -632,10 +603,9 @@ VIS.tecno = root => {
     {id:'rec',n:'Recaudo centralizado',s:'Estructurar en 2026',x:175,y:60,w:250,est:'estructuracion',g:'Recaudo y control de flota'},
     {id:'flo',n:'Gestión y control de flota',s:'Recursos desde 2027',x:185,y:152,w:290,est:'estructuracion',g:'Recaudo y control de flota'},
     {id:'usu',n:'Información al usuario',s:'En formulación',x:830,y:60,w:230,est:'estructuracion',g:'Información al usuario'},
-    {id:'sem',n:'Semáforos',s:'Fase I al 93,6 %',x:830,y:152,w:200,est:'ejecucion',g:'Semaforización'},
-    {id:'fet',n:'FET y modelo financiero',s:'Modelo actualizado',x:500,y:38,w:250,est:'estructuracion',g:null}];
-  const LK=[['cc','rec'],['cc','flo'],['cc','usu'],['cc','sem'],['cc','fet'],['fet','rec']];
-  root.innerHTML=`<div class="tec"><div class="tec-n rv"><div class="tec-b"><button class="btn sol" id="si">▶ Simular integración</button><button class="btn borde" id="re" style="display:none">↺ Restablecer</button><span class="tip2">Arrastra los nodos para reordenar el esquema</span></div><svg viewBox="0 0 1000 200" id="sv"></svg><div class="tec-s" id="tx">Azul: en estructuración · Ámbar: en ejecución · Verde: integrado</div></div><div class="tec-g rv" id="gh"></div></div>`;
+    {id:'sem',n:'Semáforos',s:'Fase I terminada · 100 %',x:830,y:152,w:230,est:'ejecutado',g:'Semaforización'}];
+  const LK=[['cc','rec'],['cc','flo'],['cc','usu'],['cc','sem']];
+  root.innerHTML=`<div class="tec"><div class="tec-n rv"><div class="tec-b"><button class="btn sol" id="si">▶ Simular integración</button><button class="btn borde" id="re" style="display:none">↺ Restablecer</button><span class="tip2">Arrastra los nodos para reordenar el esquema</span></div><svg viewBox="0 0 1000 200" id="sv"></svg><div class="tec-s" id="tx">Azul: en estructuración · Ámbar: en ejecución · Verde: integrado</div></div></div>`;
   const sv=$('#sv',root), N={}; ND.forEach(n=>N[n.id]={...n,ok:false});
   const col=n=>n.ok?'#3AA56D':ESTADO[n.est].c;
   sv.innerHTML=LK.map((l,i)=>`<line class="lk" id="lk${i}"/>`).join('')+LK.map((l,i)=>`<circle class="pk" id="pk${i}" r="7" style="display:none"/>`).join('')+
@@ -650,8 +620,7 @@ VIS.tecno = root => {
   const loop=t=>{ let hay=false; LK.forEach((l,i)=>{ const a=N[l[0]], b=N[l[1]], c=PK[i], on=a.ok&&b.ok; if(c.style.display!==(on?'':'none')) c.style.display=on?'':'none'; if(on){ hay=true; const p=((t/1400)+i*.17)%1; c.setAttribute('cx',a.x+(b.x-a.x)*p); c.setAttribute('cy',a.y+(b.y-a.y)*p); } }); raf=hay?requestAnimationFrame(loop):0; };
   const arranca=()=>{ if(!raf) raf=requestAnimationFrame(loop); }; limpiar.push(()=>cancelAnimationFrame(raf));
   const pinta=()=>ND.forEach(n=>$('#r-'+n.id,sv).setAttribute('fill',col(N[n.id]))), tms=[]; limpiar.push(()=>tms.forEach(clearTimeout));
-  $('#si',root).onclick=()=>{ $('#si',root).style.display='none'; ['sem','rec','flo','usu','cc','fet'].forEach((id,i)=>tms.push(setTimeout(()=>{ N[id].ok=true; pinta(); pos(); arranca();
-    if(i===5){ $('#tx',root).innerHTML='<b style="color:#3AA56D">Paquete integrado</b>: recaudo, control de flota, información, control, semáforos y FET.'; $('#re',root).style.display=''; } },i*700))); };
+  $('#si',root).onclick=()=>{ $('#si',root).style.display='none'; ['sem','rec','flo','usu','cc'].forEach((id,i)=>tms.push(setTimeout(()=>{ N[id].ok=true; pinta(); pos(); arranca();
+    if(i===4){ $('#tx',root).innerHTML='<b style="color:#3AA56D">Paquete integrado</b>: recaudo, control de flota, información al usuario, centro de control y semáforos.'; $('#re',root).style.display=''; } },i*700))); };
   $('#re',root).onclick=()=>{ tms.forEach(clearTimeout); ND.forEach(n=>N[n.id].ok=false); pinta(); pos(); arranca(); $('#re',root).style.display='none'; $('#si',root).style.display=''; $("#tx",root).textContent="Azul: en estructuración · Ámbar: en ejecución · Verde: integrado"; };
-  gantt($('#gh',root),GANTT.filter(g=>g.g==='Tecnología'),{fecha:CORTE_ACT.fecha,sinRezago:true});
 };

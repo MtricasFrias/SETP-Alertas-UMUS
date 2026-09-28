@@ -33,7 +33,7 @@
   body{ height:100vh; background:#CFDCEF; overflow:hidden; font:500 1.75rem/1.32 var(--ft); color:var(--tx) }
   button{ font:inherit; color:inherit; cursor:pointer; background:none; border:0 }
   svg text{ font-family:var(--ft) }
-  mark{ background:linear-gradient(transparent 60%, var(--sol) 60% 93%, transparent 93%); color:inherit; padding:0 .12em }
+  mark{ background:none; color:var(--ink); font-weight:800 }
 
   #stage{ position:absolute; left:50%; top:50%; width:120rem; height:67.5rem; transform:translate(-50%,-50%); overflow:hidden; background:var(--paper) }
   #stage.oscuro{ background:#E3EEFC }
@@ -81,6 +81,7 @@
   .frase{ font:600 2.75rem/1.18 var(--ft); color:var(--ink) }
   .hechos{ list-style:none; margin-top:2rem; display:flex; flex-direction:column; gap:1rem }
   .rcols.denso:not(.uno) .hechos{ margin-top:1.4rem; gap:.7rem } .rcols.denso:not(.uno) .hechos li{ font-size:1.95rem; line-height:1.2 }
+  .rcols.muydenso:not(.uno) .hechos{ margin-top:1rem; gap:.5rem } .rcols.muydenso:not(.uno) .hechos li{ font-size:1.55rem; line-height:1.15 }
   .rcols.uno{ grid-template-columns:minmax(0,1fr) } .rcols.uno .hechos{ margin-top:.6rem; gap:1.6rem } .rcols.uno .hechos li{ font-size:2.6rem; line-height:1.22; padding-left:3rem } .rcols.uno .hechos li:before{ width:1.3rem; height:1.3rem }
   .hechos li{ font-size:2.1rem; line-height:1.25; padding-left:2.4rem; position:relative }
   .hechos li:before{ content:""; position:absolute; left:0; top:.5em; width:1rem; height:1rem; border-radius:.25rem; background:var(--cat) }
@@ -264,14 +265,14 @@ limpiar.push(ocultaTip);
 const ESC = [{tipo:'portada'},{tipo:'panorama'}];
 if(MOSTRAR_CAMBIOS) ESC.push({tipo:'cambios'});
 ALERTAS.forEach(a=>{ ESC.push({tipo:'resumen',a}); a.vistas.forEach((v,i)=>ESC.push({tipo:'explorar',a,v,i,de:a.vistas.length})); });
-ESC.push({tipo:'ruta'},{tipo:'fin'});
+ESC.push({tipo:'fin'});
 const idxAlerta = n => ESC.findIndex(s=>s.a && s.a.n===n);
 const idxTipo   = t => ESC.findIndex(s=>s.tipo===t);
 const RAIL = [{i:idxTipo('panorama'), c:'#1F3C78', cx:'#fff', ic:'i-home', lbl:'Panorama'},
   ...ALERTAS.map(a=>({i:idxAlerta(a.n), c:CAT[a.cat].c, cx:CAT[a.cat].tx, t:a.n, lbl:a.corto})),
-  {i:idxTipo('ruta'), c:'#FFD25E', cx:'#1F3C78', ic:'i-flag', lbl:'Hoja de ruta'}];
+  {i:idxTipo('fin'), c:'#FFD25E', cx:'#1F3C78', ic:'i-flag', lbl:'Fin'}];
 const etiqueta = s => s.tipo==='resumen' ? ['Alerta '+s.a.n,'Resumen'] : s.tipo==='explorar' ? ['Alerta '+s.a.n,'Explorar'+(s.de>1?' '+(s.i+1)+' de '+s.de:'')]
-  : s.tipo==='panorama' ? ['Panorama','Las 9 alertas'] : s.tipo==='cambios' ? ['Novedades','Qué cambió desde el 26 jun'] : s.tipo==='ruta' ? ['Hoja de ruta','Quién, qué y cuándo'] : ['',''];
+  : s.tipo==='panorama' ? ['Panorama','Las 9 alertas'] : s.tipo==='cambios' ? ['Novedades','Qué cambió desde el 26 jun'] : ['',''];
 
 let idx = -1;
 function ir(n){
@@ -296,7 +297,7 @@ function ir(n){
 }
 function actualizaNav(){
   const s=ESC[idx]; let act=-1;
-  RAIL.forEach((r,k)=>{ const e=$('#st'+k); const es = s.a ? r.t===s.a.n : ((s.tipo==='panorama'||s.tipo==='cambios')&&k===0)||(s.tipo==='ruta'&&k===RAIL.length-1); if(es) act=k; e.classList.toggle('act',es); });
+  RAIL.forEach((r,k)=>{ const e=$('#st'+k); const es = s.a ? r.t===s.a.n : ((s.tipo==='panorama'||s.tipo==='cambios')&&k===0)||(s.tipo==='fin'&&k===RAIL.length-1); if(es) act=k; e.classList.toggle('act',es); });
   const [a,b]=etiqueta(s); $('#navtxt').innerHTML = a ? `${a}<small>${b}</small>` : '';
   $('#prev').disabled = idx<=0; $('#next').disabled = idx>=ESC.length-1;
   if(act<0) return;
@@ -319,7 +320,6 @@ document.addEventListener('keydown',e=>{
   else if(/^[1-9]$/.test(e.key)) ir(idxAlerta(+e.key));
   else if(e.key==='p'||e.key==='P') ir(idxTipo('panorama'));
   else if((e.key==='n'||e.key==='N') && MOSTRAR_CAMBIOS) ir(idxTipo('cambios'));
-  else if(e.key==='r'||e.key==='R') ir(idxTipo('ruta'));
   else if(e.key==='f'||e.key==='F') $('#fs').click();
 });
 </script>

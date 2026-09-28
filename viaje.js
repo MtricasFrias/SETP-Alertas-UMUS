@@ -318,7 +318,7 @@ const leyendaCat = () => ['critica','moderada','leve'].map(k=>{ const n=ALERTAS.
 
 /* ---------- trivia: «¿Sabías que…?» ---------- */
 const TRIVIA = [
-  { n:3, q:'¿Cuántas intersecciones de la Fase I ya están en servicio y seguimiento?', o:['22','30','34'], c:1, x:'30 de 34 al corte del 20 de septiembre. El plazo del contrato vence el 29.' },
+  { n:3, q:'¿Cuántas intersecciones de la Fase I están en servicio y seguimiento?', o:['22','30','34'], c:2, x:'Las 34: la Fase I quedó terminada al 100 %, corte 29 de septiembre.' },
   { n:5, q:'¿Qué parte de sus aportes ha desembolsado el Municipio?', o:['56 %','80 %','100 %'], c:2, x:'El 100 %: $80,8 mil M entre 2021 y 2026.' },
   { n:4, q:'¿Cuántos viajes por día proyecta la propuesta del tranvía?', o:['32.106','321.065','3.210.650'], c:1, x:'321.065 viajes por día. Aun así, el CONPES 4017 no permite el tranvía.' },
   { n:9, q:'¿Cuántos sistemas forman el paquete tecnológico del SETP?', o:['2','3','5'], c:1, x:'Tres: gestión y control de flota, información al usuario y recaudo.' },

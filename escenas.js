@@ -2,8 +2,9 @@
    ESCENAS: portada · panorama · qué cambió · resumen de alerta · marco de "explorar" · hoja de ruta · gracias
    ===================================================================== */
 const estilo = css => document.head.insertAdjacentHTML('beforeend','<style>'+css+'</style>');
-const catDe = n => CAT[ALERTAS[n-1].cat].c;
 const CATN = { critica:0, moderada:1, leve:2 };
+/* «2025-IV» → «2025 · IV trimestre» (los números romanos son el trimestre, no el año) */
+const perTxt = p => { const [a,r]=p.split('-'); return `${a} · ${r} trimestre`; };
 
 estilo(`
 .cifra b.m{ font-size:4.7rem; white-space:normal; line-height:1.02; letter-spacing:-.02em }
@@ -82,29 +83,11 @@ estilo(`
 .cb-n.pop{ animation:popN .55s cubic-bezier(.34,1.5,.5,1) } @keyframes popN{ from{ transform:translateY(1.4rem) scale(.96); opacity:0 } }
 .cb-b{ display:flex; gap:1.2rem }
 
-/* ---------- hoja de ruta ---------- */
-.rt{ position:absolute; inset:0 }
-.rt-h{ position:absolute; left:3.4rem; right:3.4rem; top:7rem; display:flex; align-items:flex-end; gap:3rem }
-.rt-h h1{ font:800 4.3rem/1 var(--fd); color:var(--ink); letter-spacing:-.025em }
-.rt-h p{ margin-left:auto; max-width:56rem; text-align:right; font-size:1.65rem; line-height:1.2; color:var(--mut) }
-.rt-b{ position:absolute; left:3.4rem; right:3.4rem; top:13.2rem; display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:1.4rem }
-.rt-c h3{ font:800 2.1rem var(--fd); color:var(--ink); padding-bottom:.7rem; border-bottom:.3rem solid var(--ink); margin-bottom:1rem }
-.hito{ display:block; width:100%; text-align:left; background:var(--card); border-left:.6rem solid var(--c); padding:.55rem 1rem .65rem; margin-bottom:.7rem; transition:.2s }
-.hito:hover{ background:#E3EDFB }
-.hito b{ display:flex; align-items:center; gap:.6rem; font:700 1.5rem var(--fd); color:var(--c); margin-bottom:.15rem }
-.hito em{ display:block; font:700 1.5rem var(--fd); font-style:normal; margin-top:.15rem; color:var(--mut) }
-.hito span{ font-size:1.55rem; line-height:1.15; color:var(--ink); font-weight:600 }
-.hito.vence{ background:#FBE6E4; border-left-color:var(--rojo) } .hito.vence em{ color:var(--rojo-t) }
-.hito.pc{ background:#FBF0D2 } .hito.pc em{ color:var(--ambar-t) }
-.hito.ok em{ color:var(--verde-t) } .hito.dim{ opacity:.25 }
-.rt-f{ position:absolute; left:3.4rem; right:3.4rem; bottom:.8rem; height:15.6rem; display:grid; grid-template-columns:44rem minmax(0,1fr); gap:3rem }
-.rt-f .caja{ background:var(--card); padding:1.3rem 1.8rem }
-.rt-f h4{ font:700 1.5rem var(--fd); color:var(--mut); margin-bottom:.5rem }
-.rt-f .fecha{ font:800 3.2rem/1 var(--fd); color:var(--ink); margin-bottom:.4rem }
-.rt-f .bt{ display:flex; gap:.8rem; margin-top:.6rem }
-.sf{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.5rem 2rem }
-.sf button{ text-align:left; font-size:1.5rem; line-height:1.1; padding:.22rem 0; border-bottom:.1rem solid var(--rule); color:var(--ink) }
-.sf button:hover{ background:#E3EDFB } .sf button b{ display:inline-block; min-width:3.4rem; font:800 1.5rem var(--fd); color:var(--c) }
+/* ---------- postura: lista con guiones, chulo verde en lo ya cumplido ---------- */
+.postura ul{ list-style:none; display:flex; flex-wrap:wrap; column-gap:2.8rem; row-gap:.5rem; margin-top:.7rem; padding:0 }
+.postura li{ position:relative; padding-left:1.9rem; font:600 2.15rem/1.25 var(--ft) }
+.postura li:before{ content:"–"; position:absolute; left:0; color:var(--sol); font-weight:800 }
+.postura li.ok:before{ content:"✓"; color:#4ADE80; font-weight:900 }
 `);
 
 /* ------------------------------ resumen ------------------------------ */
@@ -113,11 +96,11 @@ NODO.resumen = s => {
   n.className='scene'+(tram?' tw':''); n.style.cssText=`--cat:${c.c};--catx:${c.tx}`;
   const cuerpo=`
     <div class="spine"><div class="lab">Alerta</div><div class="num">${a.n}</div>
-      <dl><dt>Categoría</dt><dd>${c.n}</dd><dt>Identificada en</dt><dd>${a.per}</dd><dt>Componente</dt><dd>${a.comp}</dd><dt>Corte</dt><dd>${a.corte}</dd></dl></div>
+      <dl><dt>Categoría</dt><dd>${c.n}</dd><dt>Identificada en</dt><dd>${perTxt(a.per)}</dd><dt>Componente</dt><dd>${a.comp}</dd><dt>Corte</dt><dd>${a.corte}</dd></dl></div>
     <div class="rmain">
       <h1 class="rv">${a.titulo}</h1>
       <p class="ofi rv">Alerta identificada: ${a.t}</p>
-      <div class="rcols${a.cifras.length?'':' uno'}${a.hechos.length>3?' denso':''}">
+      <div class="rcols${a.cifras.length?'':' uno'}${a.hechos.length>3?' denso':''}${a.hechos.reduce((s,h)=>s+h.length,0)>450?' muydenso':''}">
         <div>${a.frase?`<p class="frase rv">${md(a.frase)}</p>`:''}<ul class="hechos">${a.hechos.map(h=>`<li class="rv">${h}</li>`).join('')}</ul></div>
         ${a.cifras.length?`<div class="cifras">${a.cifras.map(f=>{
           const txt = f.n!==undefined ? f.n.toLocaleString('es-CO',{minimumFractionDigits:f.dec||0,maximumFractionDigits:f.dec||0})+(f.suf||'') : f.t;
@@ -125,7 +108,7 @@ NODO.resumen = s => {
           return `<div class="cifra rv"><b class="${txt.length>7?'m':''}"${dato}>${f.n!==undefined?'0':f.t}</b><span>${f.l}</span></div>`; }).join('')}</div>`:''}
       </div>
     </div>
-    <div class="postura rv"><span>Línea de actividades del SETP</span><p>${a.postura}</p></div>`;
+    <div class="postura rv"><span>Línea de actividades del SETP</span><ul>${a.postura.map(t=>{ const ok=t.startsWith('✓'); return `<li class="${ok?'ok':''}">${ok?t.slice(1):t}</li>`; }).join('')}</ul></div>`;
   n.innerHTML = tram ? `<div class="tw-clip"><div class="tw-in">${cuerpo}<div class="tw-rail"></div></div></div><div class="tw-tram">${tramSVG()}<i class="tw-beam"></i><i class="tw-sp"></i><i class="tw-sp"></i><i class="tw-sp"></i></div>` : cuerpo;
   if(tram){ n.dataset.delay=2400; n.addEventListener('animationend',e=>{ if(e.animationName==='twTram') $('.tw-tram',n).remove(); }); }
   return n;
@@ -181,14 +164,14 @@ VIS.panorama = root => {
   const tb=$('#tb',root);
   function filas(){
     const arr=[...ALERTAS].sort((a,b)=>{ const va=orden.k==='cat'?CATN[a.cat]:a[orden.k], vb=orden.k==='cat'?CATN[b.cat]:b[orden.k]; return (va>vb?1:va<vb?-1:a.n-b.n)*orden.d; });
-    tb.innerHTML=arr.map(a=>`<tr data-n="${a.n}" style="--c:${CAT[a.cat].c}" class="${filtro!=='todas'&&a.cat!==filtro?'dim':''}"><td class="n">${a.n}</td><td class="t">${a.titulo}</td><td>${a.per}</td><td>${a.comp}</td><td><span class="cat"><i></i>${CAT[a.cat].n}</span></td></tr>`).join('');
+    tb.innerHTML=arr.map(a=>`<tr data-n="${a.n}" style="--c:${CAT[a.cat].c}" class="${filtro!=='todas'&&a.cat!==filtro?'dim':''}"><td class="n">${a.n}</td><td class="t">${a.titulo}</td><td>${perTxt(a.per)}</td><td>${a.comp}</td><td><span class="cat"><i></i>${CAT[a.cat].n}</span></td></tr>`).join('');
     $$('tr',tb).forEach(tr=>{ tr.onclick=()=>ir(idxAlerta(+tr.dataset.n)); tr.onmouseenter=()=>hl(tr.dataset.n,true); tr.onmouseleave=()=>hl(tr.dataset.n,false); });
   }
   const hl=(n,on)=>$$(`[data-n="${n}"]`,root).forEach(e=>e.classList.toggle('hl',on));
   function aplica(){ $$('.bub',root).forEach(b=>b.classList.toggle('dim',filtro!=='todas'&&ALERTAS[b.dataset.n-1].cat!==filtro)); filas(); $$('#fil .chip',root).forEach(c=>c.classList.toggle('on',c.dataset.f===filtro)); }
   $$('#fil .chip',root).forEach(c=>c.onclick=()=>{ filtro=c.dataset.f; aplica(); });
   $$('.tabla th',root).forEach(th=>th.onclick=()=>{ orden={k:th.dataset.k, d:orden.k===th.dataset.k?-orden.d:1}; filas(); });
-  let m='<div class="h"></div>'+PERIODOS.map(p=>`<div class="h">${p}</div>`).join('');
+  let m='<div class="h"></div>'+PERIODOS.map(p=>`<div class="h">${perTxt(p)}</div>`).join('');
   COMPONENTES.forEach(c=>{ m+=`<div class="r">${c}</div>`; PERIODOS.forEach(p=>{
     const as=ALERTAS.filter(a=>a.comp===c&&a.per===p);
     m+=`<div class="c">${as.map(a=>`<div class="bub" data-n="${a.n}" style="--c:${CAT[a.cat].c};--cx:${CAT[a.cat].tx}">${a.n}${p==='2026-II'?'<span class="nueva">nueva</span>':''}</div>`).join('')}</div>`; }); });
@@ -230,48 +213,14 @@ VIS.cambios = root => {
   limpiar.push(()=>clearTimeout(tm)); pinta(); auBtn(); tic();
 };
 
-/* ------------------------------ hoja de ruta: tablero por mes ------------------------------ */
-VIS.ruta = root => {
-  const T0=new Date(2026,3,1).getTime(), T1=new Date(2027,1,10).getTime();
-  const COLS=[['Abr–May',new Date(2026,5,1)],['1–15 jun',new Date(2026,5,16)],['16–30 jun',new Date(2026,6,1)],['Julio',new Date(2026,7,1)],['Ago–Sep',new Date(2026,9,1)],['Oct 2026–2027',new Date(2028,0,1)]];
-  let fecha=CORTE_ACT.fecha.getTime(), filt=null;
-  const ordenados=[...HITOS].sort((a,b)=>a.f-b.f);
-  root.innerHTML=`<div class="rt">
-    <div class="rt-h rv"><h1>Hoja de ruta 2026</h1><p>Cada compromiso con su fecha. Mueve la fecha de revisión: lo que quedó atrás sin cumplirse se marca en rojo y lo que falta confirmar, en ámbar.</p></div>
-    <div class="rt-b rv" id="bd"></div>
-    <div class="rt-f rv">
-      <div class="caja"><h4>Fecha de revisión</h4><div class="fecha" id="fc"></div>
-        <input type="range" id="rg" min="${T0}" max="${T1}" step="86400000" value="${fecha}">
-        <div class="bt"><button class="chip" id="bc">Corte ${CORTE_ACT.txt}</button><button class="chip" id="bh">Hoy</button></div></div>
-      <div class="caja"><h4>Sin fecha en el corte: se fijan en esta reunión</h4><div class="sf" id="sf"></div></div>
-    </div></div>`;
-  const bd=$('#bd',root); let ini=T0;
-  bd.innerHTML=COLS.map(([n,fin],i)=>{ const hs=ordenados.filter(h=>h.f>=ini&&h.f<fin); ini=+fin;
-    return `<div class="rt-c"><h3>${n}</h3>${hs.map(h=>`<button class="hito" data-i="${HITOS.indexOf(h)}" style="--c:${catDe(h.a[0])}"><b>A${h.a.join(" · A")} · ${h.f.getDate()} ${MES[h.f.getMonth()]}</b><span>${h.c}</span><em></em></button>`).join('')}</div>`; }).join('');
-  function pinta(){
-    $('#fc',root).textContent=fFecha(new Date(fecha));
-    $$('.hito',bd).forEach(b=>{ const h=HITOS[+b.dataset.i], pasada=h.f.getTime()<fecha, vence=h.est==='programado'&&pasada, pc=h.est==='porconfirmar'&&pasada;
-      b.classList.toggle('vence',vence); b.classList.toggle('pc',pc); b.classList.toggle('ok',h.est==='cumplido'); b.classList.toggle('dim',filt!==null&&!h.a.includes(filt));
-      $("em",b).textContent = h.est==="cumplido"?"Cumplido":vence?"Fecha superada":pc?"Por confirmar estado":""; });
-  }
-  let rgR=0; $('#rg',root).oninput=e=>{ fecha=+e.target.value; if(!rgR) rgR=requestAnimationFrame(()=>{ rgR=0; pinta(); }); }; limpiar.push(()=>cancelAnimationFrame(rgR));
-  $('#bc',root).onclick=()=>{ fecha=CORTE_ACT.fecha.getTime(); $('#rg',root).value=fecha; pinta(); };
-  $('#bh',root).onclick=()=>{ fecha=Math.min(Date.now(),T1); $('#rg',root).value=fecha; pinta(); };
-  $$('.hito',bd).forEach(b=>{ b.onclick=()=>{ const h=HITOS[+b.dataset.i]; filt = (filt!==null && h.a.includes(filt)) ? null : h.a[0]; pinta(); };
-    b.onmouseenter=e=>{ const h=HITOS[+b.dataset.i]; verTip(`${h.t}<br><span style="opacity:.8">Responsable: ${h.r}</span>`,e); }; b.onmouseleave=ocultaTip; });
-  $('#sf',root).innerHTML=SIN_FECHA.map(s=>`<button data-a="${s.a}" style="--c:${catDe(s.a)}"><b>A${s.a}</b>${s.c}</button>`).join('');
-  $$('#sf button',root).forEach(b=>b.onclick=()=>ir(idxAlerta(+b.dataset.a)));
-  pinta();
-};
-
 /* ------------------------------ gracias: el piano ------------------------------ */
 VIS.fin = root => {
   const HZ=[261.63,293.66,329.63,392,440,523.25,587.33];
   const v = montarViaje(root,{ tipo:'fin',
     cover:`<div class="fin-t"><small>Muchas</small><div class="keys" id="keys">${'Gracias'.split('').map((ch,i)=>`<button class="key" data-i="${i}" style="--kc:${NOTAS_COL[i%NOTAS_COL.length]}">${ch}</button>`).join('')}</div>
       <div class="fin-sub">Toca las teclas · y toca una parada para volver a esa alerta</div></div>`,
-    barra:`<button class="btn sol" id="v1">Volver al panorama</button><button class="btn" id="v2">Hoja de ruta</button><button class="btn borde" id="v3">Reiniciar</button>` });
-  $('#v1',root).onclick=()=>ir(idxTipo('panorama')); $('#v2',root).onclick=()=>ir(idxTipo('ruta')); $('#v3',root).onclick=()=>ir(0);
+    barra:`<button class="btn sol" id="v1">Volver al panorama</button><button class="btn borde" id="v3">Reiniciar</button>` });
+  $('#v1',root).onclick=()=>ir(idxTipo('panorama')); $('#v3',root).onclick=()=>ir(0);
   const host=v.el, R=()=>parseFloat(getComputedStyle(document.documentElement).fontSize), stage=$('#stage');
   $$('.key',root).forEach(k=>{
     const toca=e=>{ const i=+k.dataset.i; tono(HZ[i]); k.classList.add('dn'); setTimeout(()=>k.classList.remove('dn'),170);
