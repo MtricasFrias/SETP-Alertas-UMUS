@@ -12,8 +12,10 @@ estilo(`
 .vj .cap{ position:absolute; left:0; top:0; width:120rem; height:60.83rem; display:block }
 .vj #vjRoad{ pointer-events:none }
 .vj .nubes{ position:absolute; inset:0; pointer-events:none }
-.vj .nube-c{ position:absolute; left:-1rem; width:10.8rem; height:8.3rem; animation:nubeVa var(--dur,120s) linear infinite; animation-delay:var(--dl,0s) }
-@keyframes nubeVa{ from{ transform:translateX(-25rem) } to{ transform:translateX(141.7rem) } }
+/* las nubes NO se mueven: a esa velocidad (más de 2 minutos por vuelta) el ojo casi no lo nota,
+   y una animación «infinite» obliga a recomponer toda la escena en cada cuadro aunque sea despacio.
+   En vez de eso, cada una arranca en una posición distinta a lo largo del cielo (ver VJ_NUBES). */
+.vj .nube-c{ position:absolute; width:10.8rem; height:8.3rem }
 .vj .vj-dash{ fill:none; stroke:#fff; stroke-width:4.5; stroke-dasharray:22 20; stroke-linecap:round; animation:rutaFluye 1.1s steps(11) infinite; opacity:.95 }
 @keyframes rutaFluye{ to{ stroke-dashoffset:-42 } }
 
@@ -198,11 +200,11 @@ const satHex = (h,k)=>{ let x=h.slice(1); if(x.length===3) x=x.split('').map(c=>
   const f=v=>Math.max(0,Math.min(255,Math.round(l+(v-l)*k))).toString(16).padStart(2,'0'); return '#'+f(r)+f(g)+f(b); };
 Object.keys(VJ_LM).forEach(k=>{ VJ_LM[k]=VJ_LM[k].replace(/#[0-9A-Fa-f]{6}\b/g,h=>satHex(h,.55)); });
 
-/* nubes: capas propias que solo se desplazan (transform compuesto), fuera del fondo estático */
-const VJ_NUBES = [[130,-40,70,.92,'M0 44a26 26 0 0 1 32-24a34 34 0 0 1 62 8a22 22 0 0 1 8 44h-92a20 20 0 0 1-10-28z'],
-  [170,-110,160,.8,'M0 34a20 20 0 0 1 26-18a28 28 0 0 1 50 8a18 18 0 0 1 6 36h-76a16 16 0 0 1-6-26z'],
-  [150,-70,40,.85,'M0 34a20 20 0 0 1 26-18a28 28 0 0 1 50 8a18 18 0 0 1 6 36h-76a16 16 0 0 1-6-26z']]
-  .map(([dur,dl,ty,op,d])=>`<svg class="nube-c" viewBox="-12 -20 130 100" style="--dur:${dur}s;--dl:${dl}s;top:${((ty-20)/12).toFixed(3)}rem"><path d="${d}" fill="#fff" fill-opacity="${op}"/></svg>`).join('');
+/* nubes: quietas, repartidas por el cielo (posiciones fuera del fondo estático) */
+const VJ_NUBES = [[26,70,.92,'M0 44a26 26 0 0 1 32-24a34 34 0 0 1 62 8a22 22 0 0 1 8 44h-92a20 20 0 0 1-10-28z'],
+  [83,160,.8,'M0 34a20 20 0 0 1 26-18a28 28 0 0 1 50 8a18 18 0 0 1 6 36h-76a16 16 0 0 1-6-26z'],
+  [53,40,.85,'M0 34a20 20 0 0 1 26-18a28 28 0 0 1 50 8a18 18 0 0 1 6 36h-76a16 16 0 0 1-6-26z']]
+  .map(([x,ty,op,d])=>`<svg class="nube-c" viewBox="-12 -20 130 100" style="left:${x}rem;top:${((ty-20)/12).toFixed(3)}rem"><path d="${d}" fill="#fff" fill-opacity="${op}"/></svg>`).join('');
 
 /* fondo: se dibuja una vez en un canvas ya difuminado y desaturado (antes: filter blur sobre el SVG, recalculado en cada cuadro) */
 function hornearFondo(el){
@@ -222,8 +224,9 @@ function montarViaje(root, {tipo='portada', cover='', barra=''}={}){
     <svg class="cap" id="vjRoad" viewBox="0 0 1440 730" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
       <path id="vjRB" d="${VJ_D}" fill="none" stroke="#6B7EA6" stroke-width="72" stroke-linecap="round"/>
       <path id="vjRA" d="${VJ_D}" fill="none" stroke="#9AABCE" stroke-width="62" stroke-linecap="round"/>
-      <path id="vjRP" d="${VJ_D}" fill="none" stroke="#FFD25E" stroke-width="12" stroke-linecap="round" opacity=".95"/>
       <path class="vj-dash" d="${VJ_D}"/></svg>
+    <svg class="cap" id="vjProg" viewBox="0 0 1440 730" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <path id="vjRP" d="${VJ_D}" fill="none" stroke="#FFD25E" stroke-width="12" stroke-linecap="round" opacity=".95"/></svg>
     <svg class="cap" id="vjFg" viewBox="0 0 1440 730" preserveAspectRatio="xMidYMid meet"><g id="vjParadas"></g><g id="vjNotas"></g></svg>
     <div class="vj-bus" id="vjBus"><svg viewBox="-84 -44 168 84" aria-hidden="true">
         <ellipse cx="0" cy="28" rx="70" ry="7" fill="rgba(31,60,120,.25)"/>
@@ -277,7 +280,10 @@ function montarViaje(root, {tipo='portada', cover='', barra=''}={}){
     let k=-1; LS.forEach((l,i)=>{ if(Math.abs(s-l)<26) k=i; });
     if(k!==cur){ cur=k; PAS.forEach((g,i)=>g.classList.toggle('on',i===k)); if(k>=0){ prev=k; ficha(k); } } };
   const clampA=a=>Math.max(-40,Math.min(40,a));
-  const V=118; let colocado=false;
+  const V=118; let colocado=false, pintar=0;
+  /* el avance se calcula en cada cuadro (matemática pura, no toca el DOM) pero solo se pinta
+     a ~30 cps: el bus se mueve despacio y esa cadencia ya se ve fluida, con la mitad del costo
+     de pintado que a 60 cps. Mientras se arrastra sí se pinta cada cuadro, para que responda al dedo. */
   const cuadro=t=>{ const dt=Math.min(.2,(t-ultimo)/1000); ultimo=t; let anda=false;
     if(modo==='auto'){ if(t>=pausa){ const antes=s; s+=V*dt; anda=true;
         const k=LS.findIndex(l=>antes<l&&s>=l); if(k>=0){ s=LS[k]; pausa=t+2600; }
@@ -285,7 +291,8 @@ function montarViaje(root, {tipo='portada', cover='', barra=''}={}){
     else if(mueve) anda=true;
     if(anda && t>sigNota){ sigNota=t+520; const p=pt(s), e=document.createElementNS(NSVG,'text'); e.setAttribute('class','vj-nt'); e.setAttribute('x',(p.x-20).toFixed(0)); e.setAttribute('y',(p.y-44).toFixed(0));
       e.style.setProperty('--dx',((Math.random()-.5)*50).toFixed(0)+'px'); e.setAttribute('fill',NOTAS_COL[(Math.random()*5)|0]); e.textContent=['♪','♫','♩','♬'][(Math.random()*4)|0]; notas.append(e); setTimeout(()=>e.remove(),2000); }
-    if(anda||!colocado){ colocar(); colocado=true; } raf=requestAnimationFrame(cuadro); };
+    const toca = mueve || (pintar^=1) || !colocado;
+    if((anda&&toca)||!colocado){ colocar(); colocado=true; } raf=requestAnimationFrame(cuadro); };
   let raf=requestAnimationFrame(cuadro); limpiar.push(()=>cancelAnimationFrame(raf), ()=>clearTimeout(idle));
   /* arrastrar el bus por la ruta */
   const cercano=p=>{ let mi=0,md=1e12; PT.forEach((q,k)=>{ const d=(q.x-p.x)**2+(q.y-p.y)**2; if(d<md){ md=d; mi=k; } }); return L*mi/N; };
@@ -339,16 +346,17 @@ function trivia(root){
 
 /* ---------- confeti, notas y sonido ---------- */
 /* confeti: un solo canvas con todas las piezas (antes eran 70 elementos con su propia animación y su propia capa) */
-function confeti(host,n=40){
-  /* medio tamaño: las piezas son grandes y de color plano, y un canvas de pantalla completa costaba más que todo lo demás */
+function confeti(host,n=26){
+  /* tamaño reducido y ráfaga corta: son piezas grandes y de color plano, y en equipos modestos un canvas de
+     pantalla completa que dibuja muchas piezas largo rato competía con el resto de la escena de cierre */
   const c=document.createElement('canvas'), esc=.4, W=c.width=Math.round(host.clientWidth*esc), H=c.height=Math.round(host.clientHeight*esc), u=parseFloat(getComputedStyle(document.documentElement).fontSize)*esc;
   c.style.cssText='position:absolute;inset:0;width:100%;height:100%;z-index:8;pointer-events:none'; host.append(c);
-  const g=c.getContext('2d'), P=Array.from({length:n},(_,k)=>{ const w=(.7+Math.random()*.9)*u; return { x:Math.random()*W, w, h:w*1.6, c:NOTAS_COL[k%NOTAS_COL.length], r:k%3===0, dx:(Math.random()-.5)*16*u, rot:(Math.random()*900-450)*Math.PI/180, dur:(3+Math.random()*2.6)*1000, dl:Math.random()*900 }; });
+  const g=c.getContext('2d'), DUR=4300, P=Array.from({length:n},(_,k)=>{ const w=(.7+Math.random()*.9)*u; return { x:Math.random()*W, w, h:w*1.6, c:NOTAS_COL[k%NOTAS_COL.length], r:k%3===0, dx:(Math.random()-.5)*16*u, rot:(Math.random()*900-450)*Math.PI/180, dur:DUR*(.72+Math.random()*.28), dl:Math.random()*700 }; });
   const t0=performance.now(); let raf=0; limpiar.push(()=>{ cancelAnimationFrame(raf); c.remove(); });
   let par=0; (function f(now){ if((par^=1)&&now>t0){ raf=requestAnimationFrame(f); return; } const t=now-t0; g.clearRect(0,0,W,H); let vivo=false;
     for(const p of P){ const q=(t-p.dl)/p.dur; if(q<0){ vivo=true; continue; } if(q>=1) continue; vivo=true;
       g.save(); g.translate(p.x+p.dx*q,-3*u+72*u*q); g.rotate(p.rot*q); g.fillStyle=p.c; if(p.r){ g.beginPath(); g.arc(0,0,p.w/2,0,7); g.fill(); } else g.fillRect(-p.w/2,-p.h/2,p.w,p.h); g.restore(); }
-    if(vivo&&t<7500) raf=requestAnimationFrame(f); else c.remove(); })(t0);
+    if(vivo&&t<DUR+700) raf=requestAnimationFrame(f); else c.remove(); })(t0);
 }
 function notaFlota(host,xr,yr){ const e=document.createElement('span'); e.className='ntf'; e.textContent=['♪','♫','♩','♬'][(Math.random()*4)|0]; e.style.cssText=`left:${xr}rem;top:${yr}rem;color:${NOTAS_COL[(Math.random()*5)|0]};font-size:${(2.4+Math.random()*2).toFixed(1)}rem`; host.append(e); setTimeout(()=>e.remove(),1700); }
 let AUDIO=null;
