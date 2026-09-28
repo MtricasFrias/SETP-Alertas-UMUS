@@ -122,7 +122,7 @@ const ALERTAS = [
     postura:['Radicación de los informes mensuales', 'Atención de las observaciones del componente social', 'Acompañamiento al contratista hasta el cierre del soporte'],
     antes:'La interventoría no había enviado el informe oficial de alcances e impactos del PMA.',
     ahora:'Mesas técnicas y listas de chequeo enviadas.',
-    vistas:[{ vis:'pma', icono:'tap', pregunta:'Avanza cada componente por la ruta: contratista, interventoría y Ente Gestor.' }] },
+    vistas:[{ vis:'pma', icono:'tap', pregunta:'Toca cada componente para avanzarlo hasta el cierre del soporte.' }] },
 
   { n:8, id:'obras', corto:'Obras', titulo:'Obras frente al cronograma CONPES', t:'Retrasos en ejecución de obras de acuerdo con el cronograma CONPES',
     per:'2026-I', comp:'Cronograma', cat:'critica', act:true, corte:'25 sep 2026',

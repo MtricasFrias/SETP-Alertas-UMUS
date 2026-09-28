@@ -130,13 +130,6 @@ estilo(`
 
 /* ---------- PMA: la ruta del soporte ---------- */
 .pma{ display:flex; flex-direction:column; gap:1.6rem; height:100% }
-.pma-s{ position:relative; height:17.4rem; background:var(--card); flex:none }
-.pma-s .nodo{ position:absolute; top:.8rem; width:26rem; margin-left:-13rem; text-align:center }
-.pma-s .nodo svg{ width:4.4rem; height:4.4rem; color:var(--ink) } .pma-s .nodo b{ display:block; font:800 1.75rem var(--fd); color:var(--ink) } .pma-s .nodo span{ font-size:1.5rem; color:var(--mut) }
-.pma-s .cam{ position:absolute; left:12%; right:12%; border-top:.3rem dashed #A9B8CE }
-.pma-s .sob{ position:absolute; width:4rem; height:2.9rem; margin-left:-2rem; transition:left 1.4s cubic-bezier(.5,0,.2,1); z-index:2; filter:drop-shadow(0 .25rem .25rem rgba(31,60,120,.25)) }
-.pma-s .sob:after{ content:""; position:absolute; right:-.5rem; top:-.6rem; width:1.5rem; height:1.5rem; border-radius:50%; background:var(--c); border:.25rem solid #fff }
-.pma-s .sob svg{ width:100%; height:100% }
 .pma-b{ flex:1; min-height:0; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1.6rem }
 .pcard{ background:var(--card); border-top:.7rem solid var(--c); padding:1.1rem 1.8rem 1.3rem; display:flex; flex-direction:column; gap:.7rem; min-height:0 }
 .pc-h{ display:flex; align-items:center; gap:1rem } .pc-h svg{ width:3.4rem; height:3.4rem; color:var(--c) } .pc-h b{ font:800 2.2rem var(--fd); color:var(--ink) }
@@ -436,12 +429,7 @@ VIS.actos = root => {
    ===================================================================== */
 VIS.pma = root => {
   const C=PMA_COMP, E=PMA_ETAPAS, est=C.map(()=>1), atendida=C.map(c=>!c.obs);
-  const X=[12,50,88];
   root.innerHTML=`<div class="pma">
-    <div class="pma-s rv"><div class="nodo" style="left:12%">${ico('i-hardhat')}<b>Contratista de obra</b><span>prepara los soportes</span></div>
-      <div class="nodo" style="left:50%">${ico('i-doc')}<b>Interventoría</b><span>Consorcio Intersemafóricas Ibagué</span></div>
-      <div class="nodo" style="left:88%">${ico('i-building')}<b>Ente Gestor · SETP</b><span>recibe y cierra</span></div>
-      ${C.map((c,i)=>`<div class="cam" style="top:${11.7+i*2.1}rem"></div><div class="sob" id="sob${i}" style="left:12%;top:${10.25+i*2.1}rem;--c:${c.c}"><svg viewBox="0 0 48 34"><use href="#i-env"/></svg></div>`).join('')}</div>
     <div class="pma-b">${C.map((c,i)=>`<div class="pcard rv" style="--c:${c.c}" id="pc${i}"><div class="pc-h">${ico(c.ic)}<b>${c.n}</b><i class="pc-s" id="ps${i}"></i></div><p>${c.t}</p>
         <div class="pc-e"><div class="pc-d" id="pd${i}">${E.map(()=>'<u></u>').join('')}</div><span id="pe${i}"></span></div><button class="btn" id="pb${i}"></button></div>`).join('')}</div>
     <div class="pma-r rv"><div class="msg" id="msg">Cierre contractual y liquidación: en espera del soporte completo</div><button class="btn borde" id="pre" style="display:none">Reiniciar</button></div></div>`;
@@ -452,7 +440,6 @@ VIS.pma = root => {
     $('#pe'+i,root).textContent = e>=4?'Remitido al Ente Gestor':ob?'Observaciones por atender':E[e-1]+' ✓';
     const s=$('#ps'+i,root); s.textContent = e>=4?'Remitido':ob?'Con observaciones':e>=2?'En revisión':'En preparación'; s.className='pc-s '+(e>=4?'ok':ob?'ob':e>=2?'rv':'pr');
     const b=$('#pb'+i,root); b.disabled=e>=4; b.textContent = e>=4?'✓ Remitido':ob?'Atender observaciones':ACC[e]; b.classList.toggle('borde',ob);
-    const sob=$('#sob'+i,root); sob.style.left=(e>=4?X[2]:e>=2?X[1]:X[0])+'%';
     const k=est.filter(x=>x>=4).length;
     const ok=k===C.length; $('#msg',root).textContent = ok?'Soportes completos: se habilita el cierre contractual y la liquidación':'Cierre contractual y liquidación: en espera del soporte completo'; $('#msg',root).classList.toggle('ok',ok); $('#pre',root).style.display=ok?'':'none';
   }
