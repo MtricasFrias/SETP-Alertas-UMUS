@@ -1,5 +1,5 @@
 /* =====================================================================
-   ESCENAS: portada · panorama · qué cambió · resumen de alerta · marco de "explorar" · hoja de ruta · gracias
+   ESCENAS: portada · panorama · qué cambió · resumen de alerta · marco de "explorar" · gracias
    ===================================================================== */
 const estilo = css => document.head.insertAdjacentHTML('beforeend','<style>'+css+'</style>');
 const CATN = { critica:0, moderada:1, leve:2 };
