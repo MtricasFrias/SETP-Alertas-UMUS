@@ -223,11 +223,13 @@ const NACION = {      // convenio de cofinanciación
 const PROY26 = [
   { g:'Infraestructura', n:'Consultoría · Proyecto Av. Ferrocarril',                        nac:0,           mun:1329444200,  est:'elegible',       f:'Con elegibilidad · 22 sep 2026' },
   { g:'Infraestructura', n:'Implementación Paraderos Tipo II y Tipo I',                     nac:9366315493,  mun:0,           est:'elegible',       f:'Con elegibilidad · 22 sep 2026' },
+  { g:'Infraestructura', n:'Interventoría Paraderos Tipo II y Tipo I',                      nac:964050784,   mun:0,           est:'elegible',       f:'Con elegibilidad · 22 sep 2026' },
   { g:'Infraestructura', n:'Consultoría · Ciclo infraestructura y adecuación de andenes',   nac:0,           mun:1256243333,  est:'elegible',       f:'Con elegibilidad · 22 sep 2026' },
   { g:'Patiotalleres',   n:'Adquisición Predio 1',                                          nac:0,           mun:10000000000, est:'subsana',        f:'Subsanando recomendaciones' },
   { g:'Patiotalleres',   n:'Adquisición Predio 2',                                          nac:10000000000, mun:0,           est:'subsana',        f:'Subsanando recomendaciones' },
   { g:'Patiotalleres',   n:'Adquisición Predio 3',                                          nac:10000000000, mun:0,           est:'subsana',        f:'Subsanando recomendaciones' },
   { g:'Tecnología',      n:'Semáforos Fase II',                                             nac:11525121714, mun:0,           est:'estructuracion', f:'En estructuración' },
+  { g:'Tecnología',      n:'Interventoría Semáforos Fase II',                               nac:990203195,   mun:0,           est:'estructuracion', f:'En estructuración' },
   { g:'Tecnología',      n:'Adquisición equipos Sistema de Recaudo, Gestión y Control de flota', nac:0,      mun:0,           est:'estructuracion', f:'En estructuración', nota:'Proceso a estructurar en el 2026, recursos a comprometer del 2027' }
 ];
 /* totales de la tabla de Planeación (se muestran tal cual, como en la diapositiva) */
