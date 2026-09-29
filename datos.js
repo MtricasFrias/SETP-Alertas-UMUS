@@ -135,7 +135,7 @@ const ALERTAS = [
     postura:['Elegibilidad de Ferrocarril, ciclorruta y Paraderos Tipo 1 y 2', 'Etapa precontractual de Paraderos Tipo 1 y 2', 'Patiotalleres: subsanación de las recomendaciones de la UMUS'],
     antes:'Ferrocarril, ciclorruta, Paraderos Tipo 1 y 2 y patiotalleres radicados en la UMUS, en espera del concepto de elegibilidad.',
     ahora:'Elegibilidad el 22 de septiembre para Ferrocarril, ciclorruta y Paraderos Tipo 1 y 2. Se inició la etapa precontractual de Paraderos; los patiotalleres subsanan las recomendaciones de la UMUS.',
-    vistas:[{ vis:'obraA', icono:'drag', pregunta:'Arrastra la línea «hoy» y toca una barra para ver el estado de cada frente.' },
+    vistas:[{ vis:'obraA', icono:'tap', pregunta:'Toca la imagen para ampliarla.' },
             { vis:'obraB', icono:'tap',  pregunta:'Toca un proyecto o un símbolo de las convenciones.' }] },
 
   { n:9, id:'tecno', corto:'Tecnología', titulo:'Componente tecnológico', t:'Rezagos en los avances para la estructuración e implementación del componente tecnológico',
@@ -220,7 +220,8 @@ const NACION = {      // convenio de cofinanciación
   anios      :[2024, 2025, 2026],
   convenio   :[60387986840, 68654718016, 61521319030],
   adjudicado :[57830325615, 25978400818, 32537282487],          // 2026 = proyectado (*)
-  reprogramar:[2557661225, 42676317198, 28984036543]             // 2026 = proyectado (*)
+  reprogramar:[2557661225, 42676317198, 28984036543],            // 2026 = proyectado (*)
+  pagado     :[0, 57830325615, 0]                                // único pago real hasta el corte: $57.830.325.615 en 2025; 2024 y 2026 sin pagos
 };
 
 /* proyectos 2026 según la tabla de la Dirección de Planeación (25 sep 2026): valores en pesos y fase actual, tal cual las diapositivas.
