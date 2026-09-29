@@ -324,7 +324,7 @@ const TRIVIA = [
   { n:9, q:'¿Cuántos sistemas forman el paquete tecnológico del SETP?', o:['2','3','5'], c:1, x:'Tres: gestión y control de flota, información al usuario y recaudo.' },
   { n:7, q:'¿Qué componentes del PMA están en revisión?', o:['Solo el ambiental','Ambiental, social y SST','Ninguno todavía'], c:1, x:'Ambiental, social y SST. El social concentra las observaciones.' },
   { n:1, q:'¿En qué estado está el modelo financiero del SETP?', o:['Sin iniciar','Con resultados','Suspendido'], c:1, x:'Ya tiene resultados y se calibra para dimensionar el FET.' },
-  { n:8, q:'¿Qué obtuvieron el 22 de septiembre Ferrocarril, la ciclorruta y los paraderos Tipo I y II?', o:['Elegibilidad de la UMUS','Contrato de obra','Acta de inicio'], c:0, x:'Elegibilidad. Paraderos pasa a Junta Directiva para iniciar la etapa precontractual.' },
+  { n:8, q:'¿Qué obtuvieron el 22 de septiembre Ferrocarril, la ciclorruta y los paraderos Tipo I y II?', o:['Elegibilidad de la UMUS','Contrato de obra','Acta de inicio'], c:0, x:'Elegibilidad. Paraderos ya inició la etapa precontractual.' },
   { n:6, q:'¿En qué etapa está el acto del componente operacional?', o:['Ya expedido','Borrador en revisión','Sin iniciar'], c:1, x:'Tiene borrador y está en revisión; sigue el trámite de adopción.' },
   { n:2, q:'¿Qué norma fija los requisitos que se pidieron a los transportadores?', o:['Decreto 1079','CONPES 4017','Ley 336'], c:0, x:'El Decreto 1079: se pidió a las empresas información sobre su cumplimiento.' }
 ];
