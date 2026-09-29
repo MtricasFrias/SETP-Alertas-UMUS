@@ -106,6 +106,9 @@ estilo(`
 .gr-mini .hd{ font-size:1.35rem } .gr-mini .tot{ font-size:2.6rem; margin:.15rem 0 .3rem } .gr-mini .tot small{ font-size:1.25rem }
 .gr-mini .leyenda{ font-size:1.3rem; margin-top:.2rem } .gr-mini .sw{ margin-top:.2rem }
 .gnote{ font-size:1.5rem; color:var(--mut); margin-top:-.3rem }
+.nac-tbl{ width:100%; border-collapse:collapse; margin-top:1.4rem; table-layout:fixed }
+.nac-tbl th{ font:800 1.3rem var(--fd); letter-spacing:.03em; color:var(--mut); text-align:right; padding:.4rem .4rem; border-bottom:.25rem solid var(--ink); white-space:nowrap } .nac-tbl th:first-child{ text-align:left; width:26% }
+.nac-tbl td{ font:700 1.3rem/1.2 var(--ft); color:var(--ink); text-align:right; padding:.9rem .4rem; border-bottom:.12rem solid #DBE3F0; white-space:nowrap } .nac-tbl td:first-child{ text-align:left; font:800 1.4rem var(--fd); color:var(--mut); white-space:normal }
 .gr .tk{ font:600 15px var(--ft); fill:var(--mut) } .gr .ut{ font:700 15px var(--fd); fill:var(--mut) } .gr .xa{ font:800 16px var(--fd); fill:var(--ink); text-anchor:middle }
 .gr .pc{ font:800 17px var(--fd); fill:#fff; text-anchor:middle } .gr .pc2{ font:800 26px var(--fd); fill:var(--ink); text-anchor:middle } .gr .pc3{ font:700 15px var(--ft); fill:var(--mut); text-anchor:middle }
 .gr .lg{ font:800 16px var(--fd); text-anchor:middle } .gr .lg2{ font:700 16px var(--ft); fill:var(--ink); text-anchor:middle }
@@ -150,10 +153,13 @@ estilo(`
 .gtw{ display:flex; flex-direction:column; gap:1.2rem; height:100% }
 .gt-top{ display:flex; align-items:center; gap:1rem; flex-wrap:wrap }
 .lg-i{ display:inline-flex; align-items:center; gap:.6rem; font:600 1.5rem var(--ft); color:var(--ink); margin-left:.6rem } .lg-i i{ width:1.4rem; height:1.4rem }
-.gt{ position:relative; --lw:27rem; background:var(--card); padding:.4rem 1.6rem 1rem; flex:none }
+.gt{ position:relative; --lw:27rem; background:var(--card); padding:.4rem 1.6rem 1rem; flex:1; min-height:0; display:flex; flex-direction:column }
+#gh{ flex:6; display:flex; flex-direction:column; min-height:0 }
+.gt-h{ flex:none } .gt-rows{ flex:1; min-height:0; overflow-y:auto; scrollbar-width:thin }
 .gt-h, .gt-r{ display:grid; grid-template-columns:var(--lw) minmax(0,1fr) }
 .gt-hy{ display:flex } .gt-hy .y{ flex:1; text-align:left; border-left:.15rem solid #C7D2E3; padding:.3rem 0 .2rem .8rem; font:800 1.6rem var(--fd); color:var(--ink) }
-.gt-r{ height:2.85rem; align-items:center; cursor:pointer; border-top:.12rem solid #E0E6F1 } .gt-r.gsep{ border-top:.3rem solid var(--ink) }
+.gt-r{ height:2.85rem; align-items:center; cursor:pointer; border-top:.12rem solid #E0E6F1 }
+.gt-g{ font:800 1.35rem var(--fd); text-transform:uppercase; letter-spacing:.04em; color:var(--ink); background:var(--sol); padding:.35rem .8rem; margin-top:.4rem }
 .gt-r:hover, .gt-r.sel{ background:#E6ECF7 }
 .gt-r .lb{ font:700 1.55rem var(--ft); color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding-right:.6rem }
 .gt-t{ position:relative; height:100%; background:repeating-linear-gradient(90deg,#DBE2EF 0 .12rem,transparent .12rem 8.3333%) }
@@ -363,6 +369,7 @@ VIS.desA = root => {
     <linearGradient id="gV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6FD1A0"/><stop offset="1" stop-color="#34A06A"/></linearGradient>
     <linearGradient id="gR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F49AA0"/><stop offset="1" stop-color="#DE5860"/></linearGradient>
     <filter id="sh" x="-20%" y="-10%" width="140%" height="130%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#1F3C78" flood-opacity=".25"/></filter></defs>`;
+  const totN=sum(N.convenio);
   root.innerHTML=`<div class="des">
     <div class="gr-col">
       <div class="gr gr-mini rv"><div class="hd">Aportes del Municipio · 100 % desembolsado cada año</div>
@@ -370,14 +377,18 @@ VIS.desA = root => {
         <svg viewBox="0 0 470 330" id="gm"></svg>
         <div class="leyenda"><span><i style="background:#5B91E3"></i>Aporte</span><span id="lgix"><i style="background:#F6BD4B"></i>Indexación</span></div>
         <label class="sw on" id="swi"><i></i>Incluir indexación</label></div>
-      <div class="gr gr-mini rv"><div class="hd">Cofinanciación de la Nación · girado 2024–2026</div>
-        <div class="tot"><span data-count="${sum(N.girado)/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</span> <small>girado, todo el período</small></div>
-        <svg viewBox="0 0 470 330" id="gn2"></svg>
-        <div class="leyenda"><span><i style="background:#3AA56D"></i>Girado</span></div></div></div>
-    <div class="gr rv"><div class="hd">Cofinanciación de la Nación · convenio 2024–2026</div>
-      <div class="tot"><span data-count="${sum(N.girado)/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</span> <small>girado, todo el período</small></div>
-      <svg viewBox="0 0 470 330" id="gn"></svg>
-      <div class="leyenda"><span><i style="background:#3AA56D"></i>Girado</span><span class="uni">$ mil M = miles de millones de pesos</span></div></div></div>`;
+      <div class="gr gr-mini rv"><div class="hd">Cofinanciación de la Nación · convenio 2024–2026</div>
+        <div class="tot"><span data-count="${totN/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</span> <small>convenio, todo el período</small></div>
+        <svg viewBox="0 0 470 330" id="gn"></svg>
+        <div class="leyenda"><span><i style="background:#3AA56D"></i>Adjudicado</span><span><i style="background:#E5626A"></i>Por reprogramar</span></div></div></div>
+    <div class="gr rv"><div class="hd">Cofinanciación de la Nación · detalle por vigencia</div>
+      <table class="nac-tbl"><thead><tr><th></th>${N.anios.map(a=>`<th>${a}${a===2026?'*':''}</th>`).join('')}</tr></thead>
+        <tbody>
+          <tr><td>Convenio Cofinanciación</td>${N.convenio.map(v=>`<td>${peso(v)}</td>`).join('')}</tr>
+          <tr><td>Adjudicado</td>${N.adjudicado.map(v=>`<td>${peso(v)}</td>`).join('')}</tr>
+          <tr><td>A Reprogramar</td>${N.reprogramar.map(v=>`<td>${peso(v)}</td>`).join('')}</tr>
+        </tbody></table>
+      <div class="uni" style="margin-top:.8rem">* 2026 proyectado</div></div></div>`;
   const plot=(n,max,ticks,{L=66,R=10,T=36,B=46}={})=>{ const W=470,H=330,pw=W-L-R,ph=H-T-B; return { W,H,L,T,pw,ph,n,band:pw/n, y:v=>T+ph-(v/max)*ph, ejes:()=>ticks.map(t=>`<line x1="${L}" x2="${W-R}" y1="${T+ph-(t/max)*ph}" y2="${T+ph-(t/max)*ph}" stroke="#D9E3F3" stroke-width="1.5"/><text x="${L-9}" y="${T+ph-(t/max)*ph+5}" text-anchor="end" class="tk">$${t}</text>`).join('')+`<text x="${L-56}" y="20" class="ut">Miles de millones de pesos ($ mil M)</text><line x1="${L}" x2="${W-R}" y1="${T+ph}" y2="${T+ph}" stroke="#66799F" stroke-width="2"/>` }; };
   function dibujaM(){ const pl=plot(M.anios.length,22e9,[0,5,10,15,20].map(x=>x)); const P={...pl, ejes:()=>[0,5,10,15,20].map(t=>`<line x1="${pl.L}" x2="${pl.W-10}" y1="${pl.y(t*1e9)}" y2="${pl.y(t*1e9)}" stroke="#D9E3F3" stroke-width="1.5"/><text x="${pl.L-9}" y="${pl.y(t*1e9)+5}" text-anchor="end" class="tk">$${t}</text>`).join('')+`<text x="10" y="20" class="ut">Miles de millones de pesos ($ mil M)</text><line x1="${pl.L}" x2="${pl.W-10}" y1="${pl.y(0)}" y2="${pl.y(0)}" stroke="#66799F" stroke-width="2"/>` };
     let s=DEFS+P.ejes(); const bw=P.band*.62;
@@ -387,13 +398,14 @@ VIS.desA = root => {
         <text class="vl" x="${x+bw/2}" y="${yt-9}">$${c1(tot)}</text></g><text class="xa" x="${x+bw/2}" y="${P.y(0)+26}">${a}</text>`; });
     $('#gm',root).innerHTML=s; $$('#gm .b',root).forEach(g=>{ g.onmousemove=e=>verTip(g.dataset.t,e); g.onmouseleave=ocultaTip; });
     $('#lgix',root).style.opacity=conIdx?1:.3; }
-  function dibujaN(id){ const pl=plot(3,75e9,[0,25,50,75]); let s=DEFS; const bw=pl.band*.5, X=pl.L;
+  function dibujaN(){ const pl=plot(3,75e9,[0,25,50,75]); let s=DEFS; const bw=pl.band*.5, X=pl.L;
     s+=[0,25,50,75].map(t=>`<line x1="${X}" x2="${pl.W-10}" y1="${pl.y(t*1e9)}" y2="${pl.y(t*1e9)}" stroke="#D9E3F3" stroke-width="1.5"/><text x="${X-9}" y="${pl.y(t*1e9)+5}" text-anchor="end" class="tk">$${t}</text>`).join('')+`<text x="10" y="20" class="ut">Miles de millones de pesos ($ mil M)</text><line x1="${X}" x2="${pl.W-10}" y1="${pl.y(0)}" y2="${pl.y(0)}" stroke="#66799F" stroke-width="2"/>`;
-    N.anios.forEach((a,i)=>{ const x=X+i*pl.band+(pl.band-bw)/2, gi=N.girado[i], y0=pl.y(0), yg=pl.y(gi);
-      s+=`<g class="b" data-t="<b>${a}</b><br>Girado: ${peso(gi)}" style="cursor:pointer"><g class="gb" style="--i:${i}"><rect x="${x+3}" y="${y0-4}" width="${bw}" height="4" rx="2" fill="rgba(31,60,120,.16)"/>${gi?`<rect x="${x}" y="${yg}" width="${bw}" height="${y0-yg}" rx="6" fill="url(#gV)"/>`:''}</g>
-        <text class="vl" x="${x+bw/2}" y="${(gi?yg:y0)-9}">$${gi?c1(gi):'0'}</text></g><text class="xa" x="${x+bw/2}" y="${y0+26}">${a}</text>`; });
-    $('#'+id,root).innerHTML=s; $$('#'+id+' .b',root).forEach(g=>{ g.onmousemove=e=>verTip(g.dataset.t,e); g.onmouseleave=ocultaTip; }); }
-  dibujaM(); dibujaN('gn2'); dibujaN('gn');
+    N.anios.forEach((a,i)=>{ const x=X+i*pl.band+(pl.band-bw)/2, ad=N.adjudicado[i], rp=N.reprogramar[i], tot=N.convenio[i], y0=pl.y(0), ya=pl.y(ad), yt=pl.y(ad+rp), pa=Math.round(ad/tot*100), pr=100-pa;
+      s+=`<g class="b" data-t="<b>${a}${a===2026?'*':''}</b> · convenio ${peso(tot)}<br>Adjudicado: ${peso(ad)} (${pa} %)<br>Por reprogramar: ${peso(rp)} (${pr} %)" style="cursor:pointer"><g class="gb" style="--i:${i}"><rect x="${x+3}" y="${yt+4}" width="${bw}" height="${y0-yt}" rx="6" fill="rgba(31,60,120,.16)"/><rect x="${x}" y="${ya}" width="${bw}" height="${y0-ya}" rx="6" fill="url(#gV)"/><rect x="${x}" y="${yt}" width="${bw}" height="${ya-yt+4}" rx="6" fill="url(#gR)"/></g>
+        ${y0-ya>26?`<text class="pc" x="${x+bw/2}" y="${(y0+ya)/2+6}">${pa} %</text>`:''}${ya-yt>26?`<text class="pc" x="${x+bw/2}" y="${(ya+yt)/2+6}">${pr} %</text>`:''}
+        <text class="vl" x="${x+bw/2}" y="${yt-9}">$${c1(tot)}</text></g><text class="xa" x="${x+bw/2}" y="${y0+26}">${a}${a===2026?'*':''}</text>`; });
+    $('#gn',root).innerHTML=s; $$('#gn .b',root).forEach(g=>{ g.onmousemove=e=>verTip(g.dataset.t,e); g.onmouseleave=ocultaTip; }); }
+  dibujaM(); dibujaN();
   $('#swi',root).onclick=()=>{ conIdx=!conIdx; $('#swi',root).classList.toggle('on',conIdx); dibujaM(); };
 };
 
@@ -455,7 +467,7 @@ VIS.pma = root => {
 function gantt(host, rows, {fecha=CORTE_ACT.fecha, onSel, sinRezago=false}={}){
   const ANIOS=[2023,2024,2025,2026,2027,2028]; let hoy=idxFecha(fecha), sel=null;
   host.innerHTML=`<div class="gt"><div class="gt-h"><div></div><div class="gt-hy">${ANIOS.map(a=>`<div class="y">${a}</div>`).join('')}</div></div>
-    ${rows.map((r,i)=>`<div class="gt-r${i>0&&rows[i-1].g!==r.g?' gsep':''}" data-i="${i}"><div class="lb" title="${r.n}">${r.n}</div><div class="gt-t"></div></div>`).join('')}
+    <div class="gt-rows">${rows.map((r,i)=>`${i===0||rows[i-1].g!==r.g?`<div class="gt-g">${r.g}</div>`:''}<div class="gt-r" data-i="${i}"><div class="lb" title="${r.n}">${r.n}</div><div class="gt-t"></div></div>`).join('')}</div>
     <div class="gt-play" id="gp"><div class="mango" id="gm"></div></div></div>`;
   const play=$('#gp',host), first=$('.gt-t',host), p=v=>v/72*100+'%';
   function pinta(){
@@ -482,7 +494,7 @@ const rezagoTxt=(r,hoy)=>{ const m=hoy-(r.b+1); return m>0&&r.est!=='ejecutado'&
 
 /* ---------- 8a · cronograma CONPES ---------- */
 VIS.obraA = root => {
-  const rows=GANTT.filter(g=>g.g!=='Tecnología');
+  const rows=GANTT;
   root.innerHTML=`<div class="gtw">
     <div class="gt-top rv"><button class="chip" id="bc">Corte ${CORTE_ACT.txt}</button><button class="chip" id="bh">Hoy</button>
       ${[['ejecutado','Ejecutado'],['ejecucion','En ejecución'],['elegible','Con elegibilidad'],['subsana','Subsanando'],['estructuracion','En estructuración'],['bloqueado','Sin recursos'],['retirado','Sin alcance']].map(([k,n])=>`<span class="lg-i"><i style="background:${ESTADO[k].c}"></i>${n}</span>`).join('')}</div>
@@ -588,11 +600,11 @@ VIS.obraB = root => {
    9 · Tecnología — red arrastrable + cronograma
    ===================================================================== */
 VIS.tecno = root => {
-  const ND=[{id:'cc',n:'Centro de control',s:'Lote 6 · compra 2027',x:500,y:108,w:230,est:'estructuracion',g:'Centro de control'},
-    {id:'rec',n:'Recaudo centralizado',s:'Estructurar en 2026',x:175,y:60,w:250,est:'estructuracion',g:'Recaudo y control de flota'},
-    {id:'flo',n:'Gestión y control de flota',s:'Recursos desde 2027',x:185,y:152,w:290,est:'estructuracion',g:'Recaudo y control de flota'},
-    {id:'usu',n:'Información al usuario',s:'En formulación',x:830,y:60,w:230,est:'estructuracion',g:'Información al usuario'},
-    {id:'sem',n:'Semáforos',s:'Fase I terminada · 100 %',x:830,y:152,w:230,est:'ejecutado',g:'Semaforización'}];
+  const ND=[{id:'cc',n:'Centro de control',s:'Lote 6 · compra 2027',x:500,y:108,w:230,est:'estructuracion',g:'Centro de Control'},
+    {id:'rec',n:'Recaudo centralizado',s:'Estructurar en 2026',x:175,y:60,w:250,est:'estructuracion',g:'Sistema de Recaudo'},
+    {id:'flo',n:'Gestión y control de flota',s:'Recursos desde 2027',x:185,y:152,w:290,est:'estructuracion',g:'Sistema de Gestión y Control de Flota'},
+    {id:'usu',n:'Información al usuario',s:'En formulación',x:830,y:60,w:230,est:'estructuracion',g:'Sistema de Información al Usuario'},
+    {id:'sem',n:'Semáforos',s:'Fase I terminada · 100 %',x:830,y:152,w:230,est:'ejecutado',g:'Sistema de Semaforización'}];
   const LK=[['cc','rec'],['cc','flo'],['cc','usu'],['cc','sem']];
   root.innerHTML=`<div class="tec"><div class="tec-n rv"><div class="tec-b"><button class="btn sol" id="si">▶ Simular integración</button><button class="btn borde" id="re" style="display:none">↺ Restablecer</button><span class="tip2">Arrastra los nodos para reordenar el esquema</span></div><svg viewBox="0 0 1000 200" id="sv"></svg><div class="tec-s" id="tx">Azul: en estructuración · Ámbar: en ejecución · Verde: integrado</div></div></div>`;
   const sv=$('#sv',root), N={}; ND.forEach(n=>N[n.id]={...n,ok:false});

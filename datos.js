@@ -191,16 +191,21 @@ const GANTT = [
   { g:'Infraestructura', n:'Av. Jordán Paralela',     a:18, b:44, est:'bloqueado',      nota:'Teniendo en cuenta el tope presupuestal del componente de infraestructura, se priorizaron los demás corredores. Está en revisión la posibilidad de redistribución.' },
   { g:'Infraestructura', n:'Avenida Ambalá',          a:24, b:53, est:'ejecucion',      nota:'Se encuentra en ejecución.' },
   { g:'Infraestructura', n:'Avenida Ferrocarril',     a:24, b:59, est:'elegible', nota:'El 22 de septiembre de 2026 se obtuvo la elegibilidad de la consultoría. Actualmente, el oficio se encuentra en proceso de modificación respecto a uno de sus puntos.' },
-  { g:'Estaciones y paraderos', n:'Paraderos Tipo 1 y 2', a:21, b:35, est:'elegible', nota:'El proyecto, bajo modalidad llave en mano, cuenta con la elegibilidad desde el 22 de septiembre de 2026. Ya inició la etapa precontractual.' },
+  { g:'Estaciones y paraderos', n:'Paraderos Tipo 1', a:21, b:35, est:'elegible', nota:'El proyecto, bajo modalidad llave en mano, cuenta con la elegibilidad desde el 22 de septiembre de 2026. Ya inició la etapa precontractual.' },
+  { g:'Estaciones y paraderos', n:'Paraderos Tipo 2', a:21, b:35, est:'elegible', nota:'El proyecto, bajo modalidad llave en mano, cuenta con la elegibilidad desde el 22 de septiembre de 2026. Ya inició la etapa precontractual.' },
   { g:'Estaciones y paraderos', n:'Paraderos Tipo 3',  a:9,  b:35, est:'ejecutado',      nota:'Ejecutado.' },
   { g:'Estaciones y paraderos', n:'Estaciones de integración', a:9, b:62, est:'retirado', nota:'Con la actualización del estudio de demanda operacional (septiembre 2025) no se contemplan estaciones de integración.' },
-  { g:'Patiotalleres y terminales', n:'Patiotalleres (Grupos 1 y 2)', a:10, b:71, est:'subsana', nota:'Grupo 1: lotes 2 y 8. Grupo 2: lotes 1, 3, 4, 5, 6, 7 y 9. Actualmente, la entidad se encuentra subsanando las recomendaciones emitidas por la UMUS. De acuerdo con el estudio de actualización del componente operacional (septiembre 2025), se requerirían 5 patiotalleres.' },
+  { g:'Patiotalleres y terminales', n:'Patio Grupo 1', a:10, b:71, est:'subsana', nota:'Lotes 2 y 8. Actualmente, la entidad se encuentra subsanando las recomendaciones emitidas por la UMUS.' },
+  { g:'Patiotalleres y terminales', n:'Patio Grupo 2', a:10, b:71, est:'subsana', nota:'Lotes 1, 3, 4, 5, 6, 7 y 9. Actualmente, la entidad se encuentra subsanando las recomendaciones emitidas por la UMUS. De acuerdo con el estudio de actualización del componente operacional (septiembre 2025), se requerirían 5 patiotalleres.' },
   { g:'Infraestructura complementaria', n:'Intervención Centro', a:22, b:41, est:'ejecucion', nota:'Acciones institucionales articuladas; zonas azules como medida de regulación del espacio público en el centro.' },
   { g:'Infraestructura complementaria', n:'Cicloinfraestructura', a:22, b:62, est:'elegible', nota:'El 22 de septiembre de 2026 se obtuvo la elegibilidad de la consultoría. Actualmente, el oficio se encuentra en proceso de modificación respecto a uno de sus puntos.' },
-  { g:'Tecnología', n:'Recaudo y control de flota', a:4,  b:26, est:'estructuracion', nota:'Adquisición de equipos: proceso a estructurar en 2026; recursos a comprometer del 2027. Se precisan sus condiciones técnicas y su articulación con el modelo operacional.' },
-  { g:'Tecnología', n:'Información al usuario',    a:4,  b:25, est:'estructuracion', nota:'En estructuración junto con control de flota y recaudo, articulada con el modelo operacional.' },
-  { g:'Tecnología', n:'Semaforización',            a:12, b:31, est:'ejecutado',      nota:'Fase I terminada al 100 %, corte 29 de septiembre de 2026. Fase II en estructuración.' },
-  { g:'Tecnología', n:'Centro de control',         a:0,  b:19, est:'estructuracion', nota:'Previsto en el Lote 6 de Patiotalleres: compra en 2027 y construcción en el segundo semestre de 2027.' }
+  { g:'Interventoría obras y gerencia', n:'Interventorías', a:0, b:71, est:'ejecucion', nota:'Interventoría de las obras del componente de infraestructura, activa durante toda la ejecución.' },
+  { g:'Interventoría obras y gerencia', n:'Gerencia del Proyecto', a:0, b:71, est:'ejecucion', nota:'Gerencia integral del proyecto, activa durante toda la ejecución.' },
+  { g:'Tecnología', n:'Sistema de Recaudo', a:4,  b:26, est:'estructuracion', nota:'Adquisición de equipos: proceso a estructurar en 2026; recursos a comprometer del 2027. Se precisan sus condiciones técnicas y su articulación con el modelo operacional.' },
+  { g:'Tecnología', n:'Sistema de Gestión y Control de Flota', a:4,  b:26, est:'estructuracion', nota:'Adquisición de equipos: proceso a estructurar en 2026; recursos a comprometer del 2027. Se precisan sus condiciones técnicas y su articulación con el modelo operacional.' },
+  { g:'Tecnología', n:'Sistema de Información al Usuario',    a:4,  b:25, est:'estructuracion', nota:'En estructuración junto con control de flota y recaudo, articulada con el modelo operacional.' },
+  { g:'Tecnología', n:'Sistema de Semaforización',            a:12, b:31, est:'ejecutado',      nota:'Fase I terminada al 100 %, corte 29 de septiembre de 2026. Fase II en estructuración.' },
+  { g:'Tecnología', n:'Centro de Control',         a:0,  b:19, est:'estructuracion', nota:'Previsto en el Lote 6 de Patiotalleres: compra en 2027 y construcción en el segundo semestre de 2027.' }
 ];
 
 /* ---------------------------------------------------------------------
@@ -215,8 +220,7 @@ const NACION = {      // convenio de cofinanciación
   anios      :[2024, 2025, 2026],
   convenio   :[60387986840, 68654718016, 61521319030],
   adjudicado :[57830325615, 25978400818, 32537282487],          // 2026 = proyectado (*)
-  reprogramar:[2557661225, 42676317198, 28984036543],           // 2026 = proyectado (*)
-  girado     :[0, 57830325615, 0]                               // efectivamente girado por la Nación; 2024 y 2026 en $0 (pendiente confirmar con Ximena)
+  reprogramar:[2557661225, 42676317198, 28984036543]             // 2026 = proyectado (*)
 };
 
 /* proyectos 2026 según la tabla de la Dirección de Planeación (25 sep 2026): valores en pesos y fase actual, tal cual las diapositivas.
