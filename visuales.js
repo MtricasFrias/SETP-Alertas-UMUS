@@ -101,12 +101,10 @@ estilo(`
 .gr .b rect{ transition:.3s } .gr .b:hover rect{ opacity:.85 }
 .gr .ax text{ font:700 16px var(--fd); fill:var(--mut); text-anchor:middle } .gr .vl{ font:800 17px var(--fd); fill:var(--ink); text-anchor:middle } .gr .g{ font:800 15px var(--ft); fill:var(--verde); text-anchor:middle }
 .leyenda{ display:flex; gap:2rem; font-size:1.55rem; color:var(--ink); margin-top:.5rem; transition:.2s } .leyenda i{ display:inline-block; width:1.4rem; height:1.4rem; margin-right:.6rem; vertical-align:-.1rem; border-radius:.3rem }
-.nac-mini{ margin-top:1rem; padding-top:1rem; border-top:.15rem solid #D9E3F3; flex:none }
-.nm-t{ font:800 1.35rem var(--fd); color:var(--mut); text-transform:uppercase; letter-spacing:.05em }
-.nm-row{ display:flex; gap:1rem; margin-top:.5rem }
-.nm-i{ background:#fff; border-radius:.7rem; padding:.5rem 1.2rem; text-align:center }
-.nm-i b{ display:block; font:800 1.9rem var(--fd); color:var(--mut) } .nm-i.on b{ color:#2E8B5A }
-.nm-i span{ font:600 1.35rem var(--ft); color:var(--mut) }
+.gr-col{ display:flex; flex-direction:column; gap:1.2rem; min-height:0 }
+.gr-col .gr{ flex:1; min-height:0; padding:1.1rem 1.6rem }
+.gr-mini .hd{ font-size:1.35rem } .gr-mini .tot{ font-size:2.6rem; margin:.15rem 0 .3rem } .gr-mini .tot small{ font-size:1.25rem }
+.gr-mini .leyenda{ font-size:1.3rem; margin-top:.2rem } .gr-mini .sw{ margin-top:.2rem }
 .gnote{ font-size:1.5rem; color:var(--mut); margin-top:-.3rem }
 .gr .tk{ font:600 15px var(--ft); fill:var(--mut) } .gr .ut{ font:700 15px var(--fd); fill:var(--mut) } .gr .xa{ font:800 16px var(--fd); fill:var(--ink); text-anchor:middle }
 .gr .pc{ font:800 17px var(--fd); fill:#fff; text-anchor:middle } .gr .pc2{ font:800 26px var(--fd); fill:var(--ink); text-anchor:middle } .gr .pc3{ font:700 15px var(--ft); fill:var(--mut); text-anchor:middle }
@@ -366,13 +364,17 @@ VIS.desA = root => {
     <linearGradient id="gR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F49AA0"/><stop offset="1" stop-color="#DE5860"/></linearGradient>
     <filter id="sh" x="-20%" y="-10%" width="140%" height="130%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#1F3C78" flood-opacity=".25"/></filter></defs>`;
   root.innerHTML=`<div class="des">
-    <div class="gr rv"><div class="hd">Aportes del Municipio · 100 % desembolsado cada año</div>
-      <div class="tot"><span data-count="${totM/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</span> <small>acumulado 2021–2026</small></div>
-      <svg viewBox="0 0 470 330" id="gm"></svg>
-      <div class="leyenda"><span><i style="background:#5B91E3"></i>Aporte</span><span id="lgix"><i style="background:#F6BD4B"></i>Indexación</span><span class="uni">$ mil M = miles de millones de pesos</span></div>
-      <label class="sw on" id="swi"><i></i>Incluir indexación</label>
-      <div class="nac-mini"><span class="nm-t">Nación · girado por vigencia</span><div class="nm-row">${N.anios.map((a,i)=>`<div class="nm-i${N.girado[i]?' on':''}"><b>${N.girado[i]?'$'+c1(N.girado[i])+' mil M':'$0'}</b><span>${a}</span></div>`).join('')}</div></div></div>
-    <div class="gr rv"><div class="hd">Desembolsos de la Nación · convenio 2024–2026</div>
+    <div class="gr-col">
+      <div class="gr gr-mini rv"><div class="hd">Aportes del Municipio · 100 % desembolsado cada año</div>
+        <div class="tot"><span data-count="${totM/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</span> <small>acumulado 2021–2026</small></div>
+        <svg viewBox="0 0 470 330" id="gm"></svg>
+        <div class="leyenda"><span><i style="background:#5B91E3"></i>Aporte</span><span id="lgix"><i style="background:#F6BD4B"></i>Indexación</span></div>
+        <label class="sw on" id="swi"><i></i>Incluir indexación</label></div>
+      <div class="gr gr-mini rv"><div class="hd">Cofinanciación de la Nación · girado 2024–2026</div>
+        <div class="tot"><span data-count="${sum(N.girado)/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</span> <small>girado, todo el período</small></div>
+        <svg viewBox="0 0 470 330" id="gn2"></svg>
+        <div class="leyenda"><span><i style="background:#3AA56D"></i>Girado</span></div></div></div>
+    <div class="gr rv"><div class="hd">Cofinanciación de la Nación · convenio 2024–2026</div>
       <div class="tot"><span data-count="${sum(N.girado)/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</span> <small>girado, todo el período</small></div>
       <svg viewBox="0 0 470 330" id="gn"></svg>
       <div class="leyenda"><span><i style="background:#3AA56D"></i>Girado</span><span class="uni">$ mil M = miles de millones de pesos</span></div></div></div>`;
@@ -385,13 +387,13 @@ VIS.desA = root => {
         <text class="vl" x="${x+bw/2}" y="${yt-9}">$${c1(tot)}</text></g><text class="xa" x="${x+bw/2}" y="${P.y(0)+26}">${a}</text>`; });
     $('#gm',root).innerHTML=s; $$('#gm .b',root).forEach(g=>{ g.onmousemove=e=>verTip(g.dataset.t,e); g.onmouseleave=ocultaTip; });
     $('#lgix',root).style.opacity=conIdx?1:.3; }
-  function dibujaN(){ const pl=plot(3,75e9,[0,25,50,75]); let s=DEFS; const bw=pl.band*.5, X=pl.L;
+  function dibujaN(id){ const pl=plot(3,75e9,[0,25,50,75]); let s=DEFS; const bw=pl.band*.5, X=pl.L;
     s+=[0,25,50,75].map(t=>`<line x1="${X}" x2="${pl.W-10}" y1="${pl.y(t*1e9)}" y2="${pl.y(t*1e9)}" stroke="#D9E3F3" stroke-width="1.5"/><text x="${X-9}" y="${pl.y(t*1e9)+5}" text-anchor="end" class="tk">$${t}</text>`).join('')+`<text x="10" y="20" class="ut">Miles de millones de pesos ($ mil M)</text><line x1="${X}" x2="${pl.W-10}" y1="${pl.y(0)}" y2="${pl.y(0)}" stroke="#66799F" stroke-width="2"/>`;
     N.anios.forEach((a,i)=>{ const x=X+i*pl.band+(pl.band-bw)/2, gi=N.girado[i], y0=pl.y(0), yg=pl.y(gi);
       s+=`<g class="b" data-t="<b>${a}</b><br>Girado: ${peso(gi)}" style="cursor:pointer"><g class="gb" style="--i:${i}"><rect x="${x+3}" y="${y0-4}" width="${bw}" height="4" rx="2" fill="rgba(31,60,120,.16)"/>${gi?`<rect x="${x}" y="${yg}" width="${bw}" height="${y0-yg}" rx="6" fill="url(#gV)"/>`:''}</g>
         <text class="vl" x="${x+bw/2}" y="${(gi?yg:y0)-9}">$${gi?c1(gi):'0'}</text></g><text class="xa" x="${x+bw/2}" y="${y0+26}">${a}</text>`; });
-    $('#gn',root).innerHTML=s; $$('#gn .b',root).forEach(g=>{ g.onmousemove=e=>verTip(g.dataset.t,e); g.onmouseleave=ocultaTip; }); }
-  dibujaM(); dibujaN();
+    $('#'+id,root).innerHTML=s; $$('#'+id+' .b',root).forEach(g=>{ g.onmousemove=e=>verTip(g.dataset.t,e); g.onmouseleave=ocultaTip; }); }
+  dibujaM(); dibujaN('gn2'); dibujaN('gn');
   $('#swi',root).onclick=()=>{ conIdx=!conIdx; $('#swi',root).classList.toggle('on',conIdx); dibujaM(); };
 };
 
