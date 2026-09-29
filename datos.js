@@ -79,7 +79,7 @@ const ALERTAS = [
     frase:'',
     hechos:['Riel virtual; se presenta como 100 % privado.',
             'Pide ser único operador y usar recursos del CONPES 4017.',
-            'Concepto favorable de prefactibilidad: 27 de octubre de 2025.',
+            'Concepto favorable de prefactibilidad (oficio 108379, 27 de octubre de 2025), condicionado: el municipio no firma como deudor ni garante del crédito de la APP, y deben incorporarse las observaciones de Planeación, Infraestructura, Cultura, Hacienda y Movilidad.',
             'Último paso, 24 de septiembre: oficio informando la programación de la mesa interinstitucional y solicitando el informe de avance de la etapa de factibilidad.'],
     cifras:[],
     postura:['Seguimiento a la propuesta de APP del tranvía', 'Mesa interinstitucional con MinHacienda, DNP y MinTransporte', 'Informe de avance de la etapa de factibilidad'],
