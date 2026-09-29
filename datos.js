@@ -215,7 +215,8 @@ const NACION = {      // convenio de cofinanciación
   anios      :[2024, 2025, 2026],
   convenio   :[60387986840, 68654718016, 61521319030],
   adjudicado :[57830325615, 25978400818, 32537282487],          // 2026 = proyectado (*)
-  reprogramar:[2557661225, 42676317198, 28984036543]            // 2026 = proyectado (*)
+  reprogramar:[2557661225, 42676317198, 28984036543],           // 2026 = proyectado (*)
+  girado     :[0, 25978400818, 0]                               // efectivamente desembolsado por la Nación; 2024 y 2026 aún en $0
 };
 
 /* proyectos 2026 según la tabla de la Dirección de Planeación (25 sep 2026): valores en pesos y fase actual, tal cual las diapositivas.
