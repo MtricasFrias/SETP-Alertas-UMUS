@@ -134,22 +134,6 @@ estilo(`
 .ac-d.listo .ad-sello{ animation:selloB .55s .1s cubic-bezier(.2,1.5,.4,1) forwards }
 @keyframes selloB{ to{ transform:rotate(9deg) scale(1); opacity:1 } }
 
-/* ---------- PMA: la ruta del soporte ---------- */
-.pma{ display:flex; flex-direction:column; gap:1.6rem; height:100% }
-.pma-b{ flex:1; min-height:0; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1.6rem }
-.pcard{ background:var(--card); border-top:.7rem solid var(--c); padding:1.1rem 1.8rem 1.3rem; display:flex; flex-direction:column; gap:.7rem; min-height:0 }
-.pc-h{ display:flex; align-items:center; gap:1rem } .pc-h svg{ width:3.4rem; height:3.4rem; color:var(--c) } .pc-h b{ font:800 2.2rem var(--fd); color:var(--ink) }
-.pc-s{ margin-left:auto; font:800 1.5rem var(--fd); font-style:normal; padding:.15rem .9rem; border-radius:.5rem; white-space:nowrap }
-.pc-s.pr{ background:#FCE9B5; color:#6B4A00 } .pc-s.rv{ background:#DCE8FB; color:var(--ink) } .pc-s.ob{ background:#F8D9D6; color:#8E2A32 } .pc-s.ok{ background:var(--verde); color:#fff }
-.pcard p{ font-size:1.75rem; line-height:1.3; color:var(--tx) }
-.pc-et{ list-style:none; padding:0; margin-top:auto; display:flex; flex-direction:column; gap:1.1rem }
-.pc-et li{ position:relative; padding-left:2.6rem; font:700 1.65rem var(--ft); color:var(--mut) }
-.pc-et li:before{ content:""; position:absolute; left:0; top:.2rem; width:1.7rem; height:1.7rem; border-radius:50%; border:.2rem solid #C7D2E3; background:#fff }
-.pc-et li.ok{ color:var(--ink) } .pc-et li.ok:before{ content:"✓"; display:flex; align-items:center; justify-content:center; font-size:1.1rem; color:#fff; background:var(--verde); border-color:var(--verde) }
-.pc-et li.cur{ color:var(--ink); font-weight:800 } .pc-et li.cur:before{ background:var(--sol); border-color:var(--sol) }
-.pma-r{ display:flex; align-items:center; gap:1.8rem; background:var(--card); padding:.8rem 2.2rem; flex:none }
-.pma-r .k-num{ font-size:3.6rem } .pma-r > span{ font-size:1.6rem; color:var(--mut) } .pma-r .msg{ margin-left:auto; text-align:right; font:800 1.65rem var(--fd); color:var(--ink) } .pma-r .msg.ok{ color:var(--verde-t) }
-
 /* ---------- Cronograma como imagen tal cual ---------- */
 .gimg{ display:flex; flex-direction:column; gap:.8rem; height:100% }
 .gimg-cap{ font:700 1.7rem var(--ft); color:var(--mut) }
@@ -458,18 +442,6 @@ VIS.actos = root => {
       <div class="ad-i">Insumo: estudio de actualización del modelo operacional</div>
       <div class="ad-sl">${P.map((p,i)=>`<div class="slot lleno"><em>${i+1}</em><div><b>${p.s}</b><span>${p.t}</span></div></div>`).join('')}</div>
       <div class="ad-sello">EN ESTRUCTURACIÓN</div></div></div>`;
-};
-
-/* =====================================================================
-   7 · PMA — la ruta del soporte: contratista, interventoría y Ente Gestor
-   ===================================================================== */
-VIS.pma = root => {
-  const C=PMA_COMP, E=PMA_ETAPAS, e=1;
-  root.innerHTML=`<div class="pma">
-    <div class="pma-b">${C.map(c=>{ const ob=c.obs, s=ob?'Con observaciones':'En preparación';
-      return `<div class="pcard rv" style="--c:${c.c}"><div class="pc-h">${ico(c.ic)}<b>${c.n}</b><i class="pc-s ${ob?'ob':'pr'}">${s}</i></div><p>${c.t}</p>
-        <ul class="pc-et">${E.map((t,k)=>`<li class="${k<e?'ok':k===e?'cur':''}">${k<e?'✓':k===e?'●':''} ${t}</li>`).join('')}</ul></div>`; }).join('')}</div>
-    <div class="pma-r rv"><div class="msg" id="msg">En curso hacia el cierre contractual y la liquidación</div></div></div>`;
 };
 
 /* =====================================================================

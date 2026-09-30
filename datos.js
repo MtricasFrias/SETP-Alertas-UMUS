@@ -122,7 +122,7 @@ const ALERTAS = [
     postura:['Radicación de los informes mensuales', 'Atención de las observaciones del componente social', 'Acompañamiento al contratista hasta el cierre del soporte'],
     antes:'La interventoría no había enviado el informe oficial de alcances e impactos del PMA.',
     ahora:'Mesas técnicas y listas de chequeo enviadas.',
-    vistas:[{ vis:'pma', icono:null, pregunta:'Estado actual de cada componente hacia el cierre del soporte.' }] },
+    vistas:[] },
 
   { n:8, id:'obras', corto:'Obras', titulo:'Obras frente al cronograma CONPES', t:'Retrasos en ejecución de obras de acuerdo con el cronograma CONPES',
     per:'2026-I', comp:'Cronograma', cat:'critica', act:true, corte:'25 sep 2026',
@@ -256,9 +256,3 @@ const ACTO_PARTES = [
    ALERTA 7 — componentes del PMA y etapas del soporte (25 sep 2026)
    obs: componente con observaciones formuladas por atender
    ------------------------------------------------------------------- */
-const PMA_COMP = [
-  { id:'amb', n:'Ambiental', ic:'i-leaf',   c:'#3AA56D', obs:false, t:'Entregables revisados, con retroalimentación y lista de chequeo.' },
-  { id:'soc', n:'Social',    ic:'i-people', c:'#5B91E3', obs:true,  t:'Con observaciones formuladas: la interventoría verifica que se atiendan.' },
-  { id:'sst', n:'SST',       ic:'i-shield', c:'#F6BD4B', obs:false, t:'Seguridad y salud en el trabajo: entregables revisados, con lista de chequeo.' }
-];
-const PMA_ETAPAS = ['Lista de chequeo remitida','Informes y soportes radicados','Verificación de la interventoría','Remitido al Ente Gestor'];
