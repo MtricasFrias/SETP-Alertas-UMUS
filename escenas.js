@@ -7,7 +7,7 @@ const CATN = { critica:0, moderada:1, leve:2 };
 const perTxt = p => { const [a,r]=p.split('-'); return `${a} · ${r} trimestre`; };
 
 estilo(`
-.cifra b.m{ font-size:4.7rem; white-space:normal; line-height:1.02; letter-spacing:-.02em }
+.cifra b.m{ font-size:3.9rem; white-space:normal; overflow-wrap:break-word; line-height:1.05; letter-spacing:-.02em }
 
 /* ---------- resumen: llegada del tranvía (alerta 4) ---------- */
 /* el «destape» se hace con transform (ventana que avanza + contenido que retrocede), no con clip-path, para que no se repinte en cada cuadro */
@@ -84,8 +84,8 @@ estilo(`
 .cb-b{ display:flex; gap:1.2rem }
 
 /* ---------- postura: lista con guiones, chulo verde en lo ya cumplido ---------- */
-.postura ul{ list-style:none; display:flex; flex-wrap:wrap; column-gap:2.8rem; row-gap:.5rem; margin-top:.7rem; padding:0 }
-.postura li{ position:relative; padding-left:1.9rem; font:600 2.15rem/1.25 var(--ft) }
+.postura ul{ list-style:none; display:flex; flex-wrap:wrap; column-gap:2.8rem; row-gap:.35rem; margin-top:.5rem; padding:0 }
+.postura li{ position:relative; padding-left:1.9rem; font:600 1.85rem/1.2 var(--ft) }
 .postura li:before{ content:"–"; position:absolute; left:0; color:var(--sol); font-weight:800 }
 .postura li.ok:before{ content:"✓"; color:#4ADE80; font-weight:900 }
 `);

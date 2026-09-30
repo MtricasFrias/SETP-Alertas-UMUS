@@ -477,7 +477,15 @@ function gantt(host, rows, {fecha=CORTE_ACT.fecha, onSel, sinRezago=false}={}){
 }
 const rezagoTxt=(r,hoy)=>{ const m=hoy-(r.b+1); return m>0&&r.est!=='ejecutado'&&r.est!=='retirado' ? `<b style="color:#E5626A">${Math.round(m)} meses de rezago.</b> ` : ''; };
 
-/* ---------- 8a-8d · cronograma CONPES por frente: imagen tal cual de cada diapositiva de la Dirección de Planeación ---------- */
+/* ---------- 8a · cronograma CONPES completo: imagen tal cual, sin recorte ---------- */
+VIS.obraFull = root => {
+  root.innerHTML=`<div class="gimg">
+    <div class="gimg-cap rv">Cronograma CONPES completo · corte ${CORTE_ACT.txt}</div>
+    <div class="gimg-w rv" id="giw"><img src="img/cronograma-conpes.png" alt="Cronograma CONPES completo"></div></div>`;
+  $('#giw',root).onclick=()=>$('#giw',root).classList.toggle('on');
+};
+
+/* ---------- 8b-8e · cronograma CONPES por frente: imagen tal cual de cada diapositiva de la Dirección de Planeación ---------- */
 const obraSec = (img, cap, items) => root => {
   root.innerHTML=`<div class="gimg">
     <div class="gimg-cap rv">${cap} · corte ${CORTE_ACT.txt}</div>
