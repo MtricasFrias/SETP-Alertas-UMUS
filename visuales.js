@@ -101,10 +101,9 @@ estilo(`
 .gr .b rect{ transition:.3s } .gr .b:hover rect{ opacity:.85 }
 .gr .ax text{ font:700 16px var(--fd); fill:var(--mut); text-anchor:middle } .gr .vl{ font:800 17px var(--fd); fill:var(--ink); text-anchor:middle } .gr .g{ font:800 15px var(--ft); fill:var(--verde); text-anchor:middle }
 .leyenda{ display:flex; gap:2rem; font-size:1.55rem; color:var(--ink); margin-top:.5rem; transition:.2s } .leyenda i{ display:inline-block; width:1.4rem; height:1.4rem; margin-right:.6rem; vertical-align:-.1rem; border-radius:.3rem }
-.gr-col{ display:flex; flex-direction:column; gap:1.2rem; min-height:0 }
-.gr-col .gr{ flex:1; min-height:0; padding:1.1rem 1.6rem }
-.gr-mini .hd{ font-size:1.35rem } .gr-mini .tot{ font-size:2.6rem; margin:.15rem 0 .3rem } .gr-mini .tot small{ font-size:1.25rem }
-.gr-mini .leyenda{ font-size:1.3rem; margin-top:.2rem } .gr-mini .sw{ margin-top:.2rem }
+.seg{ display:flex; gap:.5rem; margin-bottom:.8rem; flex:none }
+.seg-b{ font:800 1.5rem var(--fd); color:var(--mut); background:var(--paper); border:none; border-radius:.6rem; padding:.6rem 1.4rem; cursor:pointer; transition:.2s }
+.seg-b.on{ background:var(--ink); color:#fff }
 .gnote{ font-size:1.5rem; color:var(--mut); margin-top:-.3rem }
 .nac-tbl{ width:100%; border-collapse:collapse; margin-top:1.4rem; table-layout:fixed }
 .nac-tbl th{ font:800 1.3rem var(--fd); letter-spacing:.03em; color:var(--mut); text-align:right; padding:.4rem .4rem; border-bottom:.25rem solid var(--ink); white-space:nowrap } .nac-tbl th:first-child{ text-align:left; width:26% }
@@ -142,17 +141,22 @@ estilo(`
 .pc-h{ display:flex; align-items:center; gap:1rem } .pc-h svg{ width:3.4rem; height:3.4rem; color:var(--c) } .pc-h b{ font:800 2.2rem var(--fd); color:var(--ink) }
 .pc-s{ margin-left:auto; font:800 1.5rem var(--fd); font-style:normal; padding:.15rem .9rem; border-radius:.5rem; white-space:nowrap }
 .pc-s.pr{ background:#FCE9B5; color:#6B4A00 } .pc-s.rv{ background:#DCE8FB; color:var(--ink) } .pc-s.ob{ background:#F8D9D6; color:#8E2A32 } .pc-s.ok{ background:var(--verde); color:#fff }
-.pcard p{ font-size:1.6rem; line-height:1.2; color:var(--tx); flex:1 }
-.pc-e{ display:flex; flex-direction:column; gap:.5rem } .pc-d{ display:flex; gap:.4rem } .pc-d u{ flex:1; height:.9rem; background:#D5DDEC; text-decoration:none; border-radius:.3rem; transition:background .4s } .pc-d u.ok{ background:var(--verde) } .pc-d u.cur{ background:var(--sol) }
-.pc-e span{ font:700 1.55rem var(--fd); color:var(--ink) }
-.pcard .btn{ width:100%; font-size:1.55rem; padding:.85rem 1rem }
+.pcard p{ font-size:1.75rem; line-height:1.3; color:var(--tx) }
+.pc-et{ list-style:none; padding:0; margin-top:auto; display:flex; flex-direction:column; gap:1.1rem }
+.pc-et li{ position:relative; padding-left:2.6rem; font:700 1.65rem var(--ft); color:var(--mut) }
+.pc-et li:before{ content:""; position:absolute; left:0; top:.2rem; width:1.7rem; height:1.7rem; border-radius:50%; border:.2rem solid #C7D2E3; background:#fff }
+.pc-et li.ok{ color:var(--ink) } .pc-et li.ok:before{ content:"✓"; display:flex; align-items:center; justify-content:center; font-size:1.1rem; color:#fff; background:var(--verde); border-color:var(--verde) }
+.pc-et li.cur{ color:var(--ink); font-weight:800 } .pc-et li.cur:before{ background:var(--sol); border-color:var(--sol) }
 .pma-r{ display:flex; align-items:center; gap:1.8rem; background:var(--card); padding:.8rem 2.2rem; flex:none }
 .pma-r .k-num{ font-size:3.6rem } .pma-r > span{ font-size:1.6rem; color:var(--mut) } .pma-r .msg{ margin-left:auto; text-align:right; font:800 1.65rem var(--fd); color:var(--ink) } .pma-r .msg.ok{ color:var(--verde-t) }
 
 /* ---------- Cronograma como imagen tal cual ---------- */
 .gimg{ display:flex; flex-direction:column; gap:.8rem; height:100% }
 .gimg-cap{ font:700 1.7rem var(--ft); color:var(--mut) }
-.gimg-w{ flex:1; min-height:0; display:flex; align-items:center; justify-content:center; background:var(--card); border-radius:.8rem; overflow:hidden; cursor:zoom-in }
+.gimg-w{ flex:3; min-height:0; display:flex; align-items:center; justify-content:center; background:var(--card); border-radius:.8rem; overflow:hidden; cursor:zoom-in }
+.gimg-det{ flex:1.5; min-height:0; overflow-y:auto; scrollbar-width:thin; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1.4rem; background:var(--card); border-radius:.8rem; padding:1rem 1.4rem }
+.gimg-col b{ display:block; font:800 1.35rem var(--fd); color:var(--ink) } .gimg-col b:first-child{ text-transform:uppercase; letter-spacing:.03em; color:var(--mut); margin-bottom:.4rem }
+.gimg-col p{ font-size:1.35rem; line-height:1.25; color:var(--tx); margin:.4rem 0 0 }
 .gimg-w img{ max-width:100%; max-height:100%; object-fit:contain }
 .gimg-w.on{ position:fixed; inset:3rem; z-index:50; cursor:zoom-out; box-shadow:0 1rem 3rem rgba(31,60,120,.4) }
 
@@ -377,22 +381,19 @@ VIS.desA = root => {
     <linearGradient id="gR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F49AA0"/><stop offset="1" stop-color="#DE5860"/></linearGradient>
     <filter id="sh" x="-20%" y="-10%" width="140%" height="130%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#1F3C78" flood-opacity=".25"/></filter></defs>`;
   root.innerHTML=`<div class="des">
-    <div class="gr-col">
-      <div class="gr gr-mini rv"><div class="hd">Aportes del Municipio · 100 % desembolsado cada año</div>
-        <div class="tot"><span data-count="${totM/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</span> <small>acumulado 2021–2026</small></div>
-        <svg viewBox="0 0 470 330" id="gm"></svg>
-        <div class="leyenda"><span><i style="background:#5B91E3"></i>Aporte</span><span id="lgix"><i style="background:#F6BD4B"></i>Indexación</span></div>
-        <label class="sw on" id="swi"><i></i>Incluir indexación</label></div>
-      <div class="gr gr-mini rv"><div class="hd">Cofinanciación de la Nación · pagos realizados</div>
-        <div class="tot"><span data-count="${sum(N.pagado)/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</span> <small>pagado, todo el período</small></div>
-        <svg viewBox="0 0 470 330" id="gn"></svg>
-        <div class="leyenda"><span><i style="background:#3AA56D"></i>Pagado</span></div></div></div>
+    <div class="gr rv">
+      <div class="seg" id="seg"><button class="seg-b on" data-v="mun">Municipio</button><button class="seg-b" data-v="nac">Nación</button></div>
+      <div class="hd" id="dhd">Aportes del Municipio · 100 % desembolsado cada año</div>
+      <div class="tot" id="dtot"><span data-count="${totM/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</span> <small>acumulado 2021–2026</small></div>
+      <svg viewBox="0 0 470 330" id="gx"></svg>
+      <div class="leyenda" id="dleg"><span><i style="background:#5B91E3"></i>Aporte</span><span id="lgix"><i style="background:#F6BD4B"></i>Indexación</span></div>
+      <label class="sw on" id="swi"><i></i>Incluir indexación</label></div>
     <div class="gr rv"><div class="hd">Cofinanciación de la Nación · detalle por vigencia</div>
-      <table class="nac-tbl"><thead><tr><th></th>${N.anios.map(a=>`<th>${a}${a===2026?'*':''}</th>`).join('')}</tr></thead>
+      <table class="nac-tbl"><thead><tr><th></th>${N.anios.map(a=>`<th>${a}</th>`).join('')}</tr></thead>
         <tbody>
           <tr><td>Convenio Cofinanciación</td>${N.convenio.map(v=>`<td>${peso(v)}</td>`).join('')}</tr>
-          <tr><td>Adjudicado</td>${N.adjudicado.map(v=>`<td>${peso(v)}</td>`).join('')}</tr>
-          <tr><td>A Reprogramar</td>${N.reprogramar.map(v=>`<td>${peso(v)}</td>`).join('')}</tr>
+          <tr><td>Adjudicado</td>${N.adjudicado.map((v,i)=>`<td>${peso(v)}${i===2?'*':''}</td>`).join('')}</tr>
+          <tr><td>A Reprogramar</td>${N.reprogramar.map((v,i)=>`<td>${peso(v)}${i===2?'*':''}</td>`).join('')}</tr>
         </tbody></table>
       <div class="uni" style="margin-top:.8rem">* 2026 proyectado</div></div></div>`;
   const plot=(n,max,ticks,{L=66,R=10,T=36,B=46}={})=>{ const W=470,H=330,pw=W-L-R,ph=H-T-B; return { W,H,L,T,pw,ph,n,band:pw/n, y:v=>T+ph-(v/max)*ph, ejes:()=>ticks.map(t=>`<line x1="${L}" x2="${W-R}" y1="${T+ph-(t/max)*ph}" y2="${T+ph-(t/max)*ph}" stroke="#D9E3F3" stroke-width="1.5"/><text x="${L-9}" y="${T+ph-(t/max)*ph+5}" text-anchor="end" class="tk">$${t}</text>`).join('')+`<text x="${L-56}" y="20" class="ut">Miles de millones de pesos ($ mil M)</text><line x1="${L}" x2="${W-R}" y1="${T+ph}" y2="${T+ph}" stroke="#66799F" stroke-width="2"/>` }; };
@@ -402,16 +403,32 @@ VIS.desA = root => {
       s+=`<g class="b" data-t="<b>${a}</b><br>Aporte: ${peso(ap)}${M.indexacion[i]?`<br>Indexación: ${peso(M.indexacion[i])}`:''}<br>Total: ${peso(ap+M.indexacion[i])}<br><span style='opacity:.8'>= $${c1(ap+M.indexacion[i])} mil M</span>${a===2026?'<br>Desembolsado el 30 de abril de 2026':''}" style="cursor:pointer">
         <g class="gb" style="--i:${i}"><rect x="${x+3}" y="${yt+4}" width="${bw}" height="${P.y(0)-yt}" rx="6" fill="rgba(31,60,120,.16)"/><rect x="${x}" y="${ya}" width="${bw}" height="${P.y(0)-ya}" rx="6" fill="url(#gA)"/>${ix?`<rect x="${x}" y="${yt}" width="${bw}" height="${ya-yt+4}" rx="6" fill="url(#gI)"/>`:''}</g>
         <text class="vl" x="${x+bw/2}" y="${yt-9}">$${c1(tot)}</text></g><text class="xa" x="${x+bw/2}" y="${P.y(0)+26}">${a}</text>`; });
-    $('#gm',root).innerHTML=s; $$('#gm .b',root).forEach(g=>{ g.onmousemove=e=>verTip(g.dataset.t,e); g.onmouseleave=ocultaTip; });
+    $('#gx',root).innerHTML=s; $$('#gx .b',root).forEach(g=>{ g.onmousemove=e=>verTip(g.dataset.t,e); g.onmouseleave=ocultaTip; });
     $('#lgix',root).style.opacity=conIdx?1:.3; }
   function dibujaN(){ const pl=plot(3,75e9,[0,25,50,75]); let s=DEFS; const bw=pl.band*.5, X=pl.L;
     s+=[0,25,50,75].map(t=>`<line x1="${X}" x2="${pl.W-10}" y1="${pl.y(t*1e9)}" y2="${pl.y(t*1e9)}" stroke="#D9E3F3" stroke-width="1.5"/><text x="${X-9}" y="${pl.y(t*1e9)+5}" text-anchor="end" class="tk">$${t}</text>`).join('')+`<text x="10" y="20" class="ut">Miles de millones de pesos ($ mil M)</text><line x1="${X}" x2="${pl.W-10}" y1="${pl.y(0)}" y2="${pl.y(0)}" stroke="#66799F" stroke-width="2"/>`;
     N.anios.forEach((a,i)=>{ const x=X+i*pl.band+(pl.band-bw)/2, pg=N.pagado[i], y0=pl.y(0), yg=pl.y(pg);
       s+=`<g class="b" data-t="<b>${a}</b><br>Pagado: ${peso(pg)}" style="cursor:pointer"><g class="gb" style="--i:${i}"><rect x="${x+3}" y="${y0-4}" width="${bw}" height="4" rx="2" fill="rgba(31,60,120,.16)"/>${pg?`<rect x="${x}" y="${yg}" width="${bw}" height="${y0-yg}" rx="6" fill="url(#gV)"/>`:''}</g>
         <text class="vl" x="${x+bw/2}" y="${(pg?yg:y0)-9}">$${pg?c1(pg):'0'}</text></g><text class="xa" x="${x+bw/2}" y="${y0+26}">${a}</text>`; });
-    $('#gn',root).innerHTML=s; $$('#gn .b',root).forEach(g=>{ g.onmousemove=e=>verTip(g.dataset.t,e); g.onmouseleave=ocultaTip; }); }
-  dibujaM(); dibujaN();
+    $('#gx',root).innerHTML=s; $$('#gx .b',root).forEach(g=>{ g.onmousemove=e=>verTip(g.dataset.t,e); g.onmouseleave=ocultaTip; }); }
+  function mostrar(v){
+    $$('.seg-b',root).forEach(b=>b.classList.toggle('on',b.dataset.v===v));
+    if(v==='mun'){
+      $('#dhd',root).textContent='Aportes del Municipio · 100 % desembolsado cada año';
+      $('#dtot',root).innerHTML=`<span data-count="${totM/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</span> <small>acumulado 2021–2026</small>`;
+      $('#dleg',root).innerHTML='<span><i style="background:#5B91E3"></i>Aporte</span><span id="lgix"><i style="background:#F6BD4B"></i>Indexación</span>';
+      $('#swi',root).style.display=''; dibujaM();
+    } else {
+      $('#dhd',root).textContent='Cofinanciación de la Nación · pagos realizados';
+      $('#dtot',root).innerHTML=`<span data-count="${sum(N.pagado)/1e9}" data-dec="1" data-pre="$" data-suf=" mil M">0</span> <small>pagado, todo el período</small>`;
+      $('#dleg',root).innerHTML='<span><i style="background:#3AA56D"></i>Pagado</span>';
+      $('#swi',root).style.display='none'; dibujaN();
+    }
+    contar($('.tot',root));
+  }
+  mostrar('mun');
   $('#swi',root).onclick=()=>{ conIdx=!conIdx; $('#swi',root).classList.toggle('on',conIdx); dibujaM(); };
+  $$('.seg-b',root).forEach(b=>b.onclick=()=>mostrar(b.dataset.v));
 };
 
 /* =====================================================================
@@ -433,37 +450,26 @@ VIS.desB = root => {
    ===================================================================== */
 VIS.actos = root => {
   const P=ACTO_PARTES;
-  const ETAPAS=[['Borrador','Listo','hecho'],['Revisión','Estamos aquí','curso'],['Adopción','Siguiente','sig'],['Expedición','Después','sig']];
+  const ETAPAS=[['Estructuración','Estamos aquí','curso'],['Revisión','Siguiente','sig'],['Adopción','Siguiente','sig'],['Expedición','Después','sig']];
   root.innerHTML=`<div class="acto">
-    <div class="caja ac-e rv"><div class="pasos p4" style="--p:1">${ETAPAS.map((e,i)=>`<div class="paso ${e[2]}"><span>${e[2]==='hecho'?'':i+1}</span>${e[0]}<em>${e[1]}</em></div>`).join('')}</div></div>
+    <div class="caja ac-e rv"><div class="pasos p4" style="--p:0">${ETAPAS.map((e,i)=>`<div class="paso ${e[2]}"><span>${e[2]==='hecho'?'':i+1}</span>${e[0]}<em>${e[1]}</em></div>`).join('')}</div></div>
     <div class="ac-d fijo rv">
       <div class="ad-h">${ico('i-doc')}<div><b>Acto administrativo</b><span>Adopción del componente operacional del SETP</span></div></div>
       <div class="ad-i">Insumo: estudio de actualización del modelo operacional</div>
       <div class="ad-sl">${P.map((p,i)=>`<div class="slot lleno"><em>${i+1}</em><div><b>${p.s}</b><span>${p.t}</span></div></div>`).join('')}</div>
-      <div class="ad-sello">EN REVISIÓN</div></div></div>`;
+      <div class="ad-sello">EN ESTRUCTURACIÓN</div></div></div>`;
 };
 
 /* =====================================================================
    7 · PMA — la ruta del soporte: contratista, interventoría y Ente Gestor
    ===================================================================== */
 VIS.pma = root => {
-  const C=PMA_COMP, E=PMA_ETAPAS, est=C.map(()=>1), atendida=C.map(c=>!c.obs);
+  const C=PMA_COMP, E=PMA_ETAPAS, e=1;
   root.innerHTML=`<div class="pma">
-    <div class="pma-b">${C.map((c,i)=>`<div class="pcard rv" style="--c:${c.c}" id="pc${i}"><div class="pc-h">${ico(c.ic)}<b>${c.n}</b><i class="pc-s" id="ps${i}"></i></div><p>${c.t}</p>
-        <div class="pc-e"><div class="pc-d" id="pd${i}">${E.map(()=>'<u></u>').join('')}</div><span id="pe${i}"></span></div><button class="btn" id="pb${i}"></button></div>`).join('')}</div>
-    <div class="pma-r rv"><div class="msg" id="msg">En curso hacia el cierre contractual y la liquidación</div><button class="btn borde" id="pre" style="display:none">Reiniciar</button></div></div>`;
-  const ACC=['','Radicar informes y soportes','Completar la verificación','Remitir al Ente Gestor'];
-  function pinta(i){
-    const e=est[i], ob=C[i].obs&&!atendida[i];
-    $$('#pd'+i+' u',root).forEach((u,k)=>u.className=k<e?'ok':k===e?'cur':'');
-    $('#pe'+i,root).textContent = e>=4?'Remitido al Ente Gestor':ob?'Observaciones por atender':E[e-1]+' ✓';
-    const s=$('#ps'+i,root); s.textContent = e>=4?'Remitido':ob?'Con observaciones':e>=2?'En revisión':'En preparación'; s.className='pc-s '+(e>=4?'ok':ob?'ob':e>=2?'rv':'pr');
-    const b=$('#pb'+i,root); b.disabled=e>=4; b.textContent = e>=4?'✓ Remitido':ob?'Atender observaciones':ACC[e]; b.classList.toggle('borde',ob);
-    const k=est.filter(x=>x>=4).length;
-    const ok=k===C.length; $('#msg',root).textContent = ok?'Soportes completos: se habilita el cierre contractual y la liquidación':'En curso hacia el cierre contractual y la liquidación'; $('#msg',root).classList.toggle('ok',ok); $('#pre',root).style.display=ok?'':'none';
-  }
-  C.forEach((c,i)=>{ $('#pb'+i,root).onclick=()=>{ if(C[i].obs&&!atendida[i]) atendida[i]=true; else if(est[i]<4) est[i]++; pinta(i); }; pinta(i); });
-  $('#pre',root).onclick=()=>{ C.forEach((c,i)=>{ est[i]=1; atendida[i]=!c.obs; pinta(i); }); };
+    <div class="pma-b">${C.map(c=>{ const ob=c.obs, s=ob?'Con observaciones':'En preparación';
+      return `<div class="pcard rv" style="--c:${c.c}"><div class="pc-h">${ico(c.ic)}<b>${c.n}</b><i class="pc-s ${ob?'ob':'pr'}">${s}</i></div><p>${c.t}</p>
+        <ul class="pc-et">${E.map((t,k)=>`<li class="${k<e?'ok':k===e?'cur':''}">${k<e?'✓':k===e?'●':''} ${t}</li>`).join('')}</ul></div>`; }).join('')}</div>
+    <div class="pma-r rv"><div class="msg" id="msg">En curso hacia el cierre contractual y la liquidación</div></div></div>`;
 };
 
 /* =====================================================================
@@ -499,9 +505,21 @@ const rezagoTxt=(r,hoy)=>{ const m=hoy-(r.b+1); return m>0&&r.est!=='ejecutado'&
 
 /* ---------- 8a · cronograma CONPES: imagen tal cual de la Dirección de Planeación ---------- */
 VIS.obraA = root => {
+  const SEC=[
+    ['Infraestructura', [['Av. Ferrocarril','elegibilidad el 22 de septiembre de 2026; oficio en ajuste de un punto.'],
+      ['Av. Ambalá','en ejecución.'],
+      ['Av. Jordán Paralela','se priorizaron otros corredores por el tope presupuestal; en revisión la redistribución.']]],
+    ['Estaciones y Paraderos', [['Paraderos Tipo 1 y 2','con elegibilidad desde el 22 de septiembre de 2026; inició la etapa precontractual.'],
+      ['Estaciones de Integración','según la actualización del estudio de demanda operacional (sep. 2025), no se contemplan.']]],
+    ['Patio Talleres y Terminales', [['Grupo 1','lotes 2 y 8.'],['Grupo 2','lotes 1, 3, 4, 5, 6, 7 y 9; subsanando recomendaciones de la UMUS.'],
+      ['Patiotalleres requeridos','5, según la actualización del componente operacional (sep. 2025).']]],
+    ['Infraestructura Complementaria', [['Intervención Centro','acciones institucionales articuladas, con avances en zonas azules.'],
+      ['Cicloinfraestructura','elegibilidad el 22 de septiembre de 2026; oficio en ajuste de un punto.']]]
+  ];
   root.innerHTML=`<div class="gimg">
     <div class="gimg-cap rv">Cronograma de la Dirección de Planeación · corte ${CORTE_ACT.txt}</div>
-    <div class="gimg-w rv" id="giw"><img src="img/cronograma-conpes.png" alt="Cronograma CONPES"></div></div>`;
+    <div class="gimg-w rv" id="giw"><img src="img/cronograma-conpes.png" alt="Cronograma CONPES"></div>
+    <div class="gimg-det rv">${SEC.map(([t,items])=>`<div class="gimg-col"><b>${t}</b>${items.map(([k,v])=>`<p><b>${k}:</b> ${v}</p>`).join('')}</div>`).join('')}</div></div>`;
   $('#giw',root).onclick=()=>$('#giw',root).classList.toggle('on');
 };
 
@@ -603,7 +621,7 @@ VIS.tecno = root => {
     {id:'usu',n:'Información al usuario',s:'En formulación',x:830,y:60,w:230,est:'estructuracion',g:'Sistema de Información al Usuario'},
     {id:'sem',n:'Semáforos',s:'Fase I terminada · 100 %',x:830,y:152,w:230,est:'ejecutado',g:'Sistema de Semaforización'}];
   const LK=[['cc','rec'],['cc','flo'],['cc','usu'],['cc','sem']];
-  root.innerHTML=`<div class="tec"><div class="tec-n rv"><div class="tec-b"><button class="btn sol" id="si">▶ Simular integración</button><button class="btn borde" id="re" style="display:none">↺ Restablecer</button><span class="tip2">Arrastra los nodos para reordenar el esquema</span></div><svg viewBox="0 0 1000 200" id="sv"></svg><div class="tec-s" id="tx">Azul: en estructuración · Ámbar: en ejecución · Verde: integrado</div></div></div>`;
+  root.innerHTML=`<div class="tec"><div class="tec-n rv"><div class="tec-b"><button class="btn sol" id="si">▶ Simular integración</button><button class="btn borde" id="re" style="display:none">↺ Restablecer</button><span class="tip2">Arrastra los nodos para reordenar el esquema</span></div><svg viewBox="0 0 1000 200" id="sv"></svg><div class="tec-s" id="tx"></div></div></div>`;
   const sv=$('#sv',root), N={}; ND.forEach(n=>N[n.id]={...n,ok:false});
   const col=n=>n.ok?'#3AA56D':ESTADO[n.est].c;
   sv.innerHTML=LK.map((l,i)=>`<line class="lk" id="lk${i}"/>`).join('')+LK.map((l,i)=>`<circle class="pk" id="pk${i}" r="7" style="display:none"/>`).join('')+
@@ -620,5 +638,5 @@ VIS.tecno = root => {
   const pinta=()=>ND.forEach(n=>$('#r-'+n.id,sv).setAttribute('fill',col(N[n.id]))), tms=[]; limpiar.push(()=>tms.forEach(clearTimeout));
   $('#si',root).onclick=()=>{ $('#si',root).style.display='none'; ['sem','rec','flo','usu','cc'].forEach((id,i)=>tms.push(setTimeout(()=>{ N[id].ok=true; pinta(); pos(); arranca();
     if(i===4){ $('#tx',root).innerHTML='<b style="color:#3AA56D">Paquete integrado</b>: recaudo, control de flota, información al usuario, centro de control y semáforos.'; $('#re',root).style.display=''; } },i*700))); };
-  $('#re',root).onclick=()=>{ tms.forEach(clearTimeout); ND.forEach(n=>N[n.id].ok=false); pinta(); pos(); arranca(); $('#re',root).style.display='none'; $('#si',root).style.display=''; $("#tx",root).textContent="Azul: en estructuración · Ámbar: en ejecución · Verde: integrado"; };
+  $('#re',root).onclick=()=>{ tms.forEach(clearTimeout); ND.forEach(n=>N[n.id].ok=false); pinta(); pos(); arranca(); $('#re',root).style.display='none'; $('#si',root).style.display=''; $("#tx",root).textContent=""; };
 };

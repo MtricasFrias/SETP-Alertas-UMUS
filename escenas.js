@@ -93,7 +93,7 @@ estilo(`
 /* ------------------------------ resumen ------------------------------ */
 NODO.resumen = s => {
   const a=s.a, c=CAT[a.cat], n=document.createElement('section'), tram=a.anim==='tram';
-  n.className='scene'+(tram?' tw':''); n.style.cssText=`--cat:${c.c};--catx:${c.tx}`;
+  n.className='scene'+(tram?' tw':'')+(a.postura.length?'':' sinpostura'); n.style.cssText=`--cat:${c.c};--catx:${c.tx}`;
   const cuerpo=`
     <div class="spine"><div class="lab">Alerta</div><div class="num">${a.n}</div>
       <dl><dt>Categoría</dt><dd>${c.n}</dd><dt>Identificada en</dt><dd>${perTxt(a.per)}</dd><dt>Componente</dt><dd>${a.comp}</dd><dt>Corte</dt><dd>${a.corte}</dd></dl></div>
@@ -108,7 +108,7 @@ NODO.resumen = s => {
           return `<div class="cifra rv"><b class="${txt.length>7?'m':''}"${dato}>${f.n!==undefined?'0':f.t}</b><span>${f.l}</span></div>`; }).join('')}</div>`:''}
       </div>
     </div>
-    <div class="postura rv"><span>Línea de actividades del SETP</span><ul>${a.postura.map(t=>{ const ok=t.startsWith('✓'); return `<li class="${ok?'ok':''}">${ok?t.slice(1):t}</li>`; }).join('')}</ul></div>`;
+    ${a.postura.length?`<div class="postura rv"><span>Línea de actividades del SETP</span><ul>${a.postura.map(t=>{ const ok=t.startsWith('✓'); return `<li class="${ok?'ok':''}">${ok?t.slice(1):t}</li>`; }).join('')}</ul></div>`:''}`;
   n.innerHTML = tram ? `<div class="tw-clip"><div class="tw-in">${cuerpo}<div class="tw-rail"></div></div></div><div class="tw-tram">${tramSVG()}<i class="tw-beam"></i><i class="tw-sp"></i><i class="tw-sp"></i><i class="tw-sp"></i></div>` : cuerpo;
   if(tram){ n.dataset.delay=2400; n.addEventListener('animationend',e=>{ if(e.animationName==='twTram') $('.tw-tram',n).remove(); }); }
   return n;
