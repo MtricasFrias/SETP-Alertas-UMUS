@@ -16,13 +16,13 @@ estilo(`
 .tw .rv{ opacity:1; transform:none; animation:none }
 @keyframes twClip{ 0%{ transform:translateX(-120rem) } 70%,100%{ transform:none } }
 @keyframes twIn{ 0%{ transform:translateX(120rem) } 70%,100%{ transform:none } }
-.tw .tw-rail{ position:absolute; left:20rem; right:0; top:46.7rem; height:.5rem; border-radius:1rem; background:repeating-linear-gradient(90deg,#9CC4FF 0 2.2rem,transparent 2.2rem 3.6rem); box-shadow:0 0 1rem rgba(120,175,255,.85) }
-.tw .tw-tram{ position:absolute; left:-62rem; top:34.9rem; width:62rem; height:12.6rem; z-index:8; will-change:transform; animation:twTram 3.4s cubic-bezier(.45,.05,.25,1) both; pointer-events:none }
+.tw .tw-rail{ position:absolute; left:20rem; right:0; top:54.76rem; height:.5rem; border-radius:1rem; background:repeating-linear-gradient(90deg,#9CC4FF 0 2.2rem,transparent 2.2rem 3.6rem); box-shadow:0 0 1rem rgba(120,175,255,.85) }
+.tw .tw-tram{ position:absolute; left:-81.2rem; top:39.3rem; width:81.2rem; height:16.5rem; z-index:8; will-change:transform; animation:twTram 3.4s cubic-bezier(.45,.05,.25,1) both; pointer-events:none }
 .tw .tw-tram:after{ content:""; position:absolute; left:3rem; right:3rem; bottom:-.2rem; height:1.4rem; background:radial-gradient(ellipse at center,rgba(31,60,120,.28),transparent 70%) }
 .tw .tw-tram svg{ display:block; width:100%; height:100%; overflow:visible; animation:twBob .3s ease-in-out infinite alternate }
 .tw .tw-tram .wh{ transform-box:fill-box; transform-origin:center; animation:twWh .42s steps(8) infinite }
-.tw .tw-beam{ position:absolute; left:61.4rem; top:6.6rem; width:28rem; height:5.4rem; background:linear-gradient(90deg,rgba(255,236,170,.9),transparent); clip-path:polygon(0 30%,100% 0,100% 100%,0 70%) }
-.tw .tw-sp{ position:absolute; left:-9rem; height:.3rem; border-radius:1rem; background:#fff; opacity:.9 } .tw .tw-sp:nth-of-type(2){ top:3rem; width:11rem } .tw .tw-sp:nth-of-type(3){ top:6.4rem; width:7rem } .tw .tw-sp:nth-of-type(4){ top:9.4rem; width:9rem }
+.tw .tw-beam{ position:absolute; left:80.4rem; top:8.65rem; width:36.7rem; height:7.07rem; background:linear-gradient(90deg,rgba(255,236,170,.9),transparent); clip-path:polygon(0 30%,100% 0,100% 100%,0 70%) }
+.tw .tw-sp{ position:absolute; left:-11.79rem; height:.3rem; border-radius:1rem; background:#fff; opacity:.9 } .tw .tw-sp:nth-of-type(2){ top:3.93rem; width:14.41rem } .tw .tw-sp:nth-of-type(3){ top:8.38rem; width:9.17rem } .tw .tw-sp:nth-of-type(4){ top:12.31rem; width:11.79rem }
 @keyframes twTram{ 0%{ transform:translateX(0) } 70%{ transform:translateX(120rem) } 100%{ transform:translateX(188rem) } }
 @keyframes twBob{ to{ transform:translateY(-.22rem) } }
 @keyframes twWh{ to{ transform:rotate(360deg) } }
