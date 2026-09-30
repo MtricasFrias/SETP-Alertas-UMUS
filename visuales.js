@@ -141,6 +141,8 @@ estilo(`
 .gimg-det{ flex:1.5; min-height:0; overflow-y:auto; scrollbar-width:thin; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1.4rem; background:var(--card); border-radius:.8rem; padding:1rem 1.4rem }
 .gimg-col b{ display:block; font:800 1.35rem var(--fd); color:var(--ink) } .gimg-col b:first-child{ text-transform:uppercase; letter-spacing:.03em; color:var(--mut); margin-bottom:.4rem }
 .gimg-col p{ font-size:1.35rem; line-height:1.25; color:var(--tx); margin:.4rem 0 0 }
+.gimg-det1{ grid-template-columns:1fr; padding:1.2rem 1.8rem; gap:.6rem }
+.gimg-det1 p{ font-size:1.75rem; line-height:1.3; color:var(--tx); margin:0 } .gimg-det1 p b{ color:var(--ink) }
 .gimg-w img{ max-width:100%; max-height:100%; object-fit:contain }
 .gimg-w.on{ position:fixed; inset:3rem; z-index:50; cursor:zoom-out; box-shadow:0 1rem 3rem rgba(31,60,120,.4) }
 
@@ -475,25 +477,27 @@ function gantt(host, rows, {fecha=CORTE_ACT.fecha, onSel, sinRezago=false}={}){
 }
 const rezagoTxt=(r,hoy)=>{ const m=hoy-(r.b+1); return m>0&&r.est!=='ejecutado'&&r.est!=='retirado' ? `<b style="color:#E5626A">${Math.round(m)} meses de rezago.</b> ` : ''; };
 
-/* ---------- 8a · cronograma CONPES: imagen tal cual de la Dirección de Planeación ---------- */
-VIS.obraA = root => {
-  const SEC=[
-    ['Infraestructura', [['Av. Ferrocarril','elegibilidad el 22 de septiembre de 2026; oficio en ajuste de un punto.'],
-      ['Av. Ambalá','en ejecución.'],
-      ['Av. Jordán Paralela','se priorizaron otros corredores por el tope presupuestal; en revisión la redistribución.']]],
-    ['Estaciones y Paraderos', [['Paraderos Tipo 1 y 2','con elegibilidad desde el 22 de septiembre de 2026; inició la etapa precontractual.'],
-      ['Estaciones de Integración','según la actualización del estudio de demanda operacional (sep. 2025), no se contemplan.']]],
-    ['Patio Talleres y Terminales', [['Grupo 1','lotes 2 y 8.'],['Grupo 2','lotes 1, 3, 4, 5, 6, 7 y 9; subsanando recomendaciones de la UMUS.'],
-      ['Patiotalleres requeridos','5, según la actualización del componente operacional (sep. 2025).']]],
-    ['Infraestructura Complementaria', [['Intervención Centro','acciones institucionales articuladas, con avances en zonas azules.'],
-      ['Cicloinfraestructura','elegibilidad el 22 de septiembre de 2026; oficio en ajuste de un punto.']]]
-  ];
+/* ---------- 8a-8d · cronograma CONPES por frente: imagen tal cual de cada diapositiva de la Dirección de Planeación ---------- */
+const obraSec = (img, cap, items) => root => {
   root.innerHTML=`<div class="gimg">
-    <div class="gimg-cap rv">Cronograma de la Dirección de Planeación · corte ${CORTE_ACT.txt}</div>
-    <div class="gimg-w rv" id="giw"><img src="img/cronograma-conpes.png" alt="Cronograma CONPES"></div>
-    <div class="gimg-det rv">${SEC.map(([t,items])=>`<div class="gimg-col"><b>${t}</b>${items.map(([k,v])=>`<p><b>${k}:</b> ${v}</p>`).join('')}</div>`).join('')}</div></div>`;
+    <div class="gimg-cap rv">${cap} · corte ${CORTE_ACT.txt}</div>
+    <div class="gimg-w rv" id="giw"><img src="img/${img}" alt="${cap}"></div>
+    <div class="gimg-det gimg-det1 rv">${items.map(([k,v])=>`<p><b>${k}:</b> ${v}</p>`).join('')}</div></div>`;
   $('#giw',root).onclick=()=>$('#giw',root).classList.toggle('on');
 };
+VIS.obraInf = obraSec('cronograma-infraestructura.png', 'Infraestructura', [
+  ['Av. Ferrocarril','elegibilidad el 22 de septiembre de 2026; oficio en ajuste de un punto.'],
+  ['Av. Ambalá','en ejecución.'],
+  ['Av. Jordán Paralela','se priorizaron otros corredores por el tope presupuestal; en revisión la redistribución.']]);
+VIS.obraEst = obraSec('cronograma-estaciones.png', 'Estaciones y Paraderos', [
+  ['Paraderos Tipo 1 y 2','con elegibilidad desde el 22 de septiembre de 2026; inició la etapa precontractual.'],
+  ['Estaciones de Integración','según la actualización del estudio de demanda operacional (sep. 2025), no se contemplan.']]);
+VIS.obraPat = obraSec('cronograma-patiotalleres.png', 'Patio Talleres y Terminales', [
+  ['Grupo 1','lotes 2 y 8.'],['Grupo 2','lotes 1, 3, 4, 5, 6, 7 y 9; subsanando recomendaciones de la UMUS.'],
+  ['Patiotalleres requeridos','5, según la actualización del componente operacional (sep. 2025).']]);
+VIS.obraCom = obraSec('cronograma-complementaria.png', 'Infraestructura Complementaria', [
+  ['Intervención Centro','acciones institucionales articuladas, con avances en zonas azules.'],
+  ['Cicloinfraestructura','elegibilidad el 22 de septiembre de 2026; oficio en ajuste de un punto.']]);
 
 /* ---------- 8b · mapa de proyectos por frente y fase ---------- */
 VIS.obraB = root => {

@@ -75,7 +75,7 @@ const ALERTAS = [
     vistas:[{ vis:'sem', icono:null, pregunta:'Fase I terminada: 34 de 34 intersecciones en servicio y seguimiento.' }] },
 
   { n:4, id:'app', corto:'Tranvía', titulo:'Propuesta de tranvía (APP)', t:'Propuesta APP tranvía podría redefinir convenio',
-    per:'2025-IV', comp:'CONPES', cat:'critica', act:true, corte:'24 sep 2026', anim:'tram',
+    per:'2025-IV', comp:'CONPES', cat:'critica', act:true, corte:'24 sep 2026', anim:'tram', resumenAlFinal:true,
     frase:'',
     hechos:['Riel virtual; se presenta como 100 % privado.',
             'Pide ser único operador y usar recursos del CONPES 4017.',
@@ -135,7 +135,10 @@ const ALERTAS = [
     postura:['Elegibilidad de Ferrocarril, ciclorruta y Paraderos Tipo 1 y 2', 'Etapa precontractual de Paraderos Tipo 1 y 2', 'Patiotalleres: subsanación de las recomendaciones de la UMUS'],
     antes:'Ferrocarril, ciclorruta, Paraderos Tipo 1 y 2 y patiotalleres radicados en la UMUS, en espera del concepto de elegibilidad.',
     ahora:'Elegibilidad el 22 de septiembre para Ferrocarril, ciclorruta y Paraderos Tipo 1 y 2. Se inició la etapa precontractual de Paraderos; los patiotalleres subsanan las recomendaciones de la UMUS.',
-    vistas:[{ vis:'obraA', icono:'tap', pregunta:'Toca la imagen para ampliarla.' },
+    vistas:[{ vis:'obraInf', icono:'tap', pregunta:'Infraestructura. Toca la imagen para ampliarla.' },
+            { vis:'obraEst', icono:'tap', pregunta:'Estaciones y Paraderos. Toca la imagen para ampliarla.' },
+            { vis:'obraPat', icono:'tap', pregunta:'Patio Talleres y Terminales. Toca la imagen para ampliarla.' },
+            { vis:'obraCom', icono:'tap', pregunta:'Infraestructura Complementaria. Toca la imagen para ampliarla.' },
             { vis:'obraB', icono:'tap',  pregunta:'Toca un proyecto o un símbolo de las convenciones.' }] },
 
   { n:9, id:'tecno', corto:'Tecnología', titulo:'Componente tecnológico', t:'Rezagos en los avances para la estructuración e implementación del componente tecnológico',

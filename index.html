@@ -266,7 +266,7 @@ limpiar.push(ocultaTip);
 /* ---------- guion de escenas ---------- */
 const ESC = [{tipo:'portada'},{tipo:'panorama'}];
 if(MOSTRAR_CAMBIOS) ESC.push({tipo:'cambios'});
-ALERTAS.forEach(a=>{ ESC.push({tipo:'resumen',a}); a.vistas.forEach((v,i)=>ESC.push({tipo:'explorar',a,v,i,de:a.vistas.length})); });
+ALERTAS.forEach(a=>{ const ex=()=>a.vistas.forEach((v,i)=>ESC.push({tipo:'explorar',a,v,i,de:a.vistas.length})), re=()=>ESC.push({tipo:'resumen',a}); if(a.resumenAlFinal){ ex(); re(); } else { re(); ex(); } });
 ESC.push({tipo:'fin'});
 const idxAlerta = n => ESC.findIndex(s=>s.a && s.a.n===n);
 const idxTipo   = t => ESC.findIndex(s=>s.tipo===t);
